@@ -64,6 +64,7 @@ class _RegisterState extends State<Register> {
                                 color: Colors.orange.shade800,
                               ),
                             )
+
                           ],
                         ),
 

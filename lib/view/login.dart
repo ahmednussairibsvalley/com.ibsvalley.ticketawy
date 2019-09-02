@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                           color: Colors.orange.shade800,
                         ),
-                      )
+                      ),
                     ],
                   ),
 
