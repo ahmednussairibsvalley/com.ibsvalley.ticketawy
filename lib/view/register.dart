@@ -177,7 +177,7 @@ class _RegisterState extends State<Register> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
-                                  child: Text('Have an acoount?',
+                                  child: Text('Have an account?',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,

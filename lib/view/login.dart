@@ -146,7 +146,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Text('Don\'t have an acoount?',
+                          child: Text('Don\'t have an account?',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,

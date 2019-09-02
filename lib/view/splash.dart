@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -30,11 +29,11 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     _animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _controller, curve: Curves.linear))
     ..addStatusListener((status) async{
       if(status == AnimationStatus.completed){
-        startWinking();
+        _winkingController.forward();
       }
     });
 
-    _winkingAnimation = Tween(begin: 0.0, end: pi).animate(CurvedAnimation(parent: _winkingController, curve: Curves.linear))
+    _winkingAnimation = Tween(begin: 0.0, end: pi /2).animate(CurvedAnimation(parent: _winkingController, curve: Curves.linear))
     ..addStatusListener((status){
       if(status == AnimationStatus.completed){
         _titleController.forward();
@@ -51,26 +50,11 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     _subTitleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _subTitleController, curve: Curves.linear))
     ..addStatusListener((status){
       if(status == AnimationStatus.completed){
-        startApp();
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     });
     super.initState();
     _controller.forward();
-  }
-
-  startWinking() async {
-    return Timer(Duration(seconds: 1), (){
-      _winkingController.forward();
-    });
-  }
-
-
-
-  startApp() async{
-
-    return Timer(Duration(seconds: 2), (){
-      Navigator.of(context).pushReplacementNamed('/login');
-    });
   }
 
   @override
