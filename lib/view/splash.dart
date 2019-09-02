@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -7,20 +8,67 @@ class Splash extends StatefulWidget {
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
+class _SplashState extends State<Splash> with TickerProviderStateMixin {
   AnimationController _controller;
+  AnimationController _winkingController;
+  AnimationController _titleController;
+  AnimationController _subTitleController;
+
   Animation _animation;
+  Animation _winkingAnimation;
+  Animation _titleAnimation;
+  Animation _subTitleAnimation;
+
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this, duration: Duration(seconds: 2));
+    _winkingController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _titleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _subTitleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+
+    _animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _controller, curve: Curves.linear))
+    ..addStatusListener((status) async{
+      if(status == AnimationStatus.completed){
+        startWinking();
+      }
+    });
+
+    _winkingAnimation = Tween(begin: 0.0, end: pi).animate(CurvedAnimation(parent: _winkingController, curve: Curves.linear))
+    ..addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        _titleController.forward();
+      }
+    });
+
+    _titleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _titleController, curve: Curves.linear))
+    ..addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        _subTitleController.forward();
+      }
+    });
+
+    _subTitleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _subTitleController, curve: Curves.linear))
+    ..addStatusListener((status){
+      if(status == AnimationStatus.completed){
+        startApp();
+      }
+    });
     super.initState();
-    startApp();
+    _controller.forward();
   }
+
+  startWinking() async {
+    return Timer(Duration(seconds: 1), (){
+      _winkingController.forward();
+    });
+  }
+
+
 
   startApp() async{
 
-    return Timer(Duration(seconds: 4), (){
+    return Timer(Duration(seconds: 2), (){
       Navigator.of(context).pushReplacementNamed('/login');
     });
   }
@@ -57,15 +105,66 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Image.asset('assets/logo.png', width: 117, height: 164,),
-                    Text('Ticketawy',
-                      style: TextStyle(
-                        fontFamily: 'TicketawyFont',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    AnimatedBuilder(
+                      child: AnimatedBuilder(
+                        child: Image.asset('assets/logo.png', width: 117, height: 164,),
+                        builder: (context, child){
+                          return Stack(
+                            children: <Widget>[
+
+                              Image.asset('assets/logo_open_eyed.png', width: 117, height: 164,),
+                              Opacity(
+                                opacity: sin(_winkingAnimation.value),
+                                child: child,
+                              ),
+                            ],
+                          );
+                        },
+                        animation: _winkingAnimation,
                       ),
-                    )
+                      animation: _animation,
+                      builder: (context, child){
+                        return Opacity(
+                          opacity: _animation.value,
+                          child: child,
+                        );
+                      },
+                    ),
+                    AnimatedBuilder(
+                      child: Text('Ticketawy',
+                        style: TextStyle(
+                          fontFamily: 'TicketawyFont',
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+
+                      ),
+                      animation: _titleAnimation,
+                      builder: (context, child){
+                        return Opacity(
+                          opacity: _titleAnimation.value,
+                          child: child,
+                        );
+                      },
+                    ),
+                    AnimatedBuilder(
+                      child: Text('Ticket Easy!',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'Segoe',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange.shade800,
+                        ),
+                      ),
+                      animation: _subTitleAnimation,
+                      builder: (context, child){
+                        return Opacity(
+                          opacity: _subTitleAnimation.value,
+                          child: child,
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

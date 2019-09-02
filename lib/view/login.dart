@@ -14,7 +14,6 @@ class _LoginState extends State<Login> {
     final _width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
           Container(
@@ -36,7 +35,7 @@ class _LoginState extends State<Login> {
             bottom: 0.0,
             child: Form(
               key: _formKey,
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
