@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'view/login.dart';
 import 'view/splash.dart';
 
 void main() async{
@@ -9,6 +10,9 @@ void main() async{
       MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Splash(),
+        routes: {
+          '/login' : (context) => Login(),
+        },
       )
   );
 }
