@@ -32,6 +32,7 @@ class _HomeState extends State<Home> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+    final _searchController = TextEditingController();
 
     final Map<String, Function> leftDrawerMap = {
       'Home' : (){
@@ -162,14 +163,16 @@ class _HomeState extends State<Home> {
               bottom: 0.0, right: 0.0, left: 0.0,
               child: Column(
                 children: <Widget>[
-                  Image.asset('assets/white_background.png'),
+
+                  DrawerDivider(color: Colors.white, height: 2.3, width: 20,),
+
                   Stack(
                     children: <Widget>[
 
                       // The white background.
                       SizedBox(
                         width: _width,
-                        height: _height * 0.1,
+                        height: _height * 0.6,
                         child: Container(
                           color: Colors.white,
                         ),
@@ -186,6 +189,10 @@ class _HomeState extends State<Home> {
               ),
             ),
 
+
+
+
+
           ],
         ),
       ),
@@ -196,14 +203,15 @@ class _HomeState extends State<Home> {
 class DrawerDivider extends StatelessWidget {
   final double height;
   final Color color;
+  final double width;
 
-  const DrawerDivider({this.height = 1, this.color = Colors.black});
+  const DrawerDivider({this.height = 1, this.color = Colors.black, this.width = 10});
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final boxWidth = constraints.constrainWidth();
-        final dashWidth = 10.0;
+        final dashWidth = width;
         final dashHeight = height;
         final dashCount = (boxWidth / (2 * dashWidth)).floor();
         return Flex(
