@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../controller.dart';
+import '../globals.dart';
+
 class Splash extends StatefulWidget {
   @override
   _SplashState createState() => _SplashState();
@@ -50,6 +53,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     _subTitleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _subTitleController, curve: Curves.linear))
     ..addStatusListener((status){
       if(status == AnimationStatus.completed){
+        Globals.controller = Controller();
         Navigator.of(context).pushReplacementNamed('/login');
       }
     });
