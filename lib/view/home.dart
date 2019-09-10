@@ -1,6 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketawy/view/home_pages/contact_page.dart';
+import 'package:ticketawy/view/home_pages/faq_page.dart';
+import 'package:ticketawy/view/home_pages/ideas_page.dart';
 
+import 'home_pages/home_page.dart';
+import 'home_pages/profile_page.dart';
+
+final int homePageIndex = 0;
+final int profilePageIndex = 1;
+final int faqPageIndex = 2;
+final int ideasPageIndex = 3;
+final int contactPageIndex = 4;
 
 
 class Home extends StatefulWidget {
@@ -9,47 +20,44 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget _drawerItem(String title){
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Text('$title',
-            style: TextStyle(
-                fontSize: 18,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const DrawerDivider(color: Colors.grey),
-        ),
-      ],
-    );
-  }
-
-
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _searchController = TextEditingController();
+
+  int index = homePageIndex;
 
   @override
   Widget build(BuildContext context) {
 
     final Map<String, Function> leftDrawerMap = {
       'Home' : (){
+        setState(() {
+          index = homePageIndex;
+        });
         Navigator.of(context).pop();
       },
       'My Profile' : (){
+        setState(() {
+          index = profilePageIndex;
+        });
         Navigator.of(context).pop();
       },
       'FAQ' : (){
+        setState(() {
+          index = faqPageIndex;
+        });
         Navigator.of(context).pop();
       },
       'Ideas' : (){
+        setState(() {
+          index = ideasPageIndex;
+        });
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
+        setState(() {
+          index = contactPageIndex;
+        });
         Navigator.of(context).pop();
       },
       'Sign Out' : (){
@@ -104,7 +112,7 @@ class _HomeState extends State<Home> {
             // The header.
             Positioned(
               right: 0.0, left: 0.0, top: 0.0,
-              child: Image.asset('assets/header.png', width: 193.2, height: 170.4,),
+              child: Image.asset('assets/header.png', width: 161, height: 142,),
             ),
 
             // The top left icon.
@@ -168,8 +176,13 @@ class _HomeState extends State<Home> {
 
                       // Here is the events data.
                       Positioned(
-                        left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
-                        child: Container(),
+                        left: 0.0, right: 0.0, bottom: 0.0, top: 30.0,
+                        child: index == homePageIndex? HomePage():
+                        index == profilePageIndex? ProfilePage():
+                        index == ideasPageIndex? IdeasPage():
+                        index == faqPageIndex? FaqPage():
+                        index == contactPageIndex? ContactPage():
+                        Container(),
                       )
                     ],
                   ),
@@ -208,6 +221,25 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _drawerItem(String title){
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text('$title',
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const DrawerDivider(color: Colors.grey),
+        ),
+      ],
     );
   }
 }
