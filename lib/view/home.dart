@@ -27,12 +27,14 @@ class _HomeState extends State<Home> {
       ],
     );
   }
+
+
+
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final _height = MediaQuery.of(context).size.height;
-    final _width = MediaQuery.of(context).size.width;
-    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-    final _searchController = TextEditingController();
 
     final Map<String, Function> leftDrawerMap = {
       'Home' : (){
@@ -55,8 +57,14 @@ class _HomeState extends State<Home> {
       },
     };
 
+    final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
+
+
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
         drawer: Drawer(
           child: ListView(
@@ -95,34 +103,8 @@ class _HomeState extends State<Home> {
 
             // The header.
             Positioned(
-              right: 0.0, left: 0.0, top: 0.0, bottom: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset('assets/logo.png', width: 70.4, height: 98.2,),
-                    Text('Ticketawy',
-                      style: TextStyle(
-                        fontFamily: 'TicketawyFont',
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-
-                    ),
-                    Text('Ticket Easy!',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Umy',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange.shade800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              right: 0.0, left: 0.0, top: 0.0,
+              child: Image.asset('assets/header.png', width: 193.2, height: 170.4,),
             ),
 
             // The top left icon.
@@ -158,13 +140,19 @@ class _HomeState extends State<Home> {
               ),
             ),
 
+
+
             // The body
             Positioned(
               bottom: 0.0, right: 0.0, left: 0.0,
               child: Column(
                 children: <Widget>[
 
-                  DrawerDivider(color: Colors.white, height: 2.3, width: 20,),
+                  Stack(
+                    children: <Widget>[
+                      DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
+                    ],
+                  ),
 
                   Stack(
                     children: <Widget>[
@@ -172,7 +160,7 @@ class _HomeState extends State<Home> {
                       // The white background.
                       SizedBox(
                         width: _width,
-                        height: _height * 0.6,
+                        height: _height * 0.65,
                         child: Container(
                           color: Colors.white,
                         ),
@@ -190,7 +178,31 @@ class _HomeState extends State<Home> {
             ),
 
 
-
+            Positioned(
+              right: 50.0, left: 50.0, bottom: _height * .6,
+              child: Material(
+                color: Colors.transparent,
+                elevation: 20.0,
+                shadowColor: Colors.black,
+                child: TextFormField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.search, size: 40,),
+                    ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(
+                            width: 1,
+                          )
+                      )
+                  ),
+                ),
+              ),
+            ),
 
 
           ],

@@ -32,6 +32,7 @@ class _LoginState extends State<Login> {
                 )
             ),
           ),
+
           Positioned(
             left: 0.0,
             right: 0.0,
@@ -169,6 +170,34 @@ class _LoginState extends State<Login> {
             ),
           ),
         ],
+      ),
+
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: GestureDetector(
+          onTap: (){
+            Navigator.of(context).pushReplacementNamed('/home');
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.orange,
+                  child: Text(
+                    'Skip This Step',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
