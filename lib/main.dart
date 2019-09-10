@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'view/home.dart';
 import 'view/login.dart';
 import 'view/splash.dart';
 
@@ -12,6 +13,7 @@ void main() async{
         home: Splash(),
         routes: {
           '/login' : (context) => Login(),
+          '/home' : (context) => Home(),
         },
       )
   );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/register.dart';
 
+import 'home.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -16,6 +18,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
+
+          // The background
           Container(
             height: _height,
             width: _width,
@@ -53,7 +57,7 @@ class _LoginState extends State<Login> {
                       Text('Ticket Easy!',
                         style: TextStyle(
                           fontSize: 25,
-                          fontFamily: 'Segoe',
+                          fontFamily: 'Umy',
                           fontWeight: FontWeight.bold,
                           color: Colors.orange.shade800,
                         ),
@@ -117,6 +121,9 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0,),
                     child: ListTile(
+                      onTap: (){
+                        Navigator.of(context).pushReplacementNamed('/home');
+                      },
                       title: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),

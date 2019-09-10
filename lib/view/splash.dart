@@ -136,7 +136,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                       child: Text('Ticket Easy!',
                         style: TextStyle(
                           fontSize: 25,
-                          fontFamily: 'Segoe',
+                          fontFamily: 'Umy',
                           fontWeight: FontWeight.bold,
                           color: Colors.orange.shade800,
                         ),
@@ -152,7 +152,11 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-            )
+            ),
+            Positioned(
+              left: 0.0, right: 0.0, bottom: 0.0,
+              child: Image.asset('assets/splash_footer.png',),
+            ),
           ],
         ),
       ),

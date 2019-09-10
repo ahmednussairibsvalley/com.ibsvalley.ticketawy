@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                       Text('Ticket Easy!',
                         style: TextStyle(
                           fontSize: 25,
-                          fontFamily: 'Segoe',
+                          fontFamily: 'Umy',
                           fontWeight: FontWeight.bold,
                           color: Colors.orange.shade800,
                         ),

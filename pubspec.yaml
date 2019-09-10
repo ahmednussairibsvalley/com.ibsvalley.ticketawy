@@ -70,11 +70,14 @@ flutter:
   #         weight: 700
   #
   fonts:
+    - family: Umy
+      fonts:
+        - asset: assets\fonts\Umy-Regular.otf
     - family: TicketawyFont
       fonts:
-        - asset: assets/fonts/webfont3e6e.ttf
-    - family: Segoe
-      fonts:
-        - asset: assets/fonts/copyfonts.com_segoe-ui-italic.ttf
+        - asset: assets/fonts/GeometriqueSans-Regular.otf
+        - asset: assets/fonts/GeometriqueSans-Bold.otf
+        - asset: assets/fonts/GeometriqueSans-ExtraBold.otf
+        - asset: assets/fonts/GeometriqueSans-Medium.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
