@@ -31,7 +31,7 @@ class _IdeasPageState extends State<IdeasPage> {
                     child: Text('Ideas',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.orange,
+                        color: Color(0xfffe6700),
                         fontSize: 25,
                       ),
                     ),
@@ -84,7 +84,7 @@ class _IdeasPageState extends State<IdeasPage> {
                     textAlign: TextAlign.center,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: Color(0xfffe6700),
                     borderRadius: BorderRadius.circular(20)
                   ),
                 ),
@@ -101,7 +101,7 @@ class _IdeasPageState extends State<IdeasPage> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(15),
-                color: Colors.orange,
+                color: Color(0xfffe6700),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[

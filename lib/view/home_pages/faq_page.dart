@@ -20,7 +20,7 @@ class _FaqPageState extends State<FaqPage> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(15),
-                color: Colors.orange,
+                color: Color(0xfffe6700),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[

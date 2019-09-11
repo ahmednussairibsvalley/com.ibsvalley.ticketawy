@@ -33,7 +33,7 @@ class _ContactPageState extends State<ContactPage> {
                     child: Text('Contact Us',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.orange,
+                        color: Color(0xfffe6700),
                         fontSize: 25,
                       ),
                     ),
@@ -50,11 +50,11 @@ class _ContactPageState extends State<ContactPage> {
                         controller: _subjectController,
                         decoration: InputDecoration(
                           labelText: 'Subject',
-
                           filled: true,
                           fillColor: Colors.white,
+                          contentPadding: EdgeInsets.all(10.0),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
@@ -78,7 +78,7 @@ class _ContactPageState extends State<ContactPage> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                       ),
@@ -108,7 +108,7 @@ class _ContactPageState extends State<ContactPage> {
                     textAlign: TextAlign.center,
                   ),
                   decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: Color(0xfffe6700),
                       borderRadius: BorderRadius.circular(20)
                   ),
                 ),
@@ -125,7 +125,7 @@ class _ContactPageState extends State<ContactPage> {
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(15),
-                color: Colors.orange,
+                color: Color(0xfffe6700),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
