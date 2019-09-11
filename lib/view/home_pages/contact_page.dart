@@ -47,7 +47,7 @@ class _ContactPageState extends State<ContactPage> {
                       shadowColor: Colors.black,
                       color: Colors.transparent,
                       child: TextField(
-                        controller: _messageController,
+                        controller: _subjectController,
                         decoration: InputDecoration(
                           labelText: 'Subject',
 
