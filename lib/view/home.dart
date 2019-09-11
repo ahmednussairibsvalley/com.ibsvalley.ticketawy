@@ -168,7 +168,7 @@ class _HomeState extends State<Home> {
                       // The white background.
                       SizedBox(
                         width: _width,
-                        height: _height * 0.65,
+                        height: _height * 0.7,
                         child: Container(
                           color: Colors.white,
                         ),
@@ -194,7 +194,7 @@ class _HomeState extends State<Home> {
             // Search field
             index != homePageIndex?
             Positioned(
-              right: 50.0, left: 50.0, bottom: _height * .6,
+              right: 50.0, left: 50.0, bottom: _height * .65,
               child: Material(
                 color: Colors.transparent,
                 elevation: 20.0,

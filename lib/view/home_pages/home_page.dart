@@ -21,9 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int _current = 0;
-
-
-
   final List child = map<Widget>(
     Globals.controller.events,
         (index, i) {
@@ -33,6 +30,7 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.data) {
               return Image.network(i.imageUrl,
                 fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height / 10,
               );
             } else {
               return Center(
@@ -65,7 +63,8 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             CarouselSlider(
               items: child,
-              aspectRatio: 1.0, viewportFraction: 1.0,
+//              aspectRatio: 1.0,
+              viewportFraction: 1.0,
               onPageChanged: (index) {
                 setState(() {
                   _current = index;
@@ -78,14 +77,14 @@ class _HomePageState extends State<HomePage> {
                 Globals.controller.events,
                     (index, url) {
                   return Container(
-                    width: 8.0,
-                    height: 8.0,
+                    width: 20.0,
+                    height: 20.0,
                     margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _current == index
-                            ? Color.fromRGBO(0, 0, 0, 0.9)
-                            : Color.fromRGBO(0, 0, 0, 0.4)),
+                            ? Color(0xffed5e00)
+                            : Color(0xff7e7e7e)),
                   );
                 },
               ),
@@ -97,73 +96,4 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
-//class EventScroller extends StatefulWidget {
-//  @override
-//  _EventScrollerState createState() => _EventScrollerState();
-//}
-//
-//class _EventScrollerState extends State<EventScroller> with TickerProviderStateMixin{
-//  TabController _tabController;
-//  int _currentPageIndex = 0;
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    _tabController = TabController(
-//      vsync: this,
-//      length: Globals.controller.events.length,
-//      initialIndex: _currentPageIndex,
-//    );
-//
-//    _tabController.addListener((){
-//      setState(() {
-//        _currentPageIndex = _tabController.index;
-//      });
-////      print('$_currentPageIndex');
-//    });
-//
-//  }
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      resizeToAvoidBottomPadding: false,
-//      resizeToAvoidBottomInset: false,
-//      body: TabBarView(
-//        controller: _tabController,
-//        children: List.generate(Globals.controller.events.length, (index){
-//
-//          return FutureBuilder(
-//            future: util.isImageUrlAvailable(Globals.controller.events[index].imageUrl),
-//            builder: (context, snapshot){
-//              if(snapshot.connectionState == ConnectionState.done){
-//                if(snapshot.hasData){
-//                  return Padding(
-//                    padding: const EdgeInsets.all(8.0),
-//                    child: snapshot.data?
-//                    Image.network('${Globals.controller.events[index].imageUrl}',)
-//                        :Container(),
-//                  );
-//                }
-//                return Container();
-//              }
-//              return Column(
-//                mainAxisAlignment: MainAxisAlignment.center,
-////                crossAxisAlignment: CrossAxisAlignment.center,
-//                children: <Widget>[
-//                  Container(
-//                    height: 50,
-//                    width: 50,
-//                    child: CircularProgressIndicator(),
-//                  )
-//                ],
-//              );
-//            },
-//          );
-//        }),
-//      ),
-//    );
-//  }
-//}
 

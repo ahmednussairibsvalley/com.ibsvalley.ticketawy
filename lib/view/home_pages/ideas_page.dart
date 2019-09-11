@@ -20,20 +20,26 @@ class _IdeasPageState extends State<IdeasPage> {
         child: ListView(
           children: <Widget>[
             Center(
+
+              // The title with the text area.
               child: Column(
                 children: <Widget>[
+
+                  // The title
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text('Ideas',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.orange,
-                        fontSize: 30,
+                        fontSize: 25,
                       ),
                     ),
                   ),
+
+                  // Ideas text area
                   Padding(
-                    padding: const EdgeInsets.only(right: 50, left: 50),
+                    padding: const EdgeInsets.only(right: 80, left: 80),
                     child: Material(
                       elevation: 20.0,
                       shadowColor: Colors.black,
@@ -41,9 +47,9 @@ class _IdeasPageState extends State<IdeasPage> {
                       child: TextField(
                         controller: _textEditingController,
                         keyboardType: TextInputType.multiline,
-                        maxLines: 5,
+                        maxLines: 7,
                         decoration: InputDecoration(
-                          labelText: 'Descripe your idea here ...',
+                          labelText: 'Describe your idea here ...',
 
                           filled: true,
                           fillColor: Colors.white,
@@ -54,7 +60,34 @@ class _IdeasPageState extends State<IdeasPage> {
                       ),
                     ),
                   ),
+
                 ],
+              ),
+            ),
+
+            // Add photo
+            Padding(
+              padding: const EdgeInsets.only(right: 80, left: 80, top: 20, bottom: 10),
+              child: Image.asset('assets/add_photo.png', width: 109, height: 28,alignment: Alignment.centerLeft,),
+            ),
+
+            // Send button
+            Padding(
+              padding: const EdgeInsets.only(right: 50, left: 50),
+              child: ListTile(
+                title: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text('Send',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                ),
               ),
             )
           ],
