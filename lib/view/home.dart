@@ -191,6 +191,8 @@ class _HomeState extends State<Home> {
             ),
 
 
+            // Search field
+            index != homePageIndex?
             Positioned(
               right: 50.0, left: 50.0, bottom: _height * .6,
               child: Material(
@@ -200,10 +202,11 @@ class _HomeState extends State<Home> {
                 child: TextFormField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.search, size: 40,),
-                    ),
+                    labelText: 'Search for an event',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.search, size: 40,),
+                      ),
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -215,7 +218,8 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-            ),
+            ):
+            Container(),
 
 
           ],

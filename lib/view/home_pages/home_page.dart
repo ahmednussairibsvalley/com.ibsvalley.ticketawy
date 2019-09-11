@@ -61,33 +61,37 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        CarouselSlider(
-          items: child,
-          aspectRatio: 1.0, viewportFraction: 1.0,
-          onPageChanged: (index) {
-            setState(() {
-              _current = index;
-            });
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: map<Widget>(
-            Globals.controller.events,
-                (index, url) {
-              return Container(
-                width: 8.0,
-                height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _current == index
-                        ? Color.fromRGBO(0, 0, 0, 0.9)
-                        : Color.fromRGBO(0, 0, 0, 0.4)),
-              );
-            },
-          ),
-        ),
+        Column(
+          children: <Widget>[
+            CarouselSlider(
+              items: child,
+              aspectRatio: 1.0, viewportFraction: 1.0,
+              onPageChanged: (index) {
+                setState(() {
+                  _current = index;
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: map<Widget>(
+                Globals.controller.events,
+                    (index, url) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _current == index
+                            ? Color.fromRGBO(0, 0, 0, 0.9)
+                            : Color.fromRGBO(0, 0, 0, 0.4)),
+                  );
+                },
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
