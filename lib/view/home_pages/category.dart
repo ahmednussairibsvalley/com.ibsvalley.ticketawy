@@ -13,6 +13,10 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class CategoryPage extends StatelessWidget {
+  
+  final Function onBack;
+  
+  CategoryPage({@required this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +25,18 @@ class CategoryPage extends StatelessWidget {
         body: Column(
 
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(4),
-                  child: Text('Category name here',
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Category name here',
                     style: TextStyle(
                       color: Color(0xffff6600),
                       fontSize: 17,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                  Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Color(0xffff6600),
@@ -49,8 +50,8 @@ class CategoryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
             Flexible(
               child: ListView(
@@ -67,21 +68,24 @@ class CategoryPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xfffe6700),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/back.png', width: 30, height: 30,),
-                      Text(
-                        'Previous Page',
-                        style: TextStyle(
-                          color: Colors.white,
+                child: GestureDetector(
+                  onTap: onBack,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Color(0xfffe6700),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/back.png', width: 30, height: 30,),
+                        Text(
+                          'Previous Page',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -253,15 +257,15 @@ class EventsPage extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
 //          childAspectRatio: 1,
-            crossAxisSpacing: 3,
-            mainAxisSpacing: 3
+            crossAxisSpacing: 1,
+            mainAxisSpacing: 1
         ),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(list.length, (index){
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: Material(
               elevation: 5,
               shadowColor: Colors.black,

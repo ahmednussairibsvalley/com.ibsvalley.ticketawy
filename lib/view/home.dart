@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
 
                       // Here is the events data.
                       Positioned(
-                        left: 0.0, right: 0.0, bottom: 0.0, top: 30.0,
+                        left: 0.0, right: 0.0, bottom: 0.0, top: 20.0,
                         child: index == homePageIndex? HomePage(onPress: (){
                           setState(() {
                             index = categoryPageIndex;
@@ -189,7 +189,13 @@ class _HomeState extends State<Home> {
                         index == ideasPageIndex? IdeasPage():
                         index == faqPageIndex? FaqPage():
                         index == contactPageIndex? ContactPage():
-                        index == categoryPageIndex? CategoryPage():
+                        index == categoryPageIndex? CategoryPage(
+                          onBack: (){
+                            setState(() {
+                              index = homePageIndex;
+                            });
+                          },
+                        ):
                         Container(),
                       )
                     ],
@@ -202,7 +208,7 @@ class _HomeState extends State<Home> {
             // Search field
             index != homePageIndex?
             Positioned(
-              right: 50.0, left: 50.0, bottom: _height * .65,
+              right: 50.0, left: 50.0, bottom: _height * .665,
               child: Material(
                 color: Colors.transparent,
                 elevation: 20.0,
@@ -211,9 +217,11 @@ class _HomeState extends State<Home> {
                   controller: _searchController,
                   decoration: InputDecoration(
                     labelText: 'Search for an event',
+
+                      contentPadding: EdgeInsets.all(4),
                       suffixIcon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.search, size: 40,),
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(Icons.search, size: 30,),
                       ),
                       filled: true,
                       fillColor: Colors.white,
