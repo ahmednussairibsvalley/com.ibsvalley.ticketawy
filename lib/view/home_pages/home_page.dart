@@ -14,12 +14,16 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class HomePage extends StatelessWidget {
+  final Function onPress;
+
+  HomePage({@required this.onPress});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
         EventsSlider(),
-        CategoriesSlider(),
+        CategoriesSlider(onPress: onPress,),
         HotOffersSlider(),
       ],
     );
@@ -183,8 +187,11 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class CategoriesSlider extends StatefulWidget {
+
+  final Function onPress;
+  CategoriesSlider({@required this.onPress});
   @override
-  _CategoriesSliderState createState() => _CategoriesSliderState();
+  _CategoriesSliderState createState() => _CategoriesSliderState(onPress: onPress);
 }
 
 class _CategoriesSliderState extends State<CategoriesSlider> {
@@ -194,6 +201,10 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   PageController _pageController;
   List child;
   List<Map> paisList = List();
+
+  final Function onPress;
+
+  _CategoriesSliderState({@required this.onPress});
 
 
   @override
@@ -230,7 +241,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
         } else {
           list.add(_list[paisList[index]['first']]);
         }
-        return CategoriesPage(list: list,);
+        return CategoriesPage(list: list, onPress: onPress,);
       },
     ).toList();
 
@@ -252,6 +263,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
       color: Color(0xfff0f0f0),
       child: Column(
         children: <Widget>[
+
           _carouselSlider,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -289,8 +301,9 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
 class CategoriesPage extends StatelessWidget {
 
   final List list;
+  final Function onPress;
 
-  CategoriesPage({@required this.list});
+  CategoriesPage({@required this.list, @required this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -305,22 +318,27 @@ class CategoriesPage extends StatelessWidget {
       scrollDirection: Axis.vertical,
       physics: NeverScrollableScrollPhysics(),
       children: List.generate(list.length, (index){
-        return Padding(
-          padding: EdgeInsets.all(10),
-          child: Material(
-            shadowColor: Colors.black,
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text('${list[index].title}'),
-                  )
-                ],
+        return GestureDetector(
+          onTap: (){
+            onPress();
+          },
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Material(
+              shadowColor: Colors.black,
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text('${list[index].title}'),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

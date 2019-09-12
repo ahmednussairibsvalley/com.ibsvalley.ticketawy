@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketawy/model/category.dart';
 import 'package:ticketawy/view/home_pages/contact_page.dart';
 import 'package:ticketawy/view/home_pages/faq_page.dart';
 import 'package:ticketawy/view/home_pages/ideas_page.dart';
 
+import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
 
@@ -12,6 +14,7 @@ final int profilePageIndex = 1;
 final int faqPageIndex = 2;
 final int ideasPageIndex = 3;
 final int contactPageIndex = 4;
+final int categoryPageIndex = 5;
 
 
 class Home extends StatefulWidget {
@@ -133,20 +136,20 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-            // The top right icon.
-            Positioned(
-              right: 0.0, top: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/top_right_settings_icon.png',
-                  height: 40,
-                  width: 40,
-                  color: Colors.white,
-                  alignment: Alignment.topRight,
-                ),
-              ),
-            ),
+//            // The top right icon.
+//            Positioned(
+//              right: 0.0, top: 0.0,
+//              child: Padding(
+//                padding: const EdgeInsets.all(8.0),
+//                child: Image.asset(
+//                  'assets/top_right_settings_icon.png',
+//                  height: 40,
+//                  width: 40,
+//                  color: Colors.white,
+//                  alignment: Alignment.topRight,
+//                ),
+//              ),
+//            ),
 
 
 
@@ -177,11 +180,16 @@ class _HomeState extends State<Home> {
                       // Here is the events data.
                       Positioned(
                         left: 0.0, right: 0.0, bottom: 0.0, top: 30.0,
-                        child: index == homePageIndex? HomePage():
+                        child: index == homePageIndex? HomePage(onPress: (){
+                          setState(() {
+                            index = categoryPageIndex;
+                          });
+                        },):
                         index == profilePageIndex? ProfilePage():
                         index == ideasPageIndex? IdeasPage():
                         index == faqPageIndex? FaqPage():
                         index == contactPageIndex? ContactPage():
+                        index == categoryPageIndex? CategoryPage():
                         Container(),
                       )
                     ],
