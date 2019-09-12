@@ -1,11 +1,14 @@
+import 'model/category.dart';
 import 'model/event.dart';
 
 class Controller{
 
   List<Event> _events;
+  List<Category> _categories;
 
   Controller(){
     _events = List();
+    _categories = List();
     _testData();
   }
 
@@ -15,6 +18,9 @@ class Controller{
     _events.add(Event(3, 'Biking Event', 'http://theindycog.com/wp-content/uploads/2019/05/FeaturedPost-2-Main-Benefits-of-Attending-Biking-Events-648x362.jpg'));
     _events.add(Event(4, 'Zunrich Event', 'https://cdn.zuerich.com/sites/default/files/styles/sharing/public/web_zuerich_home_topevents_1600x900.jpg'));
     _events.add(Event(5, 'Freshwater Wedding', 'http://freshwaterevents.com/sites/default/files/image3_3_1.jpg'));
+
+    _categories.add(Category(1, 'Sports Events', 'https://365thingsinhouston.com/wp-content/uploads/2019/05/top-games-and-sports-this-week-houston-june-2019-696x407.jpg'));
+    _categories.add(Category(2, 'Adventure Events', 'https://www.thehatt.co.uk/files/corporate/lost-team-building9.jpg'));
   }
 
   List<Event> get events => _events;
