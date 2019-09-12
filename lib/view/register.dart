@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
                   color: Colors.deepPurple,
                   image: DecorationImage(
                       fit: BoxFit.fill,
-                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
                       image: AssetImage('assets/background.png')
                   )
               ),
@@ -155,7 +155,7 @@ class _RegisterState extends State<Register> {
                                 title: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                                    color: Colors.orange,
+                                    color: Color(0xfffe6700),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),

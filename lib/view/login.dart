@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
                 color: Colors.deepPurple,
                 image: DecorationImage(
                     fit: BoxFit.fill,
-                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+//                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
                     image: AssetImage('assets/background.png')
                 )
             ),
@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                           fontSize: 25,
                           fontFamily: 'Umy',
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange.shade800,
+                          color: Color(0xfffe6700),
                         ),
                       ),
                     ],
@@ -128,7 +128,7 @@ class _LoginState extends State<Login> {
                       title: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Colors.orange,
+                          color: Color(0xfffe6700),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -184,7 +184,7 @@ class _LoginState extends State<Login> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.orange,
+                  color: Color(0xfffe6700),
                   child: Text(
                     'Skip This Step',
                     style: TextStyle(

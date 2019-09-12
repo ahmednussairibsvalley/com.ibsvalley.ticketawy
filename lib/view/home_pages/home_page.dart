@@ -13,43 +13,106 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        EventsSlider(),
+        CategoriesSlider(),
+        HotOffersSlider(),
+      ],
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
 
+class EventsSlider extends StatefulWidget {
+  @override
+  _EventsSliderState createState() => _EventsSliderState();
+}
+
+class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
+  static final List _list = Globals.controller.events;
   CarouselSlider _carouselSlider;
   PageController _pageController;
   final List child = map<Widget>(
-    Globals.controller.events,
+    _list,
         (index, i) {
       return FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  elevation: 5.0,
-                  shadowColor: Colors.black,
-                  child: Container(
+              return Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      elevation: 5.0,
+                      shadowColor: Colors.black,
+                      child: Container(
 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network(i.imageUrl,
-                        fit: BoxFit.cover,
-                        height: MediaQuery.of(context).size.height / 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(i.imageUrl,
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.height / 10,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    right: 0.0,
+                    left: 0.0,
+                    bottom: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 50, left: 50, bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffff6600),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                            ),
+                            width: 150,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('${i.title}',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffe75d02),
+                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(15), topRight: Radius.circular(15)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('${i.price} \$',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               );
             } else {
               return Center(
-                child: Text('Product Image is not available',
+                child: Text('Image is not available',
                   textAlign: TextAlign.center,),
               );
             }
@@ -72,7 +135,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _carouselSlider = CarouselSlider(
       items: child,
@@ -87,42 +149,342 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            _carouselSlider,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(
-                Globals.controller.events,
-                    (index, url) {
-                  return GestureDetector(
-                    onTap: (){
-                      setState(() {
-                        _current = index;
-                      });
-                      _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
-                    },
-                    child: Container(
-                      width: 15.0,
-                      height: 15.0,
-                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _current == index
-                              ? Color(0xffed5e00)
-                              : Color(0xff7e7e7e)),
-                    ),
-                  );
+        _carouselSlider,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: map<Widget>(
+            _list, (index, url) {
+              return GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _current = index;
+                  });
+                  _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
                 },
-              ),
-            ),
-          ],
-        )
+                child: Container(
+                  width: 15.0,
+                  height: 15.0,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Color(0xffed5e00)
+                          : Color(0xff7e7e7e)),
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
 }
+
+class CategoriesSlider extends StatefulWidget {
+  @override
+  _CategoriesSliderState createState() => _CategoriesSliderState();
+}
+
+class _CategoriesSliderState extends State<CategoriesSlider> {
+  int _current = 0;
+  static final List _list = Globals.controller.categories;
+  CarouselSlider _carouselSlider;
+  PageController _pageController;
+  List child;
+  List<Map> paisList = List();
+
+
+  @override
+  void initState() {
+    super.initState();
+
+
+
+
+    for(int i = 0; i < _list.length; i++){
+      Map pairs = Map();
+      int first = i * 2;
+      int second = first + 1;
+      if(first >= _list.length){
+        break;
+      } else {
+        pairs['first'] = first;
+      }
+
+      if(second >= _list.length){
+        second = 0;
+      }
+      pairs['second'] = second;
+      paisList.add(pairs);
+    }
+
+    child = map<Widget>(
+      paisList,
+          (index, i) {
+        List list = List();
+        if(paisList[index]['second'] > 0){
+          list.add(_list[paisList[index]['first']]);
+          list.add(_list[paisList[index]['second']]);
+        } else {
+          list.add(_list[paisList[index]['first']]);
+        }
+        return CategoriesPage(list: list,);
+      },
+    ).toList();
+
+    _carouselSlider = CarouselSlider(
+      items: child,
+      viewportFraction: 1.0,
+      onPageChanged: (index) {
+        setState(() {
+          _current = index;
+        });
+      },
+    );
+
+    _pageController = _carouselSlider.pageController;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Color(0xfff0f0f0),
+      child: Column(
+        children: <Widget>[
+          _carouselSlider,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: map<Widget>(
+              paisList,
+                  (index, url) {
+                return GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      _current = index;
+                    });
+                    _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                  },
+                  child: Container(
+                    width: 15.0,
+                    height: 15.0,
+                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _current == index
+                            ? Color(0xffed5e00)
+                            : Color(0xff7e7e7e)),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class CategoriesPage extends StatelessWidget {
+
+  final List list;
+
+  CategoriesPage({@required this.list});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5
+      ),
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: NeverScrollableScrollPhysics(),
+      children: List.generate(list.length, (index){
+        return Padding(
+          padding: EdgeInsets.all(10),
+          child: Material(
+            shadowColor: Colors.black,
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text('${list[index].title}'),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class HotOffersSlider extends StatefulWidget {
+  @override
+  _HotOffersSliderState createState() => _HotOffersSliderState();
+}
+
+class _HotOffersSliderState extends State<HotOffersSlider> {
+  int _current = 0;
+  static final List _list = Globals.controller.events;
+  CarouselSlider _carouselSlider;
+  PageController _pageController;
+  List child;
+  List<Map> paisList = List();
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    for(int i = 0; i < _list.length; i++){
+      Map pairs = Map();
+      int first = i * 2;
+      int second = first + 1;
+      if(first >= _list.length){
+        break;
+      } else {
+        pairs['first'] = first;
+      }
+
+      if(second >= _list.length){
+        second = 0;
+      }
+      pairs['second'] = second;
+      paisList.add(pairs);
+    }
+
+    child = map<Widget>(
+      paisList,
+          (index, i) {
+        List list = List();
+        if(paisList[index]['second'] > 0){
+          list.add(_list[paisList[index]['first']]);
+          list.add(_list[paisList[index]['second']]);
+        } else {
+          list.add(_list[paisList[index]['first']]);
+        }
+        return CategoriesPage(list: list,);
+      },
+    ).toList();
+
+    _carouselSlider = CarouselSlider(
+      items: child,
+      viewportFraction: 1.0,
+      onPageChanged: (index) {
+        setState(() {
+          _current = index;
+        });
+      },
+    );
+
+    _pageController = _carouselSlider.pageController;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        // The title
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('Hot Offers',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xfffe6700),
+              fontSize: 17,
+            ),
+          ),
+        ),
+        _carouselSlider,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: map<Widget>(
+            paisList,
+                (index, url) {
+              return GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _current = index;
+                  });
+                  _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                },
+                child: Container(
+                  width: 15.0,
+                  height: 15.0,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Color(0xffed5e00)
+                          : Color(0xff7e7e7e)),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+class HotOfferPage extends StatelessWidget {
+  final List list;
+
+  HotOfferPage({@required this.list});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+//          childAspectRatio: 1,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5
+      ),
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: NeverScrollableScrollPhysics(),
+      children: List.generate(list.length, (index){
+        return Padding(
+          padding: EdgeInsets.all(10),
+          child: Material(
+            shadowColor: Colors.black,
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text('${list[index].title}'),
+                  ),
+                  Text('${list[index].price}'),
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
 
 

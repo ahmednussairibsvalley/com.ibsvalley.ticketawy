@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                   color: Colors.deepPurple,
                   image: DecorationImage(
                       fit: BoxFit.fill,
-                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
                       image: AssetImage('assets/background.png')
                   )
               ),
