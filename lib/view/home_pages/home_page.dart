@@ -375,7 +375,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
         } else {
           list.add(_list[paisList[index]['first']]);
         }
-        return CategoriesPage(list: list,);
+        return HotOfferPage(list: list,);
       },
     ).toList();
 
@@ -459,24 +459,17 @@ class HotOfferPage extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: List.generate(list.length, (index){
         return Padding(
-          padding: EdgeInsets.all(10),
-          child: Material(
-            shadowColor: Colors.black,
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text('${list[index].title}'),
-                  ),
-                  Text('${list[index].price}'),
-                ],
+            children: <Widget>[
+              Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text('${list[index].title}'),
               ),
-            ),
+              Text('${list[index].price}'),
+            ],
           ),
         );
       }),
