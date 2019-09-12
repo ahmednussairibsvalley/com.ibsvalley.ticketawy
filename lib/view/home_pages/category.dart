@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
 
@@ -36,16 +37,21 @@ class CategoryPage extends StatelessWidget {
                       fontSize: 17,
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffff6600),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
-                      child: Text('Filter By',
-                        style: TextStyle(
-                          color: Colors.white,
+                  GestureDetector(
+                    onTap: (){
+                      _showFilterDialog(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffff6600),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
+                        child: Text('Filter By',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -112,6 +118,31 @@ class CategoryPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _showFilterDialog(BuildContext context){
+
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 370.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(33.0)),
+              ),
+
+              child: FiterDialog(),
+            ),
+          );
+        }
     );
   }
 }
@@ -301,6 +332,306 @@ class EventsPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+}
+
+class DrawerDivider extends StatelessWidget {
+  final double height;
+  final Color color;
+  final double width;
+
+  const DrawerDivider({this.height = 1, this.color = Colors.black, this.width = 10});
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final boxWidth = constraints.constrainWidth();
+        final dashWidth = width;
+        final dashHeight = height;
+        final dashCount = (boxWidth / (2 * dashWidth)).floor();
+        return Flex(
+          children: List.generate(dashCount, (_) {
+            return SizedBox(
+              width: dashWidth,
+              height: dashHeight,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: color),
+              ),
+            );
+          }),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          direction: Axis.horizontal,
+        );
+      },
+    );
+  }
+}
+
+class FiterDialog extends StatefulWidget {
+  @override
+  _FiterDialogState createState() => _FiterDialogState();
+}
+
+class _FiterDialogState extends State<FiterDialog> {
+  List _dateList = [
+    '01 / 05 / 2020',
+    '01 / 12 / 2019',
+    '20 / 10 / 2019',
+    '15 / 11 / 2019',
+  ];
+
+  List _timeList = [
+    '10:30 PM',
+    '10:00 AM',
+    '4:00 PM',
+    '3:00 PM',
+  ];
+
+  List _cityList = [
+    'Cairo',
+    'Alexandria',
+    'Mansoura',
+    'Marsa Matroh',
+  ];
+
+  List _categoryList = [
+    'Sports Events',
+    'Ceremony Events',
+    'School Events',
+    'Adventure Events',
+  ];
+
+  String _dateValue;
+  String _timeValue;
+  String _cityValue;
+  String _categoryValue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _dateValue = _dateList[0];
+    _timeValue = _timeList[0];
+    _cityValue = _cityList[0];
+    _categoryValue = _categoryList[0];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('Filter By',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xfffd6600),
+              fontSize: 20,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DrawerDivider(
+            width: 10,
+            height: 1,
+            color: Color(0xffb8b8b8),
+          ),
+        ),
+
+        // Date Filter
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text('Date'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.only(right: 10, left: 10,),
+                decoration: ShapeDecoration(
+                  color: Color(0xffeeeeee),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.0, style: BorderStyle.none),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                ),
+                child: DropdownButton(
+                  icon: Icon(Icons.expand_more),
+                  value: _dateValue,
+                  onChanged: (value){
+                    setState(() {
+                      _dateValue = value;
+                    });
+                  },
+                  items: List.generate(_dateList.length, (index){
+                    return DropdownMenuItem(
+                      value: _dateList[index],
+                      child: Container(
+                        width: 150,
+                        child: Text('${_dateList[index]}'),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // Time Filter
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text('Time'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.only(right: 10, left: 10,),
+                decoration: ShapeDecoration(
+                  color: Color(0xffeeeeee),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.0, style: BorderStyle.none),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                ),
+                child: DropdownButton(
+                  icon: Icon(Icons.expand_more),
+                  value: _timeValue,
+                  onChanged: (value){
+                    setState(() {
+                      _timeValue = value;
+                    });
+                  },
+                  items: List.generate(_timeList.length, (index){
+                    return DropdownMenuItem(
+                      value: _timeList[index],
+                      child: Container(
+                        width: 150,
+                        child: Text('${_timeList[index]}'),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // City Filter
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, ),
+              child: Text('City'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.only(right: 10, left: 10,),
+                decoration: ShapeDecoration(
+                  color: Color(0xffeeeeee),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.0, style: BorderStyle.none),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                ),
+                child: DropdownButton(
+                  icon: Icon(Icons.expand_more),
+                  value: _cityValue,
+                  onChanged: (value){
+                    setState(() {
+                      _cityValue = value;
+                    });
+                  },
+                  items: List.generate(_cityList.length, (index){
+                    return DropdownMenuItem(
+                      value: _cityList[index],
+                      child: Container(
+                        width: 150,
+                        child: Text('${_cityList[index]}'),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // Category Filter
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text('Category'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.only(right: 10, left: 10,),
+                decoration: ShapeDecoration(
+                  color: Color(0xffeeeeee),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.0, style: BorderStyle.none),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                ),
+                child: DropdownButton(
+                  icon: Icon(Icons.expand_more),
+                  value: _categoryValue,
+                  onChanged: (value){
+                    setState(() {
+                      _categoryValue = value;
+                    });
+                  },
+                  items: List.generate(_categoryList.length, (index){
+                    return DropdownMenuItem(
+                      value: _categoryList[index],
+                      child: Container(
+                        width: 150,
+                        child: Text('${_categoryList[index]}'),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        ListTile(
+          onTap: (){
+            Navigator.of(context).pop();
+          },
+          title: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              child: Text('Filter',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xffff6600),
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              padding: EdgeInsets.all(10),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
