@@ -447,32 +447,53 @@ class HotOfferPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
 //          childAspectRatio: 1,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5
-      ),
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      physics: NeverScrollableScrollPhysics(),
-      children: List.generate(list.length, (index){
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5
+        ),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        children: List.generate(list.length, (index){
+          return Material(
+            elevation: 5,
+            shadowColor: Colors.black,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('${list[index].title}'),
+                children: <Widget>[
+                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text('${list[index].title}'),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xffff6600),
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('${list[index].price}\$ / Ticket',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Text('${list[index].price}'),
-            ],
-          ),
-        );
-      }),
+            ),
+          );
+        }),
+      ),
     );
   }
 }
