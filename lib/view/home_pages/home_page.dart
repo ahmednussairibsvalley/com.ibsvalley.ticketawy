@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Globals.pagesStack.push(PagesIndices.homePageIndex);
     return ListView(
       children: <Widget>[
         EventsSlider(

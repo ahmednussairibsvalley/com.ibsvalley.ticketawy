@@ -5,17 +5,10 @@ import 'package:ticketawy/view/home_pages/event_details.dart';
 import 'package:ticketawy/view/home_pages/faq_page.dart';
 import 'package:ticketawy/view/home_pages/ideas_page.dart';
 
+import '../globals.dart';
 import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
-
-final int homePageIndex = 0;
-final int profilePageIndex = 1;
-final int faqPageIndex = 2;
-final int ideasPageIndex = 3;
-final int contactPageIndex = 4;
-final int categoryPageIndex = 5;
-final int eventPageIndex = 6;
 
 
 class Home extends StatefulWidget {
@@ -28,39 +21,42 @@ class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _searchController = TextEditingController();
 
-  int index = homePageIndex;
+  int index = PagesIndices.homePageIndex;
 
   @override
   Widget build(BuildContext context) {
 
     final Map<String, Function> leftDrawerMap = {
       'Home' : (){
+        while(Globals.pagesStack.isNotEmpty){
+          Globals.pagesStack.pop();
+        }
         setState(() {
-          index = homePageIndex;
+          index = PagesIndices.homePageIndex;
         });
         Navigator.of(context).pop();
       },
       'My Profile' : (){
         setState(() {
-          index = profilePageIndex;
+          index = PagesIndices.profilePageIndex;
         });
         Navigator.of(context).pop();
       },
       'FAQ' : (){
         setState(() {
-          index = faqPageIndex;
+          index = PagesIndices.faqPageIndex;
         });
         Navigator.of(context).pop();
       },
       'Ideas' : (){
         setState(() {
-          index = ideasPageIndex;
+          index = PagesIndices.ideasPageIndex;
         });
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
         setState(() {
-          index = contactPageIndex;
+          index = PagesIndices.contactPageIndex;
         });
         Navigator.of(context).pop();
       },
@@ -181,47 +177,47 @@ class _HomeState extends State<Home> {
                       // Here is the events data.
                       Positioned(
                         left: 0.0, right: 0.0, bottom: 0.0, top: 20.0,
-                        child: index == homePageIndex? HomePage(
+                        child: index == PagesIndices.homePageIndex? HomePage(
                           onPress: (){
                           setState(() {
-                              index = categoryPageIndex;
+                              index = PagesIndices.categoryPageIndex;
                             });
                           },
                           onEventPressed: (){
                             setState(() {
-                              index = eventPageIndex;
+                              index = PagesIndices.eventPageIndex;
                             });
                           },
                         ):
-                        index == profilePageIndex? ProfilePage(
+                        index == PagesIndices.profilePageIndex? ProfilePage(
                           onPreviousPagePressed: (){
+                            Globals.pagesStack.pop();
                             setState(() {
-                              index = homePageIndex;
+                              index = Globals.pagesStack.pop();
                             });
+//                            setState(() {
+//                              index = homePageIndex;
+//                            });
                           },
                         ):
-                        index == ideasPageIndex? IdeasPage():
-                        index == faqPageIndex? FaqPage(
-                          onPreviousPagePressed: (){
-                            setState(() {
-                              index = homePageIndex;
-                            });
-                          },
+                        index == PagesIndices.ideasPageIndex? IdeasPage(
+                          onPreviousPagePressed: _returnToPreviousPage,
                         ):
-                        index == contactPageIndex? ContactPage():
-                        index == categoryPageIndex? CategoryPage(
+                        index == PagesIndices.faqPageIndex? FaqPage(
+                          onPreviousPagePressed: _returnToPreviousPage,
+                        ):
+                        index == PagesIndices.contactPageIndex? ContactPage(
+                          onPreviousPagePressed: _returnToPreviousPage,
+                        ):
+                        index == PagesIndices.categoryPageIndex? CategoryPage(
                           onBack: (){
                             setState(() {
-                              index = homePageIndex;
+                              index = PagesIndices.homePageIndex;
                             });
                           },
                         ):
-                        index == eventPageIndex? EventDetails(
-                          onPreviousPagePressed: (){
-                            setState(() {
-                              index = homePageIndex;
-                            });
-                          },
+                        index == PagesIndices.eventPageIndex? EventDetails(
+                          onPreviousPagePressed: _returnToPreviousPage,
                         ):
                         Container(),
                       )
@@ -233,7 +229,7 @@ class _HomeState extends State<Home> {
 
 
             // Search field
-            index != homePageIndex?
+            index != PagesIndices.homePageIndex?
             Positioned(
               right: 50.0, left: 50.0, bottom: _height * .665,
               child: Material(
@@ -288,6 +284,13 @@ class _HomeState extends State<Home> {
         ),
       ],
     );
+  }
+
+  _returnToPreviousPage(){
+    Globals.pagesStack.pop();
+    setState(() {
+      index = Globals.pagesStack.pop();
+    });
   }
 }
 

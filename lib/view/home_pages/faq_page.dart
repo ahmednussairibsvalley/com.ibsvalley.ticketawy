@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 
-class FaqPage extends StatefulWidget {
+import '../../globals.dart';
+
+class FaqPage extends StatelessWidget {
   final Function onPreviousPagePressed;
+
   FaqPage({@required this.onPreviousPagePressed});
   @override
-  _FaqPageState createState() => _FaqPageState(
-    onPreviousPagePressed: onPreviousPagePressed,
-  );
-}
-
-class _FaqPageState extends State<FaqPage> {
-  final Function onPreviousPagePressed;
-
-  _FaqPageState({@required this.onPreviousPagePressed});
-  @override
   Widget build(BuildContext context) {
+    Globals.pagesStack.push(PagesIndices.faqPageIndex);
     return Scaffold(
       body: Center(
         child: Text('FAQ'),

@@ -19,12 +19,29 @@ class EventDetails extends StatefulWidget {
   );
 }
 
-class _EventDetailsState extends State<EventDetails> {
+class _EventDetailsState extends State<EventDetails> with TickerProviderStateMixin{
   final Function onPreviousPagePressed;
 
   int index = aboutPageIndex;
 
+  TabController _tabController;
+
   _EventDetailsState({@required this.onPreviousPagePressed});
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+      initialIndex: index,
+    )
+    ..addListener((){
+      setState(() {
+        index = _tabController.index;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +65,7 @@ class _EventDetailsState extends State<EventDetails> {
                               setState(() {
                                 index = aboutPageIndex;
                               });
+                              _tabController.animateTo(index);
                             },
                             child: Text('About',
                               style: TextStyle(
@@ -64,6 +82,7 @@ class _EventDetailsState extends State<EventDetails> {
                               setState(() {
                                 index = locationPageIndex;
                               });
+                              _tabController.animateTo(index);
                             },
                             child: Text('Location',
                               style: TextStyle(
@@ -80,6 +99,7 @@ class _EventDetailsState extends State<EventDetails> {
                               setState(() {
                                 index = schedulePageIndex;
                               });
+                              _tabController.animateTo(index);
                             },
                             child: Text('Schedule',
                               style: TextStyle(
@@ -108,10 +128,16 @@ class _EventDetailsState extends State<EventDetails> {
               ],
             ),
           ),
-          index == aboutPageIndex? AboutPage():
-          index == locationPageIndex ? LocationPage():
-          index == schedulePageIndex ? SchedulePage():
-          Container(),
+          Flexible(
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                AboutPage(),
+                LocationPage(),
+                SchedulePage(),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
