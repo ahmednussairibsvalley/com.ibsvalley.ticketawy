@@ -104,7 +104,7 @@ class CategoryPage extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/all_events.png', width: 30, height: 30,),
                       Text(
-                        'All Events',
+                        'All Categories',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -225,8 +225,8 @@ class _EventsSliderState extends State<EventsSlider> {
 
     _carouselSlider = CarouselSlider(
       items: child,
-      viewportFraction: 1.0,
-      aspectRatio: 1.0,
+      viewportFraction: .95,
+      aspectRatio: 1.185,
       onPageChanged: (index) {
         setState(() {
           _current = index;
@@ -257,7 +257,7 @@ class _EventsSliderState extends State<EventsSlider> {
                 child: Container(
                   width: 15.0,
                   height: 15.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                  margin: EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _current == index
@@ -287,7 +287,7 @@ class EventsPage extends StatelessWidget {
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-//          childAspectRatio: 1,
+            childAspectRatio: 1.2,
             crossAxisSpacing: 1,
             mainAxisSpacing: 1
         ),
@@ -301,7 +301,7 @@ class EventsPage extends StatelessWidget {
               elevation: 5,
               shadowColor: Colors.black,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -316,7 +316,7 @@ class EventsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20)
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Text('${list[index].price}\$ / Ticket',
                           style: TextStyle(
                             color: Colors.white,

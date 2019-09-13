@@ -6,13 +6,20 @@ final int infPageIndex = 0;
 final int historyPageIndex = 1;
 
 class ProfilePage extends StatefulWidget {
+  final Function onPreviousPagePressed;
+
+  ProfilePage({@required this.onPreviousPagePressed});
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(onPreviousPagePressed: onPreviousPagePressed);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
 
   int _pageIndex;
+
+  final Function onPreviousPagePressed;
+
+  _ProfilePageState({@required this.onPreviousPagePressed});
 
   @override
   void initState() {
@@ -118,21 +125,24 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Color(0xfffe6700),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/back.png', width: 30, height: 30,),
-                    Text(
-                      'Previous Page',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onPreviousPagePressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xfffe6700),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/back.png', width: 30, height: 30,),
+                      Text(
+                        'Previous Page',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 class FaqPage extends StatefulWidget {
+  final Function onPreviousPagePressed;
+  FaqPage({@required this.onPreviousPagePressed});
   @override
-  _FaqPageState createState() => _FaqPageState();
+  _FaqPageState createState() => _FaqPageState(
+    onPreviousPagePressed: onPreviousPagePressed,
+  );
 }
 
 class _FaqPageState extends State<FaqPage> {
+  final Function onPreviousPagePressed;
+
+  _FaqPageState({@required this.onPreviousPagePressed});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,21 +25,24 @@ class _FaqPageState extends State<FaqPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Color(0xfffe6700),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/back.png', width: 30, height: 30,),
-                    Text(
-                      'Previous Page',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onPreviousPagePressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xfffe6700),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/back.png', width: 30, height: 30,),
+                      Text(
+                        'Previous Page',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

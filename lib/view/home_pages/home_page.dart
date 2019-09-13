@@ -15,14 +15,17 @@ List<T> map<T>(List list, Function handler) {
 
 class HomePage extends StatelessWidget {
   final Function onPress;
+  final Function onEventPressed;
 
-  HomePage({@required this.onPress});
+  HomePage({@required this.onPress, @required this.onEventPressed});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        EventsSlider(),
+        EventsSlider(
+          onEventPressed: onEventPressed,
+        ),
         CategoriesSlider(onPress: onPress,),
         HotOffersSlider(),
       ],
@@ -32,8 +35,12 @@ class HomePage extends StatelessWidget {
 
 
 class EventsSlider extends StatefulWidget {
+  final Function onEventPressed;
+  EventsSlider({@required this.onEventPressed});
   @override
-  _EventsSliderState createState() => _EventsSliderState();
+  _EventsSliderState createState() => _EventsSliderState(
+    onEventPressed: onEventPressed,
+  );
 }
 
 class _EventsSliderState extends State<EventsSlider> {
@@ -41,105 +48,113 @@ class _EventsSliderState extends State<EventsSlider> {
   static final List _list = Globals.controller.events;
   CarouselSlider _carouselSlider;
   PageController _pageController;
-  final List child = map<Widget>(
-    _list,
-        (index, i) {
-      return FutureBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data) {
-              return Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Material(
-                      elevation: 5.0,
-                      shadowColor: Colors.black,
-                      child: Container(
+  List child;
 
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(i.imageUrl,
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.height / 10,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0.0,
-                    left: 0.0,
-                    bottom: 0.0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 50, left: 50, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffff6600),
-                                borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
-                            ),
-                            width: 150,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('${i.title}',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffe75d02),
-                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(15), topRight: Radius.circular(15)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('${i.price} \$',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              );
-            } else {
-              return Center(
-                child: Text('Image is not available',
-                  textAlign: TextAlign.center,),
-              );
-            }
-          }
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 50,
-                width: 50,
-                child: CircularProgressIndicator(),
-              )
-            ],
-          );
-        },
-        future: util.isImageUrlAvailable(i.imageUrl),
-      );
-    },
-  ).toList();
+  final Function onEventPressed;
+
+  _EventsSliderState({@required this.onEventPressed});
 
   @override
   void initState() {
     super.initState();
+    child = map<Widget>(
+      _list,
+          (index, i) {
+        return FutureBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data) {
+                return GestureDetector(
+                  onTap: onEventPressed,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Material(
+                          elevation: 5.0,
+                          shadowColor: Colors.black,
+                          child: Container(
+
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.network(i.imageUrl,
+                                fit: BoxFit.cover,
+                                height: MediaQuery.of(context).size.height / 10,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 0.0,
+                        left: 0.0,
+                        bottom: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 50, left: 50, bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xffff6600),
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                                ),
+                                width: 150,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('${i.title}',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xffe75d02),
+                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(15), topRight: Radius.circular(15)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('${i.price} \$',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return Center(
+                  child: Text('Image is not available',
+                    textAlign: TextAlign.center,),
+                );
+              }
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: 50,
+                  width: 50,
+                  child: CircularProgressIndicator(),
+                )
+              ],
+            );
+          },
+          future: util.isImageUrlAvailable(i.imageUrl),
+        );
+      },
+    ).toList();
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,

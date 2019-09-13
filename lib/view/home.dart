@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketawy/model/category.dart';
 import 'package:ticketawy/view/home_pages/contact_page.dart';
+import 'package:ticketawy/view/home_pages/event_details.dart';
 import 'package:ticketawy/view/home_pages/faq_page.dart';
 import 'package:ticketawy/view/home_pages/ideas_page.dart';
 
@@ -15,6 +15,7 @@ final int faqPageIndex = 2;
 final int ideasPageIndex = 3;
 final int contactPageIndex = 4;
 final int categoryPageIndex = 5;
+final int eventPageIndex = 6;
 
 
 class Home extends StatefulWidget {
@@ -180,17 +181,43 @@ class _HomeState extends State<Home> {
                       // Here is the events data.
                       Positioned(
                         left: 0.0, right: 0.0, bottom: 0.0, top: 20.0,
-                        child: index == homePageIndex? HomePage(onPress: (){
+                        child: index == homePageIndex? HomePage(
+                          onPress: (){
                           setState(() {
-                            index = categoryPageIndex;
-                          });
-                        },):
-                        index == profilePageIndex? ProfilePage():
+                              index = categoryPageIndex;
+                            });
+                          },
+                          onEventPressed: (){
+                            setState(() {
+                              index = eventPageIndex;
+                            });
+                          },
+                        ):
+                        index == profilePageIndex? ProfilePage(
+                          onPreviousPagePressed: (){
+                            setState(() {
+                              index = homePageIndex;
+                            });
+                          },
+                        ):
                         index == ideasPageIndex? IdeasPage():
-                        index == faqPageIndex? FaqPage():
+                        index == faqPageIndex? FaqPage(
+                          onPreviousPagePressed: (){
+                            setState(() {
+                              index = homePageIndex;
+                            });
+                          },
+                        ):
                         index == contactPageIndex? ContactPage():
                         index == categoryPageIndex? CategoryPage(
                           onBack: (){
+                            setState(() {
+                              index = homePageIndex;
+                            });
+                          },
+                        ):
+                        index == eventPageIndex? EventDetails(
+                          onPreviousPagePressed: (){
                             setState(() {
                               index = homePageIndex;
                             });
@@ -211,7 +238,7 @@ class _HomeState extends State<Home> {
               right: 50.0, left: 50.0, bottom: _height * .665,
               child: Material(
                 color: Colors.transparent,
-                elevation: 20.0,
+                elevation: 10.0,
                 shadowColor: Colors.black,
                 child: TextFormField(
                   controller: _searchController,
