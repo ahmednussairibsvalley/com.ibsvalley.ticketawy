@@ -3,30 +3,86 @@ import 'package:ticketawy/view/home_pages/event_details_pages/about.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/location.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/schedule.dart';
 
+import '../../globals.dart';
+
 final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
 final int schedulePageIndex = 2;
 
-class EventDetails extends StatefulWidget {
+class EventDetails extends StatelessWidget {
 
   final Function onPreviousPagePressed;
 
   EventDetails({@required this.onPreviousPagePressed});
 
   @override
-  _EventDetailsState createState() => _EventDetailsState(
-    onPreviousPagePressed: onPreviousPagePressed,
-  );
+  Widget build(BuildContext context) {
+    Globals.pagesStack.push(PagesIndices.eventPageIndex);
+    return Scaffold(
+      body: EventTabs(),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: GestureDetector(
+                onTap: onPreviousPagePressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xfffe6700),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/back.png', width: 30, height: 30,),
+                      Text(
+                        'Previous Page',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.all(15),
+                color: Colors.purple,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Image.asset('assets/all_events.png', width: 30, height: 30,),
+                    Text(
+                      'All Events',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _EventDetailsState extends State<EventDetails> with TickerProviderStateMixin{
-  final Function onPreviousPagePressed;
+class EventTabs extends StatefulWidget {
+  @override
+  _EventTabsState createState() => _EventTabsState();
+}
+
+class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin{
 
   int index = aboutPageIndex;
 
   TabController _tabController;
-
-  _EventDetailsState({@required this.onPreviousPagePressed});
 
   @override
   void initState() {
@@ -36,12 +92,13 @@ class _EventDetailsState extends State<EventDetails> with TickerProviderStateMix
       vsync: this,
       initialIndex: index,
     )
-    ..addListener((){
-      setState(() {
-        index = _tabController.index;
+      ..addListener((){
+        setState(() {
+          index = _tabController.index;
+        });
       });
-    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +177,7 @@ class _EventDetailsState extends State<EventDetails> with TickerProviderStateMix
                     child: Text('Buy Tickets',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white
+                          color: Colors.white
                       ),
                     ),
                   ),
@@ -140,56 +197,8 @@ class _EventDetailsState extends State<EventDetails> with TickerProviderStateMix
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: onPreviousPagePressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xfffe6700),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/back.png', width: 30, height: 30,),
-                      Text(
-                        'Previous Page',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/all_events.png', width: 30, height: 30,),
-                    Text(
-                      'All Events',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
+
 

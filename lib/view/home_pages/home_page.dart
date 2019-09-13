@@ -448,10 +448,12 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
                 (index, url) {
               return GestureDetector(
                 onTap: (){
+
                   setState(() {
                     _current = index;
                   });
                   _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+
                 },
                 child: Container(
                   width: 15.0,

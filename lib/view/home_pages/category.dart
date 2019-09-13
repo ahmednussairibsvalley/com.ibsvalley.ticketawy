@@ -16,11 +16,13 @@ List<T> map<T>(List list, Function handler) {
 class CategoryPage extends StatelessWidget {
   
   final Function onBack;
+  final Function onCategoryPressed;
   
-  CategoryPage({@required this.onBack});
+  CategoryPage({@required this.onBack, @required this.onCategoryPressed});
 
   @override
   Widget build(BuildContext context) {
+    Globals.pagesStack.push(PagesIndices.categoryPageIndex);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -62,7 +64,7 @@ class CategoryPage extends StatelessWidget {
             Flexible(
               child: ListView(
                 children: <Widget>[
-                  EventsSlider()
+                  EventsSlider(onCategoryPressed: onCategoryPressed,)
                 ],
               ),
             )
@@ -148,6 +150,9 @@ class CategoryPage extends StatelessWidget {
 }
 
 class EventsSlider extends StatefulWidget {
+  final Function onCategoryPressed;
+
+  EventsSlider({@required this.onCategoryPressed});
   @override
   _EventsSliderState createState() => _EventsSliderState();
 }
@@ -219,7 +224,7 @@ class _EventsSliderState extends State<EventsSlider> {
           }
         }
 
-        return EventsPage(list: list,);
+        return EventsPage(list: list, onCategoryPressed: widget.onCategoryPressed,);
       },
     ).toList();
 
@@ -277,8 +282,9 @@ class EventsPage extends StatelessWidget {
 
 //  List list = Globals.controller.events;
   final List list;
+  final Function onCategoryPressed;
 
-  EventsPage({@required this.list});
+  EventsPage({@required this.list, @required this.onCategoryPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -297,35 +303,38 @@ class EventsPage extends StatelessWidget {
         children: List.generate(list.length, (index){
           return Padding(
             padding: const EdgeInsets.all(2.0),
-            child: Material(
-              elevation: 5,
-              shadowColor: Colors.black,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Column(
+            child: GestureDetector(
+              onTap: onCategoryPressed,
+              child: Material(
+                elevation: 5,
+                shadowColor: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text('${list[index].title}'),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xffff6600),
-                          borderRadius: BorderRadius.circular(20)
-                      ),
-                      child: Padding(
+                    children: <Widget>[
+                      Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                      Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text('${list[index].price}\$ / Ticket',
-                          style: TextStyle(
-                            color: Colors.white,
+                        child: Text('${list[index].title}'),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xffff6600),
+                            borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text('${list[index].price}\$ / Ticket',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -409,7 +418,6 @@ class _FiterDialogState extends State<FiterDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _dateValue = _dateList[0];
     _timeValue = _timeList[0];

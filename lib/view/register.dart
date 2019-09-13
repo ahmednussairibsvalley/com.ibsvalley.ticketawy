@@ -39,30 +39,7 @@ class _RegisterState extends State<Register> {
               bottom: 0.0,
               child: ListView(
                 children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset('assets/logo.png', width: 88, height: 123,),
-                      Text('Ticketawy',
-                        style: TextStyle(
-                          fontFamily: 'TicketawyFont',
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-
-                      ),
-                      Text('Ticket Easy!',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontFamily: 'Umy',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange.shade800,
-                        ),
-                      )
-
-                    ],
-                  ),
+              Image.asset('assets/header.png', width: 161, height: 142,),
                   Column(
                     children: <Widget>[
                       Form(

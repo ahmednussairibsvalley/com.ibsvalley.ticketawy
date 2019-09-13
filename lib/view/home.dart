@@ -210,9 +210,10 @@ class _HomeState extends State<Home> {
                           onPreviousPagePressed: _returnToPreviousPage,
                         ):
                         index == PagesIndices.categoryPageIndex? CategoryPage(
-                          onBack: (){
+                          onBack: _returnToPreviousPage,
+                          onCategoryPressed: (){
                             setState(() {
-                              index = PagesIndices.homePageIndex;
+                              index = PagesIndices.eventPageIndex;
                             });
                           },
                         ):

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/register.dart';
 
-import 'home.dart';
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -42,29 +40,7 @@ class _LoginState extends State<Login> {
               key: _formKey,
               child: ListView(
                 children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset('assets/logo.png', width: 88, height: 123,),
-                      Text('Ticketawy',
-                        style: TextStyle(
-                          fontFamily: 'TicketawyFont',
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-
-                      ),
-                      Text('Ticket Easy!',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontFamily: 'Umy',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xfffe6700),
-                        ),
-                      ),
-                    ],
-                  ),
+              Image.asset('assets/header.png', width: 161, height: 142,),
 
                   // User name.
                   Padding(

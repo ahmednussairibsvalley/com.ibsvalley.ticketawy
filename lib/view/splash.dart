@@ -119,15 +119,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                       },
                     ),
                     AnimatedBuilder(
-                      child: Text('Ticketawy',
-                        style: TextStyle(
-                          fontFamily: 'TicketawyFont',
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-
-                      ),
+                      child: Image.asset('assets/ticketawy.png', width: 225.5, height: 50.75,),
                       animation: _titleAnimation,
                       builder: (context, child){
                         return Opacity(
@@ -137,14 +129,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                       },
                     ),
                     AnimatedBuilder(
-                      child: Text('Ticket Easy!',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontFamily: 'Umy',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange.shade800,
-                        ),
-                      ),
+                      child: Image.asset('assets/ticket_easy.png', width: 119.5, height: 25.75,),
                       animation: _subTitleAnimation,
                       builder: (context, child){
                         return Opacity(
