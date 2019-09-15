@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ticketawy/view/home_pages/event_details_pages/about.dart';
-import 'package:ticketawy/view/home_pages/event_details_pages/location.dart';
-import 'package:ticketawy/view/home_pages/event_details_pages/schedule.dart';
+import 'event_details_pages/about.dart';
+import 'event_details_pages/location.dart';
+import 'event_details_pages/schedule.dart';
 
 import '../../globals.dart';
 
@@ -56,7 +56,7 @@ class EventDetails extends StatelessWidget {
                   children: <Widget>[
                     Image.asset('assets/all_events.png', width: 30, height: 30,),
                     Text(
-                      'All Events',
+                      'All Categories',
                       style: TextStyle(
                         color: Colors.white,
                       ),

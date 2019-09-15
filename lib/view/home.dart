@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketawy/view/home_pages/contact_page.dart';
-import 'package:ticketawy/view/home_pages/event_details.dart';
-import 'package:ticketawy/view/home_pages/faq_page.dart';
-import 'package:ticketawy/view/home_pages/ideas_page.dart';
+import 'home_pages/contact_page.dart';
+import 'home_pages/event_details.dart';
+import 'home_pages/faq_page.dart';
+import 'home_pages/ideas_page.dart';
 
 import '../globals.dart';
 import 'home_pages/category.dart';
