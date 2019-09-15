@@ -77,7 +77,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
             child: ListTile(
               title: Container(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Text('Update',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -87,7 +87,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ),
                 decoration: BoxDecoration(
                   color: Color(0xfffe6700),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),

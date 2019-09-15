@@ -111,11 +111,5 @@ class _LocationMapState extends State<LocationMap> {
       markers: Set<Marker>.of([Marker(markerId: MarkerId('Test'), position: LatLng(45.521563, -122.677433))]),
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    mapController = null;
-  }
 }
 
