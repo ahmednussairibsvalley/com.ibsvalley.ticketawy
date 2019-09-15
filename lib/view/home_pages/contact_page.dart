@@ -162,7 +162,7 @@ class _ContactFormState extends State<ContactForm> {
           // Add photo
           Padding(
             padding: const EdgeInsets.only(right: 40, left: 40, top: 20, bottom: 10),
-            child: Image.asset('assets/add_photo.png', width: 109, height: 28,alignment: Alignment.centerLeft,),
+            child: Image.asset('assets/add_photo.png', width: 163, height: 42,alignment: Alignment.centerLeft,),
           ),
 
           // Send button

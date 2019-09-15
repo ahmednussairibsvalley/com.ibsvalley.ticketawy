@@ -182,6 +182,7 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
 
             child: TabBarView(
               controller: _tabController,
+              physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
                 ProfileInfo(),
                 ProfileHistory(),

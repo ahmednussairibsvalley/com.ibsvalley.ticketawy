@@ -108,7 +108,7 @@ class _IdeasFormState extends State<IdeasForm> {
 
           // Ideas text area
           Padding(
-            padding: const EdgeInsets.only(right: 80, left: 80),
+            padding: const EdgeInsets.only(right: 50, left: 50),
             child: Material(
               elevation: 20.0,
               shadowColor: Colors.black,
@@ -133,7 +133,7 @@ class _IdeasFormState extends State<IdeasForm> {
           // Add photo
           Padding(
             padding: const EdgeInsets.only(right: 80, left: 80, top: 20, bottom: 10),
-            child: Image.asset('assets/add_photo.png', width: 109, height: 28,alignment: Alignment.centerLeft,),
+            child: Image.asset('assets/add_photo.png', width: 163, height: 42,alignment: Alignment.centerLeft,),
           ),
 
           // Send button
