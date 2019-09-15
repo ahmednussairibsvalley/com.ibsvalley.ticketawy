@@ -15,25 +15,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.profilePageIndex);
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          // The title
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('My Profile',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xfffe6700),
-                fontSize: 25,
-              ),
-            ),
-          ),
-
-          // Profile tabs
-          ProfileTabs(),
-
-        ],
-      ),
+      body: ProfileTabs(),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
@@ -92,93 +74,135 @@ class ProfileTabs extends StatefulWidget {
   _ProfileTabsState createState() => _ProfileTabsState();
 }
 
-class _ProfileTabsState extends State<ProfileTabs> {
+class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin{
 
   int _pageIndex;
+
+  TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _pageIndex = infPageIndex;
+    _tabController = TabController(
+      vsync: this,
+      length: 2,
+    )
+    ..addListener((){
+      setState(() {
+        _pageIndex = _tabController.index;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-            //Info tab
-            GestureDetector(
-              onTap: (){
-                setState(() {
-                  setState(() {
-                    _pageIndex = infPageIndex;
-                  });
-                });
-              },
-              child: Container(
-                width: 130,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text('My Info',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xfffe6700),
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  color: _pageIndex == infPageIndex? Color(0xffd3d3d3): Color(0xffe6e6e6),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      topLeft: Radius.circular(20)
-                  ),
-                ),
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          // The title
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('My Profile',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xfffe6700),
+                fontSize: 25,
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
 
-            // History tab
-            GestureDetector(
-              onTap: (){
-                setState(() {
-                  _pageIndex = historyPageIndex;
-                });
-              },
-              child: Container(
-                width: 130,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text('My History',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xfffe6700),
-                      fontSize: 20,
+              //Info tab
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    setState(() {
+                      _pageIndex = infPageIndex;
+                    });
+                    _tabController.animateTo(_pageIndex);
+                  });
+                },
+                child: Container(
+                  width: 130,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text('My Info',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xfffe6700),
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: _pageIndex == infPageIndex? Color(0xffd3d3d3): Color(0xffe6e6e6),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        topLeft: Radius.circular(20)
                     ),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  color: _pageIndex == historyPageIndex? Color(0xffd3d3d3): Color(0xffe6e6e6),
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(20),
-                      topRight: Radius.circular(20)
+              ),
+
+              // History tab
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    _pageIndex = historyPageIndex;
+                  });
+                  _tabController.animateTo(_pageIndex);
+                },
+                child: Container(
+                  width: 130,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text('My History',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xfffe6700),
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: _pageIndex == historyPageIndex? Color(0xffd3d3d3): Color(0xffe6e6e6),
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        topRight: Radius.circular(20)
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: _pageIndex == infPageIndex? ProfileInfo():
-          _pageIndex == historyPageIndex? ProfileHistory():
-          Container(),
-        )
-      ],
+              )
+            ],
+          ),
+          Flexible(
+
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                ProfileInfo(),
+                ProfileHistory(),
+              ],
+            ),
+          )
+        ],
+      ),
     );
+//    return Column(
+//      children: <Widget>[
+//
+//
+////        Container(
+////          alignment: Alignment.center,
+////          child: _pageIndex == infPageIndex? ProfileInfo():
+////          _pageIndex == historyPageIndex? ProfileHistory():
+////          Container(),
+////        )
+//      ],
+//    );
   }
 }
 

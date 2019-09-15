@@ -176,7 +176,7 @@ class _HomeState extends State<Home> {
 
                       // Here is the events data.
                       Positioned(
-                        left: 0.0, right: 0.0, bottom: 0.0, top: 20.0,
+                        left: 0.0, right: 0.0, bottom: 0.0, top: 30.0,
                         child: index == PagesIndices.homePageIndex? HomePage(
                           onPress: (){
                           setState(() {

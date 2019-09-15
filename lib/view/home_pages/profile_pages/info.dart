@@ -11,7 +11,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
