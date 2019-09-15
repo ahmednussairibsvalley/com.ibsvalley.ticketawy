@@ -52,7 +52,7 @@ class HistoryPage extends StatelessWidget {
         ),
         Flexible(
           child: HistoryItem(
-            imageUrl: 'https://s3.amazonaws.com/busites_www/yanni/home_bg_2_1525800103.jpg',
+            imageUrl: 'https://www.liffed.com/wp-content/uploads/2018/09/de853fb9_3088_4da5_b4a7_a54ef2181ecb_a21b0077-99fe-4b74-9a87-11bd3f3b82a3.jpg',
             title: 'Event name here',
             code: '#123456789',
           ),
