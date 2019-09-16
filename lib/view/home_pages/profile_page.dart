@@ -52,7 +52,7 @@ class ProfilePage extends StatelessWidget {
                   children: <Widget>[
                     Image.asset('assets/all_events.png', width: 30, height: 30,),
                     Text(
-                      'All Events',
+                      'All Categories',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -100,6 +100,7 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
     return Scaffold(
       body: Column(
         children: <Widget>[
+
           // The title
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -111,6 +112,8 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
               ),
             ),
           ),
+
+          // Tabs
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -178,6 +181,8 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
               )
             ],
           ),
+
+          // My Profile Body.
           Flexible(
 
             child: TabBarView(
@@ -192,18 +197,6 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
         ],
       ),
     );
-//    return Column(
-//      children: <Widget>[
-//
-//
-////        Container(
-////          alignment: Alignment.center,
-////          child: _pageIndex == infPageIndex? ProfileInfo():
-////          _pageIndex == historyPageIndex? ProfileHistory():
-////          Container(),
-////        )
-//      ],
-//    );
   }
 }
 

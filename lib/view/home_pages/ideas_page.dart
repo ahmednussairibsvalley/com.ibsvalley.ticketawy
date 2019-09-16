@@ -36,6 +36,8 @@ class IdeasPage extends StatelessWidget {
           ],
         ),
       ),
+
+      // The footer buttons
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
@@ -72,7 +74,7 @@ class IdeasPage extends StatelessWidget {
                   children: <Widget>[
                     Image.asset('assets/all_events.png', width: 30, height: 30,),
                     Text(
-                      'All Events',
+                      'All Categories',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -110,7 +112,7 @@ class _IdeasFormState extends State<IdeasForm> {
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50),
             child: Material(
-              elevation: 20.0,
+              elevation: 10.0, borderRadius: BorderRadius.circular(20),
               shadowColor: Colors.black,
               color: Colors.transparent,
               child: TextField(
@@ -140,17 +142,24 @@ class _IdeasFormState extends State<IdeasForm> {
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50),
             child: ListTile(
-              title: Container(
-                padding: EdgeInsets.all(20),
-                child: Text('Send',
-                  style: TextStyle(
-                    color: Colors.white,
+              title: Material(
+                shadowColor: Colors.black,
+                elevation: 10,
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text('Send',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                decoration: BoxDecoration(
-                    color: Color(0xfffe6700),
-                    borderRadius: BorderRadius.circular(20)
+                  decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20)
+                  ),
                 ),
               ),
             ),

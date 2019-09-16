@@ -79,10 +79,14 @@ class HistoryItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
 
-              // Event image
-              Image.network(imageUrl),
+              Image.network(imageUrl,
+                height: MediaQuery.of(context).size.height / 10,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,
+              ),
 
               // Event title
               Padding(
@@ -94,6 +98,8 @@ class HistoryItem extends StatelessWidget {
                   ),
                 ),
               ),
+
+
 
               // Divider
               Padding(
@@ -107,7 +113,7 @@ class HistoryItem extends StatelessWidget {
 
               // code
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Text(code,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -118,10 +124,10 @@ class HistoryItem extends StatelessWidget {
 
               // Ticket Type
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(25),
                     color: Color(0xfffe6700),
                   ),
                   child: Padding(
@@ -129,7 +135,7 @@ class HistoryItem extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Image.asset('assets/ticket_type.png', width: 40, height: 40,),
+                        Image.asset('assets/ticket_type.png', width: 35, height: 35,),
                         Text('Class A 120\$',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -144,7 +150,7 @@ class HistoryItem extends StatelessWidget {
 
               // Delete history
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
@@ -155,7 +161,7 @@ class HistoryItem extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Image.asset('assets/delete_history.png', width: 40, height: 40,),
+                        Image.asset('assets/delete_history.png', width: 35, height: 35,),
                         Text('Delete history',
                           textAlign: TextAlign.center,
                           style: TextStyle(

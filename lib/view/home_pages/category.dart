@@ -133,8 +133,8 @@ class CategoryPage extends StatelessWidget {
             titlePadding: EdgeInsets.all(0),
             contentPadding: EdgeInsets.all(0),
             content: Container(
-              width: 260.0,
-              height: 370.0,
+              width: 300.0,
+              height: 430.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -431,7 +431,7 @@ class _FiterDialogState extends State<FiterDialog> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text('Filter By',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -454,11 +454,11 @@ class _FiterDialogState extends State<FiterDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: Text('Date'),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10,),
                 decoration: ShapeDecoration(
@@ -496,11 +496,11 @@ class _FiterDialogState extends State<FiterDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: Text('Time'),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10,),
                 decoration: ShapeDecoration(
@@ -538,11 +538,11 @@ class _FiterDialogState extends State<FiterDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, ),
+              padding: const EdgeInsets.only(left: 20.0, ),
               child: Text('City'),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10,),
                 decoration: ShapeDecoration(
@@ -580,11 +580,11 @@ class _FiterDialogState extends State<FiterDialog> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: Text('Category'),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
               child: Container(
                 padding: EdgeInsets.only(right: 10, left: 10,),
                 decoration: ShapeDecoration(
@@ -633,7 +633,7 @@ class _FiterDialogState extends State<FiterDialog> {
               ),
               decoration: BoxDecoration(
                 color: Color(0xffff6600),
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
               padding: EdgeInsets.all(10),
             ),

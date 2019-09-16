@@ -25,7 +25,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
     _controller = AnimationController(vsync: this, duration: Duration(seconds: 2));
-    _winkingController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _winkingController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _titleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
     _subTitleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
 
@@ -36,7 +36,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       }
     });
 
-    _winkingAnimation = Tween(begin: 0.0, end: pi /2).animate(CurvedAnimation(parent: _winkingController, curve: Curves.linear))
+    _winkingAnimation = Tween(begin: pi /2, end: 0.0).animate(CurvedAnimation(parent: _winkingController, curve: Curves.linear))
     ..addStatusListener((status){
       if(status == AnimationStatus.completed){
         _titleController.forward();
@@ -95,12 +95,14 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                   children: <Widget>[
                     AnimatedBuilder(
                       child: AnimatedBuilder(
-                        child: Image.asset('assets/logo.png', width: 117, height: 164,),
+                        child: Image.asset('assets/logo_open_eyed.png', width: 117, height: 164,),
                         builder: (context, child){
                           return Stack(
                             children: <Widget>[
-
-                              Image.asset('assets/logo_open_eyed.png', width: 117, height: 164,),
+//                              Container(
+//                                color: Colors.transparent,
+//                              ),
+                              Image.asset('assets/logo.png', width: 117, height: 164,),
                               Opacity(
                                 opacity: sin(_winkingAnimation.value),
                                 child: child,

@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
 
             // The header.
             Positioned(
-              right: 0.0, left: 0.0, top: 0.0,
+              right: 0.0, left: 0.0, top: 50.0,
               child: Image.asset('assets/header.png', width: 161, height: 142,),
             ),
 
@@ -176,7 +176,7 @@ class _HomeState extends State<Home> {
 
                       // Here is the events data.
                       Positioned(
-                        left: 0.0, right: 0.0, bottom: 0.0, top: 30.0,
+                        left: 0.0, right: 0.0, bottom: 0.0, top: 50.0,
                         child: index == PagesIndices.homePageIndex? HomePage(
                           onPress: (){
                           setState(() {
@@ -240,9 +240,8 @@ class _HomeState extends State<Home> {
                 child: TextFormField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    labelText: 'Search for an event',
-
-                      contentPadding: EdgeInsets.all(4),
+                    labelText: 'Search for an event ...',
+                      contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Icon(Icons.search, size: 30,),
@@ -250,7 +249,7 @@ class _HomeState extends State<Home> {
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
                             width: 1,
                           )
