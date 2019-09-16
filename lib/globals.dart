@@ -17,5 +17,6 @@ class PagesIndices {
   static final int categoryPageIndex = 5;
   static final int eventPageIndex = 6;
   static final int selectSeatPageIndex = 7;
+  static final int buyTicketsPageIndex = 8;
 }
 
