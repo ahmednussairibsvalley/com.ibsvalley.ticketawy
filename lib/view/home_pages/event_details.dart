@@ -114,6 +114,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -140,7 +141,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: _width > 360?20:16,
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -165,7 +166,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: _width > 360?20:16,
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -190,7 +191,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: _width > 360?20:16,
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -278,8 +279,11 @@ class _ChooseTicketState extends State<ChooseTicket> {
     'Class B': 80,
     'Class C': 50,
   };
+
+
   @override
   Widget build(BuildContext context) {
+
     return ListView(
       children: <Widget>[
 

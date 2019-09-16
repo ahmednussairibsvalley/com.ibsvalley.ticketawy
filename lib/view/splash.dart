@@ -24,6 +24,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 
   @override
   void initState() {
+
     _controller = AnimationController(vsync: this, duration: Duration(seconds: 2));
     _winkingController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _titleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
@@ -71,6 +72,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
+    print('${MediaQuery.of(context).size.width}');
     return SafeArea(
       child: Scaffold(
         body: Stack(

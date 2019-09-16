@@ -16,24 +16,24 @@ class SelectSeat extends StatelessWidget {
         children: <Widget>[
           // Event name
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width > 360?8.0 : 4.0),
             child: Text('Event name here',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xff767676),
-                fontSize: 25,
+                fontSize: MediaQuery.of(context).size.width > 360?25:20,
               ),
             ),
           ),
 
           // The title
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width > 360?8.0 : 4.0),
             child: Text('Select Seat',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xfffe6700),
-                fontSize: 25,
+                fontSize: MediaQuery.of(context).size.width > 360?25:20,
               ),
             ),
           ),
@@ -46,7 +46,7 @@ class SelectSeat extends StatelessWidget {
             ],
           ),
 
-          _legend(),
+          _legend(context),
 
           Padding(
             padding: const EdgeInsets.only(right: 80.0, left: 80.0),
@@ -139,7 +139,7 @@ class SelectSeat extends StatelessWidget {
     );
   }
 
-  Widget _legend(){
+  Widget _legend(BuildContext context){
 
     Map _map = {
       'Free': 0xff929292,
@@ -149,12 +149,12 @@ class SelectSeat extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(3, (index){
-        return _legendItem(_map[_map.keys.toList()[index]], _map.keys.toList()[index]);
+        return _legendItem(context, _map[_map.keys.toList()[index]], _map.keys.toList()[index]);
       }),
     );
   }
 
-  Widget _legendItem(int colorCode, String indication){
+  Widget _legendItem(BuildContext context, int colorCode, String indication){
 
     return Row(
       children: <Widget>[
@@ -162,15 +162,15 @@ class SelectSeat extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Container(
             color: Color(colorCode),
-            height: 25,
-            width: 25,
+            height: MediaQuery.of(context).size.width > 360?25:20,
+            width: MediaQuery.of(context).size.width > 360?25:20,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Text(indication,
             style: TextStyle(
-              fontSize: 20
+              fontSize: MediaQuery.of(context).size.width > 360?20:17
             ),
           ),
         ),
@@ -192,6 +192,7 @@ class _SeatsAreaState extends State<SeatsArea> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: List.generate(5, (index){
         return _row();
@@ -200,10 +201,11 @@ class _SeatsAreaState extends State<SeatsArea> {
   }
 
   Widget _row(){
+    final _width = MediaQuery.of(context).size.width;
     return Row(
       children: List.generate(6, (index){
         return Padding(
-          padding: const EdgeInsets.all(3.0),
+          padding: EdgeInsets.all(_width > 360?3.0: 2),
           child: SeatItem(),
         );
       }),
@@ -220,8 +222,10 @@ class _SeatItemState extends State<SeatItem> {
 
   bool _selected = false;
   bool _reserved = false;
+
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: (){
         setState(() {
@@ -230,8 +234,8 @@ class _SeatItemState extends State<SeatItem> {
       },
       child: Container(
         color: _reserved? Color(0xff4b3d7a): _selected? Color(0xffff6600):Color(0xff929292),
-        height: 25,
-        width: 25,
+        height: _width > 360?25:20,
+        width: _width > 360?25:20,
       ),
     );
   }

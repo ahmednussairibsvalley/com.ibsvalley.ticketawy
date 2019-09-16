@@ -7,11 +7,12 @@ class LocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 50, left: 50,),
       child: ListView(
         shrinkWrap: true,
-        itemExtent: 350,
+        itemExtent: _width > 360?350:270,
         children: <Widget>[
           Material(
             elevation: 10,

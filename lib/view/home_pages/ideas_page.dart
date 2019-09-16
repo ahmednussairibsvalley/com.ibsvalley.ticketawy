@@ -100,6 +100,8 @@ class _IdeasFormState extends State<IdeasForm> {
   final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
     return Center(
 
       // The title with the text area.
@@ -137,7 +139,7 @@ class _IdeasFormState extends State<IdeasForm> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
-              child: Image.asset('assets/add_photo.png', width: 163, height: 42,alignment: Alignment.centerLeft,),
+              child: Image.asset('assets/add_photo.png', width: _width > 360 ?163:110, height: _width> 360?42:28,alignment: Alignment.centerLeft,),
             ),
           ),
 
