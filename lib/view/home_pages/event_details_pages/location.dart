@@ -11,7 +11,7 @@ class LocationPage extends StatelessWidget {
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 50, left: 50,),
       child: ListView(
         shrinkWrap: true,
-        itemExtent: 400,
+        itemExtent: 350,
         children: <Widget>[
           Material(
             elevation: 10,
