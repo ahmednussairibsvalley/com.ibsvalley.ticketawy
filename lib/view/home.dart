@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ticketawy/view/home_pages/buy_tickets.dart';
+import 'package:ticketawy/view/home_pages/payment_page.dart';
 import 'package:ticketawy/view/home_pages/select_seat.dart';
+import 'home_pages/categories_page.dart';
 import 'home_pages/contact_page.dart';
 import 'home_pages/event_details.dart';
 import 'home_pages/faq_page.dart';
@@ -189,6 +192,11 @@ class _HomeState extends State<Home> {
                               index = PagesIndices.eventPageIndex;
                             });
                           },
+                          onHotOfferPressed: (){
+                            setState(() {
+                              index = PagesIndices.eventPageIndex;
+                            });
+                          },
                         ):
                         index == PagesIndices.profilePageIndex? ProfilePage(
                           onPreviousPagePressed: (){
@@ -196,19 +204,36 @@ class _HomeState extends State<Home> {
                             setState(() {
                               index = Globals.pagesStack.pop();
                             });
-//                            setState(() {
-//                              index = homePageIndex;
-//                            });
+                          },
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
                           },
                         ):
                         index == PagesIndices.ideasPageIndex? IdeasPage(
                           onPreviousPagePressed: _returnToPreviousPage,
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
                         ):
                         index == PagesIndices.faqPageIndex? FaqPage(
                           onPreviousPagePressed: _returnToPreviousPage,
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
                         ):
                         index == PagesIndices.contactPageIndex? ContactPage(
                           onPreviousPagePressed: _returnToPreviousPage,
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
                         ):
                         index == PagesIndices.categoryPageIndex? CategoryPage(
                           onBack: _returnToPreviousPage,
@@ -217,17 +242,69 @@ class _HomeState extends State<Home> {
                               index = PagesIndices.eventPageIndex;
                             });
                           },
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
                         ):
                         index == PagesIndices.eventPageIndex? EventDetails(
                           onPreviousPagePressed: _returnToPreviousPage,
-                          onTicketChosen: (){
+                          onEventBooked: (){
                             setState(() {
-                              index = PagesIndices.selectSeatPageIndex;
+                              index = Globals.reservationOption == ReservationOptions.bySeats?
+                              PagesIndices.selectSeatPageIndex : PagesIndices.buyTicketsPageIndex;
+                            });
+                          },
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
                             });
                           },
                         ):
                         index == PagesIndices.selectSeatPageIndex? SelectSeat(
                           onPreviousPagePressed: _returnToPreviousPage,
+                          onSeatsBooked: (){
+                            setState(() {
+                              index = PagesIndices.paymentPageIndex;
+                            });
+                          },
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
+                        ):
+                        index == PagesIndices.buyTicketsPageIndex? BuyTickets(
+                          onPreviousPagePressed: _returnToPreviousPage(),
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
+                        ):
+                        index == PagesIndices.paymentPageIndex? PaymentPage(
+                          onPreviousPagePressed: _returnToPreviousPage(),
+                          onAllCategoriesPressed: (){
+                            setState(() {
+                              index = PagesIndices.categoriesPageIndex;
+                            });
+                          },
+                        ):
+                        index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
+                          onPreviousPagePressed: (){
+                            _returnToPreviousPage();
+                          },
+                          onCategoryPressed: (){
+                            setState(() {
+                              index = PagesIndices.eventPageIndex;
+                            });
+                          },
+                          onAllEventsPressed: (){
+                            setState(() {
+                              index = PagesIndices.eventPageIndex;
+                            });
+                          },
                         ):
                         Container(),
                       )
@@ -296,9 +373,10 @@ class _HomeState extends State<Home> {
   }
 
   _returnToPreviousPage(){
-    Globals.pagesStack.pop();
+    if(Globals.pagesStack.isNotEmpty)
+      Globals.pagesStack.pop();
     setState(() {
-      index = Globals.pagesStack.pop();
+      index = Globals.pagesStack.isNotEmpty? Globals.pagesStack.pop(): PagesIndices.homePageIndex;
     });
   }
 }

@@ -3,8 +3,9 @@ class Event{
   String _title;
   String _imageUrl;
   double _price;
+  int _reservationOption;
 
-  Event(this._id, this._title, this._imageUrl, this._price);
+  Event(this._id, this._title, this._imageUrl, this._price, this._reservationOption);
 
   String get imageUrl => _imageUrl;
 
@@ -28,6 +29,12 @@ class Event{
 
   set price(double value) {
     _price = value;
+  }
+
+  int get reservationOption => _reservationOption;
+
+  set reservationOption(int value) {
+    _reservationOption = value;
   }
 
 

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../globals.dart';
+
 class BuyTickets extends StatelessWidget {
 
   final Function onPreviousPagePressed;
+  final Function onAllCategoriesPressed;
 
-  BuyTickets({@required this.onPreviousPagePressed});
+  BuyTickets({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
   @override
   Widget build(BuildContext context) {
+    Globals.pagesStack.push(PagesIndices.buyTicketsPageIndex);
     return Scaffold(
       body: buyTickets(),
       bottomNavigationBar: BottomAppBar(
@@ -37,21 +41,24 @@ class BuyTickets extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/all_events.png', width: 30, height: 30,),
-                    Text(
-                      'All Events',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.purple,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/all_events.png', width: 30, height: 30,),
+                      Text(
+                        'All Categories',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -253,7 +260,9 @@ class _buyTicketsState extends State<buyTickets> {
                 'Continue',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
-              onPressed: () {},
+              onPressed: () {
+
+              },
               color: Color(0xffff8020),
               shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),

@@ -6,7 +6,10 @@ class SelectSeat extends StatelessWidget {
 
   final Function onPreviousPagePressed;
 
-  SelectSeat({@required this.onPreviousPagePressed});
+  final Function onSeatsBooked;
+  final Function onAllCategoriesPressed;
+
+  SelectSeat({@required this.onPreviousPagePressed, @required this.onSeatsBooked, @required this.onAllCategoriesPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,7 @@ class SelectSeat extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 80.0, left: 80.0),
             child: ListTile(
+              onTap: onSeatsBooked,
               title: Container(
                 decoration: BoxDecoration(
                   color: Color(0xffff6600),
@@ -99,21 +103,24 @@ class SelectSeat extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/all_events.png', width: 30, height: 30,),
-                    Text(
-                      'All Categories',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.purple,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/all_events.png', width: 30, height: 30,),
+                      Text(
+                        'All Categories',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

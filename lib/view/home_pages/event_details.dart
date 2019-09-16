@@ -13,16 +13,17 @@ final int schedulePageIndex = 2;
 
 class EventDetails extends StatelessWidget {
   final Function onPreviousPagePressed;
-  final Function onTicketChosen;
+  final Function onEventBooked;
+  final Function onAllCategoriesPressed;
 
-  EventDetails({@required this.onPreviousPagePressed, @required this.onTicketChosen});
+  EventDetails({@required this.onPreviousPagePressed, @required this.onEventBooked, @required this.onAllCategoriesPressed});
 
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
     return Scaffold(
       body: EventTabs(
-        onTicketChosen: onTicketChosen,
+        onEventBooked: onEventBooked,
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
@@ -56,25 +57,28 @@ class EventDetails extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/all_events.png',
-                      width: 30,
-                      height: 30,
-                    ),
-                    Text(
-                      'All Categories',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.purple,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/all_events.png',
+                        width: 30,
+                        height: 30,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                      Text(
+                        'All Categories',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -86,9 +90,9 @@ class EventDetails extends StatelessWidget {
 }
 
 class EventTabs extends StatefulWidget {
-  final Function onTicketChosen;
+  final Function onEventBooked;
 
-  EventTabs({@required this.onTicketChosen});
+  EventTabs({@required this.onEventBooked});
   @override
   _EventTabsState createState() => _EventTabsState();
 }
@@ -207,7 +211,10 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 // Buy Tickets Button
                 GestureDetector(
                   onTap: () {
-                    _showChooseTicketDialog(widget.onTicketChosen);
+                    if(Globals.reservationOption == ReservationOptions.byTickets)
+                      _showChooseTicketDialog(widget.onEventBooked);
+                    else if(Globals.reservationOption == ReservationOptions.bySeats)
+                      widget.onEventBooked();
                   },
                   child: Container(
                     height: 50,
@@ -215,7 +222,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     child: Padding(
                       padding: EdgeInsets.all(15),
                       child: Text(
-                        'Buy Tickets',
+                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy 20\$',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white),
                       ),

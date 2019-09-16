@@ -6,8 +6,9 @@ import '../../globals.dart';
 class ContactPage extends StatelessWidget {
 
   final Function onPreviousPagePressed;
+  final Function onAllCategoriesPressed;
 
-  ContactPage({@required this.onPreviousPagePressed});
+  ContactPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -68,21 +69,24 @@ class ContactPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/all_events.png', width: 30, height: 30,),
-                    Text(
-                      'All Events',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.purple,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/all_events.png', width: 30, height: 30,),
+                      Text(
+                        'All Events',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

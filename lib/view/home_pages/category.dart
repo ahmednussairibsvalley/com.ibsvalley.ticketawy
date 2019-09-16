@@ -17,8 +17,9 @@ class CategoryPage extends StatelessWidget {
   
   final Function onBack;
   final Function onCategoryPressed;
+  final Function onAllCategoriesPressed;
   
-  CategoryPage({@required this.onBack, @required this.onCategoryPressed});
+  CategoryPage({@required this.onBack, @required this.onCategoryPressed, @required this.onAllCategoriesPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -98,21 +99,24 @@ class CategoryPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Colors.purple,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/all_events.png', width: 30, height: 30,),
-                      Text(
-                        'All Categories',
-                        style: TextStyle(
-                          color: Colors.white,
+                child: GestureDetector(
+                  onTap: onAllCategoriesPressed,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Colors.purple,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/all_events.png', width: 30, height: 30,),
+                        Text(
+                          'All Categories',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

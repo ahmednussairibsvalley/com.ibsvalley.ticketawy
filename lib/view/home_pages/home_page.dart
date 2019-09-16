@@ -16,8 +16,9 @@ List<T> map<T>(List list, Function handler) {
 class HomePage extends StatelessWidget {
   final Function onPress;
   final Function onEventPressed;
+  final Function onHotOfferPressed;
 
-  HomePage({@required this.onPress, @required this.onEventPressed});
+  HomePage({@required this.onPress, @required this.onEventPressed, @required this.onHotOfferPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class HomePage extends StatelessWidget {
           onEventPressed: onEventPressed,
         ),
         CategoriesSlider(onPress: onPress,),
-        HotOffersSlider(),
+        HotOffersSlider(onEventPressed: onHotOfferPressed,),
       ],
     );
   }
@@ -66,7 +67,10 @@ class _EventsSliderState extends State<EventsSlider> {
             if (snapshot.hasData) {
               if (snapshot.data) {
                 return GestureDetector(
-                  onTap: onEventPressed,
+                  onTap: (){
+                    Globals.reservationOption = i.reservationOption;
+                    onEventPressed();
+                  },
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
@@ -365,6 +369,10 @@ class CategoriesPage extends StatelessWidget {
 }
 
 class HotOffersSlider extends StatefulWidget {
+
+  final Function onEventPressed;
+
+  HotOffersSlider({@required this.onEventPressed});
   @override
   _HotOffersSliderState createState() => _HotOffersSliderState();
 }
@@ -409,7 +417,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
         } else {
           list.add(_list[paisList[index]['first']]);
         }
-        return HotOfferPage(list: list,);
+        return HotOfferPage(list: list, onEventPressed: widget.onEventPressed,);
       },
     ).toList();
 
@@ -479,7 +487,9 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
 class HotOfferPage extends StatelessWidget {
   final List list;
 
-  HotOfferPage({@required this.list});
+  final Function onEventPressed;
+
+  HotOfferPage({@required this.list, @required this.onEventPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -501,30 +511,36 @@ class HotOfferPage extends StatelessWidget {
             shadowColor: Colors.black,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
+              child: GestureDetector(
+                onTap: (){
+                  Globals.reservationOption = list[index].reservationOption;
+                  onEventPressed();
+                },
+                child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text('${list[index].title}'),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xffff6600),
-                        borderRadius: BorderRadius.circular(20)
+                  children: <Widget>[
+                    Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text('${list[index].title}'),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('${list[index].price}\$ / Ticket',
-                        style: TextStyle(
-                          color: Colors.white,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xffff6600),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('${list[index].price}\$ / Ticket',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

@@ -72,8 +72,6 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-
-    print('${MediaQuery.of(context).size.width}');
     return SafeArea(
       child: Scaffold(
         body: Stack(

@@ -4,8 +4,9 @@ import '../../globals.dart';
 
 class FaqPage extends StatelessWidget {
   final Function onPreviousPagePressed;
+  final Function onAllCategoriesPressed;
 
-  FaqPage({@required this.onPreviousPagePressed});
+  FaqPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.faqPageIndex);
@@ -43,21 +44,24 @@ class FaqPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.purple,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Image.asset('assets/all_events.png', width: 30, height: 30,),
-                    Text(
-                      'All Events',
-                      style: TextStyle(
-                        color: Colors.white,
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Colors.purple,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/all_events.png', width: 30, height: 30,),
+                      Text(
+                        'All Categories',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
