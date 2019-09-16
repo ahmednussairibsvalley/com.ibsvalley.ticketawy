@@ -117,7 +117,7 @@ class _ContactFormState extends State<ContactForm> {
           Padding(
             padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
             child: Material(
-              elevation: 20.0,
+              elevation: 10.0,
               shadowColor: Colors.black,
               color: Colors.transparent,
               child: TextField(
@@ -139,7 +139,7 @@ class _ContactFormState extends State<ContactForm> {
           Padding(
             padding: const EdgeInsets.only(right: 40, left: 40),
             child: Material(
-              elevation: 20.0,
+              elevation: 10.0,
               shadowColor: Colors.black,
               color: Colors.transparent,
               child: TextField(
@@ -160,9 +160,12 @@ class _ContactFormState extends State<ContactForm> {
           ),
 
           // Add photo
-          Padding(
-            padding: const EdgeInsets.only(right: 40, left: 40, top: 20, bottom: 10),
-            child: Image.asset('assets/add_photo.png', width: 163, height: 42,alignment: Alignment.centerLeft,),
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
+              child: Image.asset('assets/add_photo.png', width: 163, height: 42,alignment: Alignment.centerLeft,),
+            ),
           ),
 
           // Send button

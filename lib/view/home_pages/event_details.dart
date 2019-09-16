@@ -140,6 +140,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
+                                fontSize: 20,
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -164,6 +165,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
+                                fontSize: 20,
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -188,6 +190,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
+                                fontSize: 20,
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),

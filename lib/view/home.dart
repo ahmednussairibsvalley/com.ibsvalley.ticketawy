@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
 
             // The header.
             Positioned(
-              right: 0.0, left: 0.0, top: 50.0,
+              right: 0.0, left: 0.0, top: 40.0,
               child: Image.asset('assets/header.png', width: 161, height: 142,),
             ),
 

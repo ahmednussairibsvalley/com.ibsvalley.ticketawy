@@ -10,8 +10,10 @@ class FaqPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.faqPageIndex);
     return Scaffold(
-      body: Center(
-        child: Text('FAQ'),
+      body: ListView(
+        children: <Widget>[
+          _faqItem(context, 'Can I reserve a ticket after 15 days?', 'Yes, you can.')
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
@@ -61,6 +63,42 @@ class FaqPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _faqItem(BuildContext context, String question, String answer){
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Color(0xffff6600),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(question,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(answer,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
