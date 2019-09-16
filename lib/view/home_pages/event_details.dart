@@ -13,14 +13,17 @@ final int schedulePageIndex = 2;
 
 class EventDetails extends StatelessWidget {
   final Function onPreviousPagePressed;
+  final Function onTicketChosen;
 
-  EventDetails({@required this.onPreviousPagePressed});
+  EventDetails({@required this.onPreviousPagePressed, @required this.onTicketChosen});
 
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
     return Scaffold(
-      body: EventTabs(),
+      body: EventTabs(
+        onTicketChosen: onTicketChosen,
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
@@ -83,6 +86,9 @@ class EventDetails extends StatelessWidget {
 }
 
 class EventTabs extends StatefulWidget {
+  final Function onTicketChosen;
+
+  EventTabs({@required this.onTicketChosen});
   @override
   _EventTabsState createState() => _EventTabsState();
 }
@@ -197,7 +203,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 // Buy Tickets Button
                 GestureDetector(
                   onTap: () {
-                    _showChooseTicketDialog();
+                    _showChooseTicketDialog(widget.onTicketChosen);
                   },
                   child: Container(
                     height: 50,
@@ -230,7 +236,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     );
   }
 
-  _showChooseTicketDialog() {
+  _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
         context: context,
         builder: (context) {
@@ -245,7 +251,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(33.0)),
               ),
-              child: ChooseTicket(),
+              child: ChooseTicket(
+                onTicketChosen: onTicketChosen,
+              ),
             ),
           );
         });
@@ -253,6 +261,10 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 }
 
 class ChooseTicket extends StatefulWidget {
+
+  final Function onTicketChosen;
+
+  ChooseTicket({@required this.onTicketChosen});
   @override
   _ChooseTicketState createState() => _ChooseTicketState();
 }
@@ -348,6 +360,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ),
           child: ListTile(
             onTap: () {
+              widget.onTicketChosen();
               Navigator.of(context).pop();
             },
             title: Container(
