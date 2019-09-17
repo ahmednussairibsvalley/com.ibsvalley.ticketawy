@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/register.dart';
 
+import 'custom_widgets/CustomShowDialog.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -13,6 +15,7 @@ class _LoginState extends State<Login> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
+    bool _isUnderDevelopment = true;
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -181,6 +184,10 @@ class _LoginState extends State<Login> {
           color: Colors.black,
           child: GestureDetector(
             onTap: () {
+              if(_isUnderDevelopment){
+                _showUnderDevelopmentDialog(context);
+                return;
+              }
               Navigator.of(context).pushReplacementNamed('/home');
             },
             child: Row(
@@ -206,5 +213,61 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  _showUnderDevelopmentDialog(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: MediaQuery.of(context).size.width > 360 ? 400.0 : 300,
+              height: MediaQuery.of(context).size.width > 360 ?150.0 : 150,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(33.0)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Not available during the development of the app.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width > 360 ? 20: 18,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xffff6600),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text('Close',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

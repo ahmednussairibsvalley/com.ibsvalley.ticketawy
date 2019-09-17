@@ -4,8 +4,10 @@ import 'package:ticketawy/view/dashed_divider.dart';
 class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(right: 60, left: 60, top: 20, bottom: 20),
+      padding: EdgeInsets.only(right: _width> 360?80:60, left: _width> 360?80:60, top: _width> 360?40:20, bottom: _width> 360?40:20),
       child: Material(
         elevation: 10,
         shadowColor: Colors.black,
