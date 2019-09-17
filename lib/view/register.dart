@@ -26,7 +26,7 @@ class _RegisterState extends State<Register> {
                   image: DecorationImage(
                       fit: BoxFit.fill,
 //                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                      image: AssetImage('assets/background.png')
+                      image: AssetImage('assets/login.jpg')
                   )
               ),
             ),
@@ -35,21 +35,33 @@ class _RegisterState extends State<Register> {
             Positioned(
               left: 0.0,
               right: 0.0,
-              top: _height / 8,
+              top: _height / 11,
               bottom: 0.0,
               child: ListView(
                 children: <Widget>[
-              Image.asset('assets/header.png', width: 242, height: 213,),
+              Image.asset('assets/header.png', width: 300, height: 195,),
                   Column(
                     children: <Widget>[
                       Form(
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
-
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 20, right: 20,),
+                              child: Text(
+                                '- - - - - - - - - - - - - - -',
+                                style: TextStyle(fontSize: 35,color: Colors.white30,),textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 20, right: 20),
+                              child: Text('Register',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                            ),
                             // User name.
                             Padding(
-                              padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0, top: 8.0,),
+                              padding: const EdgeInsets.only(left: 45.0, right: 45.0, bottom: 8.0, top: 20.0,),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   filled: true,
@@ -74,7 +86,7 @@ class _RegisterState extends State<Register> {
 
                             // Password.
                             Padding(
-                              padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0, top: 8.0,),
+                              padding: const EdgeInsets.only(left: 45.0, right: 45.0, bottom: 8.0, top: 8.0,),
                               child: TextFormField(
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -101,7 +113,7 @@ class _RegisterState extends State<Register> {
 
                             // Phone
                             Padding(
-                              padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0, top: 8.0,),
+                              padding: const EdgeInsets.only(left: 45.0, right: 45.0, bottom: 8.0, top: 8.0,),
                               child: TextFormField(
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
@@ -127,7 +139,7 @@ class _RegisterState extends State<Register> {
 
                             // register button
                             Padding(
-                              padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0,),
+                              padding: const EdgeInsets.only(left: 28.5, right: 28.5,),
                               child: ListTile(
                                 title: Container(
                                   decoration: BoxDecoration(
@@ -158,7 +170,7 @@ class _RegisterState extends State<Register> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.all(4.0),
-                                    child: Text('Have an account?',
+                                    child: Text('Have an account?\n----------------------------',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,

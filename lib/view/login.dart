@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/register.dart';
 
-import 'dashed_divider.dart';
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -19,7 +17,6 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
-
             // The background
             Container(
               height: _height,
@@ -29,42 +26,61 @@ class _LoginState extends State<Login> {
                   image: DecorationImage(
                       fit: BoxFit.fill,
 //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                      image: AssetImage('assets/background.png')
-                  )
-              ),
+                      image: AssetImage('assets/login.jpg'))),
             ),
 
             Positioned(
               left: 0.0,
               right: 0.0,
-              top: _height / 8,
+              top: _height / 11,
               bottom: 0.0,
               child: Form(
                 key: _formKey,
                 child: ListView(
                   children: <Widget>[
-                    Image.asset('assets/header.png', width: 242, height: 213,),
+                    Image.asset(
+                      'assets/header.png',
+                      width: 300,
+                      height: 195,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20,),
+                      child: Text(
+                        '- - - - - - - - - - - - - - -',
+                        style: TextStyle(fontSize: 35,color: Colors.white30,),textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 20, right: 20),
+                      child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                    ),
 
                     // User name.
                     Padding(
-                      padding: EdgeInsets.only(left: _width > 360?80.0: 50.0, right: _width > 360?80.0:50.0, bottom: 8.0, top: 8.0,),
+                      padding: const EdgeInsets.only(
+                        left: 45.0,
+                        right: 45.0,
+                        bottom: 8.0,
+                        top: 20.0,
+                      ),
                       child: TextFormField(
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: Icon(Icons.person_outline),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: BorderSide(
                                 style: BorderStyle.none,
-                              )
-                          ),
+                              )),
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
                           labelText: 'User name',
                         ),
-                        validator: (value){
+                        validator: (value) {
                           return null;
                         },
                       ),
@@ -72,7 +88,12 @@ class _LoginState extends State<Login> {
 
                     // Password.
                     Padding(
-                      padding: EdgeInsets.only(left: _width > 360?80.0:50.0, right: _width > 360?80.0:50.0, bottom: 8.0, top: 8.0,),
+                      padding: const EdgeInsets.only(
+                        left: 45.0,
+                        right: 45.0,
+                        bottom: 8.0,
+                        top: 8.0,
+                      ),
                       child: TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
@@ -81,17 +102,16 @@ class _LoginState extends State<Login> {
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: Icon(Icons.help_outline),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(15),
                               borderSide: BorderSide(
                                 style: BorderStyle.none,
-                              )
-                          ),
+                              )),
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
                           labelText: 'Password',
                         ),
-                        validator: (value){
+                        validator: (value) {
                           return null;
                         },
                       ),
@@ -99,19 +119,24 @@ class _LoginState extends State<Login> {
 
                     // login button
                     Padding(
-                      padding: EdgeInsets.only(left: _width > 360? 60.0 : 35, right: _width > 360? 60.0 : 35, top: 8.0,),
+                      padding: const EdgeInsets.only(
+                        left: 30.0,
+                        right: 30.0,
+                        top: 1.0,
+                      ),
                       child: ListTile(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pushReplacementNamed('/home');
                         },
                         title: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Color(0xfffe6700),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
-                            child: Text('login',
+                            child: Text(
+                              'login',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,
@@ -125,15 +150,17 @@ class _LoginState extends State<Login> {
 
                     // Sign up link text
                     GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Register()));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Register()));
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text('Don\'t have an account?',
+                            child: Text(
+                              'Don\'t have an account?\n-------------------------------------',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
@@ -150,11 +177,10 @@ class _LoginState extends State<Login> {
             ),
           ],
         ),
-
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pushReplacementNamed('/home');
             },
             child: Row(
