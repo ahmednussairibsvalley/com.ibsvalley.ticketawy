@@ -140,7 +140,7 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xfffe6700),
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -170,7 +170,7 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xfffe6700),
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ),
