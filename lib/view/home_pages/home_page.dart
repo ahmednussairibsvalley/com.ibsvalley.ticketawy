@@ -445,7 +445,8 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: Color(0xfffe6700),
-                fontSize: 18, fontWeight: FontWeight.bold
+                fontSize: 18, fontWeight: FontWeight.bold,
+              //fontFamily: 'Verdana',
             ),
           ),
         ),
