@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/register.dart';
 
+import 'dashed_divider.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -41,18 +43,18 @@ class _LoginState extends State<Login> {
                 key: _formKey,
                 child: ListView(
                   children: <Widget>[
-                    Image.asset('assets/header.png', width: 161, height: 142,),
+                    Image.asset('assets/header.png', width: 242, height: 213,),
 
                     // User name.
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0, top: 8.0,),
+                      padding: EdgeInsets.only(left: _width > 360?80.0: 50.0, right: _width > 360?80.0:50.0, bottom: 8.0, top: 8.0,),
                       child: TextFormField(
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: Icon(Icons.person_outline),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide(
                                 style: BorderStyle.none,
                               )
@@ -70,7 +72,7 @@ class _LoginState extends State<Login> {
 
                     // Password.
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0, top: 8.0,),
+                      padding: EdgeInsets.only(left: _width > 360?80.0:50.0, right: _width > 360?80.0:50.0, bottom: 8.0, top: 8.0,),
                       child: TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
@@ -79,7 +81,7 @@ class _LoginState extends State<Login> {
                           prefixIcon: Icon(Icons.lock_outline),
                           suffixIcon: Icon(Icons.help_outline),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide(
                                 style: BorderStyle.none,
                               )
@@ -97,19 +99,19 @@ class _LoginState extends State<Login> {
 
                     // login button
                     Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0,),
+                      padding: EdgeInsets.only(left: _width > 360? 60.0 : 35, right: _width > 360? 60.0 : 35, top: 8.0,),
                       child: ListTile(
                         onTap: (){
                           Navigator.of(context).pushReplacementNamed('/home');
                         },
                         title: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
                             color: Color(0xfffe6700),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
-                            child: Text('Log In',
+                            child: Text('login',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,

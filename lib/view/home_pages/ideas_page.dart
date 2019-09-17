@@ -11,6 +11,7 @@ class IdeasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.ideasPageIndex);
+
     return Scaffold(
 //      resizeToAvoidBottomInset: false,
 //      resizeToAvoidBottomPadding: false,
@@ -71,7 +72,7 @@ class IdeasPage extends StatelessWidget {
                 onTap: onAllCategoriesPressed,
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.purple,
+                  color: Color(0xff4b3d7a),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

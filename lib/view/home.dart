@@ -79,8 +79,6 @@ class _HomeState extends State<Home> {
 
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-
-
     return WillPopScope(
       onWillPop: _onWillPopScope,
       child: SafeArea(
@@ -386,12 +384,19 @@ class _HomeState extends State<Home> {
   }
 
   _returnToPreviousPage(){
-    if(Globals.pagesStack.isNotEmpty)
+    if(Globals.pagesStack.isNotEmpty){
       Globals.pagesStack.pop();
+      if(Globals.pagesStack.isNotEmpty){
+        setState(() {
+          index = Globals.pagesStack.pop();
+        });
+      } else {
+        exit(0);
+      }
 
-    setState(() {
-      index = Globals.pagesStack.isNotEmpty? Globals.pagesStack.pop(): PagesIndices.homePageIndex;
-    });
+    } else {
+      exit(0);
+    }
   }
 }
 

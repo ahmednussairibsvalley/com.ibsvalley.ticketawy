@@ -39,7 +39,7 @@ class _RegisterState extends State<Register> {
               bottom: 0.0,
               child: ListView(
                 children: <Widget>[
-              Image.asset('assets/header.png', width: 161, height: 142,),
+              Image.asset('assets/header.png', width: 242, height: 213,),
                   Column(
                     children: <Widget>[
                       Form(

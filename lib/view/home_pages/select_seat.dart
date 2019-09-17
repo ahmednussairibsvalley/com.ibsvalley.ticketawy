@@ -14,6 +14,7 @@ class SelectSeat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.selectSeatPageIndex);
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -107,7 +108,7 @@ class SelectSeat extends StatelessWidget {
                 onTap: onAllCategoriesPressed,
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.purple,
+                  color: Color(0xff4b3d7a),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

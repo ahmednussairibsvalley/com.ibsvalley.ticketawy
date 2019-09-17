@@ -22,6 +22,7 @@ class AllCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.categoriesPageIndex);
+
     return Scaffold(
       body: CategoriesPager(onCategoryPressed: onCategoryPressed),
 
@@ -60,7 +61,7 @@ class AllCategoriesPage extends StatelessWidget {
                 onTap: onAllEventsPressed,
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.purple,
+                  color: Color(0xff4b3d7a),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

@@ -10,6 +10,7 @@ class FaqPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.faqPageIndex);
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -48,7 +49,7 @@ class FaqPage extends StatelessWidget {
                 onTap: onAllCategoriesPressed,
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.purple,
+                  color: Color(0xff4b3d7a),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

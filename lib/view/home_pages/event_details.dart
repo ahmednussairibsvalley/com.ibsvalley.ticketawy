@@ -21,6 +21,7 @@ class EventDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
+
     return Scaffold(
       body: EventTabs(
         onEventBooked: onEventBooked,
@@ -61,7 +62,7 @@ class EventDetails extends StatelessWidget {
                 onTap: onAllCategoriesPressed,
                 child: Container(
                   padding: EdgeInsets.all(15),
-                  color: Colors.purple,
+                  color: Color(0xff4b3d7a),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
