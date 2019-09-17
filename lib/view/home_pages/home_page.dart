@@ -191,7 +191,7 @@ class _EventsSliderState extends State<EventsSlider> {
                 child: Container(
                   width: 15.0,
                   height: 15.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: _current == index
@@ -331,7 +331,7 @@ class CategoriesPage extends StatelessWidget {
     return GridView(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 1,
+          childAspectRatio: .9,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5
       ),
@@ -344,7 +344,7 @@ class CategoriesPage extends StatelessWidget {
             onPress();
           },
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
             child: Material(
               shadowColor: Colors.black,
               elevation: 5,
@@ -495,11 +495,11 @@ class HotOfferPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-//          childAspectRatio: 1,
+          childAspectRatio: .9,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5
         ),
