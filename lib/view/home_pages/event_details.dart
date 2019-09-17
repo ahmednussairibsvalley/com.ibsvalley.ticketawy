@@ -412,7 +412,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
   Widget build(BuildContext context) {
     return DropdownButton(
         value: _current,
-        items: List.generate(100, (index) {
+        items: List.generate(11, (index) {
           return DropdownMenuItem(
             child: Text('$index'),
             value: index,

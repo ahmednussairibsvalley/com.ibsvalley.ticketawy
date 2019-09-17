@@ -90,9 +90,6 @@ class _buyTicketsState extends State<buyTickets> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 300),
-          ),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Column(
