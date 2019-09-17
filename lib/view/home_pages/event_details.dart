@@ -221,7 +221,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     height: 50,
                     color: Color(0xffff6600),
                     child: Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.only(left: 25,right: 15,top: 15,bottom: 15),
                       child: Text(
                         Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy 20\$',
                         textAlign: TextAlign.center,

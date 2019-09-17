@@ -441,11 +441,11 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
         // The title
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text('Hot Offers',
+          child: Text('Hot offers!',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xfffe6700),
-              fontSize: 17,
+                color: Color(0xfffe6700),
+                fontSize: 18, fontWeight: FontWeight.bold
             ),
           ),
         ),
