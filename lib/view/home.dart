@@ -14,6 +14,8 @@ import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
 
+import 'dart:io';
+
 
 class Home extends StatefulWidget {
   @override
@@ -26,6 +28,12 @@ class _HomeState extends State<Home> {
   TextEditingController _searchController = TextEditingController();
 
   int index = PagesIndices.homePageIndex;
+
+  Future<bool> _onWillPopScope() async {
+
+    _returnToPreviousPage();
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,69 +81,71 @@ class _HomeState extends State<Home> {
     final _width = MediaQuery.of(context).size.width;
 
 
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        resizeToAvoidBottomPadding: false,
-        key: _scaffoldKey,
-        drawer: Drawer(
-          child: ListView(
+    return WillPopScope(
+      onWillPop: _onWillPopScope,
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomPadding: false,
+          key: _scaffoldKey,
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                Image.asset('assets/drawer_header.png', fit: BoxFit.cover,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    children: List.generate(leftDrawerMap.keys.toList().length, (index){
+                      return ListTile(
+                        title: _drawerItem(leftDrawerMap.keys.toList()[index]),
+                        onTap: leftDrawerMap['${leftDrawerMap.keys.toList()[index]}'],
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          body: Stack(
             children: <Widget>[
-              Image.asset('assets/drawer_header.png', fit: BoxFit.cover,),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Column(
-                  children: List.generate(leftDrawerMap.keys.toList().length, (index){
-                    return ListTile(
-                      title: _drawerItem(leftDrawerMap.keys.toList()[index]),
-                      onTap: leftDrawerMap['${leftDrawerMap.keys.toList()[index]}'],
-                    );
-                  }),
+
+              // The background.
+              Container(
+                height: _height,
+                width: _width,
+                decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+                        image: AssetImage('assets/background.png')
+                    )
                 ),
               ),
-            ],
-          ),
-        ),
-        body: Stack(
-          children: <Widget>[
 
-            // The background.
-            Container(
-              height: _height,
-              width: _width,
-              decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                      image: AssetImage('assets/background.png')
-                  )
+              // The header.
+              Positioned(
+                right: 0.0, left: 0.0, top: _width > 360?10.0 : 10,
+                child: Image.asset('assets/header.png', width: _width > 360?161:138, height: _width > 360?142:117,),
               ),
-            ),
 
-            // The header.
-            Positioned(
-              right: 0.0, left: 0.0, top: _width > 360?40.0 : 10,
-              child: Image.asset('assets/header.png', width: 161, height: 142,),
-            ),
-
-            // The top left icon.
-            Positioned(
-              left: 0.0, top: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: (){
-                    _scaffoldKey.currentState.openDrawer();
-                  },
-                  child: Image.asset('assets/top_left_list_icon.png',
-                    height: 40,
-                    width: 40,
-                    color: Colors.white,
+              // The top left icon.
+              Positioned(
+                left: 0.0, top: 0.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                    child: Image.asset('assets/top_left_list_icon.png',
+                      height: 40,
+                      width: 40,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
 
 //            // The top right icon.
 //            Positioned(
@@ -154,200 +164,203 @@ class _HomeState extends State<Home> {
 
 
 
-            // The body
-            Positioned(
-              bottom: 0.0, right: 0.0, left: 0.0,
-              child: Column(
-                children: <Widget>[
+              // The body
+              Positioned(
+                bottom: 0.0, right: 0.0, left: 0.0,
+                child: Column(
+                  children: <Widget>[
 
-                  Stack(
-                    children: <Widget>[
-                      DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
-                    ],
-                  ),
+                    Stack(
+                      children: <Widget>[
+                        DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
+                      ],
+                    ),
 
-                  Stack(
-                    children: <Widget>[
+                    Stack(
+                      children: <Widget>[
 
-                      // The white background.
-                      SizedBox(
-                        width: _width,
-                        height: _height * 0.7,
-                        child: Container(
-                          color: Colors.white,
+                        // The white background.
+                        SizedBox(
+                          width: _width,
+                          height: _height * 0.75,
+                          child: Container(
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
 
-                      // Here is the events data.
-                      Positioned(
-                        left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360? 50.0:30,
-                        child: index == PagesIndices.homePageIndex? HomePage(
-                          onPress: (){
-                          setState(() {
-                              index = PagesIndices.categoryPageIndex;
-                            });
-                          },
-                          onEventPressed: (){
-                            setState(() {
-                              index = PagesIndices.eventPageIndex;
-                            });
-                          },
-                          onHotOfferPressed: (){
-                            setState(() {
-                              index = PagesIndices.eventPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.profilePageIndex? ProfilePage(
-                          onPreviousPagePressed: (){
-                            Globals.pagesStack.pop();
-                            setState(() {
-                              index = Globals.pagesStack.pop();
-                            });
-                          },
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.ideasPageIndex? IdeasPage(
-                          onPreviousPagePressed: _returnToPreviousPage,
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.faqPageIndex? FaqPage(
-                          onPreviousPagePressed: _returnToPreviousPage,
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.contactPageIndex? ContactPage(
-                          onPreviousPagePressed: _returnToPreviousPage,
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.categoryPageIndex? CategoryPage(
-                          onBack: _returnToPreviousPage,
-                          onCategoryPressed: (){
-                            setState(() {
-                              index = PagesIndices.eventPageIndex;
-                            });
-                          },
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.eventPageIndex? EventDetails(
-                          onPreviousPagePressed: _returnToPreviousPage,
-                          onEventBooked: (){
-                            setState(() {
-                              index = Globals.reservationOption == ReservationOptions.bySeats?
-                              PagesIndices.selectSeatPageIndex : PagesIndices.buyTicketsPageIndex;
-                            });
-                          },
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.selectSeatPageIndex? SelectSeat(
-                          onPreviousPagePressed: _returnToPreviousPage,
-                          onSeatsBooked: (){
-                            setState(() {
-                              index = PagesIndices.paymentPageIndex;
-                            });
-                          },
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.buyTicketsPageIndex? BuyTickets(
-                          onPreviousPagePressed: _returnToPreviousPage(),
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.paymentPageIndex? PaymentPage(
-                          onPreviousPagePressed: _returnToPreviousPage(),
-                          onAllCategoriesPressed: (){
-                            setState(() {
-                              index = PagesIndices.categoriesPageIndex;
-                            });
-                          },
-                        ):
-                        index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
-                          onPreviousPagePressed: (){
-                            _returnToPreviousPage();
-                          },
-                          onCategoryPressed: (){
-                            setState(() {
-                              index = PagesIndices.eventPageIndex;
-                            });
-                          },
-                          onAllEventsPressed: (){
-                            setState(() {
-                              index = PagesIndices.eventPageIndex;
-                            });
-                          },
-                        ):
-                        Container(),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-
-            // Search field
-            index != PagesIndices.homePageIndex?
-            Positioned(
-              right: 50.0, left: 50.0, bottom: _height * .665,
-              child: Material(
-                color: Colors.transparent,
-                elevation: 10.0,
-                shadowColor: Colors.black,
-                child: TextFormField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    labelText: 'Search for an event ...',
-                      contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Icon(Icons.search, size: 30,),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            width: 1,
-                          )
-                      )
-                  ),
+                        // Here is the events data.
+                        Positioned(
+                          left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
+                        index == PagesIndices.homePageIndex?2:35:
+                        index == PagesIndices.homePageIndex?1:20,
+                          child: index == PagesIndices.homePageIndex? HomePage(
+                            onPress: (){
+                              setState(() {
+                                index = PagesIndices.categoryPageIndex;
+                              });
+                            },
+                            onEventPressed: (){
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onHotOfferPressed: (){
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.profilePageIndex? ProfilePage(
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              setState(() {
+                                index = Globals.pagesStack.pop();
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.ideasPageIndex? IdeasPage(
+                            onPreviousPagePressed: _returnToPreviousPage,
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.faqPageIndex? FaqPage(
+                            onPreviousPagePressed: _returnToPreviousPage,
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.contactPageIndex? ContactPage(
+                            onPreviousPagePressed: _returnToPreviousPage,
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.categoryPageIndex? CategoryPage(
+                            onBack: _returnToPreviousPage,
+                            onCategoryPressed: (){
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.eventPageIndex? EventDetails(
+                            onPreviousPagePressed: _returnToPreviousPage,
+                            onEventBooked: (){
+                              setState(() {
+                                index = Globals.reservationOption == ReservationOptions.bySeats?
+                                PagesIndices.selectSeatPageIndex : PagesIndices.buyTicketsPageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.selectSeatPageIndex? SelectSeat(
+                            onPreviousPagePressed: _returnToPreviousPage,
+                            onSeatsBooked: (){
+                              setState(() {
+                                index = PagesIndices.paymentPageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.buyTicketsPageIndex? BuyTickets(
+                            onPreviousPagePressed: _returnToPreviousPage(),
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.paymentPageIndex? PaymentPage(
+                            onPreviousPagePressed: _returnToPreviousPage(),
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
+                            onPreviousPagePressed: (){
+                              _returnToPreviousPage();
+                            },
+                            onCategoryPressed: (){
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onAllEventsPressed: (){
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                          ):
+                          Container(),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ):
-            Container(),
 
 
-          ],
+              // Search field
+              index != PagesIndices.homePageIndex?
+              Positioned(
+                right: 50.0, left: 50.0, bottom: _height * .71,
+                child: Material(
+                  color: Colors.transparent,
+                  elevation: 10.0,
+                  shadowColor: Colors.black,
+                  child: TextFormField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                        labelText: 'Search for an event ...',
+                        contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(Icons.search, size: 30,),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              width: 1,
+                            )
+                        )
+                    ),
+                  ),
+                ),
+              ):
+              Container(),
+
+
+            ],
+          ),
         ),
       ),
     );
@@ -375,6 +388,7 @@ class _HomeState extends State<Home> {
   _returnToPreviousPage(){
     if(Globals.pagesStack.isNotEmpty)
       Globals.pagesStack.pop();
+
     setState(() {
       index = Globals.pagesStack.isNotEmpty? Globals.pagesStack.pop(): PagesIndices.homePageIndex;
     });
