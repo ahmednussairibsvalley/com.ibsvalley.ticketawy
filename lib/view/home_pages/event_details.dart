@@ -74,7 +74,7 @@ class EventDetails extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro'
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -116,7 +116,8 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
         });
       });
   }
-
+//sghgjxgjd csdkjdvskj ksjhfksjdhf
+  //Begin
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -129,7 +130,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    height: 50,
+                    height: 45,
                     color: Color(0xfff0f0f0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -218,10 +219,10 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                       widget.onEventBooked();
                   },
                   child: Container(
-                    height: 50,
+                    height: 45,
                     color: Color(0xffff6600),
                     child: Padding(
-                      padding: EdgeInsets.only(left: 25,right: 15,top: 15,bottom: 15),
+                      padding: EdgeInsets.only(left: 30,right: 30,top: 15,bottom: 15),
                       child: Text(
                         Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy 20\$',
                         textAlign: TextAlign.center,
@@ -247,7 +248,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       ),
     );
   }
-
+// End
   _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
         context: context,
@@ -257,7 +258,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
             contentPadding: EdgeInsets.all(0),
             content: Container(
               width: 400.0,
-              height: 500.0,
+              height: 530.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -316,6 +317,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
             ),
           ),
         ),
+
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -401,6 +403,8 @@ class _ChooseTicketState extends State<ChooseTicket> {
   }
 }
 
+
+// Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
@@ -410,18 +414,40 @@ class _TicketQuantityState extends State<TicketQuantity> {
   int _current = 0;
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-        value: _current,
-        items: List.generate(11, (index) {
-          return DropdownMenuItem(
-            child: Text('$index'),
-            value: index,
-          );
-        }),
-        onChanged: (index) {
-          setState(() {
-            _current = index;
-          });
-        });
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        shadowColor: Colors.black,
+        elevation: 5,
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          width: 100,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(width: 0.5, style: BorderStyle.none),
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            ),
+          ),
+          child: DropdownButton(
+            elevation: 10,underline: Container(),
+            icon: Icon(Icons.expand_more),
+              value: _current,
+              items: List.generate(11, (index) {
+                return DropdownMenuItem(
+                  child: Container(
+                    width: 70,
+                      child: Text('$index', textAlign: TextAlign.center,)
+                  ),
+                  value: index,
+                );
+              }),
+              onChanged: (index) {
+                setState(() {
+                  _current = index;
+                });
+              }),
+        ),
+      ),
+    );
   }
 }

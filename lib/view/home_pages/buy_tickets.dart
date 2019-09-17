@@ -59,7 +59,7 @@ class BuyTickets extends StatelessWidget {
                         Text(
                           'All Categories',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.white,fontSize: 20
                           ),
                           textAlign: TextAlign.center,
                         ),

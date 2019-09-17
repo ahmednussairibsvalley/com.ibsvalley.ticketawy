@@ -83,5 +83,12 @@ flutter:
         - asset: assets/fonts/GeometriqueSans-Bold.otf
         - asset: assets/fonts/GeometriqueSans-ExtraBold.otf
         - asset: assets/fonts/GeometriqueSans-Medium.otf
+    - family: MyriadPro
+      fonts:
+        - asset: assets/fonts/MYRIADPRO-REGULAR.OTF
+    - family: Verdana
+      fonts:
+        - asset: assets/fonts/verdana_1.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
