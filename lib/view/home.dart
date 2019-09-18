@@ -29,12 +29,6 @@ class _HomeState extends State<Home> {
 
   int index = PagesIndices.homePageIndex;
 
-  Future<bool> _onWillPopScope() async {
-
-    _returnToPreviousPage();
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -79,8 +73,14 @@ class _HomeState extends State<Home> {
 
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
+    print('Current Index: $index');
     return WillPopScope(
-      onWillPop: _onWillPopScope,
+      onWillPop: () async {
+
+        await _returnToPreviousPage();
+        return false;
+      },
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -123,8 +123,8 @@ class _HomeState extends State<Home> {
 
               // The header.
               Positioned(
-                right: 0.0, left: 0.0, top: _width > 360?10.0 : 10,
-                child: Image.asset('assets/header.png', width: _width > 360?161:138, height: _width > 360?142:117,),
+                right: 0.0, left: 0.0, top: _width > 360?10.0 : 1,
+                child: Image.asset('assets/header.png', width: _width > 360?161:130, height: _width > 360?142:100,),
               ),
 
               // The top left icon.
@@ -261,10 +261,15 @@ class _HomeState extends State<Home> {
                           index == PagesIndices.eventPageIndex? EventDetails(
                             onPreviousPagePressed: _returnToPreviousPage,
                             onEventBooked: (){
-                              setState(() {
-                                index = Globals.reservationOption == ReservationOptions.bySeats?
-                                PagesIndices.selectSeatPageIndex : PagesIndices.buyTicketsPageIndex;
-                              });
+                              if(Globals.reservationOption == ReservationOptions.bySeats){
+                                setState(() {
+                                  index = PagesIndices.selectSeatPageIndex;
+                                });
+                              } else {
+                                setState(() {
+                                  index = PagesIndices.buyTicketsPageIndex;
+                                });
+                              }
                             },
                             onAllCategoriesPressed: (){
                               setState(() {
@@ -389,6 +394,7 @@ class _HomeState extends State<Home> {
       if(Globals.pagesStack.isNotEmpty){
         setState(() {
           index = Globals.pagesStack.pop();
+          print('Popped Item: $index');
         });
       } else {
         exit(0);

@@ -102,6 +102,9 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -136,7 +139,7 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
                 child: Container(
                   width: 130,
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(15),
                     child: Text('My Info',
                       textAlign: TextAlign.center,
                       style: TextStyle(

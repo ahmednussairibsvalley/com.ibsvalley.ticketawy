@@ -15,7 +15,7 @@ class BuyTickets extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async{
         onPreviousPagePressed();
-        return true;
+        return false;
       },
       child: Scaffold(
         body: buyTickets(),

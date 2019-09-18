@@ -102,9 +102,9 @@ class _paymentState extends State<Payment> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 250),
-                  ),
+//                  Padding(
+//                    padding: EdgeInsets.only(bottom: 250),
+//                  ),
                   Text(
                     'Payment',
                     style: TextStyle(
