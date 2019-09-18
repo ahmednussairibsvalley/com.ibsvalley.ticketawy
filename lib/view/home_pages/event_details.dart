@@ -121,6 +121,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -147,7 +148,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
-                                fontSize: _width > 360?20:16,
+                                fontSize: _width > 360?20:12,
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -172,7 +173,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
-                                fontSize: _width > 360?20:16,
+                                fontSize: _width > 360?20:12,
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -197,7 +198,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
-                                fontSize: _width > 360?20:16,
+                                fontSize: _width > 360?20:12,
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)
                                     : Color(0xff979797),
@@ -210,7 +211,11 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   ),
                 ),
 
+
+
+
                 // Buy Tickets Button
+//                BuyTicket(),
                 GestureDetector(
                   onTap: () {
                     if(Globals.reservationOption == ReservationOptions.byTickets)
@@ -231,6 +236,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -258,7 +264,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
             contentPadding: EdgeInsets.all(0),
             content: Container(
               width: 400.0,
-              height: 530.0,
+              height: 400.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -334,7 +340,10 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('${_map.keys.toList()[index]}'),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16,left: 12),
+                          child: Text('${_map.keys.toList()[index]}'),
+                        ),
                         Container(
                           width: 70,
                           alignment: Alignment.center,
@@ -414,40 +423,37 @@ class _TicketQuantityState extends State<TicketQuantity> {
   int _current = 0;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        shadowColor: Colors.black,
-        elevation: 5,
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          width: 100,
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 0.5, style: BorderStyle.none),
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-            ),
-          ),
-          child: DropdownButton(
-            elevation: 10,underline: Container(),
-            icon: Icon(Icons.expand_more),
-              value: _current,
-              items: List.generate(11, (index) {
-                return DropdownMenuItem(
-                  child: Container(
-                    width: 70,
-                      child: Text('$index', textAlign: TextAlign.center,)
-                  ),
-                  value: index,
-                );
-              }),
-              onChanged: (index) {
-                setState(() {
-                  _current = index;
-                });
-              }),
+    return Row(
+
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        GestureDetector(
+          onTap: (){
+            setState(() {
+              _current++;
+            });
+          },
+          child: Icon(Icons.add),
         ),
-      ),
+        Container(
+            width: 30,
+            child:  Text('$_current', textAlign: TextAlign.center,)
+
+        ),
+        GestureDetector(
+          onTap: (){
+            if(_current > 0){
+              setState(() {
+                _current--;
+              });
+            }
+
+          },
+          child: Icon(Icons.remove),
+        )
+      ],
     );
   }
 }
+
+
