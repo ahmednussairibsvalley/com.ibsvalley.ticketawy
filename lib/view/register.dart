@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dashed_divider.dart';
+
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
@@ -47,11 +49,9 @@ class _RegisterState extends State<Register> {
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(
-                                left: 20, right: 20,),
-                              child: Text(
-                                '- - - - - - - - - - - - - - -',
-                                style: TextStyle(fontSize: 35,color: Colors.white30,),textAlign: TextAlign.center,
+                              padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
+                              child: DashedDivider(
+                                color: Colors.white30,
                               ),
                             ),
                             Padding(
@@ -167,18 +167,22 @@ class _RegisterState extends State<Register> {
                                 Navigator.of(context).pop();
                               },
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text('Have an account?\n----------------------------',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                      ),
+                                  Text(
+                                    'Have an account?',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                    child: DashedDivider(
+                                      width: 5,
+                                      color: Colors.white,
+                                    ),
+                                  )
                                 ],
                               ),
                             )
