@@ -4,7 +4,7 @@ import 'package:ticketawy/view/register.dart';
 
 import 'custom_widgets/CustomShowDialog.dart';
 
-String username = 'ticketawy';
+String mobile = '123456';
 String password = '123456';
 
 class Login extends StatefulWidget {
@@ -71,6 +71,7 @@ class _LoginState extends State<Login> {
                         top: 20.0,
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -83,12 +84,12 @@ class _LoginState extends State<Login> {
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
-                          hintText: 'User name',
+                          hintText: 'Mobile Number',
                         ),
                         validator: (value) {
                           if(value.isEmpty)
                             return 'Please enter your username';
-                          else if(value != username)
+                          else if(value != mobile)
                             return 'Wrong username';
                           return null;
                         },

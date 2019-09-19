@@ -63,6 +63,7 @@ class _RegisterState extends State<Register> {
                             Padding(
                               padding: const EdgeInsets.only(left: 45.0, right: 45.0, bottom: 8.0, top: 20.0,),
                               child: TextFormField(
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
@@ -76,7 +77,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     fontSize: 15,
                                   ),
-                                  hintText: 'User name',
+                                  hintText: 'Mobile Number',
                                 ),
                                 validator: (value){
                                   return null;
@@ -119,7 +120,7 @@ class _RegisterState extends State<Register> {
                                 decoration: InputDecoration(
                                   filled: true,
                                   fillColor: Colors.white,
-                                  prefixIcon: Icon(Icons.phone_iphone),
+                                  prefixIcon: Icon(Icons.lock_outline),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide(
@@ -129,7 +130,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     fontSize: 15,
                                   ),
-                                  hintText: 'Phone',
+                                  hintText: 'Confirm Password',
                                 ),
                                 validator: (value){
                                   return null;
