@@ -465,7 +465,7 @@ class _FiterDialogState extends State<FiterDialog> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Date'),
+              child: Text('Date',style: TextStyle(color: Color(0xff656565)),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
@@ -507,7 +507,7 @@ class _FiterDialogState extends State<FiterDialog> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Time'),
+              child: Text('Time',style: TextStyle(color: Color(0xff656565)),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
@@ -549,7 +549,7 @@ class _FiterDialogState extends State<FiterDialog> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 20.0, ),
-              child: Text('City'),
+              child: Text('City',style: TextStyle(color: Color(0xff656565)),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
@@ -587,16 +587,16 @@ class _FiterDialogState extends State<FiterDialog> {
 
         // Category Filter
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Category'),
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('Category',style: TextStyle(color: Color(0xff656565)),),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
+              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0,),
               child: Container(
-                padding: EdgeInsets.only(right: 10, left: 10,),
+                padding: EdgeInsets.only(right:5, left: 10,),
                 decoration: ShapeDecoration(
                   color: Color(0xffeeeeee),
                   shape: RoundedRectangleBorder(
