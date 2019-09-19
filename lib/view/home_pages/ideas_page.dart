@@ -10,6 +10,8 @@ class IdeasPage extends StatelessWidget {
   IdeasPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
     Globals.pagesStack.push(PagesIndices.ideasPageIndex);
 
     return Scaffold(
@@ -23,12 +25,13 @@ class IdeasPage extends StatelessWidget {
           children: <Widget>[
             // The title
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
               child: Text('Ideas',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xfffe6700),
                   fontSize: 25,
+                  fontFamily: 'Verdana'
                 ),
               ),
             ),
@@ -58,7 +61,8 @@ class IdeasPage extends StatelessWidget {
                       Text(
                         'Previous Page',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -80,7 +84,8 @@ class IdeasPage extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -127,12 +132,12 @@ class _IdeasFormState extends State<IdeasForm> {
                 keyboardType: TextInputType.multiline,
                 maxLines: 7,
                 decoration: InputDecoration(
-                  labelText: 'Describe your idea here ...',
+                  hintText: 'Describe your idea here ...',
 
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(20),borderSide: BorderSide.none
                   ),
                 ),
               ),
@@ -150,19 +155,20 @@ class _IdeasFormState extends State<IdeasForm> {
 
           // Send button
           Padding(
-            padding: const EdgeInsets.only(right: 50, left: 50),
+            padding: const EdgeInsets.only(right: 30, left: 30),
             child: ListTile(
               title: Material(
                 shadowColor: Colors.black,
                 elevation: 10,
                 color: Colors.transparent,
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
                 child: Container(
                   padding: EdgeInsets.all(20),
-                  child: Text('Send',
+                  child: Text('Send!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
+                      fontFamily: 'MyriadPro'
                     ),
                     textAlign: TextAlign.center,
                   ),

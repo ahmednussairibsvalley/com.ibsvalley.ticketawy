@@ -36,7 +36,8 @@ class ProfilePage extends StatelessWidget {
                       Text(
                         'Previous Page',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -58,7 +59,8 @@ class ProfilePage extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -111,12 +113,13 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
 
           // The title
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
             child: Text('My Profile',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Color(0xfffe6700),
                 fontSize: 25,
+                fontFamily: 'Verdana'
               ),
             ),
           ),

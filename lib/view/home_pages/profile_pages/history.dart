@@ -131,7 +131,7 @@ class HistoryItem extends StatelessWidget {
                     color: Color(0xfffe6700),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -157,7 +157,7 @@ class HistoryItem extends StatelessWidget {
                     color: Color(0xfffe6700),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[

@@ -33,7 +33,8 @@ class PaymentPage extends StatelessWidget {
                       Text(
                         'Previous Page',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -55,7 +56,8 @@ class PaymentPage extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -86,12 +88,13 @@ class _paymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
         body: ListView(
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 500,
+              height: 260,
               decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
@@ -133,96 +136,108 @@ class _paymentState extends State<Payment> {
                       }).toList(),
                     ),
                   ),
-                  _nameOnCard(),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.all(8.0),
+                    child: _nameOnCard(),
                   ),
-                  _cardNumber(),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _cardNumber(),
+                  ),
                 ],
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                    width: 140,
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child:
-                              Material(
-                                shadowColor: Colors.black, elevation: 4, shape: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none) ,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      hintText: 'CVV',
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                          borderSide: BorderSide.none)),
-                                ),)
-                          )
-                        ],
-                      ),
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(right: 15),
-                ),
-                SizedBox(
-                    width: 140,
-                    child: Container(
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                              child:
-
-                              Material(
-                                shadowColor: Colors.black, elevation: 4, shape: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none) ,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                      hintText: 'EXP',
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                          borderSide: BorderSide.none)),
-                                ),)
-
-                          )
-                        ],
-                      ),
-                    )),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 10),),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: FlatButton(
-                    child: Text(
-                      'Confirm',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {},
-                    color: Color(0xffff8020),
-                    shape: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none),
+            //CVV & EXP
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                      width: 140,
+                      child: Container(
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                child:
+                                Material(
+                                  shadowColor: Colors.black, elevation: 4, shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none) ,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'CVV',
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                            borderSide: BorderSide.none)),
+                                  ),)
+                            )
+                          ],
+                        ),
+                      )),
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
                   ),
-                )
-              ],
+                  //EXP
+                  SizedBox(
+                      width: 140,
+                      child: Container(
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                                child:
+                                Material(
+                                  shadowColor: Colors.black, elevation: 4, shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none) ,
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        hintText: 'EXP',
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                            borderSide: BorderSide.none)),
+                                  ),)
+
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+            ),
+
+            //Confirm Button
+            Padding(
+              padding: const EdgeInsets.only(right: 30, left: 30),
+              child: ListTile(
+                title: Material(
+                  shadowColor: Colors.black,
+                  elevation: 10,
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Text('Confirm',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: 'MyriadPro'
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    decoration: BoxDecoration(
+                        color: Color(0xfffe6700),
+                        borderRadius: BorderRadius.circular(20)
+                    ),
+                  ),
+                ),
+              ),
             )
           ],
         ));

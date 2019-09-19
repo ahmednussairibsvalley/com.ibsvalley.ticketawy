@@ -44,10 +44,11 @@ class LocationPage extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text('Starts at:'),
+                              Text('Starts at:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
                               Text('09:00 am',
                                 style: TextStyle(
                                   color: Color(0xffff6600),
+                                  fontFamily: 'Verdana',
                                 ),
                               ),
                             ],
@@ -64,10 +65,11 @@ class LocationPage extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text('Duration:'),
+                              Text('Duration:', style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
                               Text('2 Days',
                                 style: TextStyle(
                                   color: Color(0xffff6600),
+                                  fontFamily: 'Verdana',
                                 ),
                               ),
                             ],

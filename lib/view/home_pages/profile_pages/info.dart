@@ -25,7 +25,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                labelText: 'User name',
+                hintText: 'User name',
                 prefixIcon: Icon(Icons.person_outline),
               ),
               validator: (value){
@@ -49,7 +49,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                labelText: 'Password',
+                hintText: 'Password',
                 prefixIcon: Icon(Icons.lock_outline),
               ),
               validator: (value){
@@ -74,7 +74,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                labelText: 'Phone',
+                hintText: 'Phone',
                 prefixIcon: Icon(Icons.phone_android),
               ),
               validator: (value){
@@ -88,22 +88,27 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
           // Update Button
           Padding(
-            padding: const EdgeInsets.only(right: 30, left: 30,),
+            padding: const EdgeInsets.only(right: 30, left: 30),
             child: ListTile(
-              title: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+              title: Material(
+                shadowColor: Colors.black,
+                elevation: 10,
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: EdgeInsets.all(20),
                   child: Text('Update',
-                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: 'MyriadPro'
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-                decoration: BoxDecoration(
-                  color: Color(0xfffe6700),
-                  borderRadius: BorderRadius.circular(15),
+                  decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20)
+                  ),
                 ),
               ),
             ),

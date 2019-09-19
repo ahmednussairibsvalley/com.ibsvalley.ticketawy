@@ -39,6 +39,7 @@ class CategoryPage extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xffff6600),
                       fontSize: 17,
+                      fontFamily: 'Verdana'
                     ),
                   ),
                   GestureDetector(
@@ -91,6 +92,8 @@ class CategoryPage extends StatelessWidget {
                           'Previous Page',
                           style: TextStyle(
                             color: Colors.white,
+                              fontFamily: 'MyriadPro',
+                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -113,6 +116,8 @@ class CategoryPage extends StatelessWidget {
                           'All Categories',
                           style: TextStyle(
                             color: Colors.white,
+                              fontFamily: 'MyriadPro',
+                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center,
                         ),

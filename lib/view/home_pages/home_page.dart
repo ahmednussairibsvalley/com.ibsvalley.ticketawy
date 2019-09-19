@@ -174,6 +174,8 @@ class _EventsSliderState extends State<EventsSlider> {
   }
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
         _carouselSlider,
@@ -189,8 +191,8 @@ class _EventsSliderState extends State<EventsSlider> {
                   _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
                 },
                 child: Container(
-                  width: 15.0,
-                  height: 15.0,
+                  width: _width > 350? 12.0 : 10.0,
+                  height: _width > 350? 12.0 : 10.0,
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -280,6 +282,8 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   }
   @override
   Widget build(BuildContext context) {
+
+    final _width = MediaQuery.of(context).size.width;
     return Container(
       color: Color(0xfff0f0f0),
       child: Column(
@@ -299,8 +303,8 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                     _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
                   },
                   child: Container(
-                    width: 15.0,
-                    height: 15.0,
+                    width:  _width > 350? 12.0 : 10.0,
+                    height:  _width > 350? 12.0 : 10.0,
                     margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -356,7 +360,12 @@ class CategoriesPage extends StatelessWidget {
                     Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text('${list[index].title}'),
+                      child: Text('${list[index].title}',
+                        style: TextStyle(
+                            color: Color(0xff656565),
+                            fontFamily: 'MyriadPro'
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -436,6 +445,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
   }
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
         // The title
@@ -446,7 +456,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
             style: TextStyle(
                 color: Color(0xfffe6700),
                 fontSize: 18, fontWeight: FontWeight.bold,
-              //fontFamily: 'Verdana',
+              fontFamily: 'Verdana',
             ),
           ),
         ),
@@ -466,8 +476,8 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
 
                 },
                 child: Container(
-                  width: 15.0,
-                  height: 15.0,
+                  width:  _width > 350? 12.0 : 10.0,
+                  height:  _width > 350? 12.0 : 10.0,
                   margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -524,7 +534,12 @@ class HotOfferPage extends StatelessWidget {
                     Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text('${list[index].title}'),
+                      child: Text('${list[index].title}',
+                        style: TextStyle(
+                          color: Color(0xff656565),
+                          fontFamily: 'MyriadPro'
+                        ),
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(

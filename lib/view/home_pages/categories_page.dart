@@ -48,6 +48,8 @@ class AllCategoriesPage extends StatelessWidget {
                         'Previous Page',
                         style: TextStyle(
                           color: Colors.white,
+                            fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -69,7 +71,8 @@ class AllCategoriesPage extends StatelessWidget {
                       Text(
                         'All Events',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),

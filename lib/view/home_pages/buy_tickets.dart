@@ -38,6 +38,8 @@ class BuyTickets extends StatelessWidget {
                           'Previous Page',
                           style: TextStyle(
                             color: Colors.white,
+                              fontFamily: 'MyriadPro',
+                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -59,7 +61,9 @@ class BuyTickets extends StatelessWidget {
                         Text(
                           'All Categories',
                           style: TextStyle(
-                            color: Colors.white,fontSize: 20
+                            color: Colors.white, fontSize: 16,
+                              fontFamily: 'MyriadPro',
+
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -87,109 +91,116 @@ class _buyTicketsState extends State<buyTickets> {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: ListView(
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Event name here',
-                  style: TextStyle(color: Color(0xff6f7c7d), fontSize: 20),
-                ),
-                Text(
-                  'Seats order information',
-                  style: TextStyle(color: Color(0xffff8020), fontSize: 20),
-                ),
-                SizedBox(
-                  width: 350,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Table(
-                        border: TableBorder.all(
-                          color: Colors.black38,
-                          width: 2,
+            child: Padding(
+              padding: EdgeInsets.only(top: _width > 360?10:8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Event name here',
+                    style: TextStyle(color: Color(0xff6f7c7d), fontSize: 20),
+                  ),
+                  Text(
+                    'Seats order information',
+                    style: TextStyle(color: Color(0xffff8020), fontSize: 20),
+                  ),
+                  SizedBox(
+                    width: 350,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Table(
+                          border: TableBorder.all(
+                            color: Colors.black38,
+                            width: 2,
+                          ),
+                          children: [
+                            TableRow(children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: 5, right: 5, top: 5, left: 5),
+                                child: Text('Section',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black38, fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: 5, right: 5, top: 5, left: 5),
+                                child: Text('Row',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black38, fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: 5, right: 5, top: 5, left: 5),
+                                child: Text('Seats',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black38, fontSize: 20)),
+                              ),
+                            ]),
+                            TableRow(children: [
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  'C16-RIGHT',
+                                  style: TextStyle(
+                                      color: Color(0xff592c82), fontSize: 20),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  '5',
+                                  style: TextStyle(
+                                      color: Color(0xff592c82), fontSize: 20),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  '10-12',
+                                  style: TextStyle(
+                                      color: Color(0xff592c82), fontSize: 20),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ])
+                          ],
                         ),
-                        children: [
-                          TableRow(children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 5, right: 5, top: 5, left: 5),
-                              child: Text('Section',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.black38, fontSize: 20)),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 5, right: 5, top: 5, left: 5),
-                              child: Text('Row',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.black38, fontSize: 20)),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 5, right: 5, top: 5, left: 5),
-                              child: Text('Seats',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.black38, fontSize: 20)),
-                            ),
-                          ]),
-                          TableRow(children: [
-                            Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                'C16-RIGHT',
-                                style: TextStyle(
-                                    color: Color(0xff592c82), fontSize: 20),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                '5',
-                                style: TextStyle(
-                                    color: Color(0xff592c82), fontSize: 20),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                '10-12',
-                                style: TextStyle(
-                                    color: Color(0xff592c82), fontSize: 20),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ])
-                        ],
                       ),
                     ),
-                  ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  'Tickets number',
+                  style: TextStyle(color: Color(0xff592c82), fontSize: 18),
+                ),
+                Text(
+                  'Total price',
+                  style: TextStyle(color: Color(0xff592c82), fontSize: 18),
                 )
               ],
             ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Text(
-                'Tickets number',
-                style: TextStyle(color: Color(0xff592c82), fontSize: 20),
-              ),
-              Text(
-                'Tickets number',
-                style: TextStyle(color: Color(0xff592c82), fontSize: 20),
-              )
-            ],
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8),
@@ -200,14 +211,14 @@ class _buyTicketsState extends State<buyTickets> {
             children: <Widget>[
               SizedBox(
                 width: 100,
-                height: 35,
+                height: 30,
                 child: FlatButton(
                   child: Text(
                     '2',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onPressed: () {},
-                  color: Color(0xff592c82),
+                  color: Color(0xff4b3d7a),
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide.none),
@@ -215,14 +226,14 @@ class _buyTicketsState extends State<buyTickets> {
               ),
               SizedBox(
                 width: 100,
-                height: 35,
+                height: 30,
                 child: FlatButton(
                   child: Text(
                     "100\$",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onPressed: () {},
-                  color: Color(0xff592c82),
+                  color: Color(0xff4b3d7a),
                   shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide.none),
@@ -258,19 +269,29 @@ class _buyTicketsState extends State<buyTickets> {
             padding: EdgeInsets.only(bottom: 10),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 50, right: 50),
-            child: FlatButton(
-              child: Text(
-                'Continue',
-                style: TextStyle(fontSize: 20, color: Colors.white),
+            padding: const EdgeInsets.only(right: 30, left: 30),
+            child: ListTile(
+              title: Material(
+                shadowColor: Colors.black,
+                elevation: 10,
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Text('Continue',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontFamily: 'MyriadPro'
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                ),
               ),
-              onPressed: () {
-
-              },
-              color: Color(0xffff8020),
-              shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none),
             ),
           )
         ],

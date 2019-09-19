@@ -25,10 +25,10 @@ class AboutPage extends StatelessWidget {
                     Text('Event Name Here',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color(0xffff6600),
+                        color: Color(0xffff6600),fontFamily: 'Verdana'
                       ),
                     ),
-                    Text('Event Description'),
+                    Text('Event Description',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DashedDivider(
@@ -49,10 +49,11 @@ class AboutPage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Starts at:'),
+                                Text('Starts at:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565))),
                                 Text('09:00 am',
                                   style: TextStyle(
                                     color: Color(0xffff6600),
+                                    fontFamily: 'Verdana'
                                   ),
                                 ),
                               ],
@@ -69,10 +70,11 @@ class AboutPage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Duration:'),
+                                Text('Duration:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565))),
                                 Text('2 Days',
                                   style: TextStyle(
                                     color: Color(0xffff6600),
+                                    fontFamily: 'Verdana'
                                   ),
                                 ),
                               ],

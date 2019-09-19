@@ -2,6 +2,38 @@ import 'package:flutter/material.dart';
 
 import '../../globals.dart';
 
+List<List<bool>> _list1 = [
+  [false, false, true, false, true, false],
+  [false, true, false, false, true, true],
+  [true, false, true, false, true, false],
+  [false, false, false, false, false, false],
+  [true, false, true, false, false, false],
+];
+
+List<List<bool>> _list2 = [
+  [false, false, true, false, false, false],
+  [false, false, false, true, true, false],
+  [false, false, true, false, true, false],
+  [false, true, false, false, true, false],
+  [true, false, true, false, false, false],
+];
+
+List<List<bool>> _list3 = [
+  [false, false, false, false, true, false],
+  [false, false, false, false, false, false],
+  [true, false, true, false, false, true],
+  [false, false, false, false, false, false],
+  [false, false, false, false, true, false],
+];
+
+List<List<bool>> _list4 = [
+  [true, false, false, false, true, false],
+  [false, true, false, true, false, false],
+  [false, false, false, true, false, false],
+  [true, false, false, false, false, true],
+  [false, false, true, false, true, false],
+];
+
 class SelectSeat extends StatelessWidget {
 
   final Function onPreviousPagePressed;
@@ -26,6 +58,7 @@ class SelectSeat extends StatelessWidget {
               style: TextStyle(
                 color: Color(0xff767676),
                 fontSize: MediaQuery.of(context).size.width > 360?25:20,
+                fontFamily: 'Verdana',
               ),
             ),
           ),
@@ -46,7 +79,12 @@ class SelectSeat extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _row(), _row(),
+              _row(
+                [_list1, _list2]
+              ),
+              _row(
+                [_list3, _list4]
+              ),
             ],
           ),
 
@@ -94,7 +132,8 @@ class SelectSeat extends StatelessWidget {
                       Text(
                         'Previous Page',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -116,7 +155,8 @@ class SelectSeat extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -131,19 +171,17 @@ class SelectSeat extends StatelessWidget {
     );
   }
 
-  Widget _row(){
+  Widget _row(List list){
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
+      children: List.generate(list.length, (index){
+        return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SeatsArea(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SeatsArea(),
-        ),
-      ],
+          child: SeatsArea(
+            list: list[index],
+          ),
+        );
+      }),
     );
   }
 
@@ -190,6 +228,10 @@ class SelectSeat extends StatelessWidget {
 }
 
 class SeatsArea extends StatefulWidget {
+
+  final List<List<bool>> list;
+
+  SeatsArea({@required this.list});
   @override
   _SeatsAreaState createState() => _SeatsAreaState();
 }
@@ -202,19 +244,21 @@ class _SeatsAreaState extends State<SeatsArea> {
   Widget build(BuildContext context) {
 
     return Column(
-      children: List.generate(5, (index){
-        return _row();
+      children: List.generate(widget.list.length, (index){
+        return _row(widget.list[index]);
       }),
     );
   }
 
-  Widget _row(){
+  Widget _row(List<bool> list){
     final _width = MediaQuery.of(context).size.width;
     return Row(
-      children: List.generate(6, (index){
+      children: List.generate(list.length, (index){
         return Padding(
           padding: EdgeInsets.all(_width > 360?3.0: 2),
-          child: SeatItem(),
+          child: SeatItem(
+            reserved: list[index],
+          ),
         );
       }),
     );
@@ -222,23 +266,38 @@ class _SeatsAreaState extends State<SeatsArea> {
 }
 
 class SeatItem extends StatefulWidget {
+
+  final bool reserved;
+
+  SeatItem({@required this.reserved});
+
   @override
   _SeatItemState createState() => _SeatItemState();
 }
 
 class _SeatItemState extends State<SeatItem> {
 
+
+
   bool _selected = false;
   bool _reserved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _reserved = widget.reserved;
+  }
 
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: (){
-        setState(() {
-          _selected = _selected?false:true;
-        });
+        if(!_reserved){
+          setState(() {
+            _selected = _selected?false:true;
+          });
+        }
       },
       child: Container(
         color: _reserved? Color(0xff4b3d7a): _selected? Color(0xffff6600):Color(0xff929292),

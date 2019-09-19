@@ -35,7 +35,7 @@ class _RegisterState extends State<Register> {
             Positioned(
               left: 0.0,
               right: 0.0,
-              top: _height / 11,
+              top: _width > 360?_height / 11:_height / 25,
               bottom: 0.0,
               child: ListView(
                 children: <Widget>[
@@ -76,7 +76,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     fontSize: 15,
                                   ),
-                                  labelText: 'User name',
+                                  hintText: 'User name',
                                 ),
                                 validator: (value){
                                   return null;
@@ -93,7 +93,7 @@ class _RegisterState extends State<Register> {
                                   filled: true,
                                   fillColor: Colors.white,
                                   prefixIcon: Icon(Icons.lock_outline),
-                                  suffixIcon: Icon(Icons.help_outline),
+//                                  suffixIcon: Icon(Icons.help_outline),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide(
@@ -103,7 +103,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     fontSize: 15,
                                   ),
-                                  labelText: 'Password',
+                                  hintText: 'Password',
                                 ),
                                 validator: (value){
                                   return null;
@@ -129,7 +129,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     fontSize: 15,
                                   ),
-                                  labelText: 'Phone',
+                                  hintText: 'Phone',
                                 ),
                                 validator: (value){
                                   return null;
@@ -198,10 +198,11 @@ class _RegisterState extends State<Register> {
                   Navigator.of(context).pop();
                 },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Icon(
                         Icons.arrow_back,
                       color: Colors.white,
+                      size: 30,
                     ),
                   )
               ),

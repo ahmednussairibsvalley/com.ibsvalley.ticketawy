@@ -3,6 +3,9 @@ import 'package:ticketawy/view/register.dart';
 
 import 'custom_widgets/CustomShowDialog.dart';
 
+String username = 'ticketawy';
+String password = '123456';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -35,7 +38,7 @@ class _LoginState extends State<Login> {
             Positioned(
               left: 0.0,
               right: 0.0,
-              top: _height / 11,
+              top: _width > 360? _height / 11 : _height / 13,
               bottom: 0.0,
               child: Form(
                 key: _formKey,
@@ -81,9 +84,13 @@ class _LoginState extends State<Login> {
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
-                          labelText: 'User name',
+                          hintText: 'User name',
                         ),
                         validator: (value) {
+                          if(value.isEmpty)
+                            return 'Please enter your username';
+                          else if(value != username)
+                            return 'Wrong username';
                           return null;
                         },
                       ),
@@ -103,7 +110,7 @@ class _LoginState extends State<Login> {
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: Icon(Icons.lock_outline),
-                          suffixIcon: Icon(Icons.help_outline),
+//                          suffixIcon: Icon(Icons.help_outline),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide: BorderSide(
@@ -112,9 +119,13 @@ class _LoginState extends State<Login> {
                           labelStyle: TextStyle(
                             fontSize: 15,
                           ),
-                          labelText: 'Password',
+                          hintText: 'Password',
                         ),
                         validator: (value) {
+                          if(value.isEmpty)
+                            return 'Please enter your password';
+                          else if(value != password)
+                            return 'Wrong password';
                           return null;
                         },
                       ),
@@ -129,7 +140,9 @@ class _LoginState extends State<Login> {
                       ),
                       child: ListTile(
                         onTap: () {
-                          Navigator.of(context).pushReplacementNamed('/home');
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          if(_formKey.currentState.validate())
+                            Navigator.of(context).pushReplacementNamed('/home');
                         },
                         title: Container(
                           decoration: BoxDecoration(
@@ -161,7 +174,7 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.all(4.0),
+                            padding: const EdgeInsets.all(0.0),
                             child: Text(
                               'Don\'t have an account?\n-------------------------------------',
                               textAlign: TextAlign.center,

@@ -9,11 +9,22 @@ class FaqPage extends StatelessWidget {
   FaqPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
     Globals.pagesStack.push(PagesIndices.faqPageIndex);
 
     return Scaffold(
       body: ListView(
-        children: <Widget>[
+        children: <Widget>[Padding(
+          padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
+          child: Text('FAQ',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Color(0xfffe6700),
+                fontSize: 25,
+                fontFamily: 'Verdana'
+            ),
+          ),
+        ),
           _faqItem(context, 'Can I reserve a ticket after 15 days?', 'Yes, you can.')
         ],
       ),
@@ -36,6 +47,8 @@ class FaqPage extends StatelessWidget {
                         'Previous Page',
                         style: TextStyle(
                           color: Colors.white,
+                          fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -58,6 +71,8 @@ class FaqPage extends StatelessWidget {
                         'All Categories',
                         style: TextStyle(
                           color: Colors.white,
+                            fontFamily: 'MyriadPro',
+                          fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -85,7 +100,7 @@ class FaqPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(question,
                 style: TextStyle(
                   color: Colors.white,
@@ -100,6 +115,7 @@ class FaqPage extends StatelessWidget {
             child: Text(answer,
               style: TextStyle(
                 fontSize: 20,
+                color: Color(0xff656565)
               ),
             ),
           ),

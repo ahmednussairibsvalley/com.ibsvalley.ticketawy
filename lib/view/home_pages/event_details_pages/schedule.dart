@@ -7,7 +7,7 @@ class SchedulePage extends StatelessWidget {
 
     final _width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(right: _width> 360?80:60, left: _width> 360?80:60, top: _width> 360?40:20, bottom: _width> 360?40:20),
+      padding: EdgeInsets.only(right: _width> 360?80:60, left: _width> 360?80:60, top: _width> 360?40:5, bottom: _width> 360?40:20),
       child: Material(
         elevation: 10,
         shadowColor: Colors.black,
@@ -23,6 +23,7 @@ class SchedulePage extends StatelessWidget {
                   child: Text('* First Day',
                     style: TextStyle(
                       color: Color(0xffff6600),
+                      fontFamily: 'MyriadPro',
                     ),
                   ),
                 ),
@@ -41,11 +42,17 @@ class SchedulePage extends StatelessWidget {
                           child: Text('09:00 am',
                             style: TextStyle(
                               color: Colors.white,
+                              fontFamily: 'Verdana',
                             ),
                           ),
                         ),
                       ),
-                      Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+                      Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                        style: TextStyle(
+                          fontFamily: 'Verdana',
+                          color: Color(0xff656565)
+                        ),
+                      ),
                     ],
                   ),
                 ),

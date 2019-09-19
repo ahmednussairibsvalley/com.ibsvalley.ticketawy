@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
     final _width = MediaQuery.of(context).size.width;
 
     print('Current Index: $index');
+    print('Screen Width: ${MediaQuery.of(context).size.width}');
     return WillPopScope(
       onWillPop: () async {
 
@@ -112,26 +113,26 @@ class _HomeState extends State<Home> {
                 height: _height,
                 width: _width,
                 decoration: BoxDecoration(
-                    color: Colors.deepPurple,
+//                    color: Colors.deepPurple,
                     image: DecorationImage(
                         fit: BoxFit.fill,
 //                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                        image: AssetImage('assets/background.png')
+                        image: AssetImage('assets/login.jpg')
                     )
                 ),
               ),
 
               // The header.
               Positioned(
-                right: 0.0, left: 0.0, top: _width > 360?10.0 : 1,
-                child: Image.asset('assets/header.png', width: _width > 360?161:130, height: _width > 360?142:100,),
+                right: 0.0, left: 0.0, top: _width > 350?12.0 : 5,
+                child: Image.asset('assets/header.png', width: _width > 350?138:130, height: _width > 350?110:100,),
               ),
 
               // The top left icon.
               Positioned(
                 left: 0.0, top: 0.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(_width > 350? 13.0:12.0),
                   child: GestureDetector(
                     onTap: (){
                       _scaffoldKey.currentState.openDrawer();
@@ -190,7 +191,7 @@ class _HomeState extends State<Home> {
                         Positioned(
                           left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
                         index == PagesIndices.homePageIndex?2:35:
-                        index == PagesIndices.homePageIndex?1:20,
+                        index == PagesIndices.homePageIndex?1:30,
                           child: index == PagesIndices.homePageIndex? HomePage(
                             onPress: (){
                               setState(() {
@@ -341,7 +342,7 @@ class _HomeState extends State<Home> {
                   child: TextFormField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                        labelText: 'Search for an event ...',
+                        hintText: 'Search for an event ...',
                         contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -351,9 +352,9 @@ class _HomeState extends State<Home> {
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              width: 1,
-                            )
+                          borderSide: BorderSide(
+                            width: 1, style: BorderStyle.none
+                          )
                         )
                     ),
                   ),
@@ -377,6 +378,8 @@ class _HomeState extends State<Home> {
           child: Text('$title',
             style: TextStyle(
               fontSize: 18,
+              fontFamily: 'Verdana',
+              color: Color(0xff656565)
             ),
           ),
         ),
