@@ -318,7 +318,7 @@ class _HomeState extends State<Home> {
                             },
                             onAllEventsPressed: (){
                               setState(() {
-                                index = PagesIndices.eventPageIndex;
+                                index = PagesIndices.homePageIndex;
                               });
                             },
                           ):

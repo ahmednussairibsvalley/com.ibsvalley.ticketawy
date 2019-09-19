@@ -69,7 +69,7 @@ class AllCategoriesPage extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/all_events.png', width: 30, height: 30,),
                       Text(
-                        'All Events',
+                        'Home Page',
                         style: TextStyle(
                           color: Colors.white,fontFamily: 'MyriadPro',
                           fontSize: 16,
