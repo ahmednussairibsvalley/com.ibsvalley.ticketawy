@@ -88,9 +88,9 @@ class _LoginState extends State<Login> {
                         ),
                         validator: (value) {
                           if(value.isEmpty)
-                            return 'Please enter your username';
+                            return 'Please enter your mobile number';
                           else if(value != mobile)
-                            return 'Wrong username';
+                            return 'Wrong mobile number';
                           return null;
                         },
                       ),
@@ -105,6 +105,7 @@ class _LoginState extends State<Login> {
                         top: 8.0,
                       ),
                       child: TextFormField(
+
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
