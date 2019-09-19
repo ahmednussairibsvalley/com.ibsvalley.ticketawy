@@ -5,6 +5,8 @@ import 'view/home.dart';
 import 'view/login.dart';
 import 'view/splash.dart';
 
+// Ticketawy App Main
+
 void main() async{
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
