@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
                       height: 195,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 75, right: 75,),
+                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
                       child: DashedDivider(
                         color: Colors.white30,
                       ),
@@ -174,14 +174,25 @@ class _LoginState extends State<Login> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(0.0),
-                            child: Text(
-                              'Don\'t have an account?\n-------------------------------------',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Don\'t have an account?',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                  child: DashedDivider(
+                                    width: 5,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            )
                           ),
                         ],
                       ),
