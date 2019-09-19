@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:ticketawy/view/register.dart';
 
 import 'custom_widgets/CustomShowDialog.dart';
@@ -50,11 +51,9 @@ class _LoginState extends State<Login> {
                       height: 195,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          left: 20, right: 20,),
-                      child: Text(
-                        '- - - - - - - - - - - - - - -',
-                        style: TextStyle(fontSize: 35,color: Colors.white30,),textAlign: TextAlign.center,
+                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 75, right: 75,),
+                      child: DashedDivider(
+                        color: Colors.white30,
                       ),
                     ),
                     Padding(
