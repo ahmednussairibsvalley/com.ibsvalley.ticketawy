@@ -113,12 +113,10 @@ class _CategoriesPagerState extends State<CategoriesPager> {
 
     for(int i = 0; i < _list.length; i++){
       Map pairs = Map();
-      int first = i * 6;
+      int first = i * 4;
       int second = first + 1;
       int third = second + 1;
       int fourth = third + 1;
-      int fifth = fourth + 1;
-      int sixth = fifth + 1;
       if(first >= _list.length){
         break;
       } else {
@@ -141,19 +139,6 @@ class _CategoriesPagerState extends State<CategoriesPager> {
         fourth = 0;
       }
       pairs['fourth'] = fourth;
-
-
-      if(fifth >= _list.length){
-        paisList.add(pairs);
-        break;
-      } else {
-        pairs['fifth'] = fifth;
-      }
-
-      if(sixth >= _list.length){
-        sixth = 0;
-      }
-      pairs['sixth'] = sixth;
       paisList.add(pairs);
     }
 
@@ -179,17 +164,6 @@ class _CategoriesPagerState extends State<CategoriesPager> {
             list.add(_list[paisList[index]['fourth']]);
           }
         }
-        if(paisList[index].containsKey('fifth')){
-          if(paisList[index]['fifth'] > 0){
-            list.add(_list[paisList[index]['fifth']]);
-          }
-        }
-
-        if(paisList[index].containsKey('sixth')){
-          if(paisList[index]['sixth'] > 0){
-            list.add(_list[paisList[index]['sixth']]);
-          }
-        }
 
         return CategoryItem(list: list, onCategoryPressed: widget.onCategoryPressed,);
       },
@@ -197,8 +171,8 @@ class _CategoriesPagerState extends State<CategoriesPager> {
 
     _carouselSlider = CarouselSlider(
       items: child,
-      viewportFraction: 1,
-      aspectRatio: 1,
+      viewportFraction: 1.0,
+      aspectRatio: 1.0,
       onPageChanged: (index) {
         setState(() {
           _current = index;
