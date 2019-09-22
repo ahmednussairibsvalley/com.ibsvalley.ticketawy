@@ -241,7 +241,7 @@ class _EventsSliderState extends State<EventsSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: .95,
-      aspectRatio: 1.185,
+      aspectRatio: 1.1,
       onPageChanged: (index) {
         setState(() {
           _current = index;

@@ -75,6 +75,7 @@ class _EventsSliderState extends State<EventsSlider> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Material(
@@ -82,9 +83,12 @@ class _EventsSliderState extends State<EventsSlider> {
                           shadowColor: Colors.black,
                           child: Container(
 
-                            child: Padding(
+                            child:
+
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Image.network(i.imageUrl,
+                              child:
+                              Image.network(i.imageUrl,
                                 fit: BoxFit.cover,
                                 height: MediaQuery.of(context).size.height / 10,
                               ),
@@ -320,7 +324,6 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     );
   }
 }
-
 
 class CategoriesPage extends StatelessWidget {
 
