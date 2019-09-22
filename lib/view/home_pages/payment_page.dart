@@ -15,60 +15,6 @@ class PaymentPage extends StatelessWidget {
 
     return Scaffold(
       body: Payment(),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: onPreviousPagePressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xfffe6700),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/back.png', width: 30, height: 30,),
-                      Text(
-                        'Previous Page',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: onAllCategoriesPressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xff4b3d7a),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/all_events.png', width: 30, height: 30,),
-                      Text(
-                        'All Categories',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
