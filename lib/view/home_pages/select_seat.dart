@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../globals.dart';
@@ -301,8 +303,8 @@ class _SeatItemState extends State<SeatItem> {
       },
       child: Container(
         color: _reserved? Color(0xff4b3d7a): _selected? Color(0xffff6600):Color(0xff929292),
-        height: _width > 360?25:20,
-        width: _width > 360?25:20,
+        height: _width > 360?Platform.isIOS?22:25:20,
+        width: _width > 360?Platform.isIOS?22:25:20,
       ),
     );
   }
