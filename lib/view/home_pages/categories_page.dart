@@ -251,7 +251,7 @@ class CategoryItem extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Column(
-//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
                       Padding(

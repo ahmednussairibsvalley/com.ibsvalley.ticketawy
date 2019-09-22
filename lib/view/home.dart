@@ -74,8 +74,8 @@ class _HomeState extends State<Home> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
-    print('Current Index: $index');
-    print('Screen Width: ${MediaQuery.of(context).size.width}');
+//    print('Current Index: $index');
+//    print('Screen Width: ${MediaQuery.of(context).size.width}');
     return WillPopScope(
       onWillPop: () async {
 
@@ -397,7 +397,7 @@ class _HomeState extends State<Home> {
       if(Globals.pagesStack.isNotEmpty){
         setState(() {
           index = Globals.pagesStack.pop();
-          print('Popped Item: $index');
+//          print('Popped Item: $index');
         });
       } else {
         exit(0);

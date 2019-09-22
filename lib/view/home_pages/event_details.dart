@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
@@ -152,7 +154,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
-                                fontSize: _width > 360?20:14,
+                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
                                 fontFamily: 'Verdana',
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
@@ -178,7 +180,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
-                                fontSize: _width > 360?20:14,
+                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
                                 fontFamily: 'Verdana',
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
@@ -204,7 +206,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
-                                fontSize: _width > 360?20:14,
+                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
                                 fontFamily: 'Verdana',
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)

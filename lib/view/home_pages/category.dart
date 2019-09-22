@@ -478,6 +478,7 @@ class _FiterDialogState extends State<FiterDialog> {
                   ),
                 ),
                 child: DropdownButton(
+                  underline: Container(),
                   icon: Icon(Icons.expand_more),
                   value: _dateValue,
                   onChanged: (value){
@@ -520,6 +521,7 @@ class _FiterDialogState extends State<FiterDialog> {
                   ),
                 ),
                 child: DropdownButton(
+                  underline: Container(),
                   icon: Icon(Icons.expand_more),
                   value: _timeValue,
                   onChanged: (value){
@@ -562,6 +564,7 @@ class _FiterDialogState extends State<FiterDialog> {
                   ),
                 ),
                 child: DropdownButton(
+                  underline: Container(),
                   icon: Icon(Icons.expand_more),
                   value: _cityValue,
                   onChanged: (value){
@@ -604,6 +607,7 @@ class _FiterDialogState extends State<FiterDialog> {
                   ),
                 ),
                 child: DropdownButton(
+                  underline: Container(),
                   icon: Icon(Icons.expand_more),
                   value: _PriceValue,
                   onChanged: (value){
