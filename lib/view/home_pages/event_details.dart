@@ -445,19 +445,8 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        GestureDetector(
-          onTap: (){
-            setState(() {
-              _current++;
-            });
-          },
-          child: Icon(Icons.add),
-        ),
-        Container(
-            width: 30,
-            child:  Text('$_current', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Verdana',),)
 
-        ),
+        //decrement
         GestureDetector(
           onTap: (){
             if(_current > 0){
@@ -468,7 +457,24 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
           },
           child: Icon(Icons.remove),
-        )
+        ),
+
+        //Ticket Quantity
+        Container(
+            width: 30,
+            child:  Text('$_current', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Verdana',),)
+
+        ),
+
+        // increment
+        GestureDetector(
+          onTap: (){
+            setState(() {
+              _current++;
+            });
+          },
+          child: Icon(Icons.add),
+        ),
       ],
     );
   }
