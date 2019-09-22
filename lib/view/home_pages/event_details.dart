@@ -329,9 +329,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
             'Choose tickets',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'MyriadPro',
-              color: Color(0xff656565)
+              fontSize: 23,
+              fontFamily: 'GeometriqueSans',
+              color: Color(0xff878787)
             ),
           ),
         ),
@@ -354,7 +354,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 16,left: 12),
-                          child: Text('${_map.keys.toList()[index]}'),
+                          child: Text('${_map.keys.toList()[index]}',style: TextStyle(fontSize: 20,
+                              fontFamily: 'GeometriqueSans',
+                              color: Color(0xff878787)),),
                         ),
                         Container(
                           width: 70,

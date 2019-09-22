@@ -78,7 +78,7 @@ flutter:
     - family: Umy
       fonts:
         - asset: assets/fonts/Umy-Regular.otf
-    - family: TicketawyFont
+    - family: GeometriqueSans
       fonts:
         - asset: assets/fonts/GeometriqueSans-Regular.otf
         - asset: assets/fonts/GeometriqueSans-Bold.otf
