@@ -178,6 +178,17 @@ class _EventsSliderState extends State<EventsSlider> {
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('New Events',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xfffe6700),
+              fontSize: 18, fontWeight: FontWeight.bold,
+              fontFamily: 'Verdana',
+            ),
+          ),
+        ),
         _carouselSlider,
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -288,7 +299,17 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
       color: Color(0xfff0f0f0),
       child: Column(
         children: <Widget>[
-
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Categories',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xfffe6700),
+                fontSize: 18, fontWeight: FontWeight.bold,
+                fontFamily: 'Verdana',
+              ),
+            ),
+          ),
           _carouselSlider,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
