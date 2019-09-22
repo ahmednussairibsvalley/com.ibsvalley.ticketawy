@@ -171,8 +171,8 @@ class _CategoriesPagerState extends State<CategoriesPager> {
 
     _carouselSlider = CarouselSlider(
       items: child,
-      viewportFraction: .95,
-      aspectRatio: 1.185,
+      viewportFraction: 1.0,
+      aspectRatio: 1.0,
       onPageChanged: (index) {
         setState(() {
           _current = index;
