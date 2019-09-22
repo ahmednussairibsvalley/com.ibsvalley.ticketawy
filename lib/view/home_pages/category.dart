@@ -414,17 +414,16 @@ class _FiterDialogState extends State<FiterDialog> {
     'Marsa Matroh',
   ];
 
-  List _categoryList = [
-    'Sports Events',
-    'Ceremony Events',
-    'School Events',
-    'Adventure Events',
+  List _PriceList = [
+    '50\$',
+    '80\$',
+    '120\$',
   ];
 
   String _dateValue;
   String _timeValue;
   String _cityValue;
-  String _categoryValue;
+  String _PriceValue;
 
   @override
   void initState() {
@@ -432,7 +431,7 @@ class _FiterDialogState extends State<FiterDialog> {
     _dateValue = _dateList[0];
     _timeValue = _timeList[0];
     _cityValue = _cityList[0];
-    _categoryValue = _categoryList[0];
+    _PriceValue = _PriceList[0];
   }
 
   @override
@@ -587,16 +586,16 @@ class _FiterDialogState extends State<FiterDialog> {
 
         // Category Filter
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text('Category',style: TextStyle(color: Color(0xff656565)),),
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text('Price',style: TextStyle(color: Color(0xff656565)),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8.0, bottom: 15.0,),
               child: Container(
-                padding: EdgeInsets.only(right:5, left: 10,),
+                padding: EdgeInsets.only(right:10, left: 10,),
                 decoration: ShapeDecoration(
                   color: Color(0xffeeeeee),
                   shape: RoundedRectangleBorder(
@@ -606,18 +605,18 @@ class _FiterDialogState extends State<FiterDialog> {
                 ),
                 child: DropdownButton(
                   icon: Icon(Icons.expand_more),
-                  value: _categoryValue,
+                  value: _PriceValue,
                   onChanged: (value){
                     setState(() {
-                      _categoryValue = value;
+                      _PriceValue = value;
                     });
                   },
-                  items: List.generate(_categoryList.length, (index){
+                  items: List.generate(_PriceList.length, (index){
                     return DropdownMenuItem(
-                      value: _categoryList[index],
+                      value: _PriceList[index],
                       child: Container(
                         width: 150,
-                        child: Text('${_categoryList[index]}'),
+                        child: Text('${_PriceList[index]}'),
                       ),
                     );
                   }),
