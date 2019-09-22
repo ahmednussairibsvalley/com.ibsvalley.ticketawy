@@ -288,7 +288,6 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
       color: Color(0xfff0f0f0),
       child: Column(
         children: <Widget>[
-
           _carouselSlider,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

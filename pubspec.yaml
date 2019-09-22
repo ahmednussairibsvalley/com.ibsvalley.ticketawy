@@ -28,6 +28,7 @@ dependencies:
   stack: ^0.1.0
   google_maps_flutter: ^0.5.21
   device_info: ^0.4.0+2
+  intl: ^0.15.8
 
 dev_dependencies:
   flutter_test:
