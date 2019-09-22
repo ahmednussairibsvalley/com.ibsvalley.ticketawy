@@ -241,7 +241,7 @@ class _EventsSliderState extends State<EventsSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: .95,
-      aspectRatio: 1,
+      aspectRatio: 1.185,
       onPageChanged: (index) {
         setState(() {
           _current = index;
@@ -303,7 +303,7 @@ class EventsPage extends StatelessWidget {
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1,
+            childAspectRatio: 1.2,
             crossAxisSpacing: 1,
             mainAxisSpacing: 1
         ),
