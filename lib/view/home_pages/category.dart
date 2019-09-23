@@ -171,7 +171,6 @@ class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
   static final List _list = Globals.controller.events;
   CarouselSlider _carouselSlider;
-  PageController _pageController;
   List child;
   List<Map> paisList = List();
 
@@ -248,8 +247,6 @@ class _EventsSliderState extends State<EventsSlider> {
         });
       },
     );
-
-    _pageController = _carouselSlider.pageController;
   }
   @override
   Widget build(BuildContext context) {
@@ -267,7 +264,7 @@ class _EventsSliderState extends State<EventsSlider> {
                   setState(() {
                     _current = index;
                   });
-                  _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                  _carouselSlider.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
                 },
                 child: Container(
                   width: 15.0,

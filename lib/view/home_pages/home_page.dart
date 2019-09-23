@@ -436,8 +436,6 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
   }
   @override
   Widget build(BuildContext context) {
-    print('Width: ${MediaQuery.of(context).size.width}');
-    print('Height: ${MediaQuery.of(context).size.height}');
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[

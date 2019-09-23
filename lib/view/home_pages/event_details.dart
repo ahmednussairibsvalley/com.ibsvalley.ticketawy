@@ -22,8 +22,6 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
-    print('The width $_width');
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
 
     return Scaffold(
@@ -132,7 +130,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
+            padding: EdgeInsets.only(top: _width > 360?Platform.isIOS?6.0:10:8.0, bottom: _width > 360?Platform.isIOS?6.0:10:8.0),
             child: Row(
               children: <Widget>[
                 Expanded(
