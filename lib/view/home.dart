@@ -74,8 +74,6 @@ class _HomeState extends State<Home> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
-//    print('Current Index: $index');
-//    print('Screen Width: ${MediaQuery.of(context).size.width}');
     return WillPopScope(
       onWillPop: () async {
 
@@ -113,10 +111,8 @@ class _HomeState extends State<Home> {
                 height: _height,
                 width: _width,
                 decoration: BoxDecoration(
-//                    color: Colors.deepPurple,
                     image: DecorationImage(
                         fit: BoxFit.fill,
-//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
                         image: AssetImage('assets/login.jpg')
                     )
                 ),

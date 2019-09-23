@@ -34,20 +34,12 @@ class _paymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
         body: ListView(
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
               height: 260,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      "assets/payments.jpg",
-                    ),
-                    fit: BoxFit.cover,
-                  )),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
