@@ -83,7 +83,7 @@ class ContactPage extends StatelessWidget {
                     children: <Widget>[
                       Image.asset('assets/all_events.png', width: 30, height: 30,),
                       Text(
-                        'All Events',
+                        'All Categories',
                         style: TextStyle(
                           color: Colors.white,fontFamily: 'MyriadPro',
                           fontSize: 16,

@@ -22,8 +22,6 @@ class EventDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
-    print('The width $_width');
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
 
     return Scaffold(
@@ -132,7 +130,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
+            padding: EdgeInsets.only(top: _width > 360?Platform.isIOS?6.0:10:8.0, bottom: _width > 360?Platform.isIOS?6.0:10:8.0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -445,19 +443,8 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        GestureDetector(
-          onTap: (){
-            setState(() {
-              _current++;
-            });
-          },
-          child: Icon(Icons.add),
-        ),
-        Container(
-            width: 30,
-            child:  Text('$_current', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Verdana',),)
 
-        ),
+        //decrement
         GestureDetector(
           onTap: (){
             if(_current > 0){
@@ -468,7 +455,24 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
           },
           child: Icon(Icons.remove),
-        )
+        ),
+
+        //Ticket Quantity
+        Container(
+            width: 30,
+            child:  Text('$_current', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Verdana',),)
+
+        ),
+
+        // increment
+        GestureDetector(
+          onTap: (){
+            setState(() {
+              _current++;
+            });
+          },
+          child: Icon(Icons.add),
+        ),
       ],
     );
   }

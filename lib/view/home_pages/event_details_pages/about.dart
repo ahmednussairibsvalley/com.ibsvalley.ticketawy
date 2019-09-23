@@ -19,16 +19,28 @@ class AboutPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.asset('assets/event_image.png',
+                        height: 185,
                         fit: BoxFit.fill,
                       ),
                     ),
-                    Text('Event Name Here',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xffff6600),fontFamily: 'Verdana'
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Event Name Here',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xffff6600),fontFamily: 'Verdana'
+                        ),
                       ),
                     ),
-                    Text('Event Description',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Give me one good reason why I should give up '
+                          'my limited spare time to come to your Science '
+                          'Week event! While you’re at it, give me a few '
+                          'good reasons.',
+                        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DashedDivider(
@@ -87,7 +99,7 @@ class AboutPage extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  bottom: 90.0, left: 70.0, right: 70.0,
+                  top: 180.0, left: 70.0, right: 70.0,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xffff6600),

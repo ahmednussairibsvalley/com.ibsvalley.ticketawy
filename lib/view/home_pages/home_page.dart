@@ -50,7 +50,6 @@ class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
   static final List _list = Globals.controller.events;
   CarouselSlider _carouselSlider;
-  PageController _pageController;
   List child;
 
   final Function onEventPressed;
@@ -174,7 +173,6 @@ class _EventsSliderState extends State<EventsSlider> {
         });
       },
     );
-    _pageController = _carouselSlider.pageController;
   }
   @override
   Widget build(BuildContext context) {
@@ -192,7 +190,7 @@ class _EventsSliderState extends State<EventsSlider> {
                   setState(() {
                     _current = index;
                   });
-                  _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                  _carouselSlider.animateToPage(_current, duration: Duration(milliseconds: 200), curve: Curves.linear);
                 },
                 child: Container(
                   width: _width > 350? 12.0 : 10.0,
@@ -225,7 +223,6 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   int _current = 0;
   static final List _list = Globals.controller.categories;
   CarouselSlider _carouselSlider;
-  PageController _pageController;
   List child;
   List<Map> paisList = List();
 
@@ -281,8 +278,6 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
         });
       },
     );
-
-    _pageController = _carouselSlider.pageController;
   }
   @override
   Widget build(BuildContext context) {
@@ -303,7 +298,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                     setState(() {
                       _current = index;
                     });
-                    _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                    _carouselSlider.animateToPage(_current, duration: Duration(milliseconds: 200), curve: Curves.linear);
                   },
                   child: Container(
                     width:  _width > 350? 12.0 : 10.0,
@@ -393,7 +388,6 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
   int _current = 0;
   static final List _list = Globals.controller.events;
   CarouselSlider _carouselSlider;
-  PageController _pageController;
   List child;
   List<Map> paisList = List();
 
@@ -442,13 +436,9 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
         });
       },
     );
-
-    _pageController = _carouselSlider.pageController;
   }
   @override
   Widget build(BuildContext context) {
-    print('Width: ${MediaQuery.of(context).size.width}');
-    print('Height: ${MediaQuery.of(context).size.height}');
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
@@ -476,7 +466,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
                   setState(() {
                     _current = index;
                   });
-                  _pageController.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+                  _carouselSlider.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
 
                 },
                 child: Container(
