@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-import '../../globals.dart';
-
 class PaymentPage extends StatelessWidget {
 
-  final Function onPreviousPagePressed;
-  final Function onAllCategoriesPressed;
+  final Function onWillPop;
 
-  PaymentPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
+  PaymentPage({@required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.paymentPageIndex);
 
-    return Scaffold(
-      body: Payment(),
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        body: Payment(),
+      ),
     );
   }
 }

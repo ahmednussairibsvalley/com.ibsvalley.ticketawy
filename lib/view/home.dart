@@ -296,11 +296,11 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.paymentPageIndex? PaymentPage(
-                            onPreviousPagePressed: _returnToPreviousPage(),
-                            onAllCategoriesPressed: (){
+                            onWillPop: () async{
                               setState(() {
-                                index = PagesIndices.categoriesPageIndex;
+                                index = PagesIndices.homePageIndex;
                               });
+                              return false;
                             },
                           ):
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
