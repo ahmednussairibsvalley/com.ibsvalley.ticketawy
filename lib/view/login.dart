@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:ticketawy/view/register.dart';
+import '../util.dart' as util;
 
 import 'custom_widgets/CustomShowDialog.dart';
 
@@ -20,161 +21,160 @@ class _LoginState extends State<Login> {
     final _width = MediaQuery.of(context).size.width;
 
     bool _isUnderDevelopment = true;
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            // The background
-            Container(
-              height: _height,
-              width: _width,
-              decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          // The background
+          Container(
+            height: _height,
+            width: _width,
+            decoration: BoxDecoration(
+                color: Colors.deepPurple,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
 //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                      image: AssetImage('assets/login.jpg'))),
-            ),
+                    image: AssetImage('assets/login.jpg'))),
+          ),
 
-            Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: _width > 360? _height / 11 : _height / 13,
-              bottom: 0.0,
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/header.png',
-                      width: 300,
-                      height: 195,
+          Positioned(
+            left: 0.0,
+            right: 0.0,
+            top: _width > 360? _height / 11 : _height / 13,
+            bottom: 0.0,
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/header.png',
+                    width: 300,
+                    height: 195,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
+                    child: DashedDivider(
+                      color: Colors.white30,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
-                      child: DashedDivider(
-                        color: Colors.white30,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 20, right: 20),
-                      child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
-                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 20, right: 20),
+                    child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                  ),
 
-                    // User name.
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 45.0,
-                        right: 45.0,
-                        bottom: 8.0,
-                        top: 20.0,
-                      ),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.person_outline),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                style: BorderStyle.none,
-                              )),
-                          labelStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                          hintText: 'Mobile Number',
+                  // User name.
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 45.0,
+                      right: 45.0,
+                      bottom: 8.0,
+                      top: 20.0,
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.person_outline),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              style: BorderStyle.none,
+                            )),
+                        labelStyle: TextStyle(
+                          fontSize: 15,
                         ),
-                        validator: (value) {
-                          if(value.isEmpty)
-                            return 'Please enter your mobile number';
-                          else if(value != mobile)
-                            return 'Wrong mobile number';
-                          return null;
-                        },
+                        hintText: 'Mobile Number',
                       ),
+                      validator: (value) {
+                        if(value.isEmpty)
+                          return 'Please enter your mobile number';
+                        else if(value != mobile)
+                          return 'Wrong mobile number';
+                        return null;
+                      },
                     ),
+                  ),
 
-                    // Password.
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 45.0,
-                        right: 45.0,
-                        bottom: 8.0,
-                        top: 8.0,
-                      ),
-                      child: TextFormField(
+                  // Password.
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 45.0,
+                      right: 45.0,
+                      bottom: 8.0,
+                      top: 8.0,
+                    ),
+                    child: TextFormField(
 
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.lock_outline),
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.lock_outline),
 //                          suffixIcon: Icon(Icons.help_outline),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                style: BorderStyle.none,
-                              )),
-                          labelStyle: TextStyle(
-                            fontSize: 15,
-                          ),
-                          hintText: 'Password',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              style: BorderStyle.none,
+                            )),
+                        labelStyle: TextStyle(
+                          fontSize: 15,
                         ),
-                        validator: (value) {
-                          if(value.isEmpty)
-                            return 'Please enter your password';
-                          else if(value != password)
-                            return 'Wrong password';
-                          return null;
-                        },
+                        hintText: 'Password',
                       ),
+                      validator: (value) {
+                        if(value.isEmpty)
+                          return 'Please enter your password';
+                        else if(value != password)
+                          return 'Wrong password';
+                        return null;
+                      },
                     ),
+                  ),
 
-                    // login button
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 30.0,
-                        right: 30.0,
-                        top: 1.0,
-                      ),
-                      child: ListTile(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          if(_formKey.currentState.validate())
-                            Navigator.of(context).pushReplacementNamed('/home');
-                        },
-                        title: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Color(0xfffe6700),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              'login',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
+                  // login button
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 30.0,
+                      right: 30.0,
+                      top: 1.0,
+                    ),
+                    child: ListTile(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(new FocusNode());
+                        if(_formKey.currentState.validate())
+                          Navigator.of(context).pushReplacementNamed('/home');
+                      },
+                      title: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color(0xfffe6700),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            'login',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
                         ),
                       ),
                     ),
+                  ),
 
-                    // Sign up link text
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Register()));
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
+                  // Sign up link text
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Register()));
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
                             padding: const EdgeInsets.all(0.0),
                             child: Column(
                               children: <Widget>[
@@ -195,45 +195,44 @@ class _LoginState extends State<Login> {
                                 )
                               ],
                             )
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
-          child: GestureDetector(
-            onTap: () {
-              if(_isUnderDevelopment){
-                _showUnderDevelopmentDialog(context);
-                return;
-              }
-              Navigator.of(context).pushReplacementNamed('/home');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xfffe6700),
-                    child: Text(
-                      'Skip This Step',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: GestureDetector(
+          onTap: () {
+            if(_isUnderDevelopment){
+              _showUnderDevelopmentDialog(context);
+              return;
+            }
+            Navigator.of(context).pushReplacementNamed('/home');
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xfffe6700),
+                  child: Text(
+                    'Skip This Step',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

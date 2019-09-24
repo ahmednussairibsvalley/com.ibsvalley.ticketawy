@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-final String _baseUrl = 'http://40.85.116.121:8202';
+final String _baseUrl = 'http://40.85.1 16.121:8202';
 
 /// Is the image URL available
 Future<bool> isImageUrlAvailable(String imageUrl) async{
@@ -50,3 +50,38 @@ Future<List> getEventDetails(int id) async{
 
   return json.decode(response.body);
 }
+
+/// Calls the user details Api
+Future<List> getUserDetails (String id) async{
+  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=$id';
+
+  var response = await http.get(url);
+
+  return json.decode(response.body);
+}
+
+/// Calls the user list Api
+Future<List> getUserList () async {
+  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=null';
+
+  http.Response response = await http.get(url);
+
+  return jsonDecode(response.body);
+}
+
+/// Calls the VerificationMessage
+Future<List> verification (String phone) async{
+  String url = '$_baseUrl/api/ApplicationUser/Send_VerificationMessage';
+  
+  var response = await http.post(url,body: {
+
+    'Phone' : phone
+  });
+
+  return jsonDecode(response.body);
+}
+
+
+
+
+
