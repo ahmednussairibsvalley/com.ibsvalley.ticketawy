@@ -29,6 +29,7 @@ dependencies:
   google_maps_flutter: ^0.5.21
   device_info: ^0.4.0+2
   intl: ^0.15.8
+  flutter_masked_text: ^0.8.0
 
 dev_dependencies:
   flutter_test:
