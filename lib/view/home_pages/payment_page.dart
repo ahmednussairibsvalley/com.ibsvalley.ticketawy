@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 import '../../globals.dart';
 
@@ -79,6 +80,9 @@ class Payment extends StatefulWidget {
 }
 
 class _paymentState extends State<Payment> {
+
+  var _cvvController = MaskedTextController(mask: '000');
+  var _expController = MaskedTextController(mask: '00/00');
   String dropval;
   void dropChange(String val) {
     setState(() {
@@ -159,6 +163,8 @@ class _paymentState extends State<Payment> {
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: BorderSide.none) ,
                                   child: TextField(
+                                    keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                                    controller: _cvvController,
                                     decoration: InputDecoration(
                                         hintText: 'CVV',
                                         fillColor: Colors.white,
@@ -187,6 +193,8 @@ class _paymentState extends State<Payment> {
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: BorderSide.none) ,
                                   child: TextField(
+                                    keyboardType: TextInputType.datetime,
+                                    controller: _expController,
                                     decoration: InputDecoration(
                                         hintText: 'EXP',
                                         fillColor: Colors.white,
@@ -263,6 +271,7 @@ class _paymentState extends State<Payment> {
         ));
   }
   Widget _cardNumber() {
+    var _controller = new MaskedTextController(mask: '0000 0000 0000 0000 0000');
     return SizedBox(
         width: 300,
         child: Container(
@@ -274,7 +283,9 @@ class _paymentState extends State<Payment> {
                     shadowColor: Colors.black, elevation: 4, shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none) ,
-                    child:                 TextField(
+                    child: TextField(
+                      keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                      controller: _controller,
                       decoration: InputDecoration(
                           hintText: 'Card number',
                           fillColor: Colors.white,
