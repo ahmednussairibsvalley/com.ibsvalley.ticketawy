@@ -193,16 +193,19 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.categoryPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                             onEventPressed: (){
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                             onHotOfferPressed: (){
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.profilePageIndex? ProfilePage(
@@ -211,11 +214,13 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = Globals.pagesStack.pop();
                               });
+                              print('Current Index: $index');
                             },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.ideasPageIndex? IdeasPage(
@@ -224,6 +229,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.faqPageIndex? FaqPage(
@@ -232,6 +238,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.contactPageIndex? ContactPage(
@@ -240,6 +247,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.categoryPageIndex? CategoryPage(
@@ -248,11 +256,13 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.eventPageIndex? EventDetails(
@@ -267,11 +277,13 @@ class _HomeState extends State<Home> {
                                   index = PagesIndices.buyTicketsPageIndex;
                                 });
                               }
+                              print('Current Index: $index');
                             },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.selectSeatPageIndex? SelectSeat(
@@ -280,11 +292,13 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.paymentPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.buyTicketsPageIndex? BuyTickets(
@@ -293,6 +307,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           index == PagesIndices.paymentPageIndex? PaymentPage(
@@ -300,6 +315,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.homePageIndex;
                               });
+                              print('Current Index: $index');
                               return false;
                             },
                           ):
@@ -311,11 +327,13 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });
+                              print('Current Index: $index');
                             },
                             onAllEventsPressed: (){
                               setState(() {
                                 index = PagesIndices.homePageIndex;
                               });
+                              print('Current Index: $index');
                             },
                           ):
                           Container(),
@@ -348,9 +366,9 @@ class _HomeState extends State<Home> {
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            width: 1, style: BorderStyle.none
-                          )
+                            borderSide: BorderSide(
+                                width: 1, style: BorderStyle.none
+                            )
                         )
                     ),
                   ),
