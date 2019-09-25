@@ -37,6 +37,25 @@ Future<Map> login(String username, String password) async {
 
 ///Calls the register API.
 Future<Map> register(String phone, String password) async {
+
+  /*
+  Failure Response:
+  {
+      "succeeded": false,
+      "errors": [
+          {
+              "code": "DuplicateUserName",
+              "description": "User name '01157426778' is already taken."
+          }
+      ]
+  }
+
+  Success Response:
+  {
+      "succeeded": true,
+      "errors": []
+  }
+   */
   String url = '$_baseUrl/api/ApplicationUser/Register';
 
   HttpClient httpClient = new HttpClient();

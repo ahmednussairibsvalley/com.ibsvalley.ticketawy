@@ -18,6 +18,60 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   bool _loggingIn = false;
+  
+  _showLoginErrorDialog(BuildContext context, {String message}){
+
+    showDialog(context: context, builder: (context){
+      return CustomAlertDialog(
+        content: Container(
+          width: 300.0,
+          height: 150.0,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Error', textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'GeometriqueSans',
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DashedDivider(),
+              ),
+              Expanded(
+                child: Text(message.isEmpty?'Invalid login':message,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Verdana',
+                    fontSize: 17,
+                  ),
+                ),
+              ),
+              ListTile(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                title: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xfffe6700),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Close', textAlign: TextAlign.center,),
+                  ),
+
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +218,12 @@ class _LoginState extends State<Login> {
                             
                             if(response.containsKey('token')){
                               Navigator.of(context).pushReplacementNamed('/home');
+                            } else{
+                              setState(() {
+                                _loggingIn = false;
+                              });
+
+                              _showLoginErrorDialog(context, message: response.containsKey('message')?response['message']:'');
                             }
 
                           }
