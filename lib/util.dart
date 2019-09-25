@@ -62,7 +62,7 @@ Future<Map> register(String phone, String password) async {
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
   request.headers.set('content-type', 'application/json');
   Map jsonMap = {
-    'UserName':phone,
+    'Phone':phone,
     'Password':password,
   };
   request.add(utf8.encode(json.encode(jsonMap)));
