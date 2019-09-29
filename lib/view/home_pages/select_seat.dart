@@ -77,6 +77,25 @@ class SelectSeat extends StatelessWidget {
             ),
           ),
 
+          Padding(
+            padding: EdgeInsets.only(right: Platform.isIOS?15.0:30.0, left: Platform.isIOS?15.0:30.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color(0xffd9d9d9),
+
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text('Stage here',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xff493f73),
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
 
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
