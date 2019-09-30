@@ -7,6 +7,14 @@ class Event{
 
   Event(this._id, this._title, this._imageUrl, this._price, this._reservationOption);
 
+
+  Event.fromJson(Map json){
+    _id = json['id'];
+    _title = json['name'];
+    _imageUrl = json['logo'];
+    _price = 0.0;
+  }
+
   String get imageUrl => _imageUrl;
 
   set imageUrl(String value) {
