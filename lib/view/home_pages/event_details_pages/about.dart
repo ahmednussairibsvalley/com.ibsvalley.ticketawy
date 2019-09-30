@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'dashed_divider.dart';
@@ -8,7 +10,7 @@ class AboutPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 50, left: 50),
+          padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50),
           child: Material(
             elevation: 10,
             shadowColor: Colors.black,
@@ -33,12 +35,17 @@ class AboutPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Give me one good reason why I should give up '
-                          'my limited spare time to come to your Science '
-                          'Week event! While you’re at it, give me a few '
-                          'good reasons.',
-                        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                      padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                      child: Container(
+                        height: 50,
+                        child: SingleChildScrollView(
+                          child: Text('Give me one good reason why I should give up '
+                              'my limited spare time to come to your Science '
+                              'Week event! While you’re at it, give me a few '
+                              'good reasons.',
+                            style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                          ),
+                        ),
                       ),
                     ),
                     Padding(
@@ -124,3 +131,4 @@ class AboutPage extends StatelessWidget {
     );
   }
 }
+
