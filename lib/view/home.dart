@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                 right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
                 child: Image.asset('assets/header.png',
                   height: Platform.isIOS? _width < 414 ?110 : 125
-                        :_width > 350?110:100,
+                        :_width > 350?110:130,
                 ),
               ),
 
