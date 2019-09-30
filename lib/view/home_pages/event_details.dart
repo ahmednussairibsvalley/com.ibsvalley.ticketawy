@@ -248,7 +248,10 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: _width > 360? 25: 20),
+            padding: EdgeInsets.only(
+                top: Platform.isIOS?10
+                    :_width > 360? 25: 20
+            ),
           ),
           Flexible(
             child: TabBarView(

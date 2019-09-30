@@ -7,7 +7,7 @@ import 'dashed_divider.dart';
 class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50),
@@ -35,12 +35,16 @@ class AboutPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Give me one good reason why I should give up '
-                          'my limited spare time to come to your Science '
-                          'Week event! While you’re at it, give me a few '
-                          'good reasons.',
-                        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                      padding: const EdgeInsets.only(left:8.0, right: 8.0),
+                      child: SingleChildScrollView(
+                        child: Text('Give me one good reason why I should give up '
+                            'my limited spare time to come to your Science '
+                            'Week event! While you’re at it, give me a few '
+                            'good reasons.',
+                          style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                          maxLines: 2,
+                          overflow: TextOverflow.visible,
+                        ),
                       ),
                     ),
                     Padding(
