@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -10,7 +12,7 @@ class LocationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 50, left: 50,),
+      padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50,),
       child: ListView(
         shrinkWrap: true,
         itemExtent: _width > 360?350:270,
@@ -126,10 +128,10 @@ class _LocationMap2State extends State<LocationMap2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 370,
-        width: 370,
+        height: Platform.isIOS?230:370,
+        width: Platform.isIOS?270:370,
         child: WebView(
-          initialUrl: Uri.dataFromString('<html><body><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4121109128837!2d31.213833215114693!3d30.025032681889385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145847cdee4f6545%3A0x8e04c3152a2d7f4e!2sGiza%20Zoological%20Garden!5e0!3m2!1sen!2seg!4v1568237729053!5m2!1sen!2seg" width="370" height="370" frameborder="0" style="border:0;" allowfullscreen=""></iframe></body></html>', mimeType: 'text/html').toString(),
+          initialUrl: Uri.dataFromString('<html><body><center><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.4121109128837!2d31.213833215114693!3d30.025032681889385!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145847cdee4f6545%3A0x8e04c3152a2d7f4e!2sGiza%20Zoological%20Garden!5e0!3m2!1sen!2seg!4v1568237729053!5m2!1sen!2seg" height="900" width="900" frameborder="0" align="middle" style="border:0;" allowfullscreen=""></iframe></center></body></html>', mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
 
 

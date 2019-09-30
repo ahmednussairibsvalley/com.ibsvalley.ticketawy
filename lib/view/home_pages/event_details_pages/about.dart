@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'dashed_divider.dart';
@@ -8,7 +10,7 @@ class AboutPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 50, left: 50),
+          padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50),
           child: Material(
             elevation: 10,
             shadowColor: Colors.black,

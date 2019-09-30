@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 
@@ -7,7 +9,7 @@ class SchedulePage extends StatelessWidget {
 
     final _width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(right: _width> 360?80:60, left: _width> 360?80:60, top: _width> 360?40:5, bottom: _width> 360?40:20),
+      padding: EdgeInsets.only(right: _width> 360?80:60, left: _width> 360?80:60, top: Platform.isIOS?0.0:_width> 360?40:5, bottom: _width> 360?40:20),
       child: Material(
         elevation: 10,
         shadowColor: Colors.black,
