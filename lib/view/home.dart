@@ -299,12 +299,10 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.paymentPageIndex? PaymentPage(
-                            onWillPop: () async{
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                              return false;
+                            onPreviousPagePressed: (){
+                              _returnToPreviousPage();
                             },
+                            onAllCategoriesPressed: (){},
                           ):
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
                             onPreviousPagePressed: (){

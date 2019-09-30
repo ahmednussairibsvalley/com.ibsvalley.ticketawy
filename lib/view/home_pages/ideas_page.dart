@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../globals.dart';
@@ -149,7 +151,11 @@ class _IdeasFormState extends State<IdeasForm> {
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
-              child: Image.asset('assets/add_photo.png', width: _width > 360 ?163:110, height: _width> 360?42:28,alignment: Alignment.centerLeft,),
+              child: Image.asset('assets/add_photo.png',
+                height: Platform.isIOS?30
+                    :_width> 360?42:28,
+                alignment: Alignment.centerLeft,
+              ),
             ),
           ),
 
