@@ -144,7 +144,7 @@ class CategoryPage extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             content: Container(
               width: 300.0,
-              height: 430.0,
+              height: 450.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -417,6 +417,8 @@ class _FiterDialogState extends State<FiterDialog> {
     '120\$',
   ];
 
+  RangeValues _values = RangeValues(50.0, 1000.0);
+
   String _dateValue;
   String _timeValue;
   String _cityValue;
@@ -429,6 +431,10 @@ class _FiterDialogState extends State<FiterDialog> {
     _timeValue = _timeList[0];
     _cityValue = _cityList[0];
     _PriceValue = _PriceList[0];
+  }
+
+  Widget _priceItem(double price){
+    return Text('${price.toStringAsFixed(0)} \$');
   }
 
   @override
@@ -584,7 +590,7 @@ class _FiterDialogState extends State<FiterDialog> {
           ],
         ),
 
-        // Category Filter
+        // Price Filter
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -595,7 +601,6 @@ class _FiterDialogState extends State<FiterDialog> {
             Padding(
               padding: const EdgeInsets.only(right: 8.0, bottom: 15.0,),
               child: Container(
-                padding: EdgeInsets.only(right:10, left: 10,),
                 decoration: ShapeDecoration(
                   color: Color(0xffeeeeee),
                   shape: RoundedRectangleBorder(
@@ -603,25 +608,33 @@ class _FiterDialogState extends State<FiterDialog> {
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
                 ),
-                child: DropdownButton(
-                  underline: Container(),
-                  icon: Icon(Icons.expand_more),
-                  value: _PriceValue,
-                  onChanged: (value){
-                    setState(() {
-                      _PriceValue = value;
-                    });
-                  },
-                  items: List.generate(_PriceList.length, (index){
-                    return DropdownMenuItem(
-                      value: _PriceList[index],
-                      child: Container(
-                        width: 150,
-                        child: Text('${_PriceList[index]}'),
+                  child: Column(
+                    children: <Widget>[
+                      RangeSlider(
+                        values: _values,
+                        min: 20.0,
+                        max: 1500.0,
+                        onChanged: (RangeValues value) {
+                          setState(() {
+                            _values = value;
+                          });
+                        },
                       ),
-                    );
-                  }),
-                ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 40.0),
+                            child: Text('${_values.start.toStringAsFixed(0)} \$', textAlign: TextAlign.left,),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40.0),
+                            child: Text('${_values.end.toStringAsFixed(0)} \$', textAlign: TextAlign.right,),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
               ),
             ),
           ],
