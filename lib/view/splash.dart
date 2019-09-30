@@ -25,6 +25,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
 
+//    print('Width: ${Globals.screenUtil.width}');
+//    print('Height: ${Globals.screenUtil.height}');
     _controller = AnimationController(vsync: this, duration: Duration(seconds: 2));
     _winkingController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _titleController = AnimationController(vsync: this, duration: Duration(seconds: 1));

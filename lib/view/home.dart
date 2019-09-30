@@ -74,6 +74,8 @@ class _HomeState extends State<Home> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
+    print('Width: $_width');
+
     return WillPopScope(
       onWillPop: () async {
 
@@ -121,7 +123,10 @@ class _HomeState extends State<Home> {
               // The header.
               Positioned(
                 right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
-                child: Image.asset('assets/header.png', width: _width > 350?138:130, height: _width > 350?110:100,),
+                child: Image.asset('assets/header.png',
+                  height: Platform.isIOS? _width < 414 ?110 : 125
+                        :_width > 350?110:100,
+                ),
               ),
 
               // The top left icon.
