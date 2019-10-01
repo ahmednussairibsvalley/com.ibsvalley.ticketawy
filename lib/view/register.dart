@@ -130,7 +130,6 @@ class _RegisterState extends State<Register> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 45.0, right: 45.0, bottom: 8.0, top: 8.0,),
                                 child: TextFormField(
-                                  keyboardType: TextInputType.phone,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     filled: true,
