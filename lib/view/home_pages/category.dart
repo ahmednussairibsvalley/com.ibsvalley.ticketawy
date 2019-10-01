@@ -411,18 +411,18 @@ class _FiterDialogState extends State<FiterDialog> {
     'Marsa Matroh',
   ];
 
-  List _PriceList = [
-    '50\$',
-    '80\$',
-    '120\$',
-  ];
+//  List _PriceList = [
+//    '50\$',
+//    '80\$',
+//    '120\$',
+//  ];
 
   RangeValues _values = RangeValues(50.0, 1000.0);
 
   String _dateValue;
   String _timeValue;
   String _cityValue;
-  String _PriceValue;
+//  String _PriceValue;
 
   @override
   void initState() {
@@ -430,12 +430,12 @@ class _FiterDialogState extends State<FiterDialog> {
     _dateValue = _dateList[0];
     _timeValue = _timeList[0];
     _cityValue = _cityList[0];
-    _PriceValue = _PriceList[0];
+//    _PriceValue = _PriceList[0];
   }
 
-  Widget _priceItem(double price){
-    return Text('${price.toStringAsFixed(0)} \$');
-  }
+//  Widget _priceItem(double price){
+//    return Text('${price.toStringAsFixed(0)} \$');
+//  }
 
   @override
   Widget build(BuildContext context) {
