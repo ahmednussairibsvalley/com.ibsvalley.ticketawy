@@ -209,10 +209,18 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.profilePageIndex? ProfilePage(
-                            onPreviousPagePressed: (){
-                              Globals.pagesStack.pop();
+                            onWillPop: (){
                               setState(() {
-                                index = Globals.pagesStack.pop();
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+//                              Globals.pagesStack.pop();
+//                              setState(() {
+//                                index = Globals.pagesStack.pop();
+//                              });
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
                               });
                             },
                             onAllCategoriesPressed: (){
@@ -222,7 +230,16 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.ideasPageIndex? IdeasPage(
-                            onPreviousPagePressed: _returnToPreviousPage,
+                            onWillPop: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
@@ -230,7 +247,16 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.faqPageIndex? FaqPage(
-                            onPreviousPagePressed: _returnToPreviousPage,
+                            onWillPop: () {
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
@@ -238,7 +264,16 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.contactPageIndex? ContactPage(
-                            onPreviousPagePressed: _returnToPreviousPage,
+                            onWillPop: () {
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: () {
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
                             onAllCategoriesPressed: (){
                               setState(() {
                                 index = PagesIndices.categoriesPageIndex;
@@ -246,7 +281,11 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.categoryPageIndex? CategoryPage(
-                            onBack: _returnToPreviousPage,
+                            onBack: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
                             onCategoryPressed: (){
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
@@ -306,7 +345,9 @@ class _HomeState extends State<Home> {
                           ):
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
                             onPreviousPagePressed: (){
-                              _returnToPreviousPage();
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
                             },
                             onCategoryPressed: (){
                               setState(() {

@@ -9,67 +9,74 @@ final int historyPageIndex = 1;
 class ProfilePage extends StatelessWidget {
   final Function onPreviousPagePressed;
   final Function onAllCategoriesPressed;
+  final Function onWillPop;
 
-  ProfilePage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
+  ProfilePage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.profilePageIndex);
 
-    return Scaffold(
-      body: ProfileTabs(),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: onPreviousPagePressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xfffe6700),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/back.png', width: 30, height: 30,),
-                      Text(
-                        'Previous Page',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
+    return WillPopScope(
+      onWillPop: () async{
+        onWillPop();
+        return null;
+      },
+      child: Scaffold(
+        body: ProfileTabs(),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  onTap: onPreviousPagePressed,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Color(0xfffe6700),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/back.png', width: 30, height: 30,),
+                        Text(
+                          'Previous Page',
+                          style: TextStyle(
+                            color: Colors.white,fontFamily: 'MyriadPro',
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: onAllCategoriesPressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xff4b3d7a),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/all_events.png', width: 30, height: 30,),
-                      Text(
-                        'All Categories',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
+              Expanded(
+                child: GestureDetector(
+                  onTap: onAllCategoriesPressed,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Color(0xff4b3d7a),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/all_events.png', width: 30, height: 30,),
+                        Text(
+                          'All Categories',
+                          style: TextStyle(
+                            color: Colors.white,fontFamily: 'MyriadPro',
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

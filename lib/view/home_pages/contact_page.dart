@@ -2,102 +2,109 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../globals.dart';
+//import '../../globals.dart';
 
 
 class ContactPage extends StatelessWidget {
 
   final Function onPreviousPagePressed;
   final Function onAllCategoriesPressed;
+  final Function onWillPop;
 
-  ContactPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed});
+  ContactPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    Globals.pagesStack.push(PagesIndices.contactPageIndex);
+//    Globals.pagesStack.push(PagesIndices.contactPageIndex);
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async{
+        onWillPop();
+        return null;
+      },
+      child: Scaffold(
 //      resizeToAvoidBottomInset: false,
 //      resizeToAvoidBottomPadding: false,
-      body: GestureDetector(
-        onTap: (){
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: ListView(
-          children: <Widget>[
-            // The title
-            Padding(
-              padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
-              child: Text('Contact Us',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xfffe6600),
-                  fontSize: 25,
-                  fontFamily: 'Verdana'
+        body: GestureDetector(
+          onTap: (){
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: ListView(
+            children: <Widget>[
+              // The title
+              Padding(
+                padding: EdgeInsets.only(top: _width > 360?10:8.0, bottom: _width > 360?10:8.0),
+                child: Text('Contact Us',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color(0xfffe6600),
+                      fontSize: 25,
+                      fontFamily: 'Verdana'
+                  ),
                 ),
               ),
-            ),
-            ContactForm(),
+              ContactForm(),
 
 
 
 
-          ],
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: onPreviousPagePressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xfffe6700),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/back.png', width: 30, height: 30,),
-                      Text(
-                        'Previous Page',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  onTap: onPreviousPagePressed,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Color(0xfffe6700),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/back.png', width: 30, height: 30,),
+                        Text(
+                          'Previous Page',
+                          style: TextStyle(
+                            color: Colors.white,fontFamily: 'MyriadPro',
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: onAllCategoriesPressed,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  color: Color(0xff4b3d7a),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset('assets/all_events.png', width: 30, height: 30,),
-                      Text(
-                        'All Categories',
-                        style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
-                          fontSize: 16,
+              Expanded(
+                child: GestureDetector(
+                  onTap: onAllCategoriesPressed,
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    color: Color(0xff4b3d7a),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Image.asset('assets/all_events.png', width: 30, height: 30,),
+                        Text(
+                          'All Categories',
+                          style: TextStyle(
+                            color: Colors.white,fontFamily: 'MyriadPro',
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

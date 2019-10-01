@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -560,29 +562,33 @@ class HotOfferPage extends StatelessWidget {
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
-                        child: Stack(
-                          children: <Widget>[
-                            Image.network(
-                              list[index].imageUrl,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned(
+                      flex: 1,
+                      child: Stack(
+                        children: <Widget>[
+                          Image.network(
+                            list[index].imageUrl,
+                            fit: BoxFit.cover,
+                            height: Platform.isIOS? 150 //for IOS
+                                :150, // for Android
+                          ),
+                          Positioned(
 
-                              left: 10.0,
-                              child: Container(
-                                decoration: BoxDecoration(color: Colors.deepPurple),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Text(
-                                    'Sale',
-                                    style: TextStyle(
-                                        color: Color(0xffeaeae7),fontSize: 18),
-                                  ),
+                            left: 10.0,
+                            child: Container(
+                              decoration: BoxDecoration(color: Colors.deepPurple),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  'Sale',
+                                  style: TextStyle(
+                                      color: Color(0xffeaeae7),fontSize: 18),
                                 ),
                               ),
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
