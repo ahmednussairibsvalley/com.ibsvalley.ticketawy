@@ -567,14 +567,14 @@ class HotOfferPage extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             Positioned(
-                              top: 8.0,
-                              right: 50.0,
+
+                              left: 10.0,
                               child: Container(
-                                decoration: BoxDecoration(color: Colors.deepOrange),
+                                decoration: BoxDecoration(color: Colors.deepPurple),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(15.0),
+                                  padding: const EdgeInsets.all(10.0),
                                   child: Text(
-                                    'Hot',
+                                    'Sale',
                                     style: TextStyle(
                                         color: Color(0xffeaeae7),fontSize: 18),
                                   ),
