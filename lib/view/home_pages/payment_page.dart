@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 import '../../globals.dart';
@@ -29,11 +30,18 @@ class _paymentState extends State<Payment> {
 
   var _cvvController = MaskedTextController(mask: '000');
   var _expController = MaskedTextController(mask: '00/00');
+
+  static const platform = const MethodChannel('fawry');
+
+
   String dropval;
   void dropChange(String val) {
     setState(() {
       dropval = val;
     });
+    if(dropval == 'Fawry'){
+      platform.invokeMethod('initFawry');
+    }
   }
 
   @override
