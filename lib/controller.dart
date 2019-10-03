@@ -19,6 +19,7 @@ class Controller{
   }
 
   populateCategories(List categoriesList){
+    _categories.clear();
     for(int i = 0; i < categoriesList.length; i++){
       Category category = Category.fromJson(categoriesList[i]);
 
@@ -48,12 +49,14 @@ class Controller{
   }
 
   populateHomeEvents(List homeEventsList){
+    _homeEvents.clear();
     for(int i = 0; i < homeEventsList.length; i++){
       _homeEvents.add(Event.fromJson(homeEventsList[i]));
     }
   }
 
   populateHotEvents(List hotEvents){
+    _hotEvents.clear();
     for(int i = 0 ; i < hotEvents.length; i++){
       _hotEvents.add(Event.fromJson(hotEvents[i]));
     }
