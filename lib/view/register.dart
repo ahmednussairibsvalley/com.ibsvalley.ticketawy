@@ -168,18 +168,16 @@ class _RegisterState extends State<Register> {
                                       });
                                       Map response = await util.register(phoneNumber, password);
 
-                                      bool succeeded = response['succeeded'];
-
-                                      if(succeeded){
+                                      if(response['result']){
                                         setState(() {
                                           _registering = false;
                                         });
-                                        _showRegistrationSuccessDialog(context);
+                                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
                                       } else {
                                         setState(() {
                                           _registering = false;
                                         });
-                                        _showRegistrationErrorDialog(context, message: response['errors'][0]['description']);
+                                        _showRegistrationErrorDialog(context, message: response['user_Message']);
                                       }
 
                                     }
@@ -330,7 +328,7 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  _showRegistrationSuccessDialog(BuildContext context){
+  _showRegistrationSuccessDialog(BuildContext context, {String message}){
 
     showDialog(context: context, builder: (context){
       return CustomAlertDialog(
@@ -341,7 +339,7 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Success', textAlign: TextAlign.center,
+                child: Text(message.isNotEmpty && message != null?message:'Success', textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
                     fontFamily: 'GeometriqueSans',

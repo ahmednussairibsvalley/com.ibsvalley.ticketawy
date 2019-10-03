@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-final String _baseUrl = 'http://40.85.116.121:8202';
+final String _baseUrl = 'http://40.85.116.121:8607';
 
 /// Is the image URL available
 Future<bool> isImageUrlAvailable(String imageUrl) async{
@@ -18,7 +18,7 @@ Future<bool> isImageUrlAvailable(String imageUrl) async{
 
 ///Calls the login API.
 Future<Map> login(String username, String password) async {
-  String url = '$_baseUrl/api/ApplicationUser/Login';
+  String url = '$_baseUrl/api/AspNetUsers/Login';
 
   HttpClient httpClient = new HttpClient();
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
@@ -56,7 +56,7 @@ Future<Map> register(String phone, String password) async {
       "errors": []
   }
    */
-  String url = '$_baseUrl/api/ApplicationUser/Register';
+  String url = '$_baseUrl/api/AspNetUsers/Register';
 
   HttpClient httpClient = new HttpClient();
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
@@ -110,8 +110,4 @@ Future<List> verification (String phone) async{
 
   return jsonDecode(response.body);
 }
-
-
-
-
 

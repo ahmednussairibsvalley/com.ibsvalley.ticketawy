@@ -215,14 +215,14 @@ class _LoginState extends State<Login> {
 
                               Map response = await util.login(_userName, _password);
 
-                              if(response.containsKey('token')){
+                              if(response['result']){
                                 Navigator.of(context).pushReplacementNamed('/home');
                               } else{
                                 setState(() {
                                   _loggingIn = false;
                                 });
 
-                                _showLoginErrorDialog(context, message: response.containsKey('message')?response['message']:'');
+                                _showLoginErrorDialog(context, message: response['user_Message']);
                               }
 
                             }
