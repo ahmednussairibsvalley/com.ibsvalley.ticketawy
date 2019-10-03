@@ -4,6 +4,7 @@ import 'package:ticketawy/controller.dart';
 class Globals{
   static Controller controller;
   static Stack<int> pagesStack = Stack();
+  static int eventId = 0;
   static int reservationOption = 0;
 }
 

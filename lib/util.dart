@@ -73,12 +73,13 @@ Future<Map> register(String phone, String password) async {
 }
 
 ///Calls the event API specified by its id.
-Future<List> getEventDetails(int id) async{
-  String url = '$_baseUrl/api/Events/Events_Details?id=$id';
+Future<Map> getEventDetails(int id) async{
+  String url = '$_baseUrl/api/Event/Events_Details?id=$id';
 
   var response = await http.get(url);
 
-  return json.decode(response.body);
+  List result = json.decode(response.body);
+  return result[0];
 }
 
 /// Calls the user details Api

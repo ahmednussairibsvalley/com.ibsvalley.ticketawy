@@ -28,7 +28,7 @@ dependencies:
   stack: ^0.1.0
   google_maps_flutter: ^0.5.21
   device_info: ^0.4.0+2
-  intl: ^0.15.8
+  intl: ^0.16.0
   flutter_masked_text: ^0.8.0
   webview_flutter: ^0.3.14+1
   connectivity: ^0.4.3+2

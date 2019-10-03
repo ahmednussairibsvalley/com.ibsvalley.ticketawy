@@ -13,7 +13,7 @@ class Event{
     _title = json['name'];
     _imageUrl = 'http://40.85.116.121:8606/EventsLogo/${json['logo']}';
     _price = json['price'];
-    _reservationOption = 1;
+    _reservationOption = 0;
   }
 
   String get imageUrl => _imageUrl;

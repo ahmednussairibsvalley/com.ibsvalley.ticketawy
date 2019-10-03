@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 
 class SchedulePage extends StatelessWidget {
+
+  final List scheduleList;
+
+  SchedulePage({@required this.scheduleList});
   @override
   Widget build(BuildContext context) {
 
@@ -17,52 +21,91 @@ class SchedulePage extends StatelessWidget {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
+            child: ListView(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(scheduleList.length, (index){
+
+                List agendaList = scheduleList[index]['agendas'];
+                return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('* First Day',
-                    style: TextStyle(
-                      color: Color(0xffff6600),
-                      fontFamily: 'MyriadPro',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xff4b3d7a),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
-                          child: Text('09:00 am',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Verdana',
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('* ${scheduleList[index]['actTitle']}',
+                          style: TextStyle(
+                            color: Color(0xffff6600),
+                            fontFamily: 'MyriadPro',
                           ),
                         ),
                       ),
-                      Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                        style: TextStyle(
-                          fontFamily: 'Verdana',
-                          color: Color(0xff656565)
-                        ),
-                      ),
+                      Column(
+                        children: List.generate(agendaList.length, (index){
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff4b3d7a),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
+                                    child: Text(agendaList[index]['start'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Verdana',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                  style: TextStyle(
+                                      fontFamily: 'Verdana',
+                                      color: Color(0xff656565)
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
+                                  child: DashedDivider(),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff4b3d7a),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
+                                    child: Text(agendaList[index]['end'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Verdana',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                  style: TextStyle(
+                                      fontFamily: 'Verdana',
+                                      color: Color(0xff656565)
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
+                                  child: DashedDivider(),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      )
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
-                  child: DashedDivider(),
-                ),
-              ],
+                  )
+                );
+              }),
             ),
           ),
         ),

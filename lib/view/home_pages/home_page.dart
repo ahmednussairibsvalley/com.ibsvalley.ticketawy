@@ -17,7 +17,7 @@ List<T> map<T>(List list, Function handler) {
 
 class HomePage extends StatelessWidget {
   final Function onPress;
-  final Function onEventPressed;
+  final Function(int) onEventPressed;
   final Function onHotOfferPressed;
 
   HomePage(
@@ -117,7 +117,7 @@ class _EventsSliderState extends State<EventsSlider> {
                 return GestureDetector(
                   onTap: () {
                     Globals.reservationOption = i.reservationOption;
-                    onEventPressed();
+                    onEventPressed(i.id);
                   },
                   child: Stack(
                     fit: StackFit.expand,
@@ -171,7 +171,7 @@ class _EventsSliderState extends State<EventsSlider> {
                                       topLeft: Radius.circular(15),
                                       bottomLeft: Radius.circular(15)),
                                 ),
-                                width: 150,
+                                width: i.title.length > 20?200 : 150,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
