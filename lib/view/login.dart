@@ -17,6 +17,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   bool _loggingIn = false;
+
+
   
   _showLoginErrorDialog(BuildContext context, {String message}){
 
@@ -76,6 +78,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
 
     bool _isUnderDevelopment = false;
     
@@ -299,11 +302,14 @@ class _LoginState extends State<Login> {
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: GestureDetector(
-            onTap: () {
+            onTap: () async {
               if(_isUnderDevelopment){
                 _showUnderDevelopmentDialog(context);
                 return;
               }
+              List categoriesList = await categoryList();
+
+              Globals.controller.populateCategories(categoriesList);
               Navigator.of(context).pushReplacementNamed('/home');
             },
             child: Row(
