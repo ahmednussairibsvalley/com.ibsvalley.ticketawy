@@ -49,7 +49,6 @@ Future<Map> register(String phone, String password) async {
           }
       ]
   }
-
   Success Response:
   {
       "succeeded": true,

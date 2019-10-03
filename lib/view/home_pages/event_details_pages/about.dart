@@ -1,30 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'dashed_divider.dart';
 
-import '../../../util.dart' as util;
-
 class AboutPage extends StatelessWidget {
-
-  final String eventName;
-  final String eventDescription;
-  final String imageUrl;
-  final String startDate;
-  final String endDate;
-
-  AboutPage({@required this.eventName, @required this.eventDescription,
-    @required this.imageUrl, @required this.startDate, @required this.endDate});
   @override
   Widget build(BuildContext context) {
-
-    DateTime _startDate = DateTime.parse(startDate);
-    DateTime _endDate = DateTime.parse(endDate);
-    String _startDateText = DateFormat.yMd().format(_startDate);
-    String _startTimeText = DateFormat.jm().format(_startDate);
-
     return ListView(
       children: <Widget>[
         Padding(
@@ -38,28 +20,14 @@ class AboutPage extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: FutureBuilder(
-                        future: util.isImageUrlAvailable(imageUrl),
-                        builder: (context, snapshot){
-                          if(snapshot.hasData){
-                            if(snapshot.data){
-                              return Image.network(imageUrl,
-                                height: 185,
-                                fit: BoxFit.fill,
-                              );
-                            }
-                            return Container();
-                          }
-                          return Image.asset('assets/logo.png',
-                            height: 185,
-                            fit: BoxFit.fill,
-                          );
-                        },
+                      child: Image.asset('assets/event_image.png',
+                        height: 185,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(eventName,
+                      child: Text('Event Name Here',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color(0xffff6600),fontFamily: 'Verdana'
@@ -69,9 +37,12 @@ class AboutPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
-                        height: 100,
+                        height: 50,
                         child: SingleChildScrollView(
-                          child: Text(eventDescription,
+                          child: Text('Give me one good reason why I should give up '
+                              'my limited spare time to come to your Science '
+                              'Week event! While you’re at it, give me a few '
+                              'good reasons.',
                             style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
                           ),
                         ),
@@ -98,7 +69,7 @@ class AboutPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text('Starts at:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565))),
-                                Text(_startTimeText,
+                                Text('09:00 am',
                                   style: TextStyle(
                                     color: Color(0xffff6600),
                                     fontFamily: 'Verdana'
@@ -119,7 +90,7 @@ class AboutPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text('Duration:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565))),
-                                Text('${_endDate.difference(_startDate).inDays} Days',
+                                Text('2 Days',
                                   style: TextStyle(
                                     color: Color(0xffff6600),
                                     fontFamily: 'Verdana'
@@ -143,7 +114,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text(_startDateText,
+                      child: Text('30-09-2019',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white

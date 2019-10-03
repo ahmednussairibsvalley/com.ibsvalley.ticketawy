@@ -184,6 +184,7 @@ class _EventsSliderState extends State<EventsSlider> {
                                 ),
                               ),
                               Container(
+
                                 decoration: BoxDecoration(
                                   color: Color(0xffe75d02),
                                   borderRadius: BorderRadius.only(

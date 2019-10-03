@@ -17,6 +17,7 @@ class BuyTickets extends StatelessWidget {
         onPreviousPagePressed();
         return false;
       },
+
       child: Scaffold(
         body: buyTickets(),
         bottomNavigationBar: BottomAppBar(
@@ -80,7 +81,6 @@ class BuyTickets extends StatelessWidget {
   }
 }
 
-
 class buyTickets extends StatefulWidget {
   @override
   _buyTicketsState createState() => _buyTicketsState();
@@ -108,7 +108,7 @@ class _buyTicketsState extends State<buyTickets> {
                   ),
                   Text(
                     'Seats order information',
-                    style: TextStyle(color: Color(0xffff8020), fontSize: 20),
+                    style: TextStyle(color: Color(0xfffe6700), fontSize: 20),
                   ),
                   SizedBox(
                     width: 350,
@@ -296,7 +296,6 @@ class _buyTicketsState extends State<buyTickets> {
           )
         ],
       ),
-
     );
   }
 }

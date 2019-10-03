@@ -123,7 +123,7 @@ class _HomeState extends State<Home> {
                 right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
                 child: Image.asset('assets/header.png',
                   height: Platform.isIOS? _width < 414 ?110 : 125
-                        :_width > 350?110:130,
+                      :_width > 350?110:130,
                 ),
               ),
 
@@ -231,11 +231,6 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.ideasPageIndex? IdeasPage(
-                            onWillPop: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
                             onPreviousPagePressed: (){
                               setState(() {
                                 index = PagesIndices.homePageIndex;
@@ -248,11 +243,7 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.faqPageIndex? FaqPage(
-                            onWillPop: () {
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
+
                             onPreviousPagePressed: (){
                               setState(() {
                                 index = PagesIndices.homePageIndex;
@@ -265,11 +256,7 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.contactPageIndex? ContactPage(
-                            onWillPop: () {
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
+                            
                             onPreviousPagePressed: () {
                               setState(() {
                                 index = PagesIndices.homePageIndex;
@@ -416,9 +403,9 @@ class _HomeState extends State<Home> {
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text('$title',
             style: TextStyle(
-              fontSize: 18,
-              fontFamily: 'Verdana',
-              color: Color(0xff656565)
+                fontSize: 18,
+                fontFamily: 'Verdana',
+                color: Color(0xff656565)
             ),
           ),
         ),
@@ -478,7 +465,3 @@ class DrawerDivider extends StatelessWidget {
     );
   }
 }
-
-
-
-
