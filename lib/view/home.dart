@@ -203,7 +203,8 @@ class _HomeState extends State<Home> {
                                 index = PagesIndices.eventPageIndex;
                               });
                             },
-                            onHotOfferPressed: (){
+                            onHotOfferPressed: (id){
+                              Globals.eventId = id;
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });

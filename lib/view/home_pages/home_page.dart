@@ -18,7 +18,7 @@ List<T> map<T>(List list, Function handler) {
 class HomePage extends StatelessWidget {
   final Function onPress;
   final Function(int) onEventPressed;
-  final Function onHotOfferPressed;
+  final Function(int) onHotOfferPressed;
 
   HomePage(
       {@required this.onPress,
@@ -450,7 +450,7 @@ class CategoriesPage extends StatelessWidget {
 }
 
 class HotOffersSlider extends StatefulWidget {
-  final Function onEventPressed;
+  final Function(int) onEventPressed;
   final List list;
 
   HotOffersSlider({@required this.onEventPressed, @required this.list});
@@ -571,7 +571,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
 class HotOfferPage extends StatelessWidget {
   final List list;
 
-  final Function onEventPressed;
+  final Function(int) onEventPressed;
 
   HotOfferPage({@required this.list, @required this.onEventPressed});
 
@@ -598,7 +598,7 @@ class HotOfferPage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   Globals.reservationOption = list[index].reservationOption;
-                  onEventPressed();
+                  onEventPressed(list[index].id);
                 },
                 child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
