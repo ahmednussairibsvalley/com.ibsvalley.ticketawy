@@ -110,4 +110,11 @@ Future<List> verification (String phone) async{
 
   return jsonDecode(response.body);
 }
+/// Calling the Category List
+Future<List> categoryList () async{
+  String url = '$_baseUrl/api/Event/Category_list';
 
+  var response = await http.get(url);
+
+  return jsonDecode(response.body);
+}
