@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:ticketawy/view/register.dart';
+import '../globals.dart';
 import '../util.dart' as util;
 
+import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 
 class Login extends StatefulWidget {
@@ -216,6 +218,10 @@ class _LoginState extends State<Login> {
                               Map response = await util.login(_userName, _password);
 
                               if(response['result']){
+
+                                List categoriesList = await categoryList();
+
+                                Globals.controller.populateCategories(categoriesList);
                                 Navigator.of(context).pushReplacementNamed('/home');
                               } else{
                                 setState(() {

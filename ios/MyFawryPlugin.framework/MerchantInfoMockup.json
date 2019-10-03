@@ -1,0 +1,111 @@
+{
+    "type":"MerchantResponseDataModel",
+    "loginEnabled":"Y",
+    "regEnabled":"Y",
+    "shippingStatus":"Mandatory",
+    "paymentMethods":[
+                      {
+                      "code":"PayAtFawry",
+                      "name":"@Fawry",
+                      "fixedFees":0.0,
+                      "selected":false,
+                      "enable":true
+                      },
+                      {
+                      "code":"CashOnDelivery",
+                      "name":"Pay@Delivery",
+                      "fixedFees":0.0,
+                      "selected":false,
+                      "enable":true
+                      },
+                      {
+                      "code":"PayUsingCC",
+                      "name":"Credit Card",
+                      "fixedFees":1.0,
+                      "selected":false,
+                      "enable":true
+                      },
+                      {
+                      "code":"PayUsingWalletAcc",
+                      "name":"Pay Using Wallet Account",
+                      "fixedFees":1.0,
+                      "selected":false,
+                      "enable":true
+                      }
+                      ],
+    "requirePreAuth":false,
+    "requireKYCAuth":false,
+    "merchantDataModel":{
+        "itemCategoryDataModels":[
+        
+        ],
+        "requirePreAuth":false,
+        "merchantAddress":{
+            "governorate":{
+                
+            },
+            "city":{
+                
+            }
+        },
+        "shippingOptionNever":false,
+        "id":0,
+        "accountInfoSent":false,
+        "loginTrialCount":0,
+        "orderHistoryPermitted":false,
+        "merchantBalancePermitted":false,
+        "notificationHistoryPermitted":false,
+        "shipmentManageMentPermitted":false,
+        "rankedCustomersPermitted":false,
+        "reportsPermitted":false,
+        "profileSettingsPermitted":false,
+        "cashoutPermitted":false,
+        "userManagementPermitted":false,
+        "orderVerificationPermitted":false,
+        "estatmentPermitted":false,
+        "passwordChangeRequired":false
+    },
+    "ecommerceApp":"DEFAULT_ECOMMERCE",
+    "statusCode":200,
+    "statusDescription":"Operation done successfully",
+    "accTypesInfo":{
+        "MCV":false,
+        "SDA":false,
+        "MC":false,
+        "VC":true
+    },
+    "senderCode":"FAWRY",
+    "recieverCode":"LeUuYdRoErw=",
+    "messagCode":"GetMerchantInfoRs",
+    "messageVersion":"V1.0",
+    "requestUID":"28c7003a-30a0-4d3e-b92b-ae897a5b9b6a",
+    "asyncReqUID":"797ded3e-c259-4b23-8ba6-f0bc54c67049",
+    "merchant":{
+        "accountNumber":"LeUuYdRoErw=",
+        "requirePreAuth":false,
+        "merchantAddress":{
+            "governorate":{
+                
+            },
+            "city":{
+                
+            }
+        },
+        "shippingOptionNever":false,
+        "id":0,
+        "accountInfoSent":false,
+        "loginTrialCount":0,
+        "orderHistoryPermitted":false,
+        "merchantBalancePermitted":false,
+        "notificationHistoryPermitted":false,
+        "shipmentManageMentPermitted":false,
+        "rankedCustomersPermitted":false,
+        "reportsPermitted":false,
+        "profileSettingsPermitted":false,
+        "cashoutPermitted":false,
+        "userManagementPermitted":false,
+        "orderVerificationPermitted":false,
+        "estatmentPermitted":false,
+        "passwordChangeRequired":false
+    }
+}

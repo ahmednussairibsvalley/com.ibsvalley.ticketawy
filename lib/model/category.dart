@@ -5,6 +5,12 @@ class Category{
 
   Category(this._id, this._title, this._imageUrl);
 
+
+  Category.fromJson(Map json){
+    _id = json['id'];
+    _title = json['categoryName'];
+  }
+
   String get imageUrl => _imageUrl;
 
   set imageUrl(String value) {

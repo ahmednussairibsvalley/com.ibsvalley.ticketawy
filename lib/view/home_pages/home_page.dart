@@ -386,7 +386,7 @@ class CategoriesPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
-                        child: Image.network(
+                        child: Image.asset(
                       list[index].imageUrl,
                       fit: BoxFit.cover,
                     )),
