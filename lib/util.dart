@@ -100,16 +100,37 @@ Future<List> getUserList () async {
 }
 
 /// Calls the VerificationMessage
-Future<List> verification (String phone) async{
-  String url = '$_baseUrl/api/ApplicationUser/Send_VerificationMessage';
-  
-  var response = await http.post(url,body: {
-
+Future<Map> sendVerificationMessage (String phone) async{
+  String url = '$_baseUrl/api/AspNetUsers/Send_VerificationMessage';
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
     'Phone' : phone
-  });
-
-  return jsonDecode(response.body);
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
 }
+
+Future<Map> verifyPhone (String phone, String code) async {
+  String url = '$_baseUrl/api/AspNetUsers/Verify_Phone';
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
+    'Phone' : phone,
+    'Code' : code,
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
+}
+
 /// Calling the Category List
 Future<List> categoryList () async{
   String url = '$_baseUrl/api/Event/Category_list';
@@ -117,4 +138,30 @@ Future<List> categoryList () async{
   var response = await http.get(url);
 
   return jsonDecode(response.body);
+}
+
+Future<Map> getHomeLists() async {
+  String url = '$_baseUrl/api/Home/Home_Lists';
+
+  var response = await http.get(url);
+
+  return jsonDecode(response.body);
+}
+
+Future<List> getHomeEvents() async {
+  String url = '$_baseUrl/api/Home/Home_Lists';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result['homeEvents'];
+}
+
+Future<List> getHotEvents() async {
+  String url = '$_baseUrl/api/Home/Home_Lists';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result['hotEvents'];
 }

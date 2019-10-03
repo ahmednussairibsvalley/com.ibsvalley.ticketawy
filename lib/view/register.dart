@@ -207,14 +207,20 @@ class _RegisterState extends State<Register> {
                                           phoneNumber, password);
 
                                       if (response['result']) {
-                                        setState(() {
-                                          _registering = false;
-                                        });
-                                        _showRegistrationSuccessDialog(context,
-                                            message: response['user_Message']);
-                                        _phoneController.value = _phoneController.value.copyWith(text: '');
-                                        _passwordController.value = _passwordController.value.copyWith(text: '');
-                                        _confirmPasswordController.value = _confirmPasswordController.value.copyWith(text: '');
+                                        Map verificationResponse = await util.sendVerificationMessage(phoneNumber);
+
+                                        if(verificationResponse['result']){
+                                          _showVerificationDialog(phoneNumber: phoneNumber);
+                                          setState(() {
+                                            _registering = false;
+                                          });
+
+//                                        _showRegistrationSuccessDialog(context,message: response['user_Message']);
+                                          _phoneController.value = _phoneController.value.copyWith(text: '');
+                                          _passwordController.value = _passwordController.value.copyWith(text: '');
+                                          _confirmPasswordController.value = _confirmPasswordController.value.copyWith(text: '');
+                                        }
+
                                       } else {
                                         setState(() {
                                           _registering = false;
@@ -322,6 +328,76 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  _showVerificationDialog({String phoneNumber}){
+    final _verificationController = TextEditingController();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: Container(
+              width: 300.0,
+              height: 200.0,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'An SMS sent to you with verification code.'
+                      'Please enter the code and press OK',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'GeometriqueSans',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DashedDivider(),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _verificationController,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        hintText: 'Enter the verification code',
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: () async{
+
+                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
+
+                      if(response['result']){
+                        Navigator.of(context).pop();
+                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
+                      }
+                    },
+                    title: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xfffe6700),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Close',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
   _showRegistrationErrorDialog(BuildContext context, {String message}) {
     showDialog(
         context: context,

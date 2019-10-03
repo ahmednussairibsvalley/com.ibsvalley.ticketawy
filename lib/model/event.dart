@@ -11,8 +11,9 @@ class Event{
   Event.fromJson(Map json){
     _id = json['id'];
     _title = json['name'];
-    _imageUrl = json['logo'];
-    _price = 0.0;
+    _imageUrl = 'http://40.85.116.121:8606/EventsLogo/${json['logo']}';
+    _price = json['price'];
+    _reservationOption = 1;
   }
 
   String get imageUrl => _imageUrl;

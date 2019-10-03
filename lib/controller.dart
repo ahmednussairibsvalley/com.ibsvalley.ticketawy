@@ -7,10 +7,14 @@ class Controller{
 
   List<Event> _events;
   List<Category> _categories;
+  List<Event> _homeEvents;
+  List<Event> _hotEvents;
 
   Controller(){
     _events = List();
     _categories = List();
+    _homeEvents = List();
+    _hotEvents = List();
     _testData();
   }
 
@@ -43,6 +47,18 @@ class Controller{
     }
   }
 
+  populateHomeEvents(List homeEventsList){
+    for(int i = 0; i < homeEventsList.length; i++){
+      _homeEvents.add(Event.fromJson(homeEventsList[i]));
+    }
+  }
+
+  populateHotEvents(List hotEvents){
+    for(int i = 0 ; i < hotEvents.length; i++){
+      _hotEvents.add(Event.fromJson(hotEvents[i]));
+    }
+  }
+
   _testData(){
     _events.add(Event(1, 'Yanni Event', 'https://s3.amazonaws.com/busites_www/yanni/home_bg_2_1525800103.jpg', 30, 1));
     _events.add(Event(2, 'Hiking Event', 'https://www.liffed.com/wp-content/uploads/2018/09/de853fb9_3088_4da5_b4a7_a54ef2181ecb_a21b0077-99fe-4b74-9a87-11bd3f3b82a3.jpg', 50, 0));
@@ -67,6 +83,18 @@ class Controller{
 
   set categories(List<Category> value) {
     _categories = value;
+  }
+
+  List<Event> get hotEvents => _hotEvents;
+
+  set hotEvents(List<Event> value) {
+    _hotEvents = value;
+  }
+
+  List<Event> get homeEvents => _homeEvents;
+
+  set homeEvents(List<Event> value) {
+    _homeEvents = value;
   }
 
 

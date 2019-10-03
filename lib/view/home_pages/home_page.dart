@@ -31,14 +31,52 @@ class HomePage extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        EventsSlider(
-          onEventPressed: onEventPressed,
+        FutureBuilder(
+          future: util.getHomeEvents(),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.done){
+              if(snapshot.hasData){
+                Globals.controller.populateHomeEvents(snapshot.data);
+                return EventsSlider(
+                  onEventPressed: onEventPressed,
+                  list: Globals.controller.homeEvents,
+                );
+              }
+              return Container();
+            }
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          },
         ),
         CategoriesSlider(
           onPress: onPress,
         ),
-        HotOffersSlider(
-          onEventPressed: onHotOfferPressed,
+        FutureBuilder(
+          future: util.getHotEvents(),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.done){
+              if(snapshot.hasData){
+                Globals.controller.populateHotEvents(snapshot.data);
+                return HotOffersSlider(
+                  onEventPressed: onHotOfferPressed,
+                  list: Globals.controller.hotEvents,
+                );
+              }
+              return Container();
+            }
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          },
         ),
       ],
     );
@@ -47,7 +85,8 @@ class HomePage extends StatelessWidget {
 
 class EventsSlider extends StatefulWidget {
   final Function onEventPressed;
-  EventsSlider({@required this.onEventPressed});
+  final List list;
+  EventsSlider({@required this.onEventPressed, @required this.list});
   @override
   _EventsSliderState createState() => _EventsSliderState(
         onEventPressed: onEventPressed,
@@ -56,7 +95,7 @@ class EventsSlider extends StatefulWidget {
 
 class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.events;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
 
@@ -66,6 +105,7 @@ class _EventsSliderState extends State<EventsSlider> {
 
   @override
   void initState() {
+    _list = widget.list;
     super.initState();
     child = map<Widget>(
       _list,
@@ -411,21 +451,23 @@ class CategoriesPage extends StatelessWidget {
 
 class HotOffersSlider extends StatefulWidget {
   final Function onEventPressed;
+  final List list;
 
-  HotOffersSlider({@required this.onEventPressed});
+  HotOffersSlider({@required this.onEventPressed, @required this.list});
   @override
   _HotOffersSliderState createState() => _HotOffersSliderState();
 }
 
 class _HotOffersSliderState extends State<HotOffersSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.events;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
 
   @override
   void initState() {
+    _list = widget.list;
     super.initState();
 
     for (int i = 0; i < _list.length; i++) {
