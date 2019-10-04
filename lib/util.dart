@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:ticketawy/globals.dart';
 
 final String _baseUrl = 'http://40.85.116.121:8607';
 
@@ -83,8 +84,8 @@ Future<Map> getEventDetails(int id) async{
 }
 
 /// Calls the user details Api
-Future<List> getUserDetails (String id) async{
-  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=$id';
+Future<List> getUserDetails () async{
+  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=${Globals.userId}';
 
   var response = await http.get(url);
 

@@ -222,6 +222,7 @@ class _LoginState extends State<Login> {
 
                               if(response['result']){
 
+                                Globals.userId = response['id'];
                                 List categoriesList = await categoryList();
 
                                 Globals.controller.populateCategories(categoriesList);
