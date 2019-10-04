@@ -85,11 +85,12 @@ Future<Map> getEventDetails(int id) async{
 
 /// Calls the user details Api
 Future<List> getUserDetails () async{
-  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=${Globals.userId}';
+  String url = '$_baseUrl/api/AspNetUsers/User_Details?id=${Globals.userId}';
 
   var response = await http.get(url);
 
-  return json.decode(response.body);
+  print('${jsonDecode(response.body)}');
+  return jsonDecode(response.body);
 }
 
 /// Calls the user list Api

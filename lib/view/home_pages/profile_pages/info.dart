@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProfileInfo extends StatefulWidget {
+
   @override
   _ProfileInfoState createState() => _ProfileInfoState();
 }
