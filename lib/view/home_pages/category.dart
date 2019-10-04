@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
+import '../../util.dart' as util;
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -19,115 +20,125 @@ class CategoryPage extends StatelessWidget {
   final Function onCategoryPressed;
   final Function onAllCategoriesPressed;
   
-  CategoryPage({@required this.onBack, @required this.onCategoryPressed, @required this.onAllCategoriesPressed});
+  CategoryPage({@required this.onBack, @required this.onCategoryPressed,
+    @required this.onAllCategoriesPressed, });
 
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.categoryPageIndex);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: Column(
 
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Category name here',
-                    style: TextStyle(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(Globals.currentCategoryName,
+                  style: TextStyle(
                       color: Color(0xffff6600),
                       fontSize: 17,
                       fontFamily: 'Verdana'
-                    ),
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      _showFilterDialog(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffff6600),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
-                        child: Text('Filter By',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    _showFilterDialog(context);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0xffff6600),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
+                      child: Text('Filter By',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: FutureBuilder(
+              future: util.getEventsList(Globals.categoryId),
+              builder: (context, snapshot){
+                if(snapshot.hasData){
+                  Globals.controller.populateEvents(snapshot.data);
+                  return Globals.controller.events.length > 0?ListView(
+                    children: <Widget>[
+                      EventsSlider(onCategoryPressed: onCategoryPressed,
+                        eventsList: Globals.controller.events,
+                      )
+                    ],
+                  ):Container();
+                }
+                return Container();
+              },
+            ),
+          )
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: GestureDetector(
+                onTap: onBack,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xfffe6700),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/back.png', width: 30, height: 30,),
+                      Text(
+                        'Previous Page',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'MyriadPro',
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            Flexible(
-              child: ListView(
-                children: <Widget>[
-                  EventsSlider(onCategoryPressed: onCategoryPressed,)
-                ],
+            Expanded(
+              child: GestureDetector(
+                onTap: onAllCategoriesPressed,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  color: Color(0xff4b3d7a),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Image.asset('assets/all_events.png', width: 30, height: 30,),
+                      Text(
+                        'All Categories',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'MyriadPro',
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            )
+            ),
           ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: onBack,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xfffe6700),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset('assets/back.png', width: 30, height: 30,),
-                        Text(
-                          'Previous Page',
-                          style: TextStyle(
-                            color: Colors.white,
-                              fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onAllCategoriesPressed,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xff4b3d7a),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset('assets/all_events.png', width: 30, height: 30,),
-                        Text(
-                          'All Categories',
-                          style: TextStyle(
-                            color: Colors.white,
-                              fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -161,15 +172,16 @@ class CategoryPage extends StatelessWidget {
 
 class EventsSlider extends StatefulWidget {
   final Function onCategoryPressed;
+  final List eventsList;
 
-  EventsSlider({@required this.onCategoryPressed});
+  EventsSlider({@required this.onCategoryPressed, @required this.eventsList});
   @override
   _EventsSliderState createState() => _EventsSliderState();
 }
 
 class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.events;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
@@ -178,6 +190,8 @@ class _EventsSliderState extends State<EventsSlider> {
   @override
   void initState() {
     super.initState();
+
+    _list = widget.eventsList;
 
     for(int i = 0; i < _list.length; i++){
       Map pairs = Map();

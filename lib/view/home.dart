@@ -192,7 +192,9 @@ class _HomeState extends State<Home> {
                         index == PagesIndices.homePageIndex?2:35:
                         index == PagesIndices.homePageIndex?1:30,
                           child: index == PagesIndices.homePageIndex? HomePage(
-                            onPress: (){
+                            onPress: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
                               setState(() {
                                 index = PagesIndices.categoryPageIndex;
                               });

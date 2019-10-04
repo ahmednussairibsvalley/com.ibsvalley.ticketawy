@@ -175,3 +175,12 @@ Future<List> getServiceClasses(int id) async{
   var result = jsonDecode(response.body);
   return result;
 }
+
+Future<List> getEventsList(int categoryId) async{
+  String url = '$_baseUrl/api/Event/Events_List?id=$categoryId';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result;
+}

@@ -18,6 +18,13 @@ class Controller{
     _testData();
   }
 
+  populateEvents(List eventsList){
+    _events.clear();
+    for(int i = 0; i < eventsList.length; i++){
+      _events.add(Event.fromJson(eventsList[i]));
+    }
+  }
+
   populateCategories(List categoriesList){
     _categories.clear();
     for(int i = 0; i < categoriesList.length; i++){

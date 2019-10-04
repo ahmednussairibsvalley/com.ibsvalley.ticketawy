@@ -16,7 +16,7 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class HomePage extends StatelessWidget {
-  final Function onPress;
+  final Function(int, String) onPress;
   final Function(int) onEventPressed;
   final Function(int) onHotOfferPressed;
 
@@ -283,7 +283,7 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class CategoriesSlider extends StatefulWidget {
-  final Function onPress;
+  final Function(int, String) onPress;
   CategoriesSlider({@required this.onPress});
   @override
   _CategoriesSliderState createState() =>
@@ -297,7 +297,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   List child;
   List<Map> paisList = List();
 
-  final Function onPress;
+  final Function(int, String) onPress;
 
   _CategoriesSliderState({@required this.onPress});
 
@@ -395,7 +395,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
 
 class CategoriesPage extends StatelessWidget {
   final List list;
-  final Function onPress;
+  final Function(int, String) onPress;
 
   CategoriesPage({@required this.list, @required this.onPress});
 
@@ -413,7 +413,7 @@ class CategoriesPage extends StatelessWidget {
       children: List.generate(list.length, (index) {
         return GestureDetector(
           onTap: () {
-            onPress();
+            onPress(list[index].id, list[index].title);
           },
           child: Padding(
             padding: EdgeInsets.all(5),
