@@ -353,9 +353,11 @@ class _HomeState extends State<Home> {
                                 index = PagesIndices.homePageIndex;
                               });
                             },
-                            onCategoryPressed: (){
+                            onCategoryPressed: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
                               setState(() {
-                                index = PagesIndices.eventPageIndex;
+                                index = PagesIndices.categoryPageIndex;
                               });
                             },
                             onAllEventsPressed: (){

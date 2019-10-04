@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../../globals.dart';
+import '../../util.dart' as util;
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -14,7 +15,7 @@ List<T> map<T>(List list, Function handler) {
 
 class AllCategoriesPage extends StatelessWidget {
 
-  final Function onCategoryPressed;
+  final Function(int, String) onCategoryPressed;
   final Function onPreviousPagePressed;
   final Function onAllEventsPressed;
 
@@ -24,7 +25,19 @@ class AllCategoriesPage extends StatelessWidget {
     Globals.pagesStack.push(PagesIndices.categoriesPageIndex);
 
     return Scaffold(
-      body: CategoriesPager(onCategoryPressed: onCategoryPressed),
+      body: FutureBuilder(
+        future: util.categoryList(),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            Globals.controller.populateCategories(snapshot.data);
+            return CategoriesPager(
+                onCategoryPressed: onCategoryPressed,
+              categoriesList: Globals.controller.categories,
+            );
+          }
+          return Container();
+        },
+      ),
 
       // The footer buttons
       bottomNavigationBar: BottomAppBar(
@@ -90,9 +103,10 @@ class AllCategoriesPage extends StatelessWidget {
 
 class CategoriesPager extends StatefulWidget {
 
-  final Function onCategoryPressed;
+  final Function(int, String) onCategoryPressed;
+  final List categoriesList;
 
-  CategoriesPager({@required this.onCategoryPressed});
+  CategoriesPager({@required this.onCategoryPressed, @required this.categoriesList});
 
   @override
   _CategoriesPagerState createState() => _CategoriesPagerState();
@@ -100,7 +114,7 @@ class CategoriesPager extends StatefulWidget {
 
 class _CategoriesPagerState extends State<CategoriesPager> {
   int _current = 0;
-  static final List _list = Globals.controller.categories;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
@@ -109,7 +123,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
   @override
   void initState() {
     super.initState();
-
+    _list = widget.categoriesList;
     for(int i = 0; i < _list.length; i++){
       Map pairs = Map();
       int first = i * 4;
@@ -219,7 +233,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
 
 class CategoryItem extends StatelessWidget {
   final List list;
-  final Function onCategoryPressed;
+  final Function(int, String) onCategoryPressed;
 
   CategoryItem({@required this.list, @required this.onCategoryPressed});
 
@@ -241,7 +255,9 @@ class CategoryItem extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
-              onTap: onCategoryPressed,
+              onTap: (){
+                onCategoryPressed(list[index].id, list[index].title);
+              },
               child: Material(
                 elevation: 5,
                 shadowColor: Colors.black,
