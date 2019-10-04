@@ -9,6 +9,7 @@ class Globals{
   static int eventId = 0;
   static int reservationOption = 0;
   static String currentCategoryName = '';
+  static String userPassword = 'esraa123';
 }
 
 class PagesIndices {

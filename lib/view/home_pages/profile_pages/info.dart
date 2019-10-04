@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../globals.dart';
+
 class ProfileInfo extends StatefulWidget {
 
   @override
@@ -8,6 +10,19 @@ class ProfileInfo extends StatefulWidget {
 
 class _ProfileInfoState extends State<ProfileInfo> {
   final _formKey = GlobalKey<FormState>();
+
+  final _fullNameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fullNameController.value = _fullNameController.value.copyWith(text: Globals.controller.user.fullName);
+    _passwordController.value = _passwordController.value.copyWith(text: Globals.userPassword);
+    _phoneNumberController.value = _phoneNumberController.value.copyWith(text: Globals.controller.user.phoneNumber);
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -19,6 +34,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
             child: TextFormField(
+              controller: _fullNameController,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
@@ -42,6 +58,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
             child: TextFormField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 fillColor: Colors.white,
@@ -66,7 +83,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
           Padding(
             padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
             child: TextFormField(
-
+              controller: _phoneNumberController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 fillColor: Colors.white,

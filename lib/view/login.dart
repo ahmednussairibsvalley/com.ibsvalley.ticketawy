@@ -221,8 +221,11 @@ class _LoginState extends State<Login> {
                               Map response = await util.login(_userName, _password);
 
                               if(response['result']){
-
+                                Globals.userPassword = _password;
                                 Globals.userId = response['id'];
+                                Map userData = await getUserDetails();
+
+                                Globals.controller.populateUser(userData);
                                 List categoriesList = await categoryList();
 
                                 Globals.controller.populateCategories(categoriesList);
@@ -308,6 +311,9 @@ class _LoginState extends State<Login> {
                 _showUnderDevelopmentDialog(context);
                 return;
               }
+              Map userData = await getUserDetails();
+
+              Globals.controller.populateUser(userData);
               List categoriesList = await categoryList();
 
               Globals.controller.populateCategories(categoriesList);
