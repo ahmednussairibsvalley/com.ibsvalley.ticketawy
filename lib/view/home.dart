@@ -48,6 +48,12 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
+      'My Wishlist' : (){
+        setState(() {
+          index = PagesIndices.mywishlistPageindex;
+        });
+        Navigator.of(context).pop();
+      },
       'FAQ' : (){
         setState(() {
           index = PagesIndices.faqPageIndex;
