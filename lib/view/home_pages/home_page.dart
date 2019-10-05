@@ -33,9 +33,9 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         FutureBuilder(
           future: util.getHomeEvents(),
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
-              if(snapshot.hasData){
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
                 Globals.controller.populateHomeEvents(snapshot.data);
                 Globals.controller.homeEvents[1].reservationOption = 1;
                 return EventsSlider(
@@ -59,9 +59,9 @@ class HomePage extends StatelessWidget {
         ),
         FutureBuilder(
           future: util.getHotEvents(),
-          builder: (context, snapshot){
-            if(snapshot.connectionState == ConnectionState.done){
-              if(snapshot.hasData){
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
                 Globals.controller.populateHotEvents(snapshot.data);
                 Globals.controller.hotEvents[1].reservationOption = 1;
                 return HotOffersSlider(
@@ -151,18 +151,39 @@ class _EventsSliderState extends State<EventsSlider> {
                             child: Text(
                               'Hot',
                               style: TextStyle(
-                                  color: Color(0xffeaeae7),fontSize: 18),
+                                  color: Color(0xffeaeae7), fontSize: 18),
                             ),
                           ),
                         ),
                       ),
+
+                      //Wishlist Button
+                      Positioned(
+                          top: 25.0,
+                          right: 25,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.deepOrange),
+                            child: GestureDetector(
+                              child: IconButton(padding: EdgeInsets.only(top: 2),
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  onPressed: null),
+                            ),
+                          )),
                       Positioned(
                         right: 0.0,
                         left: 0.0,
                         bottom: 0.0,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              right: 50, left: 50, bottom: 20),
+                              right: 35, left: 35, bottom: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -173,7 +194,7 @@ class _EventsSliderState extends State<EventsSlider> {
                                       topLeft: Radius.circular(15),
                                       bottomLeft: Radius.circular(15)),
                                 ),
-                                width: i.title.length > 20?200 : 150,
+                                width: i.title.length > 20 ? 200 : 150,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -186,7 +207,6 @@ class _EventsSliderState extends State<EventsSlider> {
                                 ),
                               ),
                               Container(
-
                                 decoration: BoxDecoration(
                                   color: Color(0xffe75d02),
                                   borderRadius: BorderRadius.only(
@@ -613,24 +633,44 @@ class HotOfferPage extends StatelessWidget {
                           Image.network(
                             list[index].imageUrl,
                             fit: BoxFit.cover,
-                            height: Platform.isIOS? 150 //for IOS
-                                :150, // for Android
+                            height: Platform.isIOS
+                                ? 150 //for IOS
+                                : 150, // for Android
                           ),
                           Positioned(
-
                             left: 10.0,
                             child: Container(
-                              decoration: BoxDecoration(color: Colors.deepPurple),
+                              decoration:
+                                  BoxDecoration(color: Colors.deepPurple),
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
                                   'Sale',
                                   style: TextStyle(
-                                      color: Color(0xffeaeae7),fontSize: 18),
+                                      color: Color(0xffeaeae7), fontSize: 18),
                                 ),
                               ),
                             ),
                           ),
+                          Positioned(
+                              top: 5.0,
+                              right: 5,
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.deepOrange),
+                                child: GestureDetector(
+                                  child: IconButton(padding: EdgeInsets.only(top: 2),
+                                      icon: Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                      onPressed: null),
+                                ),
+                              )),
                         ],
                       ),
                     ),
