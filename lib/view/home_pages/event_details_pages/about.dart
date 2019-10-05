@@ -152,6 +152,25 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                Positioned(
+                    top: 20,
+                    right: 13,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.deepOrange),
+                      child: GestureDetector(
+                        child: IconButton(padding: EdgeInsets.only(top: 2),
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            onPressed: null),
+                      ),
+                    )),
               ],
             ),
           ),

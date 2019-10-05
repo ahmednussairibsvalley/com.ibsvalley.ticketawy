@@ -10,6 +10,7 @@ import 'event_details_pages/schedule.dart';
 
 import '../../globals.dart';
 import '../../util.dart' as util;
+import 'package:intl/intl.dart';
 
 final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
@@ -327,172 +328,129 @@ class ChooseTicket extends StatefulWidget {
 }
 
 class _ChooseTicketState extends State<ChooseTicket> {
+  Map _map = {
+    'Class A': 120,
+    'Class B': 80,
+    'Class C': 50,
+  };
 
   static const platform = const MethodChannel('fawry');
 
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder(
-      future: util.getServiceClasses(Globals.eventId),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
+    return ListView(
+      children: <Widget>[
 
-          List list = snapshot.data;
-          return Column(
-            children: <Widget>[
+        // The logo
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/logo.png',
+            width: 60,
+            height: 82,
+          ),
+        ),
 
-              // The logo
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/logo.png',
-                  width: 60,
-                  height: 82,
-                ),
+        // Choose Ticket title
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Choose tickets',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 23,
+              fontFamily: 'GeometriqueSans',
+              color: Color(0xff878787)
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(_map.keys.toList().length, (index) {
+              return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DashedDivider(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16,left: 12),
+                          child: Text('${_map.keys.toList()[index]}',style: TextStyle(fontSize: 20,
+                              fontFamily: 'GeometriqueSans',
+                              color: Color(0xff878787)),),
+                        ),
+                        Container(
+                          width: 70,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Color(0xffff6600),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 8.0,
+                              right: 8.0,
+                              top: 3.0,
+                              bottom: 3.0,
+                            ),
+                            child: Text(
+                              '${_map[_map.keys.toList()[index]]}\$',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Verdana',
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          child: TicketQuantity(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
+        ),
+
+        // Buy Button
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 70,
+            left: 70,
+          ),
+          child: ListTile(
+            onTap: () {
+              platform.invokeMethod('initFawry');
+              Navigator.of(context).pop();
+            },
+            title: Container(
+              decoration: BoxDecoration(
+                color: Color(0xfffe6700),
+                borderRadius: BorderRadius.circular(10),
               ),
-
-              // Choose Ticket title
-              Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Choose tickets',
+                  'Buy',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontFamily: 'GeometriqueSans',
-                      color: Color(0xff878787)
+                  style: TextStyle(color: Colors.white,
+                    fontFamily: 'Verdana',
+                    fontSize: 20,
                   ),
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 150,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(list.length, (index) {
-                        return ServiceClassItem(
-                          data: list[index],
-                        );
-                      }),
-                    ),
-                  ),
-                )
-              ),
-
-              // Buy Button
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 70,
-                  left: 70,
-                ),
-                child: ListTile(
-                  onTap: () {
-                    platform.invokeMethod('initFawry');
-                    Navigator.of(context).pop();
-                  },
-                  title: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Buy',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white,
-                          fontFamily: 'Verdana',
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        }
-        return Container();
-      },
-    );
-  }
-}
-
-
-class ServiceClassItem extends StatefulWidget {
-  final Map data;
-
-  ServiceClassItem({@required this.data});
-  @override
-  _ServiceClassItemState createState() => _ServiceClassItemState();
-}
-
-class _ServiceClassItemState extends State<ServiceClassItem> {
-
-  double _totalPrice;
-
-  @override
-  void initState() {
-    super.initState();
-    _totalPrice = widget.data['total_Price'];
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DashedDivider(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                width: 100,
-                child: Text('${widget.data['class_Name']}',style: TextStyle(fontSize: 20,
-                    fontFamily: 'GeometriqueSans',
-                    color: Color(0xff878787)),
-                ),
-              ),
-              Container(
-                width: 100,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Color(0xffff6600),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    right: 8.0,
-                    top: 3.0,
-                    bottom: 3.0,
-                  ),
-                  child: Text(
-                    '$_totalPrice\$',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Verdana',
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                child: TicketQuantity(
-                  updateItem: (quantity){
-                    setState(() {
-                      _totalPrice = widget.data['total_Price'] * quantity;
-                    });
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ],
@@ -503,10 +461,6 @@ class _ServiceClassItemState extends State<ServiceClassItem> {
 
 // Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {
-
-  final Function(int) updateItem;
-
-  TicketQuantity({@required this.updateItem});
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
 }
@@ -526,9 +480,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
             if(_current > 0){
               setState(() {
                 _current--;
-
               });
-              widget.updateItem(_current);
             }
 
           },
@@ -547,9 +499,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
           onTap: (){
             setState(() {
               _current++;
-
             });
-            widget.updateItem(_current);
           },
           child: Icon(Icons.add),
         ),
