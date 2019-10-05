@@ -17,7 +17,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _fullNameController.value = _fullNameController.value.copyWith(text: Globals.controller.user.fullName);
     _passwordController.value = _passwordController.value.copyWith(text: Globals.userPassword);

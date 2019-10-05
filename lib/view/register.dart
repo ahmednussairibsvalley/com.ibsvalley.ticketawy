@@ -498,6 +498,7 @@ class _RegisterState extends State<Register> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed('/home');
                     },
                     title: Container(
                       decoration: BoxDecoration(

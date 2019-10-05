@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/home_pages/buy_tickets.dart';
+import 'package:ticketawy/view/home_pages/mywishlist.dart';
 import 'package:ticketawy/view/home_pages/payment_page.dart';
 import 'package:ticketawy/view/home_pages/select_seat.dart';
 import 'home_pages/categories_page.dart';
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
       },
       'My Wishlist' : (){
         setState(() {
-          index = PagesIndices.mywishlistPageindex;
+          index = PagesIndices.myWishListPageIndex;
         });
         Navigator.of(context).pop();
       },
@@ -252,7 +253,6 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.faqPageIndex? FaqPage(
-
                             onPreviousPagePressed: (){
                               setState(() {
                                 index = PagesIndices.homePageIndex;
@@ -334,12 +334,7 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ):
-                          index == PagesIndices.paymentPageIndex? PaymentPage(
-                            onPreviousPagePressed: (){
-                              _returnToPreviousPage();
-                            },
-                            onAllCategoriesPressed: (){},
-                          ):
+                          index == PagesIndices.myWishListPageIndex? MyWishListPage():
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
                             onPreviousPagePressed: (){
                               setState(() {
