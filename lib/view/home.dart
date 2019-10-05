@@ -192,7 +192,9 @@ class _HomeState extends State<Home> {
                         index == PagesIndices.homePageIndex?2:35:
                         index == PagesIndices.homePageIndex?1:30,
                           child: index == PagesIndices.homePageIndex? HomePage(
-                            onPress: (){
+                            onPress: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
                               setState(() {
                                 index = PagesIndices.categoryPageIndex;
                               });
@@ -203,7 +205,8 @@ class _HomeState extends State<Home> {
                                 index = PagesIndices.eventPageIndex;
                               });
                             },
-                            onHotOfferPressed: (){
+                            onHotOfferPressed: (id){
+                              Globals.eventId = id;
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });
@@ -337,9 +340,11 @@ class _HomeState extends State<Home> {
                                 index = PagesIndices.homePageIndex;
                               });
                             },
-                            onCategoryPressed: (){
+                            onCategoryPressed: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
                               setState(() {
-                                index = PagesIndices.eventPageIndex;
+                                index = PagesIndices.categoryPageIndex;
                               });
                             },
                             onAllEventsPressed: (){

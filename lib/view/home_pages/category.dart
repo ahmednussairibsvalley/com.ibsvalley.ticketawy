@@ -25,7 +25,6 @@ class CategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.categoryPageIndex);
 
-
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -667,3 +666,5 @@ class _FiterDialogState extends State<FiterDialog> {
     );
   }
 }
+
+

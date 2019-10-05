@@ -16,9 +16,9 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class HomePage extends StatelessWidget {
-  final Function onPress;
+  final Function(int, String) onPress;
   final Function(int) onEventPressed;
-  final Function onHotOfferPressed;
+  final Function(int) onHotOfferPressed;
 
   HomePage(
       {@required this.onPress,
@@ -37,6 +37,7 @@ class HomePage extends StatelessWidget {
             if(snapshot.connectionState == ConnectionState.done){
               if(snapshot.hasData){
                 Globals.controller.populateHomeEvents(snapshot.data);
+                Globals.controller.homeEvents[1].reservationOption = 1;
                 return EventsSlider(
                   onEventPressed: onEventPressed,
                   list: Globals.controller.homeEvents,
@@ -62,6 +63,7 @@ class HomePage extends StatelessWidget {
             if(snapshot.connectionState == ConnectionState.done){
               if(snapshot.hasData){
                 Globals.controller.populateHotEvents(snapshot.data);
+                Globals.controller.hotEvents[1].reservationOption = 1;
                 return HotOffersSlider(
                   onEventPressed: onHotOfferPressed,
                   list: Globals.controller.hotEvents,
@@ -284,7 +286,7 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class CategoriesSlider extends StatefulWidget {
-  final Function onPress;
+  final Function(int, String) onPress;
   CategoriesSlider({@required this.onPress});
   @override
   _CategoriesSliderState createState() =>
@@ -298,7 +300,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   List child;
   List<Map> paisList = List();
 
-  final Function onPress;
+  final Function(int, String) onPress;
 
   _CategoriesSliderState({@required this.onPress});
 
@@ -396,7 +398,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
 
 class CategoriesPage extends StatelessWidget {
   final List list;
-  final Function onPress;
+  final Function(int, String) onPress;
 
   CategoriesPage({@required this.list, @required this.onPress});
 
@@ -414,7 +416,7 @@ class CategoriesPage extends StatelessWidget {
       children: List.generate(list.length, (index) {
         return GestureDetector(
           onTap: () {
-            onPress();
+            onPress(list[index].id, list[index].title);
           },
           child: Padding(
             padding: EdgeInsets.all(5),
@@ -451,7 +453,7 @@ class CategoriesPage extends StatelessWidget {
 }
 
 class HotOffersSlider extends StatefulWidget {
-  final Function onEventPressed;
+  final Function(int) onEventPressed;
   final List list;
 
   HotOffersSlider({@required this.onEventPressed, @required this.list});
@@ -572,7 +574,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
 class HotOfferPage extends StatelessWidget {
   final List list;
 
-  final Function onEventPressed;
+  final Function(int) onEventPressed;
 
   HotOfferPage({@required this.list, @required this.onEventPressed});
 
@@ -599,7 +601,7 @@ class HotOfferPage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   Globals.reservationOption = list[index].reservationOption;
-                  onEventPressed();
+                  onEventPressed(list[index].id);
                 },
                 child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,

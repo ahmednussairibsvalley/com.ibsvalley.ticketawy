@@ -1,10 +1,12 @@
 import 'model/category.dart';
 import 'model/event.dart';
+import 'model/user.dart';
 
 
 // I have edited changes in blablabla
 class Controller{
 
+  User _user;
   List<Event> _events;
   List<Category> _categories;
   List<Event> _homeEvents;
@@ -16,6 +18,17 @@ class Controller{
     _homeEvents = List();
     _hotEvents = List();
     _testData();
+  }
+
+  populateUser(Map userData){
+    _user = User.fromJson(userData);
+  }
+
+  populateEvents(List eventsList){
+    _events.clear();
+    for(int i = 0; i < eventsList.length; i++){
+      _events.add(Event.fromJson(eventsList[i]));
+    }
   }
 
   populateCategories(List categoriesList){
@@ -98,6 +111,12 @@ class Controller{
 
   set homeEvents(List<Event> value) {
     _homeEvents = value;
+  }
+
+  User get user => _user;
+
+  set user(User value) {
+    _user = value;
   }
 
 

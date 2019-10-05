@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
 import 'event_details_pages/about.dart';
@@ -8,6 +9,8 @@ import 'event_details_pages/location.dart';
 import 'event_details_pages/schedule.dart';
 
 import '../../globals.dart';
+import '../../util.dart' as util;
+import 'package:intl/intl.dart';
 
 final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
@@ -25,8 +28,17 @@ class EventDetails extends StatelessWidget {
     Globals.pagesStack.push(PagesIndices.eventPageIndex);
 
     return Scaffold(
-      body: EventTabs(
-        onEventBooked: onEventBooked,
+      body: FutureBuilder(
+        future: util.getEventDetails(Globals.eventId),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            return EventTabs(
+              data: snapshot.data,
+              onEventBooked: onEventBooked,
+            );
+          }
+          return Container();
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
@@ -96,8 +108,9 @@ class EventDetails extends StatelessWidget {
 
 class EventTabs extends StatefulWidget {
   final Function onEventBooked;
+  final Map data;
 
-  EventTabs({@required this.onEventBooked});
+  EventTabs({@required this.onEventBooked, @required this.data});
   @override
   _EventTabsState createState() => _EventTabsState();
 }
@@ -110,6 +123,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -257,9 +271,21 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                AboutPage(),
-                LocationPage(),
-                SchedulePage(),
+                AboutPage(
+                  imageUrl: 'http://40.85.116.121:8606/EventsLogo/${widget.data['logo']}',
+                  eventName: widget.data['name'],
+                  eventDescription: widget.data['content'],
+                  endDate: widget.data['endDate'],
+                  startDate: widget.data['startDate'],
+                ),
+                LocationPage(
+                  mapUrl: widget.data['locationGmap'],
+                  endDate: widget.data['endDate'],
+                  startDate: widget.data['startDate'],
+                ),
+                SchedulePage(
+                  scheduleList: widget.data['schedules'],
+                ),
               ],
             ),
           ),
@@ -308,6 +334,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
     'Class C': 50,
   };
 
+  static const platform = const MethodChannel('fawry');
 
   @override
   Widget build(BuildContext context) {
@@ -404,7 +431,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ),
           child: ListTile(
             onTap: () {
-              widget.onTicketChosen();
+              platform.invokeMethod('initFawry');
               Navigator.of(context).pop();
             },
             title: Container(
