@@ -294,7 +294,7 @@ class _RegisterState extends State<Register> {
                       Navigator.of(context).pop();
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.only(top: 40, bottom: 40 , left: 20, right: 40),
                       child: Icon(
                         Icons.arrow_back,
                         color: Colors.white,
