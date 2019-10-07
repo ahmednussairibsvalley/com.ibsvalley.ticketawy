@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
+import 'package:intl/intl.dart';
 
 class SchedulePage extends StatelessWidget {
 
@@ -42,6 +43,9 @@ class SchedulePage extends StatelessWidget {
                       ),
                       Column(
                         children: List.generate(agendaList.length, (index){
+                          DateTime dateTime = DateTime.parse('${agendaList[index]['start']}');
+                          String _startTimeText = DateFormat.jm().format(dateTime);
+
                           return Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
@@ -54,7 +58,7 @@ class SchedulePage extends StatelessWidget {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
-                                    child: Text(agendaList[index]['start'],
+                                    child: Text('$_startTimeText',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Verdana',
@@ -62,32 +66,7 @@ class SchedulePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                  style: TextStyle(
-                                      fontFamily: 'Verdana',
-                                      color: Color(0xff656565)
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
-                                  child: DashedDivider(),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff4b3d7a),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
-                                    child: Text(agendaList[index]['end'],
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Verdana',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                Text('${agendaList[index]['description']}',
                                   style: TextStyle(
                                       fontFamily: 'Verdana',
                                       color: Color(0xff656565)
