@@ -26,6 +26,7 @@ class PagesIndices {
   static final int paymentPageIndex = 9;
   static final int categoriesPageIndex = 10;
   static final int myWishListPageIndex = 11;
+  static final int searchPageIndex = 12;
 }
 
 class ReservationOptions{

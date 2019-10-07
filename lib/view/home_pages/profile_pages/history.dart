@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
 
+import '../../../util.dart' as util;
+
 class ProfileHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return HistorySlider();
+    return FutureBuilder(
+      future: util.getOrdersHistory(),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          return HistorySlider(
+            list: snapshot.data,
+          );
+        }
+        return Container();
+      },
+    );
   }
 }
 
 
 class HistorySlider extends StatefulWidget {
+
+  final List list;
+
+  HistorySlider({@required this.list});
   @override
   _HistorySliderState createState() => _HistorySliderState();
 }
@@ -17,13 +33,30 @@ class HistorySlider extends StatefulWidget {
 class _HistorySliderState extends State<HistorySlider> with TickerProviderStateMixin{
 
   TabController _tabController;
+  List<Map> paisList = List();
 
   @override
   void initState() {
     super.initState();
+    for (int i = 0; i < widget.list.length; i++) {
+      Map pairs = Map();
+      int first = i * 2;
+      int second = first + 1;
+      if (first >= widget.list.length) {
+        break;
+      } else {
+        pairs['first'] = first;
+      }
+
+      if (second >= widget.list.length) {
+        second = 0;
+      }
+      pairs['second'] = second;
+      paisList.add(pairs);
+    }
     _tabController = TabController(
       vsync: this,
-      length: 3,
+      length: paisList.length,
     );
   }
   @override
@@ -31,7 +64,14 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
     return TabBarView(
       controller: _tabController,
       children: List.generate(_tabController.length, (index){
-        return HistoryPage();
+        List list = List();
+        if (paisList[index]['second'] > 0) {
+          list.add(widget.list[paisList[index]['first']]);
+          list.add(widget.list[paisList[index]['second']]);
+        } else {
+          list.add(widget.list[paisList[index]['first']]);
+        }
+        return HistoryPage(list: list,);
       }),
     );
   }
@@ -39,25 +79,22 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
 
 
 class HistoryPage extends StatelessWidget {
+
+  final List list;
+
+  HistoryPage({@required this.list});
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
-        Flexible(
+      children: List.generate(list.length, (index){
+        return Flexible(
           child: HistoryItem(
-            imageUrl: 'https://s3.amazonaws.com/busites_www/yanni/home_bg_2_1525800103.jpg',
-            title: 'Event name here',
-            code: '#123456789',
+            imageUrl: 'http://40.85.116.121:8606/EventsLogo/${list[index]['event_Logo']}',
+            title: list[index]['event_Name'],
+            code: '#${list[index]['order_Id']}',
           ),
-        ),
-        Flexible(
-          child: HistoryItem(
-            imageUrl: 'https://www.liffed.com/wp-content/uploads/2018/09/de853fb9_3088_4da5_b4a7_a54ef2181ecb_a21b0077-99fe-4b74-9a87-11bd3f3b82a3.jpg',
-            title: 'Event name here',
-            code: '#123456789',
-          ),
-        ),
-      ],
+        );
+      }),
     );
   }
 }

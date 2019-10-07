@@ -11,6 +11,7 @@ import 'home_pages/faq_page.dart';
 import 'home_pages/ideas_page.dart';
 
 import '../globals.dart';
+import '../util.dart' as util;
 import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
@@ -438,7 +439,16 @@ class _HomeState extends State<Home> {
                         contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Icon(Icons.search, size: 30,),
+                          child: GestureDetector(
+                            onTap: () async{
+                              List response = await util.search(_searchController.text);
+
+                              for(int i = 0; i < response.length; i++){
+                                print('${response[i]}');
+                              }
+                            },
+                              child: Icon(Icons.search, size: 30,)
+                          ),
                         ),
                         filled: true,
                         fillColor: Colors.white,
