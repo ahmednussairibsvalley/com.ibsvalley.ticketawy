@@ -602,7 +602,7 @@ class HotOfferPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
+      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -613,97 +613,134 @@ class HotOfferPage extends StatelessWidget {
         scrollDirection: Axis.vertical,
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(list.length, (index) {
-          return Material(
-            elevation: 5,
-            shadowColor: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Globals.reservationOption = list[index].reservationOption;
-                  onEventPressed(list[index].id);
-                },
-                child: Column(
-//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: Stack(
-                        children: <Widget>[
-                          Image.network(
-                            list[index].imageUrl,
-                            fit: BoxFit.cover,
-                            height: Platform.isIOS
-                                ? 150 //for IOS
-                                : 150, // for Android
-                          ),
-                          Positioned(
-                            left: 10.0,
-                            child: Container(
-                              decoration:
-                                  BoxDecoration(color: Colors.deepPurple),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  'Sale',
-                                  style: TextStyle(
-                                      color: Color(0xffeaeae7), fontSize: 18),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                              top: 5.0,
-                              right: 5,
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.deepOrange),
-                                child: GestureDetector(
-                                  child: IconButton(padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        Icons.favorite_border,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: (){Icon(Icons.favorite);}),
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Text(
-                        '${list[index].title}',
-                        style: TextStyle(
-                            color: Color(0xff656565), fontFamily: 'MyriadPro'),
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xffff6600),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${list[index].price}\$ / Ticket',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          return HotOfferItem(
+            imageUrl: list[index].imageUrl,
+            title: list[index].title,
+            id: list[index].id,
+            onEventPressed: onEventPressed,
+            price: list[index].price,
+            reservationOption: list[index].reservationOption,
           );
         }),
       ),
     );
   }
 }
+
+class HotOfferItem extends StatefulWidget {
+
+  final int id;
+  final Function(int) onEventPressed;
+  final int reservationOption;
+  final String imageUrl;
+  final String title;
+  final double price;
+
+  HotOfferItem({@required this.id, @required this.onEventPressed,
+    @required this.reservationOption, @required this.imageUrl,
+  @required this.title, @required this.price});
+
+  @override
+  _HotOfferItemState createState() => _HotOfferItemState();
+}
+
+class _HotOfferItemState extends State<HotOfferItem> {
+
+  bool _addedToWishList = false;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 5,
+      shadowColor: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {
+            Globals.reservationOption = widget.reservationOption;
+            widget.onEventPressed(widget.id);
+          },
+          child: Column(
+//                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: <Widget>[
+                    Image.network(
+                      widget.imageUrl,
+                      fit: BoxFit.cover,
+                      height: Platform.isIOS
+                          ? 150 //for IOS
+                          : 150, // for Android
+                    ),
+                    Positioned(
+                      left: 10.0,
+                      child: Container(
+                        decoration:
+                        BoxDecoration(color: Colors.deepPurple),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Sale',
+                            style: TextStyle(
+                                color: Color(0xffeaeae7), fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 5.0,
+                        right: 5,
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.deepOrange),
+                          child: GestureDetector(
+                            child: IconButton(padding: EdgeInsets.only(top: 2),
+                                icon: Icon(
+                                  _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                  color: Colors.white,
+                                  size: 25,
+                                ),
+                                onPressed: (){setState(() {
+                                  _addedToWishList = _addedToWishList?false:true;
+                                });;}),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                      color: Color(0xff656565), fontFamily: 'MyriadPro'),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Color(0xffff6600),
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '${widget.price}\$ / Ticket',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

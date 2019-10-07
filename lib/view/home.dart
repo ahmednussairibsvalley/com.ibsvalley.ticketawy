@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/home_pages/buy_tickets.dart';
 import 'package:ticketawy/view/home_pages/mywishlist.dart';
-import 'package:ticketawy/view/home_pages/payment_page.dart';
 import 'package:ticketawy/view/home_pages/select_seat.dart';
 import 'home_pages/categories_page.dart';
 import 'home_pages/contact_page.dart';
@@ -16,6 +15,8 @@ import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
 
 import 'dart:io';
+
+import 'login.dart';
 
 
 class Home extends StatefulWidget {
@@ -33,7 +34,35 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    final Map<String, Function> leftDrawerMap = {
+    final Map<String, Function> leftDrawerMap = Globals.skipped?
+    {
+      'Home' : (){
+        while(Globals.pagesStack.isNotEmpty){
+          Globals.pagesStack.pop();
+        }
+        setState(() {
+          index = PagesIndices.homePageIndex;
+        });
+        Navigator.of(context).pop();
+      },
+      'FAQ' : (){
+        setState(() {
+          index = PagesIndices.faqPageIndex;
+        });
+        Navigator.of(context).pop();
+      },
+      'Contact Us' : (){
+        setState(() {
+          index = PagesIndices.contactPageIndex;
+        });
+        Navigator.of(context).pop();
+      },
+      'log in' : (){
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+//        Navigator.of(context).pop();
+      },
+    }
+    :{
       'Home' : (){
         while(Globals.pagesStack.isNotEmpty){
           Globals.pagesStack.pop();
@@ -283,7 +312,8 @@ class _HomeState extends State<Home> {
                                 index = PagesIndices.homePageIndex;
                               });
                             },
-                            onCategoryPressed: (){
+                            onCategoryPressed: (id){
+                              Globals.eventId = id;
                               setState(() {
                                 index = PagesIndices.eventPageIndex;
                               });

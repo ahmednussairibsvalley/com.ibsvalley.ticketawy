@@ -10,6 +10,7 @@ class Globals{
   static int reservationOption = 0;
   static String currentCategoryName = '';
   static String userPassword = 'esraa123';
+  static bool skipped = false;
 }
 
 class PagesIndices {

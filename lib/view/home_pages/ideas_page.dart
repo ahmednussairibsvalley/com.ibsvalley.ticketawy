@@ -10,7 +10,8 @@ class IdeasPage extends StatelessWidget {
   final Function onAllCategoriesPressed;
   final Function onWillPop;
 
-  IdeasPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
+  IdeasPage({@required this.onPreviousPagePressed,
+    @required this.onAllCategoriesPressed, @required this.onWillPop});
   @override
   Widget build(BuildContext context) {
 

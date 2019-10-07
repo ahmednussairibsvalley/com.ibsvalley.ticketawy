@@ -303,7 +303,22 @@ class _LoginState extends State<Login> {
               ),
             ),
 
-
+            Globals.skipped?//The back arrow
+            Container(
+              alignment: Alignment.topLeft,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40, bottom: 40 , left: 20, right: 40),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  )),
+            ): Container(),
           ],
         ),
         bottomNavigationBar: BottomAppBar(
@@ -314,6 +329,7 @@ class _LoginState extends State<Login> {
                 _showUnderDevelopmentDialog(context);
                 return;
               }
+              Globals.skipped = true;
               Map userData = await getUserDetails();
 
               Globals.controller.populateUser(userData);
