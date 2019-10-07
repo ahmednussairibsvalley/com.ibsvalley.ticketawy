@@ -21,7 +21,7 @@ class LocationPage extends StatelessWidget {
     DateTime _endDate = DateTime.parse(endDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
     return Padding(
-      padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50,),
+      padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 15, left: 15,),
       child: ListView(
         shrinkWrap: true,
         itemExtent: _width > 360?350:270,

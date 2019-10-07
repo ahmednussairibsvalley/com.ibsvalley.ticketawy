@@ -28,7 +28,7 @@ class AboutPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 50, left: 50),
+          padding: EdgeInsets.only(top: Platform.isIOS?0.0:1.0, bottom: 8.0, right: 25, left: 25),
           child: Material(
             elevation: 10,
             shadowColor: Colors.black,
@@ -153,8 +153,8 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                    top: 20,
-                    right: 13,
+                    top: 15,
+                    right: 25,
                     child: Container(
                       width: 40,
                       height: 40,

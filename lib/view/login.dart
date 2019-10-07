@@ -43,11 +43,14 @@ class _LoginState extends State<Login> {
                 child: DashedDivider(),
               ),
               Expanded(
-                child: Text(message.isEmpty?'Invalid login':message,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Verdana',
-                    fontSize: 17,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Invalid login',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Verdana',
+                      fontSize: 17,
+                    ),
                   ),
                 ),
               ),
