@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../globals.dart';
+import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
@@ -207,10 +209,11 @@ class _RegisterState extends State<Register> {
                                           phoneNumber, password);
 
                                       if (response['result']) {
+                                        String id = response['id'];
                                         Map verificationResponse = await util.sendVerificationMessage(phoneNumber);
 
                                         if(verificationResponse['result']){
-                                          _showVerificationDialog(phoneNumber: phoneNumber);
+                                          _showVerificationDialog(id: id, password: password, phoneNumber: phoneNumber);
                                           setState(() {
                                             _registering = false;
                                           });
@@ -328,90 +331,123 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  _showVerificationDialog({String phoneNumber}){
-    final _verificationController = TextEditingController();
+  _showVerificationDialog({String phoneNumber, String id, String password}){
+
     showDialog(
         context: context,
         builder: (context) {
           return CustomAlertDialog(
-            content: Container(
-              width: 300.0,
-              height: 300.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'An SMS sent to you with verification code.'
-                      'Please enter the code and press OK',
+            content: VerificationDialog(
+              phoneNumber: phoneNumber,
+              id: id, password: password,
+            ),
+          );
+        });
+  }
+
+}
+
+class VerificationDialog extends StatefulWidget {
+
+  final String phoneNumber;
+  final String id;
+  final String password;
+
+  VerificationDialog({@required this.phoneNumber, this.password, this.id});
+  @override
+  _VerificationDialogState createState() => _VerificationDialogState();
+}
+
+class _VerificationDialogState extends State<VerificationDialog> {
+
+  final _verificationController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300.0,
+      height: 250.0,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'An SMS sent to you with verification code.'
+                  'Please enter the code and press OK',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'GeometriqueSans',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DashedDivider(),
+          ),
+          Expanded(
+            child: TextFormField(
+              controller: _verificationController,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                hintText: 'Enter the verification code',
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () async{
+                  Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
+                  if(response['result']){
+                    Navigator.of(context).pop();
+                    _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xfffe6700),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text('Confirm',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'GeometriqueSans',
+                          color: Colors.white
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
+                ),
+              ),
+              GestureDetector(
+                onTap: () async{
+                  await util.sendVerificationMessage(widget.phoneNumber);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xfffe6700),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _verificationController,
-                      keyboardType: TextInputType.number,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text('Resend',
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        hintText: 'Enter the verification code',
+                      style: TextStyle(
+                        color: Colors.white
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () async{
-                          Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
-                          if(response['result']){
-                            Navigator.of(context).pop();
-                            _showRegistrationSuccessDialog(context, message: response['user_Message']);
-                          }
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xfffe6700),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Confirm',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async{
-                          await util.sendVerificationMessage(phoneNumber);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xfffe6700),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Resend',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+              ),
+            ],
+          ),
 //                  ListTile(
 //                    onTap: () async{
 //
@@ -436,24 +472,9 @@ class _RegisterState extends State<Register> {
 //                      ),
 //                    ),
 //                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-}
-
-class VerificationDialog extends StatefulWidget {
-  @override
-  _VerificationDialogState createState() => _VerificationDialogState();
-}
-
-class _VerificationDialogState extends State<VerificationDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+        ],
+      ),
+    );
   }
 }
 
@@ -518,7 +539,7 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
       });
 }
 
-_showRegistrationSuccessDialog(BuildContext context, {String message}) {
+_showRegistrationSuccessDialog(BuildContext context, {String message, String id, String password}) {
   showDialog(
       context: context,
       builder: (context) {
@@ -556,7 +577,17 @@ _showRegistrationSuccessDialog(BuildContext context, {String message}) {
                   ),
                 ),
                 ListTile(
-                  onTap: () {
+                  onTap: ()async {
+
+                    Globals.userPassword = password != null && password.isNotEmpty?password:'';
+//                    Globals.userId = response['id'];
+                    Globals.userId = id != null && id.isNotEmpty ?id:'';
+                    Map userData = await getUserDetails();
+
+                    Globals.controller.populateUser(userData);
+                    List categoriesList = await categoryList();
+
+                    Globals.controller.populateCategories(categoriesList);
                     Navigator.of(context).pop();
                     Navigator.of(context).pushReplacementNamed('/home');
                   },
