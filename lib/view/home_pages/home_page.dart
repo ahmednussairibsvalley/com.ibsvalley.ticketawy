@@ -516,7 +516,6 @@ class _HotOfferItemState extends State<HotOfferItem> {
   bool _addedToWishList = false;
 
   initValues() async{
-    print('id ${widget.id}');
     List response = await util.getWishList();
     for(int i = 0; i < response.length ; i++){
       if(response[i]['id'] == widget.id){
@@ -577,26 +576,58 @@ class _HotOfferItemState extends State<HotOfferItem> {
                         top: 5.0,
                         right: 5,
                         child: Container(
-                          width: 30,
-                          height: 30,
+                          width: 40,
+                          height: 40,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.deepOrange),
-                          child: IconButton(padding: EdgeInsets.only(top: 2),
-                              icon: Icon(
-                                _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                              onPressed: () async{
-                                Map response = await util.addToRemoveFromWishList(widget.id);
-                                if(response['result']){
-                                  setState(() {
+                          child: FutureBuilder(
+                            future: util.getWishList(),
+                            builder: (context, snapshot){
+                              if(snapshot.connectionState == ConnectionState.done){
+                                if(snapshot.hasData){
+                                  return GestureDetector(
+                                    onTap: () async{
+                                      Map response = await util.addToRemoveFromWishList(widget.id);
+                                      if(response['result']){
+                                        _addedToWishList = _addedToWishList?false:true;
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.deepOrange),
+                                      child: IconButton(padding: EdgeInsets.only(top: 2),
+                                          icon: Icon(
+                                            _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
+                                          onPressed: () async{
+                                            Map response = await util.addToRemoveFromWishList(widget.id);
+                                            if(response['result']){
+                                              setState(() {
 
-                                    _addedToWishList = _addedToWishList?false: true;
-                                  });
+                                                _addedToWishList = _addedToWishList?false: true;
+                                              });
+                                            }
+                                          }),
+                                    ),
+                                  );
                                 }
-                              }),
+                                return Container();
+                              }
+                              return Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    CircularProgressIndicator(),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         )),
                   ],
                 ),
@@ -724,22 +755,52 @@ class _EventItemState extends State<EventItem> {
                         decoration: new BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.deepOrange),
-                        child: GestureDetector(
-                          child: IconButton(padding: EdgeInsets.only(top: 2),
-                              icon: Icon(
-                                _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                              onPressed: () async{
-                                Map response = await util.addToRemoveFromWishList(widget.id);
-                                if(response['result']){
-                                  setState(() {
+                        child: FutureBuilder(
+                          future: util.getWishList(),
+                          builder: (context, snapshot){
+                            if(snapshot.connectionState == ConnectionState.done){
+                              if(snapshot.hasData){
+                                return GestureDetector(
+                                  onTap: () async{
+                                    Map response = await util.addToRemoveFromWishList(widget.id);
+                                    if(response['result']){
+                                      _addedToWishList = _addedToWishList?false:true;
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.deepOrange),
+                                    child: IconButton(padding: EdgeInsets.only(top: 2),
+                                        icon: Icon(
+                                          _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 25,
+                                        ),
+                                        onPressed: () async{
+                                          Map response = await util.addToRemoveFromWishList(widget.id);
+                                          if(response['result']){
+                                            setState(() {
 
-                                    _addedToWishList = _addedToWishList?false: true;
-                                  });
-                                }
-                          }),
+                                              _addedToWishList = _addedToWishList?false: true;
+                                            });
+                                          }
+                                        }),
+                                  ),
+                                );
+                              }
+                              return Container();
+                            }
+                            return Container(
+                              child: Column(
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                       )),
                   Positioned(

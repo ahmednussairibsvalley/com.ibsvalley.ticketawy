@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../globals.dart';
 import 'dashed_divider.dart';
 
 import '../../../util.dart' as util;
@@ -180,18 +181,65 @@ class WishListButton extends StatefulWidget {
 class _WishListButtonState extends State<WishListButton> {
 
   bool _addedToWishList = false;
+
+  initValues() async{
+    List response = await util.getWishList();
+    for(int i = 0; i < response.length ; i++){
+      if(response[i]['id'] == Globals.eventId){
+        _addedToWishList = true;
+        break;
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initValues();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: IconButton(padding: EdgeInsets.only(top: 2),
-          icon: Icon(
-            _addedToWishList?Icons.favorite:Icons.favorite_border,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: (){setState(() {
-            _addedToWishList = _addedToWishList?false:true;
-          });;}),
+      child: FutureBuilder(
+        future: util.getWishList(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              List list = snapshot.data;
+
+              for (int i = 0; i < list.length ; i++){
+                if(list[i]['id'] == Globals.eventId){
+                  _addedToWishList = true;
+                  break;
+                }
+              }
+              return IconButton(padding: EdgeInsets.only(top: 2),
+                  icon: Icon(
+                    _addedToWishList?Icons.favorite:Icons.favorite_border,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () async{
+                Map response = await util.addToRemoveFromWishList(Globals.eventId);
+                if(response['result']){
+                  setState(() {
+                    _addedToWishList = _addedToWishList?false:true;
+                  });
+                }
+                  });
+            }
+            return Container();
+          }
+          return Container(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
