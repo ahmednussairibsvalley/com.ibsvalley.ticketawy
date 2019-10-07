@@ -5,6 +5,7 @@ import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -360,7 +361,7 @@ class VerificationDialog extends StatefulWidget {
 
 class _VerificationDialogState extends State<VerificationDialog> {
 
-  final _verificationController = TextEditingController();
+  final _verificationController = MaskedTextController(mask: '000000');
 
   @override
   Widget build(BuildContext context) {
