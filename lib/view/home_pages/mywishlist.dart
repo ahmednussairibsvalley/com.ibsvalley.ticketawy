@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
+import '../../util.dart' as util;
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -49,8 +50,19 @@ class MyWishListPage extends StatelessWidget {
             Flexible(
               child: ListView(
                 children: <Widget>[
-                  EventsSlider(
-                    onCategoryPressed: onCategoryPressed,
+                  FutureBuilder(
+                    future: util.getWishList(),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        List list = snapshot.data;
+                        Globals.controller.populateWishList(list);
+                        return EventsSlider(
+                          onCategoryPressed: onCategoryPressed,
+                          list: Globals.controller.wishList,
+                        );
+                      }
+                      return Container();
+                    },
                   )
                 ],
               ),
@@ -128,15 +140,16 @@ class MyWishListPage extends StatelessWidget {
 
 class EventsSlider extends StatefulWidget {
   final Function onCategoryPressed;
+  final List list;
 
-  EventsSlider({@required this.onCategoryPressed});
+  EventsSlider({@required this.onCategoryPressed, @required this.list});
   @override
   _EventsSliderState createState() => _EventsSliderState();
 }
 
 class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.events;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
@@ -144,7 +157,7 @@ class _EventsSliderState extends State<EventsSlider> {
   @override
   void initState() {
     super.initState();
-
+    _list = widget.list;
     for (int i = 0; i < _list.length; i++) {
       Map pairs = Map();
       int first = i * 4;

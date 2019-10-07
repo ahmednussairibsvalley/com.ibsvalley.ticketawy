@@ -11,15 +11,23 @@ class Controller{
   List<Category> _categories;
   List<Event> _homeEvents;
   List<Event> _hotEvents;
+  List<Event> _wishList;
 
   Controller(){
     _events = List();
     _categories = List();
     _homeEvents = List();
     _hotEvents = List();
+    _wishList = List();
     _testData();
   }
 
+  populateWishList(List list){
+    _wishList.clear();
+    for(int i = 0; i < list.length; i++){
+      _wishList.add(Event.fromJson(list[i]));
+    }
+  }
   populateUser(Map userData){
     _user = User.fromJson(userData);
   }
@@ -117,6 +125,12 @@ class Controller{
 
   set user(User value) {
     _user = value;
+  }
+
+  List<Event> get wishList => _wishList;
+
+  set wishList(List<Event> value) {
+    _wishList = value;
   }
 
 
