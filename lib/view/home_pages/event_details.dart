@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
+import '../login.dart';
 import 'event_details_pages/about.dart';
 import 'event_details_pages/location.dart';
 import 'event_details_pages/schedule.dart';
@@ -239,10 +240,15 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 //                BuyTicket(),
                 GestureDetector(
                   onTap: () {
-                    if(Globals.reservationOption == ReservationOptions.byTickets)
-                      _showChooseTicketDialog(widget.onEventBooked);
-                    else if(Globals.reservationOption == ReservationOptions.bySeats)
-                      widget.onEventBooked();
+                    if(Globals.skipped){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                    } else {
+                      if(Globals.reservationOption == ReservationOptions.byTickets)
+                        _showChooseTicketDialog(widget.onEventBooked);
+                      else if(Globals.reservationOption == ReservationOptions.bySeats)
+                        widget.onEventBooked();
+                    }
+
                   },
                   child: Container(
                     height: 45,
