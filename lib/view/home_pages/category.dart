@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
+import '../../util.dart' as util;
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -36,7 +37,7 @@ class CategoryPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('Category name here',
+                  Text(Globals.currentCategoryName,
                     style: TextStyle(
                       color: Color(0xffff6600),
                       fontSize: 17,
@@ -68,7 +69,19 @@ class CategoryPage extends StatelessWidget {
             Flexible(
               child: ListView(
                 children: <Widget>[
-                  EventsSlider(onCategoryPressed: onCategoryPressed,)
+                  FutureBuilder(
+                    future: util.getEventsList(Globals.categoryId),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        Globals.controller.populateEvents(snapshot.data);
+                        return Globals.controller.events.length > 0?EventsSlider(
+                          eventsList: Globals.controller.events,
+                          onCategoryPressed: onCategoryPressed,
+                        ):Container();
+                      }
+                      return Container();
+                    },
+                  )
                 ],
               ),
             )
@@ -162,15 +175,16 @@ class CategoryPage extends StatelessWidget {
 
 class EventsSlider extends StatefulWidget {
   final Function(int) onCategoryPressed;
+  final List eventsList;
 
-  EventsSlider({@required this.onCategoryPressed});
+  EventsSlider({@required this.onCategoryPressed, @required this.eventsList});
   @override
   _EventsSliderState createState() => _EventsSliderState();
 }
 
 class _EventsSliderState extends State<EventsSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.events;
+  static List _list = List();
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
@@ -179,7 +193,7 @@ class _EventsSliderState extends State<EventsSlider> {
   @override
   void initState() {
     super.initState();
-
+    _list = widget.eventsList;
     for(int i = 0; i < _list.length; i++){
       Map pairs = Map();
       int first = i * 4;
