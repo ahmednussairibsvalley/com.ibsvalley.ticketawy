@@ -85,14 +85,20 @@ class HistoryPage extends StatelessWidget {
   HistoryPage({@required this.list});
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(list.length, (index){
-        return Flexible(
-          child: HistoryItem(
-            imageUrl: 'http://40.85.116.121:8606/EventsLogo/${list[index]['event_Logo']}',
-            title: list[index]['event_Name'],
-            code: '#${list[index]['order_Id']}',
-          ),
+    return GridView(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: .6,
+          crossAxisSpacing: 1,
+          mainAxisSpacing: 1),
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: NeverScrollableScrollPhysics(),
+      children: List.generate(list.length, (index) {
+        return HistoryItem(
+          imageUrl: 'http://40.85.116.121:8606/EventsLogo/${list[index]['event_Logo']}',
+          title: list[index]['event_Name'],
+          code: '#${list[index]['order_Id']}',
         );
       }),
     );
