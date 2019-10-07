@@ -377,7 +377,24 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ):
-                          index == PagesIndices.myWishListPageIndex? MyWishListPage():
+                          index == PagesIndices.myWishListPageIndex? MyWishListPage(
+                            onCategoryPressed: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onBack: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
                             onPreviousPagePressed: (){
                               setState(() {

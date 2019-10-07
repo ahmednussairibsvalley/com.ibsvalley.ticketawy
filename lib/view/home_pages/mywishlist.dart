@@ -16,7 +16,7 @@ List<T> map<T>(List list, Function handler) {
 
 class MyWishListPage extends StatelessWidget {
   final Function onBack;
-  final Function onCategoryPressed;
+  final Function(int) onCategoryPressed;
   final Function onAllCategoriesPressed;
 
   MyWishListPage(
@@ -139,7 +139,7 @@ class MyWishListPage extends StatelessWidget {
 }
 
 class EventsSlider extends StatefulWidget {
-  final Function onCategoryPressed;
+  final Function(int) onCategoryPressed;
   final List list;
 
   EventsSlider({@required this.onCategoryPressed, @required this.list});
@@ -272,7 +272,7 @@ class _EventsSliderState extends State<EventsSlider> {
 class EventsPage extends StatelessWidget {
 //  List list = Globals.controller.events;
   final List list;
-  final Function onCategoryPressed;
+  final Function(int) onCategoryPressed;
 
   EventsPage({@required this.list, @required this.onCategoryPressed});
 
@@ -293,7 +293,9 @@ class EventsPage extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
-              onTap: onCategoryPressed,
+              onTap: (){
+                onCategoryPressed(list[index].id);
+              },
               child: Material(
                 elevation: 5,
                 shadowColor: Colors.black,
