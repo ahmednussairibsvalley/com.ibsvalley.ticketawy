@@ -61,6 +61,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
         Globals.controller = Controller();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         if(prefs.containsKey('userId')) {
+          Globals.userId = prefs.getString('userId');
           Map userData = await getUserDetails();
           Globals.controller.populateUser(userData);
           List categoriesList = await categoryList();

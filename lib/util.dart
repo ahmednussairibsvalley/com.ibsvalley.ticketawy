@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ticketawy/globals.dart';
 
@@ -184,4 +185,23 @@ Future<List> getEventsList(int categoryId) async{
 
   var result = jsonDecode(response.body);
   return result;
+}
+
+Future<Map> updateUserDetails({@required String fullName,
+  @required String phoneNumber,@required String password}) async {
+  String url = '$_baseUrl/api/AspNetUsers/Update_User';
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
+    'fullName':fullName,
+    'PhoneNumber':phoneNumber,
+    'Password':password,
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
 }
