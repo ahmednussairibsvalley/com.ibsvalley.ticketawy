@@ -229,6 +229,8 @@ class _LoginState extends State<Login> {
                                 Globals.userId = response['id'];
                                 SharedPreferences prefs = await SharedPreferences.getInstance();
                                 prefs.setString('userId', response['id']);
+                                prefs.setString('fullName', response['fullName']);
+                                prefs.setString('phoneNumber', _userName);
                                 prefs.setString('password', _password);
                                 Map userData = await getUserDetails();
 

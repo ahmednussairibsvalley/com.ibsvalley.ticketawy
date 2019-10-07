@@ -112,6 +112,8 @@ class _HomeState extends State<Home> {
       'Sign Out' : () async{
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('userId');
+        prefs.remove('fullName');
+        prefs.remove('phoneNumber');
         prefs.remove('password');
         //Navigator.of(context).pop();
         Navigator.of(context).pushReplacementNamed('/login');

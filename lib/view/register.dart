@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals.dart';
 import '../util.dart';
@@ -589,6 +590,13 @@ _showRegistrationSuccessDialog(BuildContext context, {String message, String id,
                     List categoriesList = await categoryList();
 
                     Globals.controller.populateCategories(categoriesList);
+
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('userId', id != null && id.isNotEmpty ?id:'');
+                    prefs.setString('fullName', userData['fullName']);
+                    prefs.setString('phoneNumber', userData['phoneNumber']);
+                    prefs.setString('password', password != null && password.isNotEmpty?password:'');
+
                     Navigator.of(context).pop();
                     Navigator.of(context).pushReplacementNamed('/home');
                   },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../globals.dart';
 
@@ -18,9 +19,21 @@ class _ProfileInfoState extends State<ProfileInfo> {
   @override
   void initState() {
     super.initState();
-    _fullNameController.value = _fullNameController.value.copyWith(text: Globals.controller.user.fullName);
-    _passwordController.value = _passwordController.value.copyWith(text: Globals.userPassword);
-    _phoneNumberController.value = _phoneNumberController.value.copyWith(text: Globals.controller.user.phoneNumber);
+    initValues();
+  }
+
+  initValues() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String fullName = prefs.get('fullName');
+    String password = prefs.get('password');
+    String phoneNumber = prefs.get('phoneNumber');
+
+    print('Full Name: $fullName');
+    print('Password: $password');
+    print('Phone Number: $phoneNumber');
+    _fullNameController.value = _fullNameController.value.copyWith(text: fullName);
+    _passwordController.value = _passwordController.value.copyWith(text: password);
+    _phoneNumberController.value = _phoneNumberController.value.copyWith(text: phoneNumber);
   }
   @override
   Widget build(BuildContext context) {
