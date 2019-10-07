@@ -22,10 +22,9 @@ class SearchResults extends StatelessWidget {
       future: util.search(Globals.keyWord),
       builder: (context, snapshot){
         if(snapshot.hasData){
-          Globals.controller.populateEvents(snapshot.data);
           return EventsSlider(
             onCategoryPressed: onEventClicked,
-            list: Globals.controller.events,
+            list: snapshot.data,
           );
         }
         return Container();
@@ -190,7 +189,7 @@ class EventsPage extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
               onTap: (){
-                onCategoryPressed(list[index].id);
+                onCategoryPressed(list[index]['event_Id']);
               },
               child: Material(
                 elevation: 5,
@@ -204,7 +203,7 @@ class EventsPage extends StatelessWidget {
                           child: Stack(
                             children: <Widget>[
                               Image.network(
-                                list[index].imageUrl,
+                                'http://40.85.116.121:8606/EventsLogo/${list[index]['logo']}',
                                 fit: BoxFit.cover,
                               ),
                               Positioned(
@@ -231,7 +230,7 @@ class EventsPage extends StatelessWidget {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text('${list[index].title}'),
+                        child: Text('${list[index]['event_name']}'),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -240,7 +239,7 @@ class EventsPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            '${list[index].price}\$ / Ticket',
+                            '${list[index]['price']}\$ / Ticket',
                             style: TextStyle(
                               color: Colors.white,
                             ),
