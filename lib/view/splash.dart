@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller.dart';
 import '../globals.dart';
+import '../util.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -54,10 +56,19 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
     });
 
     _subTitleAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _subTitleController, curve: Curves.linear))
-    ..addStatusListener((status){
+    ..addStatusListener((status) async{
       if(status == AnimationStatus.completed){
         Globals.controller = Controller();
-        Navigator.of(context).pushReplacementNamed('/login');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        if(prefs.containsKey('userId')) {
+          Map userData = await getUserDetails();
+          Globals.controller.populateUser(userData);
+          List categoriesList = await categoryList();
+
+          Globals.controller.populateCategories(categoriesList);
+          Navigator.of(context).pushReplacementNamed('/home');
+        }else
+          Navigator.of(context).pushReplacementNamed('/login');
       }
     });
     super.initState();

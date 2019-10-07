@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
 import 'home_pages/select_seat.dart';
@@ -108,8 +109,12 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
-      'Sign Out' : (){
-        Navigator.of(context).pop();
+      'Sign Out' : () async{
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove('userId');
+        prefs.remove('password');
+        //Navigator.of(context).pop();
+        Navigator.of(context).pushReplacementNamed('/login');
       },
     };
 

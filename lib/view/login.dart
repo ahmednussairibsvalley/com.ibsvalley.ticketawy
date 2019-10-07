@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:ticketawy/view/register.dart';
 import '../globals.dart';
@@ -226,6 +227,9 @@ class _LoginState extends State<Login> {
                               if(response['result']){
                                 Globals.userPassword = _password;
                                 Globals.userId = response['id'];
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                prefs.setString('userId', response['id']);
+                                prefs.setString('password', _password);
                                 Map userData = await getUserDetails();
 
                                 Globals.controller.populateUser(userData);
