@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ticketawy/view/home_pages/buy_tickets.dart';
-import 'package:ticketawy/view/home_pages/mywishlist.dart';
-import 'package:ticketawy/view/home_pages/select_seat.dart';
+import 'home_pages/buy_tickets.dart';
+import 'home_pages/mywishlist.dart';
+import 'home_pages/select_seat.dart';
 import 'home_pages/categories_page.dart';
 import 'home_pages/contact_page.dart';
 import 'home_pages/event_details.dart';
@@ -66,7 +66,6 @@ class _HomeState extends State<Home> {
       'log in' : (){
         Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
-//        Navigator.of(context).pop();
       },
     }
     :{
