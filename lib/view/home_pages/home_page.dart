@@ -28,7 +28,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.homePageIndex);
-
     return ListView(
       children: <Widget>[
         FutureBuilder(
@@ -83,6 +82,7 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+
 }
 
 class EventsSlider extends StatefulWidget {
@@ -514,6 +514,24 @@ class HotOfferItem extends StatefulWidget {
 class _HotOfferItemState extends State<HotOfferItem> {
 
   bool _addedToWishList = false;
+
+  initValues() async{
+    print('id ${widget.id}');
+    List response = await util.getWishList();
+    for(int i = 0; i < response.length ; i++){
+      if(response[i]['id'] == widget.id){
+        _addedToWishList = true;
+        break;
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initValues();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -564,17 +582,21 @@ class _HotOfferItemState extends State<HotOfferItem> {
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.deepOrange),
-                          child: GestureDetector(
-                            child: IconButton(padding: EdgeInsets.only(top: 2),
-                                icon: Icon(
-                                  _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
-                                onPressed: (){setState(() {
-                                  _addedToWishList = _addedToWishList?false:true;
-                                });;}),
-                          ),
+                          child: IconButton(padding: EdgeInsets.only(top: 2),
+                              icon: Icon(
+                                _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                              onPressed: () async{
+                                Map response = await util.addToRemoveFromWishList(widget.id);
+                                if(response['result']){
+                                  setState(() {
+
+                                    _addedToWishList = _addedToWishList?false: true;
+                                  });
+                                }
+                              }),
                         )),
                   ],
                 ),
@@ -629,6 +651,22 @@ class EventItem extends StatefulWidget {
 class _EventItemState extends State<EventItem> {
 
   bool _addedToWishList = false;
+
+  initValues() async{
+    List response = await util.getWishList();
+    for(int i = 0; i < response.length ; i++){
+      if(response[i]['id'] == widget.id){
+        _addedToWishList = true;
+        break;
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initValues();
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -693,9 +731,15 @@ class _EventItemState extends State<EventItem> {
                                 color: Colors.white,
                                 size: 30,
                               ),
-                              onPressed: (){setState(() {
-                                _addedToWishList = _addedToWishList?false: true;
-                              });;}),
+                              onPressed: () async{
+                                Map response = await util.addToRemoveFromWishList(widget.id);
+                                if(response['result']){
+                                  setState(() {
+
+                                    _addedToWishList = _addedToWishList?false: true;
+                                  });
+                                }
+                          }),
                         ),
                       )),
                   Positioned(

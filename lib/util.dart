@@ -89,7 +89,7 @@ Future<Map> getUserDetails () async{
 
   var response = await http.get(url);
 
-  print('${jsonDecode(response.body)}');
+//  print('${jsonDecode(response.body)}');
   return jsonDecode(response.body);
 }
 
@@ -204,4 +204,27 @@ Future<Map> updateUserDetails({@required String fullName,
   String reply = await response.transform(utf8.decoder).join();
   httpClient.close();
   return json.decode(reply);
+}
+
+Future<Map> addToRemoveFromWishList(int eventId) async {
+  String url = '$_baseUrl/api/Event/Add_Wishlist?Event_Id=$eventId&User_Id=${Globals.userId}';
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {};
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
+}
+
+Future<List> getWishList () async {
+  String url = '$_baseUrl/api/Event/Get_Wishlist?User_Id=${Globals.userId}';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result;
 }

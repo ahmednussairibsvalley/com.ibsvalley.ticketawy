@@ -30,8 +30,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
     String password = prefs.get('password');
     String phoneNumber = prefs.get('phoneNumber');
 
-    print('${prefs.get('password')}');
-
     _fullNameController.value = _fullNameController.value.copyWith(text: fullName);
     _passwordController.value = _passwordController.value.copyWith(text: password);
     _phoneNumberController.value = _phoneNumberController.value.copyWith(text: phoneNumber);
