@@ -313,7 +313,7 @@ class EventsPage extends StatelessWidget {
                                         color: Colors.white,
                                         size: 25,
                                       ),
-                                      onPressed: null),
+                                      onPressed: (){Icon(Icons.favorite_border);}),
                                 ),
                               )),
                         ],

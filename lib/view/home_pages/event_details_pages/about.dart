@@ -168,7 +168,7 @@ class AboutPage extends StatelessWidget {
                               color: Colors.white,
                               size: 30,
                             ),
-                            onPressed: null),
+                            onPressed: (){Icon(Icons.favorite);}),
                       ),
                     )),
               ],

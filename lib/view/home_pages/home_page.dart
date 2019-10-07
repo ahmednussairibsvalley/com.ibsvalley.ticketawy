@@ -174,7 +174,7 @@ class _EventsSliderState extends State<EventsSlider> {
                                     color: Colors.white,
                                     size: 30,
                                   ),
-                                  onPressed: null),
+                                  onPressed: (){Icon(Icons.favorite);}),
                             ),
                           )),
                       Positioned(
@@ -668,7 +668,7 @@ class HotOfferPage extends StatelessWidget {
                                         color: Colors.white,
                                         size: 25,
                                       ),
-                                      onPressed: null),
+                                      onPressed: (){Icon(Icons.favorite);}),
                                 ),
                               )),
                         ],
