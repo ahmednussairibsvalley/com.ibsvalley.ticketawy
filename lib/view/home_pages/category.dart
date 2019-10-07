@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
@@ -456,6 +457,9 @@ class _FiterDialogState extends State<FiterDialog> {
 
   @override
   Widget build(BuildContext context) {
+
+    final _DateController = MaskedTextController(mask: '00/00/0000',);
+    final _timeController = MaskedTextController(mask: '00:00 AA');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -486,35 +490,24 @@ class _FiterDialogState extends State<FiterDialog> {
               padding: const EdgeInsets.only(left: 20.0),
               child: Text('Date',style: TextStyle(color: Color(0xff656565)),),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
-              child: Container(
-                padding: EdgeInsets.only(right: 10, left: 10,),
-                decoration: ShapeDecoration(
-                  color: Color(0xffeeeeee),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.0, style: BorderStyle.none),
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 50.0),
+                child: TextFormField(
+                  controller: _DateController,
+                  decoration: InputDecoration(
+                    hintText: 'dd / MM / YYYY',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    labelStyle: TextStyle(
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                child: DropdownButton(
-                  underline: Container(),
-                  icon: Icon(Icons.expand_more),
-                  value: _dateValue,
-                  onChanged: (value){
-                    setState(() {
-                      _dateValue = value;
-                    });
-                  },
-                  items: List.generate(_dateList.length, (index){
-                    return DropdownMenuItem(
-                      value: _dateList[index],
-                      child: Container(
-                        width: 150,
-                        child: Text('${_dateList[index]}'),
-                      ),
-                    );
-                  }),
                 ),
               ),
             ),
@@ -529,35 +522,24 @@ class _FiterDialogState extends State<FiterDialog> {
               padding: const EdgeInsets.only(left: 20.0),
               child: Text('Time',style: TextStyle(color: Color(0xff656565)),),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
-              child: Container(
-                padding: EdgeInsets.only(right: 10, left: 10,),
-                decoration: ShapeDecoration(
-                  color: Color(0xffeeeeee),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.0, style: BorderStyle.none),
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 50.0),
+                child: TextFormField(
+                  controller: _timeController,
+                  decoration: InputDecoration(
+                    hintText: '00:00 --',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    labelStyle: TextStyle(
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                child: DropdownButton(
-                  underline: Container(),
-                  icon: Icon(Icons.expand_more),
-                  value: _timeValue,
-                  onChanged: (value){
-                    setState(() {
-                      _timeValue = value;
-                    });
-                  },
-                  items: List.generate(_timeList.length, (index){
-                    return DropdownMenuItem(
-                      value: _timeList[index],
-                      child: Container(
-                        width: 150,
-                        child: Text('${_timeList[index]}'),
-                      ),
-                    );
-                  }),
                 ),
               ),
             ),
