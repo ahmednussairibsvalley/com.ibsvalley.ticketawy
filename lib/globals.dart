@@ -11,6 +11,7 @@ class Globals{
   static String currentCategoryName = '';
   static String userPassword = 'esraa123';
   static bool skipped = false;
+  static String keyWord = '';
 }
 
 class PagesIndices {

@@ -241,8 +241,8 @@ Future<List> search(String keyWord) async {
 }
 
 Future<List> getOrdersHistory() async {
-  String url = '$_baseUrl/api/Order/Order_History?id=e00a11e5-2c02-4ac9-b5db-c24ff9cbbb92';
-
+  //String url = '$_baseUrl/api/Order/Order_History?id=e00a11e5-2c02-4ac9-b5db-c24ff9cbbb92';
+  String url = '$_baseUrl/api/Order/Order_History?id=${Globals.userId}';
   var response = await http.get(url);
 
   var result = jsonDecode(response.body);

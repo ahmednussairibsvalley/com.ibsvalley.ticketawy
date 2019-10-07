@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../../globals.dart';
 import '../../util.dart' as util;
 
@@ -13,126 +12,24 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
-class MyWishListPage extends StatelessWidget {
-  final Function onBack;
-  final Function(int) onCategoryPressed;
-  final Function onAllCategoriesPressed;
+class SearchResults extends StatelessWidget {
+  final Function(int) onEventClicked;
 
-  MyWishListPage(
-      {@required this.onBack,
-      @required this.onCategoryPressed,
-      @required this.onAllCategoriesPressed});
-
+  SearchResults({@required this.onEventClicked});
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.categoryPageIndex);
-
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'My wishlist',
-                    style: TextStyle(
-                        color: Color(0xffff6600),
-                        fontSize: 17,
-                        fontFamily: 'Verdana'),
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              child: ListView(
-                children: <Widget>[
-                  FutureBuilder(
-                    future: util.getWishList(),
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        List list = snapshot.data;
-                        Globals.controller.populateWishList(list);
-                        return EventsSlider(
-                          onCategoryPressed: onCategoryPressed,
-                          list: Globals.controller.wishList,
-                        );
-                      }
-                      return Container();
-                    },
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: onBack,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xfffe6700),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/back.png',
-                          width: 30,
-                          height: 30,
-                        ),
-                        Text(
-                          'Previous Page',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onAllCategoriesPressed,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xff4b3d7a),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/all_events.png',
-                          width: 30,
-                          height: 30,
-                        ),
-                        Text(
-                          'All Categories',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return FutureBuilder(
+      future: util.search(Globals.keyWord),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          Globals.controller.populateEvents(snapshot.data);
+          return EventsSlider(
+            onCategoryPressed: onEventClicked,
+            list: Globals.controller.events,
+          );
+        }
+        return Container();
+      },
     );
   }
 }
@@ -190,7 +87,7 @@ class _EventsSliderState extends State<EventsSlider> {
 
     child = map<Widget>(
       paisList,
-      (index, i) {
+          (index, i) {
         List list = List();
 
         list.add(_list[paisList[index]['first']]);
@@ -239,7 +136,7 @@ class _EventsSliderState extends State<EventsSlider> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             paisList,
-            (index, url) {
+                (index, url) {
               return GestureDetector(
                 onTap: () {
                   setState(() {
@@ -305,33 +202,33 @@ class EventsPage extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                           child: Stack(
-                        children: <Widget>[
-                          Image.network(
-                            list[index].imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                              top: 3.0,
-                              right: 3,
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.deepOrange),
-                                child: GestureDetector(
-                                  child: IconButton(
-                                      padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        Icons.favorite,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: (){Icon(Icons.favorite_border);}),
-                                ),
-                              )),
-                        ],
-                      )),
+                            children: <Widget>[
+                              Image.network(
+                                list[index].imageUrl,
+                                fit: BoxFit.cover,
+                              ),
+                              Positioned(
+                                  top: 3.0,
+                                  right: 3,
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.deepOrange),
+                                    child: GestureDetector(
+                                      child: IconButton(
+                                          padding: EdgeInsets.only(top: 2),
+                                          icon: Icon(
+                                            Icons.favorite,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
+                                          onPressed: (){Icon(Icons.favorite_border);}),
+                                    ),
+                                  )),
+                            ],
+                          )),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text('${list[index].title}'),

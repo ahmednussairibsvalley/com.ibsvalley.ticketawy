@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ticketawy/view/home_pages/search_results.dart';
 import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
 import 'home_pages/select_seat.dart';
@@ -415,6 +416,14 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ):
+                          index == PagesIndices.searchPageIndex?SearchResults(
+                            onEventClicked: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                          ):
                           Container(),
                         )
                       ],
@@ -441,11 +450,10 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.all(4.0),
                           child: GestureDetector(
                             onTap: () async{
-                              List response = await util.search(_searchController.text);
-
-                              for(int i = 0; i < response.length; i++){
-                                print('${response[i]}');
-                              }
+                              Globals.keyWord = _searchController.text;
+                              setState(() {
+                                index = PagesIndices.searchPageIndex;
+                              });
                             },
                               child: Icon(Icons.search, size: 30,)
                           ),
