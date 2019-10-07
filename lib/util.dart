@@ -228,3 +228,14 @@ Future<List> getWishList () async {
   var result = jsonDecode(response.body);
   return result;
 }
+
+
+/// Search
+Future<List> search(String keyWord) async {
+  String url = '$_baseUrl/api/Search/Search_Result?searchword=$keyWord';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result;
+}
