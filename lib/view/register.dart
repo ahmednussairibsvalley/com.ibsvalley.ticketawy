@@ -336,7 +336,7 @@ class _RegisterState extends State<Register> {
           return CustomAlertDialog(
             content: Container(
               width: 300.0,
-              height: 200.0,
+              height: 300.0,
               child: Column(
                 children: <Widget>[
                   Padding(
@@ -368,89 +368,74 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                   ),
-                  ListTile(
-                    onTap: () async{
-
-                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
-
-                      if(response['result']){
-                        Navigator.of(context).pop();
-                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
-                      }
-                    },
-                    title: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xfffe6700),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Confirm',
-                          textAlign: TextAlign.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () async{
+                          Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
+                          if(response['result']){
+                            Navigator.of(context).pop();
+                            _showRegistrationSuccessDialog(context, message: response['user_Message']);
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xfffe6700),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Confirm',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-  _showRegistrationErrorDialog(BuildContext context, {String message}) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CustomAlertDialog(
-            content: Container(
-              width: 300.0,
-              height: 200.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'GeometriqueSans',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
-                  ),
-                  Expanded(
-                    child: Text(
-                      message.isEmpty ? 'Registration Failed' : message,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Verdana',
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    title: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xfffe6700),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Close',
-                          textAlign: TextAlign.center,
+                      GestureDetector(
+                        onTap: () async{
+                          await util.sendVerificationMessage(phoneNumber);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xfffe6700),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Resend',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  )
+                    ],
+                  ),
+//                  ListTile(
+//                    onTap: () async{
+//
+//                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
+//
+//                      if(response['result']){
+//                        Navigator.of(context).pop();
+//                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
+//                      }
+//                    },
+//                    title: Container(
+//                      decoration: BoxDecoration(
+//                        color: Color(0xfffe6700),
+//                        borderRadius: BorderRadius.circular(20),
+//                      ),
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(8.0),
+//                        child: Text(
+//                          'Confirm',
+//                          textAlign: TextAlign.center,
+//                        ),
+//                      ),
+//                    ),
+//                  )
                 ],
               ),
             ),
@@ -458,66 +443,140 @@ class _RegisterState extends State<Register> {
         });
   }
 
-  _showRegistrationSuccessDialog(BuildContext context, {String message}) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CustomAlertDialog(
-            content: Container(
-              width: 300.0,
-              height: 200.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      message.isNotEmpty && message != null
-                          ? message
-                          : 'Success',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'GeometriqueSans',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Registered With Success',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Verdana',
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    },
-                    title: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xfffe6700),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Close',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
+}
+
+class VerificationDialog extends StatefulWidget {
+  @override
+  _VerificationDialogState createState() => _VerificationDialogState();
+}
+
+class _VerificationDialogState extends State<VerificationDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
+}
+
+
+_showRegistrationErrorDialog(BuildContext context, {String message}) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: Container(
+            width: 300.0,
+            height: 200.0,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Error',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'GeometriqueSans',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DashedDivider(),
+                ),
+                Expanded(
+                  child: Text(
+                    message.isEmpty ? 'Registration Failed' : message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Verdana',
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  title: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Close',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+_showRegistrationSuccessDialog(BuildContext context, {String message}) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: Container(
+            width: 300.0,
+            height: 200.0,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    message.isNotEmpty && message != null
+                        ? message
+                        : 'Success',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'GeometriqueSans',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DashedDivider(),
+                ),
+                Expanded(
+                  child: Text(
+                    'Registered With Success',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Verdana',
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  },
+                  title: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Close',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      });
 }
