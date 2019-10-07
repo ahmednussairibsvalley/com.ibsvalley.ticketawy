@@ -492,7 +492,7 @@ class _FiterDialogState extends State<FiterDialog> {
             ),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 50.0),
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
                 child: TextFormField(
                   controller: _DateController,
                   decoration: InputDecoration(
@@ -524,7 +524,7 @@ class _FiterDialogState extends State<FiterDialog> {
             ),
             Flexible(
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 50.0),
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
                 child: TextFormField(
                   controller: _timeController,
                   decoration: InputDecoration(
