@@ -112,146 +112,13 @@ class _EventsSliderState extends State<EventsSlider> {
     child = map<Widget>(
       _list,
       (index, i) {
-        return FutureBuilder(
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data) {
-                return GestureDetector(
-                  onTap: () {
-                    Globals.reservationOption = i.reservationOption;
-                    onEventPressed(i.id);
-                  },
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Material(
-                          elevation: 5.0,
-                          shadowColor: Colors.black,
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                i.imageUrl,
-                                fit: BoxFit.cover,
-                                height: MediaQuery.of(context).size.height / 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 8.0,
-                        left: 30.0,
-                        child: Container(
-                          decoration: BoxDecoration(color: Colors.deepOrange),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              'Hot',
-                              style: TextStyle(
-                                  color: Color(0xffeaeae7), fontSize: 18),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //Wishlist Button
-                      Positioned(
-                          top: 25.0,
-                          right: 25,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.deepOrange),
-                            child: GestureDetector(
-                              child: IconButton(padding: EdgeInsets.only(top: 2),
-                                  icon: Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  onPressed: (){Icon(Icons.favorite);}),
-                            ),
-                          )),
-                      Positioned(
-                        right: 0.0,
-                        left: 0.0,
-                        bottom: 0.0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 35, left: 35, bottom: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffff6600),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      bottomLeft: Radius.circular(15)),
-                                ),
-                                width: i.title.length > 20 ? 200 : 150,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${i.title}',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffe75d02),
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(15),
-                                      topRight: Radius.circular(15)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${i.price} \$',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Center(
-                  child: Text(
-                    'Image is not available',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-            }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  width: 50,
-                  child: CircularProgressIndicator(),
-                )
-              ],
-            );
-          },
-          future: util.isImageUrlAvailable(i.imageUrl),
+        return EventItem(
+          reservationOption: i.reservationOption,
+          price: i.price,
+          onEventPressed: onEventPressed,
+          id: i.id,
+          title: i.title,
+          imageUrl: i.imageUrl,
         );
       },
     ).toList();
@@ -742,5 +609,173 @@ class _HotOfferItemState extends State<HotOfferItem> {
     );
   }
 }
+
+class EventItem extends StatefulWidget {
+
+  final int id;
+  final int reservationOption;
+  final String imageUrl;
+  final String title;
+  final double price;
+  final Function(int) onEventPressed;
+
+  EventItem({@required this.id, @required this.reservationOption,
+    @required this.onEventPressed, @required this.imageUrl,
+    @required this.title, @required this.price,});
+  @override
+  _EventItemState createState() => _EventItemState();
+}
+
+class _EventItemState extends State<EventItem> {
+
+  bool _addedToWishList = false;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data) {
+            return GestureDetector(
+              onTap: () {
+                Globals.reservationOption = widget.reservationOption;
+                widget.onEventPressed(widget.id);
+              },
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      elevation: 5.0,
+                      shadowColor: Colors.black,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            widget.imageUrl,
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.height / 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 8.0,
+                    left: 30.0,
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.deepOrange),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          'Hot',
+                          style: TextStyle(
+                              color: Color(0xffeaeae7), fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  //Wishlist Button
+                  Positioned(
+                      top: 25.0,
+                      right: 25,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepOrange),
+                        child: GestureDetector(
+                          child: IconButton(padding: EdgeInsets.only(top: 2),
+                              icon: Icon(
+                                _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              onPressed: (){setState(() {
+                                _addedToWishList = _addedToWishList?false: true;
+                              });;}),
+                        ),
+                      )),
+                  Positioned(
+                    right: 0.0,
+                    left: 0.0,
+                    bottom: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 35, left: 35, bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffff6600),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15)),
+                            ),
+                            width: widget.title.length > 20 ? 200 : 150,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${widget.title}',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffe75d02),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(15),
+                                  topRight: Radius.circular(15)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${widget.price} \$',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Text(
+                'Image is not available',
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
+        }
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 50,
+              width: 50,
+              child: CircularProgressIndicator(),
+            )
+          ],
+        );
+      },
+      future: util.isImageUrlAvailable(widget.imageUrl),
+    );
+  }
+}
+
 
 
