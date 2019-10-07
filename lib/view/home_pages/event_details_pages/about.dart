@@ -161,15 +161,7 @@ class AboutPage extends StatelessWidget {
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.deepOrange),
-                      child: GestureDetector(
-                        child: IconButton(padding: EdgeInsets.only(top: 2),
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            onPressed: (){Icon(Icons.favorite);}),
-                      ),
+                      child: WishListButton(),
                     )),
               ],
             ),
@@ -179,3 +171,28 @@ class AboutPage extends StatelessWidget {
     );
   }
 }
+
+class WishListButton extends StatefulWidget {
+  @override
+  _WishListButtonState createState() => _WishListButtonState();
+}
+
+class _WishListButtonState extends State<WishListButton> {
+
+  bool _addedToWishList = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: IconButton(padding: EdgeInsets.only(top: 2),
+          icon: Icon(
+            _addedToWishList?Icons.favorite:Icons.favorite_border,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: (){setState(() {
+            _addedToWishList = _addedToWishList?false:true;
+          });;}),
+    );
+  }
+}
+

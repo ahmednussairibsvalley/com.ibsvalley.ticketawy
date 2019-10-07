@@ -51,6 +51,12 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
+      'Ideas' : (){
+        setState(() {
+          index = PagesIndices.ideasPageIndex;
+        });
+        Navigator.of(context).pop();
+      },
       'Contact Us' : (){
         setState(() {
           index = PagesIndices.contactPageIndex;
@@ -58,6 +64,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'log in' : (){
+        Navigator.of(context).pop();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
 //        Navigator.of(context).pop();
       },
