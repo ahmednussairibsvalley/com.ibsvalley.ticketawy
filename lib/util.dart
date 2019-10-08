@@ -221,12 +221,17 @@ Future<Map> addToRemoveFromWishList(int eventId) async {
 }
 
 Future<List> getWishList () async {
-  String url = '$_baseUrl/api/Event/Get_Wishlist?User_Id=${Globals.userId}';
 
-  var response = await http.get(url);
+  try{
+    String url = '$_baseUrl/api/Event/Get_Wishlist?User_Id=${Globals.userId}';
 
-  var result = jsonDecode(response.body);
-  return result;
+    var response = await http.get(url);
+
+    var result = jsonDecode(response.body);
+    return result;
+  }catch (e){
+    return null;
+  }
 }
 
 

@@ -66,7 +66,8 @@ class SchedulePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text('${agendaList[index]['description']}',
+                                Text('${agendaList[index]['description'] != null? agendaList[index]['description'].isEmpty?
+                                agendaList[index]['description']: 'There is no description': 'There is no description'}',
                                   style: TextStyle(
                                       fontFamily: 'Verdana',
                                       color: Color(0xff656565)

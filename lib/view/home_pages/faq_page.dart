@@ -8,6 +8,7 @@ class FaqPage extends StatelessWidget {
   final Function onWillPop;
 
   FaqPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;

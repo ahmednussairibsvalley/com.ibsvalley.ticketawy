@@ -136,7 +136,7 @@ class AboutPage extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  top: 180.0, left: 70.0, right: 70.0,
+                  top: 180.0, left: Platform.isIOS?70.0:70.0, right: Platform.isIOS?70.0:70.0,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xffff6600),
@@ -184,18 +184,22 @@ class _WishListButtonState extends State<WishListButton> {
 
   initValues() async{
     List response = await util.getWishList();
-    for(int i = 0; i < response.length ; i++){
-      if(response[i]['id'] == Globals.eventId){
-        _addedToWishList = true;
-        break;
+    if(response != null){
+      for(int i = 0; i < response.length ; i++){
+        if(response[i]['id'] == Globals.eventId){
+          _addedToWishList = true;
+          break;
+        }
       }
     }
+
   }
 
   @override
   void initState() {
     super.initState();
-    initValues();
+    if(!Globals.skipped)
+      initValues();
   }
 
   @override
@@ -207,29 +211,29 @@ class _WishListButtonState extends State<WishListButton> {
           if(snapshot.connectionState == ConnectionState.done){
             if(snapshot.hasData){
               List list = snapshot.data;
-
-              for (int i = 0; i < list.length ; i++){
-                if(list[i]['id'] == Globals.eventId){
-                  _addedToWishList = true;
-                  break;
+              if(list != null){
+                for (int i = 0; i < list.length ; i++){
+                  if(list[i]['id'] == Globals.eventId){
+                    _addedToWishList = true;
+                    break;
+                  }
                 }
               }
-              return IconButton(padding: EdgeInsets.only(top: 2),
-                  icon: Icon(
-                    _addedToWishList?Icons.favorite:Icons.favorite_border,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  onPressed: () async{
-                Map response = await util.addToRemoveFromWishList(Globals.eventId);
-                if(response['result']){
-                  setState(() {
-                    _addedToWishList = _addedToWishList?false:true;
-                  });
-                }
-                  });
             }
-            return Container();
+            return IconButton(padding: EdgeInsets.only(top: 2),
+                icon: Icon(
+                  _addedToWishList?Icons.favorite:Icons.favorite_border,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () async{
+                  Map response = await util.addToRemoveFromWishList(Globals.eventId);
+                  if(response['result']){
+                    setState(() {
+                      _addedToWishList = _addedToWishList?false:true;
+                    });
+                  }
+                });
           }
           return Container(
             child: Column(

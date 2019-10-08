@@ -11,7 +11,6 @@ import 'event_details_pages/schedule.dart';
 
 import '../../globals.dart';
 import '../../util.dart' as util;
-import 'package:intl/intl.dart';
 
 final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
@@ -334,11 +333,6 @@ class ChooseTicket extends StatefulWidget {
 }
 
 class _ChooseTicketState extends State<ChooseTicket> {
-  Map _map = {
-    'Class A': 120,
-    'Class B': 80,
-    'Class C': 50,
-  };
 
   static const platform = const MethodChannel('fawry');
 

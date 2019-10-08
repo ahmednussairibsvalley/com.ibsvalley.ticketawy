@@ -532,18 +532,22 @@ class _HotOfferItemState extends State<HotOfferItem> {
 
   initValues() async{
     List response = await util.getWishList();
-    for(int i = 0; i < response.length ; i++){
-      if(response[i]['id'] == widget.id){
-        _addedToWishList = true;
-        break;
+    if(response != null){
+      for(int i = 0; i < response.length ; i++){
+        if(response[i]['id'] == widget.id){
+          _addedToWishList = true;
+          break;
+        }
       }
     }
+
   }
 
   @override
   void initState() {
     super.initState();
-    initValues();
+    if(!Globals.skipped)
+      initValues();
   }
 
   @override
@@ -601,39 +605,28 @@ class _HotOfferItemState extends State<HotOfferItem> {
                             future: util.getWishList(),
                             builder: (context, snapshot){
                               if(snapshot.connectionState == ConnectionState.done){
-                                if(snapshot.hasData){
-                                  return GestureDetector(
-                                    onTap: () async{
-                                      Map response = await util.addToRemoveFromWishList(widget.id);
-                                      if(response['result']){
-                                        _addedToWishList = _addedToWishList?false:true;
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: new BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.deepOrange),
-                                      child: IconButton(padding: EdgeInsets.only(top: 2),
-                                          icon: Icon(
-                                            _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                            color: Colors.white,
-                                            size: 25,
-                                          ),
-                                          onPressed: () async{
-                                            Map response = await util.addToRemoveFromWishList(widget.id);
-                                            if(response['result']){
-                                              setState(() {
+                                return Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: new BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.deepOrange),
+                                  child: IconButton(padding: EdgeInsets.only(top: 2),
+                                      icon: Icon(
+                                        _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                        color: Colors.white,
+                                        size: 25,
+                                      ),
+                                      onPressed: () async{
+                                        Map response = await util.addToRemoveFromWishList(widget.id);
+                                        if(response['result']){
+                                          setState(() {
 
-                                                _addedToWishList = _addedToWishList?false: true;
-                                              });
-                                            }
-                                          }),
-                                    ),
-                                  );
-                                }
-                                return Container();
+                                            _addedToWishList = _addedToWishList?false: true;
+                                          });
+                                        }
+                                      }),
+                                );
                               }
                               return Container(
                                 child: Column(
@@ -701,18 +694,22 @@ class _EventItemState extends State<EventItem> {
 
   initValues() async{
     List response = await util.getWishList();
-    for(int i = 0; i < response.length ; i++){
-      if(response[i]['id'] == widget.id){
-        _addedToWishList = true;
-        break;
+    if(response != null){
+      for(int i = 0; i < response.length ; i++){
+        if(response[i]['id'] == widget.id){
+          _addedToWishList = true;
+          break;
+        }
       }
     }
+
   }
 
   @override
   void initState() {
     super.initState();
-    initValues();
+    if(!Globals.skipped)
+      initValues();
   }
   @override
   Widget build(BuildContext context) {
@@ -776,39 +773,28 @@ class _EventItemState extends State<EventItem> {
                           future: util.getWishList(),
                           builder: (context, snapshot){
                             if(snapshot.connectionState == ConnectionState.done){
-                              if(snapshot.hasData){
-                                return GestureDetector(
-                                  onTap: () async{
-                                    Map response = await util.addToRemoveFromWishList(widget.id);
-                                    if(response['result']){
-                                      _addedToWishList = _addedToWishList?false:true;
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: new BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.deepOrange),
-                                    child: IconButton(padding: EdgeInsets.only(top: 2),
-                                        icon: Icon(
-                                          _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 25,
-                                        ),
-                                        onPressed: () async{
-                                          Map response = await util.addToRemoveFromWishList(widget.id);
-                                          if(response['result']){
-                                            setState(() {
+                              return Container(
+                                width: 30,
+                                height: 30,
+                                decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.deepOrange),
+                                child: IconButton(padding: EdgeInsets.only(top: 2),
+                                    icon: Icon(
+                                      _addedToWishList?Icons.favorite:Icons.favorite_border,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ),
+                                    onPressed: () async{
+                                      Map response = await util.addToRemoveFromWishList(widget.id);
+                                      if(response['result']){
+                                        setState(() {
 
-                                              _addedToWishList = _addedToWishList?false: true;
-                                            });
-                                          }
-                                        }),
-                                  ),
-                                );
-                              }
-                              return Container();
+                                          _addedToWishList = _addedToWishList?false: true;
+                                        });
+                                      }
+                                    }),
+                              );
                             }
                             return Container(
                               child: Column(

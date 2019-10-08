@@ -145,7 +145,7 @@ class _LocationMap2State extends State<LocationMap2> {
         height: Platform.isIOS?230:370,
         width: Platform.isIOS?270:370,
         child: WebView(
-          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height="900" width="900" frameborder="0" align="middle" style="border:0;" allowfullscreen=""></iframe></center></body></html>', mimeType: 'text/html').toString(),
+          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=500 width=500 frameborder=0 align=middle allowfullscreen=true></iframe></center></body></html>', mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
 
 
