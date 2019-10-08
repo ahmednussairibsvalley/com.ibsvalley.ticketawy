@@ -1,5 +1,7 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 
 import '../../../util.dart' as util;
 
@@ -34,6 +36,63 @@ class _ProfileInfoState extends State<ProfileInfo> {
     _passwordController.value = _passwordController.value.copyWith(text: password);
     _phoneNumberController.value = _phoneNumberController.value.copyWith(text: phoneNumber);
   }
+
+  _showNoConnectivityDialog(){
+    showDialog(
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text('Please check your internet connection and try again.',
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text('Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -123,6 +182,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 padding: const EdgeInsets.only(right: 30, left: 30),
                 child: ListTile(
                   onTap: () async{
+                    var connectivityResult = await Connectivity().checkConnectivity();
+                    if (connectivityResult != ConnectivityResult.mobile &&
+                        connectivityResult != ConnectivityResult.wifi){
+                      _showNoConnectivityDialog();
+                      return;
+                    }
                     if(_formKey.currentState.validate()){
                       setState(() {
                         _updating = true;

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -28,58 +29,72 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.homePageIndex);
-    return ListView(
-      children: <Widget>[
-        FutureBuilder(
-          future: util.getHomeEvents(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                Globals.controller.populateHomeEvents(snapshot.data);
-                Globals.controller.homeEvents[1].reservationOption = 1;
-                return EventsSlider(
-                  onEventPressed: onEventPressed,
-                  list: Globals.controller.homeEvents,
-                );
-              }
-              return Container();
-            }
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  CircularProgressIndicator(),
-                ],
-              ),
+    return FutureBuilder(
+      future: Connectivity().checkConnectivity(),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          if (snapshot.data == ConnectivityResult.mobile ||
+              snapshot.data == ConnectivityResult.wifi){
+            return ListView(
+              children: <Widget>[
+                FutureBuilder(
+                  future: util.getHomeEvents(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        Globals.controller.populateHomeEvents(snapshot.data);
+                        Globals.controller.homeEvents[1].reservationOption = 1;
+                        return EventsSlider(
+                          onEventPressed: onEventPressed,
+                          list: Globals.controller.homeEvents,
+                        );
+                      }
+                      return Container();
+                    }
+                    return Container(
+                      child: Column(
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                CategoriesSlider(
+                  onPress: onPress,
+                ),
+                FutureBuilder(
+                  future: util.getHotEvents(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        Globals.controller.populateHotEvents(snapshot.data);
+                        Globals.controller.hotEvents[1].reservationOption = 1;
+                        return HotOffersSlider(
+                          onEventPressed: onHotOfferPressed,
+                          list: Globals.controller.hotEvents,
+                        );
+                      }
+                      return Container();
+                    }
+                    return Container(
+                      child: Column(
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             );
-          },
-        ),
-        CategoriesSlider(
-          onPress: onPress,
-        ),
-        FutureBuilder(
-          future: util.getHotEvents(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                Globals.controller.populateHotEvents(snapshot.data);
-                Globals.controller.hotEvents[1].reservationOption = 1;
-                return HotOffersSlider(
-                  onEventPressed: onHotOfferPressed,
-                  list: Globals.controller.hotEvents,
-                );
-              }
-              return Container();
-            }
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  CircularProgressIndicator(),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+          }
+          return Center(
+            child: Text('There is no connection'),
+          );
+        }
+        return Container();
+      },
     );
   }
 

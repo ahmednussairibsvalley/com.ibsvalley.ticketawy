@@ -1,7 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/home_pages/search_results.dart';
+import 'custom_widgets/CustomShowDialog.dart';
 import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
 import 'home_pages/select_seat.dart';
@@ -33,6 +35,68 @@ class _HomeState extends State<Home> {
   TextEditingController _searchController = TextEditingController();
 
   int index = PagesIndices.homePageIndex;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  _showNoConnectivityDialog(){
+    showDialog(
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text('Please check your internet connection and try again.',
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text('Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +373,7 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.contactPageIndex? ContactPage(
-                            
+
                             onPreviousPagePressed: () {
                               setState(() {
                                 index = PagesIndices.homePageIndex;
@@ -449,12 +513,18 @@ class _HomeState extends State<Home> {
                         suffixIcon: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: GestureDetector(
-                            onTap: () async{
-                              Globals.keyWord = _searchController.text;
-                              setState(() {
-                                index = PagesIndices.searchPageIndex;
-                              });
-                            },
+                              onTap: () async{
+                                var connectivityResult = await Connectivity().checkConnectivity();
+                                if (connectivityResult != ConnectivityResult.mobile &&
+                                    connectivityResult != ConnectivityResult.wifi){
+                                  _showNoConnectivityDialog();
+                                  return;
+                                }
+                                Globals.keyWord = _searchController.text;
+                                setState(() {
+                                  index = PagesIndices.searchPageIndex;
+                                });
+                              },
                               child: Icon(Icons.search, size: 30,)
                           ),
                         ),

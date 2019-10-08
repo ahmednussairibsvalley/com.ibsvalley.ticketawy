@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
 
@@ -7,12 +8,33 @@ class ProfileHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: util.getOrdersHistory(),
+      future: Connectivity().checkConnectivity(),
       builder: (context, snapshot){
         if(snapshot.hasData){
-          return HistorySlider(
-            list: snapshot.data,
-          );
+          if(snapshot.hasData){
+            if (snapshot.data == ConnectivityResult.mobile ||
+                snapshot.data == ConnectivityResult.wifi){
+              return FutureBuilder(
+                future: util.getOrdersHistory(),
+                builder: (context, snapshot){
+                  if(snapshot.hasData){
+                    if(snapshot.data.length > 0){
+                      return HistorySlider(
+                        list: snapshot.data,
+                      );
+                    }
+                    return Center(
+                      child: Text('You don\'t have any orders'),
+                    );
+                  }
+                  return Container();
+                },
+              );
+            }
+            return Center(
+              child: Text('There is no connection'),
+            );
+          }
         }
         return Container();
       },

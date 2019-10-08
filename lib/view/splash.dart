@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
 
 import '../controller.dart';
 import '../globals.dart';
@@ -61,13 +62,17 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
         Globals.controller = Controller();
         SharedPreferences prefs = await SharedPreferences.getInstance();
         if(prefs.containsKey('userId')) {
-          Globals.userId = prefs.getString('userId');
-          Map userData = await getUserDetails();
-          print('$userData');
-          Globals.controller.populateUser(userData);
-          List categoriesList = await categoryList();
+          var connectivityResult = await Connectivity().checkConnectivity();
+          if (connectivityResult == ConnectivityResult.mobile ||
+              connectivityResult == ConnectivityResult.wifi){
+            Globals.userId = prefs.getString('userId');
+            Map userData = await getUserDetails();
+            print('$userData');
+            Globals.controller.populateUser(userData);
+            List categoriesList = await categoryList();
 
-          Globals.controller.populateCategories(categoriesList);
+            Globals.controller.populateCategories(categoriesList);
+          }
           Navigator.of(context).pushReplacementNamed('/home');
         }else
           Navigator.of(context).pushReplacementNamed('/login');

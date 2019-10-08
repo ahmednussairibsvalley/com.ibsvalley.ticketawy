@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,6 +77,62 @@ class _LoginState extends State<Login> {
         ),
       );
     });
+  }
+
+  _showNoConnectivityDialog(){
+    showDialog(
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text('Please check your internet connection and try again.',
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text('Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
   }
 
   @override
@@ -471,8 +528,14 @@ class _LoginState extends State<Login> {
                           ),
                           child: ListTile(
                             onTap: () async {
-                              Globals.skipped = false;
+
                               FocusScope.of(context).requestFocus(FocusNode());
+                              var connectivityResult = await Connectivity().checkConnectivity();
+                              if (connectivityResult != ConnectivityResult.mobile &&
+                                  connectivityResult != ConnectivityResult.wifi){
+                                _showNoConnectivityDialog();
+                                return;
+                              }
                               if(_formKey.currentState.validate()){
                                 setState(() {
                                   _loggingIn = true;
@@ -481,6 +544,7 @@ class _LoginState extends State<Login> {
                                 Map response = await util.login(_userName, _password);
 
                                 if(response['result']){
+                                  Globals.skipped = false;
                                   Globals.userPassword = _password;
                                   Globals.userId = response['id'];
 
@@ -595,6 +659,15 @@ class _LoginState extends State<Login> {
                   _showUnderDevelopmentDialog(context);
                   return;
                 }
+                var connectivityResult = await Connectivity().checkConnectivity();
+                if (connectivityResult != ConnectivityResult.mobile &&
+                    connectivityResult != ConnectivityResult.wifi){
+                  _showNoConnectivityDialog();
+                  return;
+                }
+                setState(() {
+                  _loggingIn = true;
+                });
                 Globals.skipped = true;
 //              Map userData = await getUserDetails();
 //
