@@ -144,7 +144,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: _width > 360?Platform.isIOS?6.0:10:8.0, bottom: _width > 360?Platform.isIOS?6.0:10:8.0),
+            padding: EdgeInsets.only(top: _width > 360?Platform.isIOS?6.0:10:6.0, bottom: _width > 360?Platform.isIOS?6.0:10:0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -262,7 +262,6 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
