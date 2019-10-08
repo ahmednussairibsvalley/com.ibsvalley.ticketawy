@@ -159,7 +159,7 @@ class CategoryPage extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             content: Container(
               width: 300.0,
-              height: 450.0,
+              height: 400.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -515,36 +515,7 @@ class _FiterDialogState extends State<FiterDialog> {
         ),
 
         // Time Filter
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Time',style: TextStyle(color: Color(0xff656565)),),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
-                child: TextFormField(
-                  controller: _timeController,
-                  decoration: InputDecoration(
-                    hintText: '00:00 --',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                          style: BorderStyle.none,
-                        )),
-                    labelStyle: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+
 
         // City Filter
         Row(
@@ -623,11 +594,11 @@ class _FiterDialogState extends State<FiterDialog> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(right: 40.0),
+                            padding: const EdgeInsets.only(right: 25.0),
                             child: Text('${_values.start.toStringAsFixed(0)} EGP', textAlign: TextAlign.left,),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 40.0),
+                            padding: const EdgeInsets.only(left: 25.0),
                             child: Text('${_values.end.toStringAsFixed(0)} EGP', textAlign: TextAlign.right,),
                           ),
                         ],
