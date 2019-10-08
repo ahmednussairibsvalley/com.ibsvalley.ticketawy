@@ -54,11 +54,15 @@ class MyWishListPage extends StatelessWidget {
                     builder: (context, snapshot){
                       if(snapshot.hasData){
                         List list = snapshot.data;
-                        Globals.controller.populateWishList(list);
-                        return EventsSlider(
-                          onCategoryPressed: onCategoryPressed,
-                          list: Globals.controller.wishList,
-                        );
+                        if(list.length > 0){
+                          Globals.controller.populateWishList(list);
+                          return EventsSlider(
+                            onCategoryPressed: onCategoryPressed,
+                            list: Globals.controller.wishList,
+                          );
+                        }
+                        return Container();
+
                       }
                       return Container();
                     },
