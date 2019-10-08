@@ -229,7 +229,7 @@ class _buyTicketsState extends State<buyTickets> {
                 height: 30,
                 child: FlatButton(
                   child: Text(
-                    "100\$",
+                    "100 EGP",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   onPressed: () {},

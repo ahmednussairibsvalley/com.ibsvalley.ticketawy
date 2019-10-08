@@ -55,12 +55,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    hintText: 'User name',
+                    hintText: 'Full Name',
                     prefixIcon: Icon(Icons.person_outline),
                   ),
                   validator: (value){
                     if(value.isEmpty){
-                      return 'Please enter your user name.';
+                      return 'Please enter your full name.';
                     }
                     return null;
                   },
@@ -96,6 +96,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
                 child: TextFormField(
+                  enabled: false,
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(

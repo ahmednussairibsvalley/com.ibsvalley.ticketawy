@@ -179,7 +179,7 @@ class HistoryItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Image.asset('assets/ticket_type.png', width: 35, height: 35,),
-                        Text('Class A 120\$',
+                        Text('Class A 120 EGP',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,

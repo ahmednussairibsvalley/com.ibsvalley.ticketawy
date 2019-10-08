@@ -202,6 +202,7 @@ class _RegisterState extends State<Register> {
                                 ),
                                 child: ListTile(
                                   onTap: () async {
+                                    Globals.skipped = false;
                                     FocusScope.of(context).requestFocus(FocusNode());
                                     if (_formKey.currentState.validate()) {
                                       setState(() {
@@ -580,7 +581,7 @@ _showRegistrationSuccessDialog(BuildContext context, {String message, String id,
                 ),
                 ListTile(
                   onTap: ()async {
-
+                    Globals.skipped = false;
                     Globals.userPassword = password != null && password.isNotEmpty?password:'';
 //                    Globals.userId = response['id'];
                     Globals.userId = id != null && id.isNotEmpty ?id:'';

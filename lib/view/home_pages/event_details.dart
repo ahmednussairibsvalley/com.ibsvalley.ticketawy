@@ -241,7 +241,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 GestureDetector(
                   onTap: () {
                     if(Globals.skipped){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
                     } else {
                       if(Globals.reservationOption == ReservationOptions.byTickets)
                         _showChooseTicketDialog(widget.onEventBooked);
@@ -256,7 +256,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     child: Padding(
                       padding: EdgeInsets.only(left: _width > 350?30:25,right: _width > 350?30:20,top: 15,bottom: 15),
                       child: Text(
-                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : '  Buy 20\$  ',
+                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : '  Buy 20 EGP  ',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
                       ),
@@ -374,58 +374,70 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(_map.keys.toList().length, (index) {
-              return Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: FutureBuilder(
+            future: util.getServiceClasses(Globals.eventId),
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(snapshot.data.length, (index) {
+                    return Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(right: 16,left: 12),
-                          child: Text('${_map.keys.toList()[index]}',style: TextStyle(fontSize: 20,
-                              fontFamily: 'GeometriqueSans',
-                              color: Color(0xff878787)),),
+                          padding: const EdgeInsets.all(8.0),
+                          child: DashedDivider(),
                         ),
-                        Container(
-                          width: 70,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Color(0xffff6600),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 8.0,
-                              right: 8.0,
-                              top: 3.0,
-                              bottom: 3.0,
-                            ),
-                            child: Text(
-                              '${_map[_map.keys.toList()[index]]}\$',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Verdana',
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16,left: 12),
+                                child:  Text('${snapshot.data[index]['class_Name']}',style: TextStyle(fontSize: 20,
+                                    fontFamily: 'GeometriqueSans',
+                                    color: Color(0xff878787)),),
                               ),
-                            ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+
+                                  Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffff6600),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 8.0,
+                                        right: 8.0,
+                                        top: 3.0,
+                                        bottom: 3.0,
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data[index]['total_Price']} EGP',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Verdana',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: TicketQuantity(),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        Flexible(
-                          child: TicketQuantity(),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              );
-            }),
+                    );
+                  }),
+                );
+              }
+              return Container();
+            },
           ),
         ),
 

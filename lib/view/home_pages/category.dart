@@ -350,7 +350,7 @@ class EventsPage extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
-                          child: Text('${list[index].price}\$ / Ticket',
+                          child: Text('${list[index].price} EGP / Ticket',
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -624,11 +624,11 @@ class _FiterDialogState extends State<FiterDialog> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(right: 40.0),
-                            child: Text('${_values.start.toStringAsFixed(0)} \$', textAlign: TextAlign.left,),
+                            child: Text('${_values.start.toStringAsFixed(0)} EGP', textAlign: TextAlign.left,),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 40.0),
-                            child: Text('${_values.end.toStringAsFixed(0)} \$', textAlign: TextAlign.right,),
+                            child: Text('${_values.end.toStringAsFixed(0)} EGP', textAlign: TextAlign.right,),
                           ),
                         ],
                       ),

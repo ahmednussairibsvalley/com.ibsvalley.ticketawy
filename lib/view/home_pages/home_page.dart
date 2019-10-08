@@ -572,6 +572,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                         ),
                       ),
                     ),
+                    Globals.skipped?Container():
                     Positioned(
                         top: 5.0,
                         right: 5,
@@ -647,7 +648,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${widget.price}\$ / Ticket',
+                    '${widget.price} EGP / Ticket',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -746,7 +747,8 @@ class _EventItemState extends State<EventItem> {
                   ),
 
                   //Wishlist Button
-                  Positioned(
+                  Globals.skipped?Container()
+                  :Positioned(
                       top: 25.0,
                       right: 25,
                       child: Container(
@@ -803,6 +805,7 @@ class _EventItemState extends State<EventItem> {
                           },
                         ),
                       )),
+
                   Positioned(
                     right: 0.0,
                     left: 0.0,
@@ -842,7 +845,7 @@ class _EventItemState extends State<EventItem> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                '${widget.price} \$',
+                                '${widget.price} EGP',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   color: Colors.white,

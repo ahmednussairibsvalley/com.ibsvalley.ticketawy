@@ -153,7 +153,7 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
+                Globals.skipped?Container():Positioned(
                     top: 15,
                     right: 25,
                     child: Container(

@@ -239,7 +239,7 @@ class EventsPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            '${list[index]['price']}\$ / Ticket',
+                            '${list[index]['price']} EGP / Ticket',
                             style: TextStyle(
                               color: Colors.white,
                             ),
