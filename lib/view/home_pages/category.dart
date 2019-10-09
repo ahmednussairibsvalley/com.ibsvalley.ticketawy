@@ -460,179 +460,183 @@ class _FiterDialogState extends State<FiterDialog> {
 
     final _DateController = MaskedTextController(mask: '00/00/0000',);
     final _timeController = MaskedTextController(mask: '00:00 AA');
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 20, bottom: 10),
-          child: Text('Filter By',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xfffd6600),
-              fontSize: 20,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
+      body: ListView(
+//      crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 10),
+            child: Text('Filter By',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xfffd6600),
+                fontSize: 20,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: DrawerDivider(
-            width: 10,
-            height: 1,
-            color: Color(0xffb8b8b8),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DrawerDivider(
+              width: 10,
+              height: 1,
+              color: Color(0xffb8b8b8),
+            ),
           ),
-        ),
 
-        // Date Filter
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Date',style: TextStyle(color: Color(0xff656565)),),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
-                child: TextFormField(
-                  controller: _DateController,
-                  decoration: InputDecoration(
-                    hintText: 'dd / MM / YYYY',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                          style: BorderStyle.none,
-                        )),
-                    labelStyle: TextStyle(
-                      fontSize: 15,
+          // Date Filter
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text('Date',style: TextStyle(color: Color(0xff656565)),),
+              ),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
+                  child: TextFormField(
+                    controller: _DateController,
+                    decoration: InputDecoration(
+                      hintText: 'dd / MM / YYYY',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            style: BorderStyle.none,
+                          )),
+                      labelStyle: TextStyle(
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
-        // Time Filter
+          // Time Filter
 
 
-        // City Filter
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, ),
-              child: Text('City',style: TextStyle(color: Color(0xff656565)),),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
-              child: Container(
-                padding: EdgeInsets.only(right: 10, left: 10,),
-                decoration: ShapeDecoration(
-                  color: Color(0xffeeeeee),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.0, style: BorderStyle.none),
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          // City Filter
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, ),
+                child: Text('City',style: TextStyle(color: Color(0xff656565)),),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0),
+                child: Container(
+                  padding: EdgeInsets.only(right: 10, left: 10,),
+                  decoration: ShapeDecoration(
+                    color: Color(0xffeeeeee),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 1.0, style: BorderStyle.none),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                  ),
+                  child: DropdownButton(
+                    underline: Container(),
+                    icon: Icon(Icons.expand_more),
+                    value: _cityValue,
+                    onChanged: (value){
+                      setState(() {
+                        _cityValue = value;
+                      });
+                    },
+                    items: List.generate(_cityList.length, (index){
+                      return DropdownMenuItem(
+                        value: _cityList[index],
+                        child: Container(
+                          width: 150,
+                          child: Text('${_cityList[index]}'),
+                        ),
+                      );
+                    }),
                   ),
                 ),
-                child: DropdownButton(
-                  underline: Container(),
-                  icon: Icon(Icons.expand_more),
-                  value: _cityValue,
-                  onChanged: (value){
-                    setState(() {
-                      _cityValue = value;
-                    });
-                  },
-                  items: List.generate(_cityList.length, (index){
-                    return DropdownMenuItem(
-                      value: _cityList[index],
-                      child: Container(
-                        width: 150,
-                        child: Text('${_cityList[index]}'),
+              ),
+            ],
+          ),
+
+          // Price Filter
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text('Price',style: TextStyle(color: Color(0xff656565)),),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0, bottom: 15.0,),
+                child: Container(
+                    decoration: ShapeDecoration(
+                      color: Color(0xffeeeeee),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 1.0, style: BorderStyle.none),
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),
-                    );
-                  }),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        RangeSlider(
+                          values: _values,
+                          min: 20.0,
+                          max: 1500.0,
+                          onChanged: (RangeValues value) {
+                            setState(() {
+                              _values = value;
+                            });
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 25.0),
+                              child: Text('${_values.start.toStringAsFixed(0)} EGP', textAlign: TextAlign.left,),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 25.0),
+                              child: Text('${_values.end.toStringAsFixed(0)} EGP', textAlign: TextAlign.right,),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
-        // Price Filter
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Text('Price',style: TextStyle(color: Color(0xff656565)),),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0, bottom: 15.0,),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pop();
+            },
+            title: Padding(
+              padding: const EdgeInsets.all(10),
               child: Container(
-                decoration: ShapeDecoration(
-                  color: Color(0xffeeeeee),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(width: 1.0, style: BorderStyle.none),
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                child: Text('Filter',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                  child: Column(
-                    children: <Widget>[
-                      RangeSlider(
-                        values: _values,
-                        min: 20.0,
-                        max: 1500.0,
-                        onChanged: (RangeValues value) {
-                          setState(() {
-                            _values = value;
-                          });
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 25.0),
-                            child: Text('${_values.start.toStringAsFixed(0)} EGP', textAlign: TextAlign.left,),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 25.0),
-                            child: Text('${_values.end.toStringAsFixed(0)} EGP', textAlign: TextAlign.right,),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-              ),
-            ),
-          ],
-        ),
-
-        ListTile(
-          onTap: (){
-            Navigator.of(context).pop();
-          },
-          title: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Container(
-              child: Text('Filter',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                decoration: BoxDecoration(
+                  color: Color(0xffff6600),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                textAlign: TextAlign.center,
+                padding: EdgeInsets.all(10),
               ),
-              decoration: BoxDecoration(
-                color: Color(0xffff6600),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
-              padding: EdgeInsets.all(10),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

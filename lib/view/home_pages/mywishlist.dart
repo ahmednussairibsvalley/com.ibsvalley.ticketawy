@@ -67,7 +67,9 @@ class MyWishListPage extends StatelessWidget {
                                   list: Globals.controller.wishList,
                                 );
                               }
-                              return Container();
+                              return Center(
+                                child: Image.asset('assets/sad_ticketawy.png'),
+                              );
 
                             }
                             return Container();
