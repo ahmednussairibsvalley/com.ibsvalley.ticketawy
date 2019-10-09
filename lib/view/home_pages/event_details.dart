@@ -413,57 +413,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(snapshot.data.length, (index) {
-                    return Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DashedDivider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16,left: 12),
-                                child:  Text('${snapshot.data[index]['class_Name']}',style: TextStyle(fontSize: 20,
-                                    fontFamily: 'GeometriqueSans',
-                                    color: Color(0xff878787)),),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-
-                                  Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffff6600),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 8.0,
-                                        right: 8.0,
-                                        top: 3.0,
-                                        bottom: 3.0,
-                                      ),
-                                      child: Text(
-                                        '${snapshot.data[index]['total_Price']} EGP',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Verdana',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: TicketQuantity(),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    return ClassItem(
+                      className: snapshot.data[index]['class_Name'],
+                      totalPrice: snapshot.data[index]['total_Price'],
                     );
                   }),
                 );
@@ -509,8 +461,90 @@ class _ChooseTicketState extends State<ChooseTicket> {
 }
 
 
+class ClassItem extends StatefulWidget {
+
+  final String className;
+  final double totalPrice;
+
+  ClassItem({ @required this.className, @required this.totalPrice});
+  @override
+  _ClassItemState createState() => _ClassItemState();
+}
+
+class _ClassItemState extends State<ClassItem> {
+
+  int _quantity = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DashedDivider(),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 16,left: 12),
+                child:  Text(widget.className,style: TextStyle(fontSize: 20,
+                    fontFamily: 'GeometriqueSans',
+                    color: Color(0xff878787)),),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(0xffff6600),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                        top: 3.0,
+                        bottom: 3.0,
+                      ),
+                      child: Text(
+                        '${widget.totalPrice * _quantity} EGP',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Verdana',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: TicketQuantity(
+                      onUpdateQuantity: (value){
+                        setState(() {
+                          _quantity = value;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 // Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {
+
+  final Function(int) onUpdateQuantity;
+
+  TicketQuantity({@required this.onUpdateQuantity});
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
 }
@@ -528,9 +562,11 @@ class _TicketQuantityState extends State<TicketQuantity> {
         GestureDetector(
           onTap: (){
             if(_current > 0){
+
               setState(() {
                 _current--;
               });
+              widget.onUpdateQuantity(_current);
             }
 
           },
@@ -550,6 +586,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
             setState(() {
               _current++;
             });
+            widget.onUpdateQuantity(_current);
           },
           child: Icon(Icons.add),
         ),
