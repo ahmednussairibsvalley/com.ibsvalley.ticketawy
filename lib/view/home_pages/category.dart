@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:intl/intl.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
 import '../../globals.dart';
@@ -501,10 +503,10 @@ class _FiterDialogState extends State<FiterDialog> {
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
-                  child: TextFormField(
-                    controller: _dateController,
+                  child: DateTimeField(
+                    format: DateFormat("yyyy-MM-dd"),
                     decoration: InputDecoration(
-                      hintText: 'dd / MM / YYYY',
+                      hintText: 'Press to set date',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
@@ -516,6 +518,13 @@ class _FiterDialogState extends State<FiterDialog> {
                         fontSize: 15,
                       ),
                     ),
+                    onShowPicker: (context, currentValue) {
+                      return showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
+                    },
                   ),
                 ),
               ),
