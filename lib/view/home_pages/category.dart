@@ -78,9 +78,32 @@ class CategoryPage extends StatelessWidget {
                         return Globals.controller.events.length > 0?EventsSlider(
                           eventsList: Globals.controller.events,
                           onCategoryPressed: onCategoryPressed,
-                        ):Container();
+                        ):
+                        Center(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset('assets/sad_ticketawy.png', width: 200,),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('There is no events yet',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xfffe6700),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       }
-                      return Container();
+                      return Container(
+                        child: Column(
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      );
                     },
                   )
                 ],
@@ -408,19 +431,6 @@ class FiterDialog extends StatefulWidget {
 }
 
 class _FiterDialogState extends State<FiterDialog> {
-  List _dateList = [
-    '01 / 05 / 2020',
-    '01 / 12 / 2019',
-    '20 / 10 / 2019',
-    '15 / 11 / 2019',
-  ];
-
-  List _timeList = [
-    '10:30 PM',
-    '10:00 AM',
-    '4:00 PM',
-    '3:00 PM',
-  ];
 
   List _cityList = [
     'Cairo',
@@ -437,16 +447,12 @@ class _FiterDialogState extends State<FiterDialog> {
 
   RangeValues _values = RangeValues(50.0, 1000.0);
 
-  String _dateValue;
-  String _timeValue;
   String _cityValue;
 //  String _PriceValue;
 
   @override
   void initState() {
     super.initState();
-    _dateValue = _dateList[0];
-    _timeValue = _timeList[0];
     _cityValue = _cityList[0];
 //    _PriceValue = _PriceList[0];
   }
@@ -458,8 +464,7 @@ class _FiterDialogState extends State<FiterDialog> {
   @override
   Widget build(BuildContext context) {
 
-    final _DateController = MaskedTextController(mask: '00/00/0000',);
-    final _timeController = MaskedTextController(mask: '00:00 AA');
+    final _dateController = MaskedTextController(mask: '00/00/0000',);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -497,7 +502,7 @@ class _FiterDialogState extends State<FiterDialog> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
                   child: TextFormField(
-                    controller: _DateController,
+                    controller: _dateController,
                     decoration: InputDecoration(
                       hintText: 'dd / MM / YYYY',
                       filled: true,
