@@ -24,7 +24,10 @@ class EventDetails extends StatelessWidget {
   final Function onEventBooked;
   final Function onAllCategoriesPressed;
 
-  EventDetails({@required this.onPreviousPagePressed, @required this.onEventBooked, @required this.onAllCategoriesPressed});
+  EventDetails(
+      {@required this.onPreviousPagePressed,
+      @required this.onEventBooked,
+      @required this.onAllCategoriesPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,8 @@ class EventDetails extends StatelessWidget {
     return Scaffold(
       body: FutureBuilder(
         future: util.getEventDetails(Globals.eventId),
-        builder: (context, snapshot){
-          if(snapshot.hasData){
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
             return EventTabs(
               data: snapshot.data,
               onEventBooked: onEventBooked,
@@ -65,7 +68,8 @@ class EventDetails extends StatelessWidget {
                       Text(
                         'Previous Page',
                         style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
+                          color: Colors.white,
+                          fontFamily: 'MyriadPro',
                           fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
@@ -92,7 +96,8 @@ class EventDetails extends StatelessWidget {
                       Text(
                         'All Categories',
                         style: TextStyle(
-                          color: Colors.white,fontFamily: 'MyriadPro',
+                          color: Colors.white,
+                          fontFamily: 'MyriadPro',
                           fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
@@ -114,6 +119,7 @@ class EventTabs extends StatefulWidget {
   final Map data;
 
   EventTabs({@required this.onEventBooked, @required this.data});
+
   @override
   _EventTabsState createState() => _EventTabsState();
 }
@@ -129,7 +135,8 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     super.initState();
     DateTime _expirationDate = DateTime.parse(widget.data['expirationDate']);
     DateTime _currentDate = DateTime.now();
-    _expired = _expirationDate.difference(_currentDate).inDays > 0?false:true;
+    _expired =
+        _expirationDate.difference(_currentDate).inDays > 0 ? false : true;
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -140,6 +147,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
         });
       });
   }
+
 //sghgjxgjd csdkjdvskj ksjhfksjdhf
   //Begin
   @override
@@ -150,7 +158,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: _width > 360?Platform.isIOS?6.0:10:6.0, bottom: _width > 360?Platform.isIOS?6.0:10:0),
+            padding: EdgeInsets.only(
+                top: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 6.0,
+                bottom: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 0),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -172,7 +182,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
-                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
+                                fontSize: _width > 360
+                                    ? Platform.isIOS ? 14 : 20
+                                    : 14,
                                 fontFamily: 'Verdana',
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
@@ -198,7 +210,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
-                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
+                                fontSize: _width > 360
+                                    ? Platform.isIOS ? 14 : 20
+                                    : 14,
                                 fontFamily: 'Verdana',
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
@@ -224,7 +238,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
-                                fontSize: _width > 360?Platform.isIOS? 14:20:14,
+                                fontSize: _width > 360
+                                    ? Platform.isIOS ? 14 : 20
+                                    : 14,
                                 fontFamily: 'Verdana',
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)
@@ -238,32 +254,38 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   ),
                 ),
 
-
-
-
                 // Buy Tickets Button
 //                BuyTicket(),
                 GestureDetector(
                   onTap: () {
-                    if(Globals.skipped){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                    if (Globals.skipped) {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Login()));
                     } else {
-                      if(Globals.reservationOption == ReservationOptions.byTickets)
+                      if (Globals.reservationOption ==
+                          ReservationOptions.byTickets)
                         _showChooseTicketDialog(widget.onEventBooked);
-                      else if(Globals.reservationOption == ReservationOptions.bySeats)
-                        widget.onEventBooked();
+                      else if (Globals.reservationOption ==
+                          ReservationOptions.bySeats) widget.onEventBooked();
                     }
-
                   },
                   child: Container(
                     height: 45,
                     color: Color(0xffff6600),
                     child: Padding(
-                      padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
+                      padding: EdgeInsets.only(
+                          left: _width > 350 ? 23 : 25,
+                          right: _width > 350 ? 23 : 20,
+                          top: 15,
+                          bottom: 15),
                       child: Text(
-                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy Seats',
+                        Globals.reservationOption ==
+                                ReservationOptions.byTickets
+                            ? 'Buy Tickets'
+                            : 'Buy Seats',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'MyriadPro'),
                       ),
                     ),
                   ),
@@ -309,16 +331,15 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: Platform.isIOS?10
-                    :_width > 360? 25: 20
-            ),
+                top: Platform.isIOS ? 10 : _width > 360 ? 25 : 20),
           ),
           Flexible(
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
                 AboutPage(
-                  imageUrl: 'http://40.85.116.121:8606/EventsLogo/${widget.data['logo']}',
+                  imageUrl:
+                      'http://40.85.116.121:8606/EventsLogo/${widget.data['logo']}',
                   eventName: widget.data['name'],
                   eventDescription: widget.data['content'],
                   endDate: widget.data['endDate'],
@@ -339,6 +360,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       ),
     );
   }
+
 // End
   _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
@@ -365,24 +387,21 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 }
 
 class ChooseTicket extends StatefulWidget {
-
   final Function onTicketChosen;
 
   ChooseTicket({@required this.onTicketChosen});
+
   @override
   _ChooseTicketState createState() => _ChooseTicketState();
 }
 
 class _ChooseTicketState extends State<ChooseTicket> {
-
   static const platform = const MethodChannel('fawry');
 
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       children: <Widget>[
-
         // The logo
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -400,10 +419,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
             'Choose tickets',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 23,
-              fontFamily: 'GeometriqueSans',
-              color: Color(0xff878787)
-            ),
+                fontSize: 23,
+                fontFamily: 'GeometriqueSans',
+                color: Color(0xff878787)),
           ),
         ),
 
@@ -411,17 +429,17 @@ class _ChooseTicketState extends State<ChooseTicket> {
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
             future: util.getServiceClasses(Globals.eventId),
-            builder: (context, snapshot){
-              if(snapshot.hasData){
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(snapshot.data.length, (index) {
                     return ClassItem(
-                      orderIndex: index,
-                      classId: snapshot.data[index]['id'],
-                      className: snapshot.data[index]['class_Name'],
-                      totalPrice: snapshot.data[index]['total_Price'],
-                    );
+                        orderIndex: index,
+                        classId: snapshot.data[index]['id'],
+                        className: snapshot.data[index]['class_Name'],
+                        totalPrice: snapshot.data[index]['total_Price'],
+                        activity_service_Id: snapshot.data[index]['activity_service_Id']);
                   }),
                 );
               }
@@ -437,11 +455,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
             left: 70,
           ),
           child: ListTile(
-            onTap: () async{
+            onTap: () async {
               List list = List();
-              for(int i = 0; i < orderTickets.length ; i++){
-                int numberOfTickets = int.parse(orderTickets[i]['numberOfTickets'].toString());
-                if(numberOfTickets > 0){
+              for (int i = 0; i < orderTickets.length; i++) {
+                int numberOfTickets =
+                    int.parse(orderTickets[i]['numberOfTickets'].toString());
+                if (numberOfTickets > 0) {
                   list.add(orderTickets[i]);
                 }
               }
@@ -450,10 +469,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
               print('${Globals.eventId}');
               print('${json.encode(list)}');
 
-              Map response = await util.addOrder(eventId: Globals.eventId, orders: list);
+              Map response =
+                  await util.addOrder(eventId: Globals.eventId, orders: list);
 
-              print('${response}');
-//              platform.invokeMethod('initFawry');
+
+              print('$response');
+              platform.invokeMethod('initFawry', response);
               Navigator.of(context).pop();
             },
             title: Container(
@@ -466,7 +487,8 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 child: Text(
                   'Buy',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white,
+                  style: TextStyle(
+                    color: Colors.white,
                     fontFamily: 'Verdana',
                     fontSize: 20,
                   ),
@@ -480,42 +502,44 @@ class _ChooseTicketState extends State<ChooseTicket> {
   }
 }
 
-
 class ClassItem extends StatefulWidget {
-
   final int orderIndex;
   final int classId;
   final String className;
   final double totalPrice;
+  final int activity_service_Id;
 
-  ClassItem({@required this.orderIndex, @required this.classId, @required this.className, @required this.totalPrice});
+  ClassItem(
+      {@required this.orderIndex,
+      @required this.classId,
+      @required this.className,
+      @required this.totalPrice,
+      @required this.activity_service_Id});
+
   @override
   _ClassItemState createState() => _ClassItemState();
 }
 
 class _ClassItemState extends State<ClassItem> {
-
   int _quantity = 1;
 
   @override
   void initState() {
     super.initState();
-    Map item = {"classId" : widget.classId, "numberOfTickets" : 0};
+    Map item = {"classId": widget.classId, "numberOfTickets": 0};
     bool itemAddedBefore = false;
 
-    for(int i = 0; i < orderTickets.length; i++){
-      if(orderTickets[i]['classId'] == item['classId']){
+    for (int i = 0; i < orderTickets.length; i++) {
+      if (orderTickets[i]['classId'] == item['classId']) {
         itemAddedBefore = true;
         break;
       }
     }
-    if(!itemAddedBefore)
-      orderTickets.add(item);
+    if (!itemAddedBefore) orderTickets.add(item);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Padding(
@@ -527,15 +551,18 @@ class _ClassItemState extends State<ClassItem> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(right: 16,left: 12),
-                child:  Text(widget.className,style: TextStyle(fontSize: 20,
-                    fontFamily: 'GeometriqueSans',
-                    color: Color(0xff878787)),),
+                padding: const EdgeInsets.only(right: 16, left: 12),
+                child: Text(
+                  widget.className,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'GeometriqueSans',
+                      color: Color(0xff878787)),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -560,12 +587,14 @@ class _ClassItemState extends State<ClassItem> {
                   ),
                   Flexible(
                     child: TicketQuantity(
-                      onUpdateQuantity: (value){
+                      onUpdateQuantity: (value) {
                         setState(() {
                           _quantity = value;
                         });
-                        orderTickets[widget.orderIndex]['classId'] = '${widget.classId}';
-                        orderTickets[widget.orderIndex]['numberOfTickets'] = '$value';
+                        orderTickets[widget.orderIndex]['classId'] =
+                            '${widget.classId}';
+                        orderTickets[widget.orderIndex]['numberOfTickets'] =
+                            '$value';
                         print('$orderTickets');
                       },
                     ),
@@ -580,37 +609,33 @@ class _ClassItemState extends State<ClassItem> {
   }
 }
 
-
 // Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {
-
   final Function(int) onUpdateQuantity;
 
   TicketQuantity({@required this.onUpdateQuantity});
+
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
 }
 
 class _TicketQuantityState extends State<TicketQuantity> {
   int _current = 0;
+
   @override
   Widget build(BuildContext context) {
     return Row(
-
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-
         //decrement
         GestureDetector(
-          onTap: (){
-            if(_current > 0){
-
+          onTap: () {
+            if (_current > 0) {
               setState(() {
                 _current--;
               });
               widget.onUpdateQuantity(_current);
             }
-
           },
           child: Icon(Icons.remove),
         ),
@@ -618,13 +643,17 @@ class _TicketQuantityState extends State<TicketQuantity> {
         //Ticket Quantity
         Container(
             width: 30,
-            child:  Text('$_current', textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Verdana',),)
-
-        ),
+            child: Text(
+              '$_current',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Verdana',
+              ),
+            )),
 
         // increment
         GestureDetector(
-          onTap: (){
+          onTap: () {
             setState(() {
               _current++;
             });
@@ -636,5 +665,3 @@ class _TicketQuantityState extends State<TicketQuantity> {
     );
   }
 }
-
-
