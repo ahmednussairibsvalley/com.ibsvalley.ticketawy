@@ -16,6 +16,8 @@ final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
 final int schedulePageIndex = 2;
 
+List orderTickets = [];
+
 class EventDetails extends StatelessWidget {
   final Function onPreviousPagePressed;
   final Function onEventBooked;
@@ -413,7 +415,10 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(snapshot.data.length, (index) {
+                    orderTickets.clear();
                     return ClassItem(
+                      orderIndex: index,
+                      classId: snapshot.data[index]['id'],
                       className: snapshot.data[index]['class_Name'],
                       totalPrice: snapshot.data[index]['total_Price'],
                     );
@@ -433,7 +438,8 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ),
           child: ListTile(
             onTap: () {
-              platform.invokeMethod('initFawry');
+              print('$orderTickets');
+//              platform.invokeMethod('initFawry');
               Navigator.of(context).pop();
             },
             title: Container(
@@ -463,10 +469,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
 class ClassItem extends StatefulWidget {
 
+  final int orderIndex;
+  final int classId;
   final String className;
   final double totalPrice;
 
-  ClassItem({ @required this.className, @required this.totalPrice});
+  ClassItem({@required this.orderIndex, @required this.classId, @required this.className, @required this.totalPrice});
   @override
   _ClassItemState createState() => _ClassItemState();
 }
@@ -477,6 +485,8 @@ class _ClassItemState extends State<ClassItem> {
 
   @override
   Widget build(BuildContext context) {
+    Map item = {"classId" : widget.classId, "numberOfTickets" : _quantity};
+    orderTickets.add(item);
     return Column(
       children: <Widget>[
         Padding(
@@ -525,6 +535,8 @@ class _ClassItemState extends State<ClassItem> {
                         setState(() {
                           _quantity = value;
                         });
+                        orderTickets[widget.orderIndex]['classId'] = '${widget.classId}';
+                        orderTickets[widget.orderIndex]['numberOfTickets'] = '$value';
                       },
                     ),
                   ),
