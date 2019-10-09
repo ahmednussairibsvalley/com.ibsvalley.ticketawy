@@ -240,18 +240,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 
                 // Buy Tickets Button
 //                BuyTicket(),
-                _expired?Container(
-                  height: 45,
-                  color: Color(0xff808B96),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
-                    child: Text('Expired',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
-                    ),
-                  ),
-                )
-                :GestureDetector(
+                GestureDetector(
                   onTap: () {
                     if(Globals.skipped){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
@@ -275,7 +264,43 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                ),
+                )
+//                _expired?Container(
+//                  height: 45,
+//                  color: Color(0xff808B96),
+//                  child: Padding(
+//                    padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
+//                    child: Text('Expired',
+//                      textAlign: TextAlign.center,
+//                      style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
+//                    ),
+//                  ),
+//                )
+//                :GestureDetector(
+//                  onTap: () {
+//                    if(Globals.skipped){
+//                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+//                    } else {
+//                      if(Globals.reservationOption == ReservationOptions.byTickets)
+//                        _showChooseTicketDialog(widget.onEventBooked);
+//                      else if(Globals.reservationOption == ReservationOptions.bySeats)
+//                        widget.onEventBooked();
+//                    }
+//
+//                  },
+//                  child: Container(
+//                    height: 45,
+//                    color: Color(0xffff6600),
+//                    child: Padding(
+//                      padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
+//                      child: Text(
+//                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy Seats',
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
+//                      ),
+//                    ),
+//                  ),
+//                ),
               ],
             ),
           ),
