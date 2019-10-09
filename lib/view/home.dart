@@ -14,7 +14,6 @@ import 'home_pages/faq_page.dart';
 import 'home_pages/ideas_page.dart';
 
 import '../globals.dart';
-import '../util.dart' as util;
 import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
@@ -112,12 +111,12 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
-      'FAQ' : (){
-        setState(() {
-          index = PagesIndices.faqPageIndex;
-        });
-        Navigator.of(context).pop();
-      },
+//      'FAQ' : (){
+//        setState(() {
+//          index = PagesIndices.faqPageIndex;
+//        });
+//        Navigator.of(context).pop();
+//      },
       'Ideas' : (){
         setState(() {
           index = PagesIndices.ideasPageIndex;
@@ -157,12 +156,12 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
-      'FAQ' : (){
-        setState(() {
-          index = PagesIndices.faqPageIndex;
-        });
-        Navigator.of(context).pop();
-      },
+//      'FAQ' : (){
+//        setState(() {
+//          index = PagesIndices.faqPageIndex;
+//        });
+//        Navigator.of(context).pop();
+//      },
       'Ideas' : (){
         setState(() {
           index = PagesIndices.ideasPageIndex;
@@ -280,219 +279,224 @@ class _HomeState extends State<Home> {
               // The body
               Positioned(
                 bottom: 0.0, right: 0.0, left: 0.0,
-                child: Column(
-                  children: <Widget>[
+                child: GestureDetector(
+                  onTap: (){
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: Column(
+                    children: <Widget>[
 
-                    Stack(
-                      children: <Widget>[
-                        DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
-                      ],
-                    ),
+                      Stack(
+                        children: <Widget>[
+                          DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
+                        ],
+                      ),
 
-                    Stack(
-                      children: <Widget>[
+                      Stack(
+                        children: <Widget>[
 
-                        // The white background.
-                        SizedBox(
-                          width: _width,
-                          height: _height * 0.75,
-                          child: Container(
-                            color: Colors.white,
+                          // The white background.
+                          SizedBox(
+                            width: _width,
+                            height: _height * 0.75,
+                            child: Container(
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
 
-                        // Here is the events data.
-                        Positioned(
-                          left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
-                        index == PagesIndices.homePageIndex?2:35:
-                        index == PagesIndices.homePageIndex?1:30,
-                          child: index == PagesIndices.homePageIndex? HomePage(
-                            onPress: (id, categoryName){
-                              Globals.categoryId = id;
-                              Globals.currentCategoryName = categoryName;
-                              setState(() {
-                                index = PagesIndices.categoryPageIndex;
-                              });
-                            },
-                            onEventPressed: (id){
-                              Globals.eventId = id;
-                              setState(() {
-                                index = PagesIndices.eventPageIndex;
-                              });
-                            },
-                            onHotOfferPressed: (id){
-                              Globals.eventId = id;
-                              setState(() {
-                                index = PagesIndices.eventPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.profilePageIndex? ProfilePage(
-                            onWillPop: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onPreviousPagePressed: (){
+                          // Here is the events data.
+                          Positioned(
+                            left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
+                          index == PagesIndices.homePageIndex?2:35:
+                          index == PagesIndices.homePageIndex?1:30,
+                            child: index == PagesIndices.homePageIndex? HomePage(
+                              onPress: (id, categoryName){
+                                Globals.categoryId = id;
+                                Globals.currentCategoryName = categoryName;
+                                setState(() {
+                                  index = PagesIndices.categoryPageIndex;
+                                });
+                              },
+                              onEventPressed: (id){
+                                Globals.eventId = id;
+                                setState(() {
+                                  index = PagesIndices.eventPageIndex;
+                                });
+                              },
+                              onHotOfferPressed: (id){
+                                Globals.eventId = id;
+                                setState(() {
+                                  index = PagesIndices.eventPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.profilePageIndex? ProfilePage(
+                              onWillPop: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onPreviousPagePressed: (){
 //                              Globals.pagesStack.pop();
 //                              setState(() {
 //                                index = Globals.pagesStack.pop();
 //                              });
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.ideasPageIndex? IdeasPage(
-                            onPreviousPagePressed: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.faqPageIndex? FaqPage(
-                            onPreviousPagePressed: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.contactPageIndex? ContactPage(
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.ideasPageIndex? IdeasPage(
+                              onPreviousPagePressed: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.faqPageIndex? FaqPage(
+                              onPreviousPagePressed: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.contactPageIndex? ContactPage(
 
-                            onPreviousPagePressed: () {
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.categoryPageIndex? CategoryPage(
-                            onBack: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onCategoryPressed: (id){
-                              Globals.eventId = id;
-                              setState(() {
-                                index = PagesIndices.eventPageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.eventPageIndex? EventDetails(
-                            onPreviousPagePressed: _returnToPreviousPage,
-                            onEventBooked: (){
-                              if(Globals.reservationOption == ReservationOptions.bySeats){
+                              onPreviousPagePressed: () {
                                 setState(() {
-                                  index = PagesIndices.selectSeatPageIndex;
+                                  index = PagesIndices.homePageIndex;
                                 });
-                              } else {
+                              },
+                              onAllCategoriesPressed: (){
                                 setState(() {
-                                  index = PagesIndices.buyTicketsPageIndex;
+                                  index = PagesIndices.categoriesPageIndex;
                                 });
-                              }
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.selectSeatPageIndex? SelectSeat(
-                            onPreviousPagePressed: _returnToPreviousPage,
-                            onSeatsBooked: (){
-                              setState(() {
-                                index = PagesIndices.paymentPageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.buyTicketsPageIndex? BuyTickets(
-                            onPreviousPagePressed: _returnToPreviousPage(),
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.myWishListPageIndex? MyWishListPage(
-                            onCategoryPressed: (id){
-                              Globals.eventId = id;
-                              setState(() {
-                                index = PagesIndices.eventPageIndex;
-                              });
-                            },
-                            onBack: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
-                            onPreviousPagePressed: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                            onCategoryPressed: (id, categoryName){
-                              Globals.categoryId = id;
-                              Globals.currentCategoryName = categoryName;
-                              setState(() {
-                                index = PagesIndices.categoryPageIndex;
-                              });
-                            },
-                            onAllEventsPressed: (){
-                              setState(() {
-                                index = PagesIndices.homePageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.searchPageIndex?SearchResults(
-                            onEventClicked: (id){
-                              Globals.eventId = id;
-                              setState(() {
-                                index = PagesIndices.eventPageIndex;
-                              });
-                            },
-                          ):
-                          Container(),
-                        )
-                      ],
-                    ),
-                  ],
+                              },
+                            ):
+                            index == PagesIndices.categoryPageIndex? CategoryPage(
+                              onBack: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onCategoryPressed: (id){
+                                Globals.eventId = id;
+                                setState(() {
+                                  index = PagesIndices.eventPageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.eventPageIndex? EventDetails(
+                              onPreviousPagePressed: _returnToPreviousPage,
+                              onEventBooked: (){
+                                if(Globals.reservationOption == ReservationOptions.bySeats){
+                                  setState(() {
+                                    index = PagesIndices.selectSeatPageIndex;
+                                  });
+                                } else {
+                                  setState(() {
+                                    index = PagesIndices.buyTicketsPageIndex;
+                                  });
+                                }
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.selectSeatPageIndex? SelectSeat(
+                              onPreviousPagePressed: _returnToPreviousPage,
+                              onSeatsBooked: (){
+                                setState(() {
+                                  index = PagesIndices.paymentPageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.buyTicketsPageIndex? BuyTickets(
+                              onPreviousPagePressed: _returnToPreviousPage(),
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.myWishListPageIndex? MyWishListPage(
+                              onCategoryPressed: (id){
+                                Globals.eventId = id;
+                                setState(() {
+                                  index = PagesIndices.eventPageIndex;
+                                });
+                              },
+                              onBack: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onAllCategoriesPressed: (){
+                                setState(() {
+                                  index = PagesIndices.categoriesPageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
+                              onPreviousPagePressed: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                              onCategoryPressed: (id, categoryName){
+                                Globals.categoryId = id;
+                                Globals.currentCategoryName = categoryName;
+                                setState(() {
+                                  index = PagesIndices.categoryPageIndex;
+                                });
+                              },
+                              onAllEventsPressed: (){
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              },
+                            ):
+                            index == PagesIndices.searchPageIndex?SearchResults(
+                              onEventClicked: (id){
+                                Globals.eventId = id;
+                                setState(() {
+                                  index = PagesIndices.eventPageIndex;
+                                });
+                              },
+                            ):
+                            Container(),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
 

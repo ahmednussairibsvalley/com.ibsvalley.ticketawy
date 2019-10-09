@@ -237,22 +237,22 @@ class _ContactFormState extends State<ContactForm> {
             ),
           ),
 
-          // Add photo
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
-              child: Image.asset('assets/add_photo.png',
-                height: Platform.isIOS?30
-                    :_width> 360?42:28,
-                alignment: Alignment.centerLeft,
-              ),
-            ),
-          ),
+//          // Add photo
+//          Container(
+//            alignment: Alignment.centerLeft,
+//            child: Padding(
+//              padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
+//              child: Image.asset('assets/add_photo.png',
+//                height: Platform.isIOS?30
+//                    :_width> 360?42:28,
+//                alignment: Alignment.centerLeft,
+//              ),
+//            ),
+//          ),
 
           // Send button
           Padding(
-            padding: const EdgeInsets.only(right: 30, left: 30),
+            padding: const EdgeInsets.only(right: 30, left: 30, top: 30),
             child: ListTile(
               onTap: () async{
                 var connectivityResult = await Connectivity().checkConnectivity();
