@@ -507,6 +507,22 @@ class _HomeState extends State<Home> {
                   shadowColor: Colors.black,
                   child: TextFormField(
                     controller: _searchController,
+                    onTap: (){
+                      setState(() {
+                        index = -1;
+                      });
+                    },
+                    onChanged: (value) async{
+                      var connectivityResult = await Connectivity().checkConnectivity();
+                      if (connectivityResult != ConnectivityResult.mobile &&
+                          connectivityResult != ConnectivityResult.wifi){
+                        return;
+                      }
+                      Globals.keyWord = value;
+                      setState(() {
+                        index = PagesIndices.searchPageIndex;
+                      });
+                    },
                     decoration: InputDecoration(
                         hintText: 'Search for an event ...',
                         contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
