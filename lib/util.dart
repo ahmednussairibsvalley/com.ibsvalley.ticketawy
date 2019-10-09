@@ -254,25 +254,6 @@ Future<List> getOrdersHistory() async {
   return result;
 }
 
-Future<Map> addOrder({@required int eventId, @required int classId, @required int numberOfTickets}) async {
-  String url = '$_baseUrl/api/Order/payment';
-
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'classId':'$classId',
-    'numberOfTickets':'$numberOfTickets',
-    'EventId':'$eventId',
-    'userId':Globals.userId
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
-}
-
 Future<Map> contactUs({@required String phoneEmail, @required String subject,
   @required String message}) async{
 
@@ -285,6 +266,24 @@ Future<Map> contactUs({@required String phoneEmail, @required String subject,
     'Phone_Email':phoneEmail,
     'Subject':subject,
     'Message':message,
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
+}
+
+Future<Map> addOrder({@required int eventId, @required List orders}) async {
+  String url = '$_baseUrl/api/Order/payment';
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
+    'EventId':'$eventId',
+    'userId':Globals.userId,
+    'Order_Tickets':orders,
   };
   request.add(utf8.encode(json.encode(jsonMap)));
   HttpClientResponse response = await request.close();

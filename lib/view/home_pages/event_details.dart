@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -415,7 +416,6 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(snapshot.data.length, (index) {
-                    orderTickets.clear();
                     return ClassItem(
                       orderIndex: index,
                       classId: snapshot.data[index]['id'],
@@ -437,8 +437,22 @@ class _ChooseTicketState extends State<ChooseTicket> {
             left: 70,
           ),
           child: ListTile(
-            onTap: () {
-              print('$orderTickets');
+            onTap: () async{
+              List list = List();
+              for(int i = 0; i < orderTickets.length ; i++){
+                int numberOfTickets = int.parse(orderTickets[i]['numberOfTickets'].toString());
+                if(numberOfTickets > 0){
+                  list.add(orderTickets[i]);
+                }
+              }
+              orderTickets.clear();
+              print('${Globals.userId}');
+              print('${Globals.eventId}');
+              print('${json.encode(list)}');
+
+              Map response = await util.addOrder(eventId: Globals.eventId, orders: list);
+
+              print('${response}');
 //              platform.invokeMethod('initFawry');
               Navigator.of(context).pop();
             },
@@ -484,9 +498,24 @@ class _ClassItemState extends State<ClassItem> {
   int _quantity = 1;
 
   @override
+  void initState() {
+    super.initState();
+    Map item = {"classId" : widget.classId, "numberOfTickets" : 0};
+    bool itemAddedBefore = false;
+
+    for(int i = 0; i < orderTickets.length; i++){
+      if(orderTickets[i]['classId'] == item['classId']){
+        itemAddedBefore = true;
+        break;
+      }
+    }
+    if(!itemAddedBefore)
+      orderTickets.add(item);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Map item = {"classId" : widget.classId, "numberOfTickets" : _quantity};
-    orderTickets.add(item);
+
     return Column(
       children: <Widget>[
         Padding(
@@ -537,6 +566,7 @@ class _ClassItemState extends State<ClassItem> {
                         });
                         orderTickets[widget.orderIndex]['classId'] = '${widget.classId}';
                         orderTickets[widget.orderIndex]['numberOfTickets'] = '$value';
+                        print('$orderTickets');
                       },
                     ),
                   ),
