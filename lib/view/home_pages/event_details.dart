@@ -119,11 +119,17 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   int index = aboutPageIndex;
 
   TabController _tabController;
+  bool _expired = false;
 
   @override
   void initState() {
     super.initState();
+    DateTime _expirationDate = DateTime.parse(widget.data['expirationDate']);
+    DateTime _currentDate = DateTime.now();
 
+
+    print('${_expirationDate.difference(_currentDate).inDays}');
+    _expired = _expirationDate.difference(_currentDate).inDays > 0?false:true;
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -237,7 +243,18 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 
                 // Buy Tickets Button
 //                BuyTicket(),
-                GestureDetector(
+                _expired?Container(
+                  height: 45,
+                  color: Color(0xff808B96),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
+                    child: Text('Expired',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
+                    ),
+                  ),
+                )
+                :GestureDetector(
                   onTap: () {
                     if(Globals.skipped){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
