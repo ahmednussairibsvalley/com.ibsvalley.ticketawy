@@ -49,7 +49,7 @@ class EventsPage extends StatelessWidget {
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1,
+            childAspectRatio: .9,
             crossAxisSpacing: 1,
             mainAxisSpacing: 1),
         shrinkWrap: true,
