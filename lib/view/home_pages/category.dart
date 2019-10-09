@@ -361,7 +361,7 @@ class EventsPage extends StatelessWidget {
                   child: Column(
 //                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.cover,)),
+                      Expanded(child: Image.network(list[index].imageUrl, fit: BoxFit.fill,)),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Text('${list[index].title}'),
