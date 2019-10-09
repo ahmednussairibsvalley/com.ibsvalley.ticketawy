@@ -58,21 +58,47 @@ class MyWishListPage extends StatelessWidget {
                         FutureBuilder(
                           future: util.getWishList(),
                           builder: (context, snapshot){
-                            if(snapshot.hasData){
-                              List list = snapshot.data;
-                              if(list.length > 0){
-                                Globals.controller.populateWishList(list);
-                                return EventsSlider(
-                                  onCategoryPressed: onCategoryPressed,
-                                  list: Globals.controller.wishList,
+                            if(snapshot.connectionState == ConnectionState.done){
+                              if(snapshot.hasData){
+                                List list = snapshot.data;
+                                print('${list.length}');
+                                if(list.length > 0){
+                                  Globals.controller.populateWishList(list);
+                                  return EventsSlider(
+                                    onCategoryPressed: onCategoryPressed,
+                                    list: Globals.controller.wishList,
+                                  );
+                                }
+                                return Center(
+                                  child: Image.asset('assets/sad_ticketawy.png'),
                                 );
+
                               }
                               return Center(
-                                child: Image.asset('assets/sad_ticketawy.png'),
+                                child: Column(
+                                  children: <Widget>[
+                                    Image.asset('assets/sad_ticketawy.png', width: 200,),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('There is no events yet',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Color(0xfffe6700),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               );
-
                             }
-                            return Container();
+                            return Container(
+                              child: Column(
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
+                            );
                           },
                         )
                       ],
