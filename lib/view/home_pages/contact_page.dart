@@ -189,8 +189,27 @@ class _ContactFormState extends State<ContactForm> {
       child: Column(
         children: <Widget>[
 
-
-
+          //Email or Phone
+          Padding(
+            padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
+            child: Material(
+              elevation: 10.0,
+              shadowColor: Colors.black,
+              color: Colors.transparent,
+              child: TextField(
+                controller: _subjectController,
+                decoration: InputDecoration(
+                  hintText: 'Email or phone number',
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.all(10.0),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                  ),
+                ),
+              ),
+            ),
+          ),
           // Subject text field
           Padding(
             padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
