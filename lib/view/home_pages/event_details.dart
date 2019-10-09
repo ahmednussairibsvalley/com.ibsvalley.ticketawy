@@ -240,7 +240,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 GestureDetector(
                   onTap: () {
                     if(Globals.skipped){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
                     } else {
                       if(Globals.reservationOption == ReservationOptions.byTickets)
                         _showChooseTicketDialog(widget.onEventBooked);

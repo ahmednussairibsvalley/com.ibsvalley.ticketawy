@@ -9,6 +9,7 @@ import '../util.dart' as util;
 
 import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
+import 'verification.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -543,7 +544,7 @@ class _LoginState extends State<Login> {
 
                                 Map response = await util.login(_userName, _password);
 
-                                if(response['result']){
+                                if(response['result'] == true){
                                   Globals.skipped = false;
                                   Globals.userPassword = _password;
                                   Globals.userId = response['id'];
@@ -563,6 +564,12 @@ class _LoginState extends State<Login> {
 
                                   Globals.controller.populateCategories(categoriesList);
                                   Navigator.of(context).pushReplacementNamed('/home');
+                                } else if(response['result'] == 2){
+                                  setState(() {
+                                    _loggingIn = false;
+                                  });
+
+                                  _showVerificationDialog(phoneNumber: _userName, password: _password);
                                 } else{
                                   setState(() {
                                     _loggingIn = false;
@@ -716,6 +723,103 @@ class _LoginState extends State<Login> {
         Container(),
       ],
     );
+  }
+
+  _showVerificationDialog({String phoneNumber, String id, String password}){
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: VerificationDialog(
+              phoneNumber: phoneNumber,
+              id: id != null?id:'', password: password,
+              onSuccess: (id , message , password ) {
+                _showRegistrationSuccessDialog(context, message: message, password: password);
+              },
+            ),
+          );
+        });
+  }
+
+  _showRegistrationSuccessDialog(BuildContext context, {String message, String id, String password}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: Container(
+              width: 300.0,
+              height: 200.0,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      message.isNotEmpty && message != null
+                          ? message
+                          : 'Success',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'GeometriqueSans',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DashedDivider(),
+                  ),
+                  Expanded(
+                    child: Text(
+                      'Registered With Success',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Verdana',
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: ()async {
+                      Globals.skipped = false;
+                      Globals.userPassword = password != null && password.isNotEmpty?password:'';
+//                    Globals.userId = response['id'];
+                      Globals.userId = id != null && id.isNotEmpty ?id:'';
+                      Map userData = await getUserDetails();
+
+                      Globals.controller.populateUser(userData);
+                      List categoriesList = await categoryList();
+
+                      Globals.controller.populateCategories(categoriesList);
+
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.setString('userId', id != null && id.isNotEmpty ?id:'');
+                      prefs.setString('fullName', userData['fullName']);
+                      prefs.setString('phoneNumber', userData['phoneNumber']);
+                      prefs.setString('password', password != null && password.isNotEmpty?password:'');
+
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed('/home');
+                    },
+                    title: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xfffe6700),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Close',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   _showUnderDevelopmentDialog(context) {

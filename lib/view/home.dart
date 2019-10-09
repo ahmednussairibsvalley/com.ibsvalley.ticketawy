@@ -514,6 +514,7 @@ class _HomeState extends State<Home> {
                           padding: const EdgeInsets.all(4.0),
                           child: GestureDetector(
                               onTap: () async{
+                                FocusScope.of(context).requestFocus(FocusNode());
                                 var connectivityResult = await Connectivity().checkConnectivity();
                                 if (connectivityResult != ConnectivityResult.mobile &&
                                     connectivityResult != ConnectivityResult.wifi){
@@ -521,6 +522,10 @@ class _HomeState extends State<Home> {
                                   return;
                                 }
                                 Globals.keyWord = _searchController.text;
+                                print('${Globals.keyWord}');
+                                setState(() {
+                                  index = -1;
+                                });
                                 setState(() {
                                   index = PagesIndices.searchPageIndex;
                                 });

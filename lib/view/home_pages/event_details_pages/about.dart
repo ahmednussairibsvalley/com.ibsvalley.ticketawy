@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import '../../../globals.dart';
@@ -71,10 +72,15 @@ class AboutPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
                         height: 100,
-                        child: SingleChildScrollView(
-                          child: Text(eventDescription,
-                            style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
-                          ),
+                        child: Scrollable(
+                          viewportBuilder: (BuildContext context, ViewportOffset position) {
+                            return SingleChildScrollView(
+                              child: Text(eventDescription,
+                                style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+                              ),
+                            );
+                          },
+                          
                         ),
                       ),
                     ),

@@ -6,7 +6,8 @@ import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+
+import 'verification.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -343,6 +344,9 @@ class _RegisterState extends State<Register> {
             content: VerificationDialog(
               phoneNumber: phoneNumber,
               id: id, password: password,
+              onSuccess: (id , message , password ) {
+                _showRegistrationSuccessDialog(context, message: message,id: id, password: password);
+              },
             ),
           );
         });
@@ -350,136 +354,183 @@ class _RegisterState extends State<Register> {
 
 }
 
-class VerificationDialog extends StatefulWidget {
-
-  final String phoneNumber;
-  final String id;
-  final String password;
-
-  VerificationDialog({@required this.phoneNumber, this.password, this.id});
-  @override
-  _VerificationDialogState createState() => _VerificationDialogState();
-}
-
-class _VerificationDialogState extends State<VerificationDialog> {
-
-  final _verificationController = MaskedTextController(mask: '000000');
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300.0,
-      height: 250.0,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'An SMS sent to you with verification code.'
-                  'Please enter the code and press OK',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'GeometriqueSans',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DashedDivider(),
-          ),
-          Expanded(
-            child: TextFormField(
-              controller: _verificationController,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                hintText: 'Enter the verification code',
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () async{
-                  Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
-                  if(response['result']){
-                    Navigator.of(context).pop();
-                    _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                  }
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xfffe6700),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text('Confirm',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () async{
-                  await util.sendVerificationMessage(widget.phoneNumber);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xfffe6700),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text('Resend',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-//                  ListTile(
-//                    onTap: () async{
+//class VerificationDialog extends StatefulWidget {
 //
-//                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
+//  final String phoneNumber;
+//  final String id;
+//  final String password;
 //
-//                      if(response['result']){
-//                        Navigator.of(context).pop();
-//                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
-//                      }
-//                    },
-//                    title: Container(
-//                      decoration: BoxDecoration(
-//                        color: Color(0xfffe6700),
-//                        borderRadius: BorderRadius.circular(20),
-//                      ),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(8.0),
-//                        child: Text(
-//                          'Confirm',
-//                          textAlign: TextAlign.center,
+//  VerificationDialog({@required this.phoneNumber, this.password, this.id});
+//  @override
+//  _VerificationDialogState createState() => _VerificationDialogState();
+//}
+//
+//class _VerificationDialogState extends State<VerificationDialog> {
+//
+//  final _verificationController = MaskedTextController(mask: '000000',);
+//
+//  String _message = '';
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return GestureDetector(
+//      onTap: (){
+//        FocusScope.of(context).requestFocus(FocusNode());
+//      },
+//      child: Container(
+//        width: 300.0,
+//        height: 300.0,
+//        child: Column(
+//          children: <Widget>[
+//            Padding(
+//              padding: const EdgeInsets.all(8.0),
+//              child: Text(
+//                'An SMS sent to you with verification code.'
+//                    'Please enter the code and press OK',
+//                textAlign: TextAlign.center,
+//                style: TextStyle(
+//                  fontSize: 20,
+//                  fontFamily: 'GeometriqueSans',
+//                ),
+//              ),
+//            ),
+//
+//            // Divider
+//            Padding(
+//              padding: const EdgeInsets.all(8.0),
+//              child: DashedDivider(),
+//            ),
+//
+//
+//            TextFormField(
+//              onTap: (){
+//                setState(() {
+//                  _message = '';
+//                });
+//              },
+//              onChanged: (value){
+//                setState(() {
+//                  _message = '';
+//                });
+//              },
+//              controller: _verificationController,
+//              keyboardType: TextInputType.number,
+//              textAlign: TextAlign.center,
+//              decoration: InputDecoration(
+//                border: OutlineInputBorder(
+//                  borderRadius: BorderRadius.circular(30),
+//                ),
+//                hintText: 'Enter the verification code',
+//              ),
+//            ),
+//
+//            Padding(
+//              padding: const EdgeInsets.all(10.0),
+//              child: _message.isNotEmpty?
+//              Text(_message, textAlign: TextAlign.center,)
+//              : Padding(
+//                padding: const EdgeInsets.all(15),
+//              ),
+//            ),
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              crossAxisAlignment: CrossAxisAlignment.center,
+//              children: <Widget>[
+//
+//                // Confirm
+//                GestureDetector(
+//                  onTap: () async{
+//                    Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
+//                    if(response['result']){
+//                      Navigator.of(context).pop();
+//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
+//                    } else {
+//                      setState(() {
+//                        _message = response['user_Message'];
+//                      });
+//                    }
+//                  },
+//                  child: Container(
+//                    decoration: BoxDecoration(
+//                      color: Color(0xfffe6700),
+//                      borderRadius: BorderRadius.circular(20),
+//                    ),
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(15.0),
+//                      child: Text('Confirm',
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                            color: Colors.white
 //                        ),
 //                      ),
 //                    ),
-//                  )
-        ],
-      ),
-    );
-  }
-}
+//                  ),
+//                ),
+//
+//                //Resend
+//                GestureDetector(
+//                  onTap: () async{
+//                    FocusScope.of(context).requestFocus(FocusNode());
+//                    setState(() {
+//                      _message = 'Resending ..';
+//                    });
+//                    var response = await util.sendVerificationMessage(widget.phoneNumber);
+//                    if(response['result']){
+//                      setState(() {
+//                        _message = 'An SMS sent to you';
+//                      });
+//                    } else {
+//                      _message = 'Error while resending a new SMS.';
+//                    }
+//                  },
+//                  child: Container(
+//                    decoration: BoxDecoration(
+//                      color: Color(0xfffe6700),
+//                      borderRadius: BorderRadius.circular(20),
+//                    ),
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(15.0),
+//                      child: Text('Resend',
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                            color: Colors.white
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ],
+//            ),
+////                  ListTile(
+////                    onTap: () async{
+////
+////                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
+////
+////                      if(response['result']){
+////                        Navigator.of(context).pop();
+////                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
+////                      }
+////                    },
+////                    title: Container(
+////                      decoration: BoxDecoration(
+////                        color: Color(0xfffe6700),
+////                        borderRadius: BorderRadius.circular(20),
+////                      ),
+////                      child: Padding(
+////                        padding: const EdgeInsets.all(8.0),
+////                        child: Text(
+////                          'Confirm',
+////                          textAlign: TextAlign.center,
+////                        ),
+////                      ),
+////                    ),
+////                  )
+//          ],
+//        ),
+//      ),
+//    );
+//  }
+//}
 
 
 _showRegistrationErrorDialog(BuildContext context, {String message}) {
