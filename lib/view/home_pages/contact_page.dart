@@ -4,6 +4,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 
+import '../../util.dart' as util;
+
 //import '../../globals.dart';
 
 
@@ -120,8 +122,11 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
 
+  final TextEditingController _mailPhoneController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
+
+  bool _sending = false;
 
 
   _showNoConnectivityDialog(){
@@ -183,78 +188,81 @@ class _ContactFormState extends State<ContactForm> {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    return Center(
+    return Stack(
+      children: <Widget>[
+        Center(
 
-      // The title with the text area.
-      child: Column(
-        children: <Widget>[
+          // The title with the text area.
+          child: Column(
+            children: <Widget>[
 
-          //Email or Phone
-          Padding(
-            padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
-            child: Material(
-              elevation: 10.0,
-              shadowColor: Colors.black,
-              color: Colors.transparent,
-              child: TextField(
-                controller: _subjectController,
-                decoration: InputDecoration(
-                  hintText: 'Email or phone number',
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+              //Email or Phone
+              Padding(
+                padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
+                child: Material(
+                  elevation: 10.0,
+                  shadowColor: Colors.black,
+                  color: Colors.transparent,
+                  child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _mailPhoneController,
+                    decoration: InputDecoration(
+                      hintText: 'Email or phone number',
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          // Subject text field
-          Padding(
-            padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
-            child: Material(
-              elevation: 10.0,
-              shadowColor: Colors.black,
-              color: Colors.transparent,
-              child: TextField(
-                controller: _subjectController,
-                decoration: InputDecoration(
-                  hintText: 'Subject',
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+              // Subject text field
+              Padding(
+                padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
+                child: Material(
+                  elevation: 10.0,
+                  shadowColor: Colors.black,
+                  color: Colors.transparent,
+                  child: TextField(
+                    controller: _subjectController,
+                    decoration: InputDecoration(
+                      hintText: 'Subject',
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.all(10.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
 
-          // Message text area
-          Padding(
-            padding: const EdgeInsets.only(right: 40, left: 40),
-            child: Material(
-              elevation: 10.0,
-              shadowColor: Colors.black,
-              color: Colors.transparent,
-              child: TextField(
-                controller: _messageController,
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: 'Your message here ...',
+              // Message text area
+              Padding(
+                padding: const EdgeInsets.only(right: 40, left: 40),
+                child: Material(
+                  elevation: 10.0,
+                  shadowColor: Colors.black,
+                  color: Colors.transparent,
+                  child: TextField(
+                    controller: _messageController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      hintText: 'Your message here ...',
 
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),borderSide: BorderSide.none
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),borderSide: BorderSide.none
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
 
 //          // Add photo
 //          Container(
@@ -269,45 +277,125 @@ class _ContactFormState extends State<ContactForm> {
 //            ),
 //          ),
 
-          // Send button
-          Padding(
-            padding: const EdgeInsets.only(right: 30, left: 30, top: 30),
-            child: ListTile(
-              onTap: () async{
-                var connectivityResult = await Connectivity().checkConnectivity();
-                if (connectivityResult != ConnectivityResult.mobile &&
-                    connectivityResult != ConnectivityResult.wifi){
-                  _showNoConnectivityDialog();
-                  return;
-                }
-              },
-              title: Material(
-                shadowColor: Colors.black,
-                elevation: 10,
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text('Send!',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'MyriadPro'
+              // Send button
+              Padding(
+                padding: const EdgeInsets.only(right: 30, left: 30, top: 30),
+                child: ListTile(
+                  onTap: () async{
+                    var connectivityResult = await Connectivity().checkConnectivity();
+                    if (connectivityResult != ConnectivityResult.mobile &&
+                        connectivityResult != ConnectivityResult.wifi){
+                      _showNoConnectivityDialog();
+                      return;
+                    }
+
+                    setState(() {
+                      _sending = true;
+                    });
+
+                    Map response = await util.contactUs(phoneEmail: _mailPhoneController.text,
+                        subject: _subjectController.text,
+                        message: _messageController.text);
+
+
+                    setState(() {
+                      _sending = false;
+                    });
+
+                    _mailPhoneController.value = _mailPhoneController.value.copyWith(text: '');
+                    _subjectController.value = _subjectController.value.copyWith(text: '');
+                    _messageController.value = _messageController.value.copyWith(text: '');
+                    _showSuccessDialog(context, response);
+
+                  },
+                  title: Material(
+                    shadowColor: Colors.black,
+                    elevation: 10,
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      child: Text('Send!',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'MyriadPro'
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(20)
                   ),
                 ),
-              ),
-            ),
-          )
+              )
 
-        ],
-      ),
+            ],
+          ),
+        ),
+        _sending? Positioned(
+          top: 0.0, bottom: 0.0, left: 0.0, right: 0.0,
+          child: Container(
+            alignment: Alignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          ),
+        ):
+        Container(),
+      ],
     );
   }
+}
+
+_showSuccessDialog(BuildContext context, Map data) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: Container(
+            width: 300.0,
+            height: 200.0,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    data['user_Message'],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Verdana',
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: ()async {
+                    Navigator.of(context).pop();
+                  },
+                  title: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xfffe6700),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Close',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      });
 }
 

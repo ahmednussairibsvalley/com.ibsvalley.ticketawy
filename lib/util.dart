@@ -272,3 +272,23 @@ Future<Map> addOrder({@required int eventId, @required int classId, @required in
   httpClient.close();
   return json.decode(reply);
 }
+
+Future<Map> contactUs({@required String phoneEmail, @required String subject,
+  @required String message}) async{
+
+  String url = '$_baseUrl/api/AspNetUsers/Contact_Us';
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
+    'Phone_Email':phoneEmail,
+    'Subject':subject,
+    'Message':message,
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
+}
