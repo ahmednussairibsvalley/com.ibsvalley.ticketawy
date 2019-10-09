@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 
 
-public class Item implements PayableItem, Serializable {
+public  class Item implements PayableItem, Serializable {
     private String description ;
     private String price;
     private String sku ;
