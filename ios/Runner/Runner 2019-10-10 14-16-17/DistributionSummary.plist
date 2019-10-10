@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Runner.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>61DFF8DAF5A9BED369E00DB374709881C7EA8079</string>
+				<key>dateExpires</key>
+				<string>9/23/20</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>embeddedBinaries</key>
+			<array>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>61DFF8DAF5A9BED369E00DB374709881C7EA8079</string>
+						<key>dateExpires</key>
+						<string>9/23/20</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>App.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>7LR93Q7PT6</string>
+						<key>name</key>
+						<string>Ibs Valley For Digital Solutions</string>
+					</dict>
+				</dict>
+				<dict>
+					<key>architectures</key>
+					<array>
+						<string>arm64</string>
+					</array>
+					<key>certificate</key>
+					<dict>
+						<key>SHA1</key>
+						<string>61DFF8DAF5A9BED369E00DB374709881C7EA8079</string>
+						<key>dateExpires</key>
+						<string>9/23/20</string>
+						<key>type</key>
+						<string>Apple Development</string>
+					</dict>
+					<key>name</key>
+					<string>Flutter.framework</string>
+					<key>team</key>
+					<dict>
+						<key>id</key>
+						<string>7LR93Q7PT6</string>
+						<key>name</key>
+						<string>Ibs Valley For Digital Solutions</string>
+					</dict>
+				</dict>
+			</array>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>7LR93Q7PT6.com.ibsvalley.ticketawy</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>7LR93Q7PT6</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>7LR93Q7PT6.com.ibsvalley.ticketawy</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>Runner.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>66804134-291e-402f-b43a-78c8e86465de</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>7LR93Q7PT6</string>
+				<key>name</key>
+				<string>Ibs Valley For Digital Solutions</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
