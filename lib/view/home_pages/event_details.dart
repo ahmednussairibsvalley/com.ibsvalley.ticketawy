@@ -339,7 +339,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
               children: <Widget>[
                 AboutPage(
                   imageUrl:
-                      'http://40.85.116.121:8606/EventsLogo/${widget.data['logo']}',
+                      '${Globals.imageBaseUrl}/${widget.data['logo']}',
                   eventName: widget.data['name'],
                   eventDescription: widget.data['content'],
                   endDate: widget.data['endDate'],

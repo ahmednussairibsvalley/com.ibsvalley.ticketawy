@@ -11,7 +11,7 @@ class Event{
   Event.fromJson(Map json){
     _id = json['id'];
     _title = json['name'];
-    _imageUrl = 'http://40.85.116.121:8606/EventsLogo/${json['logo']}';
+    _imageUrl = 'https://beta.ticketawy.com/Media/Events_Logo/${json['logo']}';
     _price = json['price'];
     _reservationOption = 0;
   }

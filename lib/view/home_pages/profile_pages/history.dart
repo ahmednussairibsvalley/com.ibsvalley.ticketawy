@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
 
+import '../../../globals.dart';
 import '../../../util.dart' as util;
 
 class ProfileHistory extends StatelessWidget {
@@ -118,7 +119,7 @@ class HistoryPage extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       children: List.generate(list.length, (index) {
         return HistoryItem(
-          imageUrl: 'http://40.85.116.121:8606/EventsLogo/${list[index]['event_Logo']}',
+          imageUrl: '${Globals.imageBaseUrl}/${list[index]['event_Logo']}',
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
         );
