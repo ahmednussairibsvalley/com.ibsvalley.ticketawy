@@ -4,6 +4,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 
+import '../../util.dart' as util;
+
 //import '../../globals.dart';
 
 class IdeasPage extends StatelessWidget {
@@ -15,9 +17,15 @@ class IdeasPage extends StatelessWidget {
   IdeasPage({@required this.onPreviousPagePressed,
     @required this.onAllCategoriesPressed, @required this.onWillPop});
 
+//  test() async {
+//    Map response = await util.addIdeas(message: 'fdsssfds');
+//    print('$response');
+//  }
+
   @override
   Widget build(BuildContext context) {
 
+//    test();
     final _width = MediaQuery.of(context).size.width;
 //    Globals.pagesStack.push(PagesIndices.ideasPageIndex);
 

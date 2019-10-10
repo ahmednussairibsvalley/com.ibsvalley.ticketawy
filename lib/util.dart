@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -286,8 +288,57 @@ Future<Map> addOrder({@required int eventId, @required List orders}) async {
     'Order_Tickets':orders,
   };
   request.add(utf8.encode(json.encode(jsonMap)));
+
   HttpClientResponse response = await request.close();
   String reply = await response.transform(utf8.decoder).join();
   httpClient.close();
   return json.decode(reply);
 }
+
+Future<Map> recoverPassword(String phoneNumber) async{
+  String url = '$_baseUrl/api/AspNetUsers/ForgotPassword';
+
+  HttpClient httpClient = new HttpClient();
+  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+  request.headers.set('content-type', 'application/json');
+  Map jsonMap = {
+    'Phone':'$phoneNumber',
+  };
+  request.add(utf8.encode(json.encode(jsonMap)));
+
+  HttpClientResponse response = await request.close();
+  String reply = await response.transform(utf8.decoder).join();
+  httpClient.close();
+  return json.decode(reply);
+}
+
+//Future<Map> addIdeas({File imageFile, @required String message}) async {
+//  // open a bytestream
+//  var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+//  // get file length
+//  var length = await imageFile.length();
+//
+//  // string to uri
+//  var uri = Uri.parse("http://ip:8082/composer/predict");
+//
+//  // create multipart request
+//  var request = new http.MultipartRequest("POST", uri);
+//
+//  // multipart that takes file
+//  var multipartFile = new http.MultipartFile('file', stream, length,
+//      filename: basename(imageFile.path));
+//
+//  // add file to multipart
+//  request.files.add(multipartFile);
+//
+//  request.fields.
+//
+//  // send
+//  var response = await request.send();
+//  print(response.statusCode);
+//
+//  // listen for response
+//  response.stream.transform(utf8.decoder).listen((value) {
+//    print(value);
+//  });
+//}

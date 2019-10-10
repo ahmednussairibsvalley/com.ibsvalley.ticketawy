@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -465,15 +464,15 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 }
               }
               orderTickets.clear();
-              print('${Globals.userId}');
-              print('${Globals.eventId}');
-              print('${json.encode(list)}');
+//              print('${Globals.userId}');
+//              print('${Globals.eventId}');
+//              print('${json.encode(list)}');
 
               Map response =
                   await util.addOrder(eventId: Globals.eventId, orders: list);
 
 
-              print('$response');
+//              print('$response');
               var responseFromNative = await platform.invokeMethod('initFawry', response);
 
               print('Response from native: ${responseFromNative.toString()}');
@@ -579,7 +578,7 @@ class _ClassItemState extends State<ClassItem> {
                         bottom: 3.0,
                       ),
                       child: Text(
-                        '${widget.totalPrice * _quantity} EGP',
+                        '${_quantity > 0 ?widget.totalPrice * _quantity:widget.totalPrice} EGP',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Verdana',

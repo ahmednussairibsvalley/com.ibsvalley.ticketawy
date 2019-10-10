@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
+import 'package:ticketawy/view/password_recovery.dart';
 import 'package:ticketawy/view/register.dart';
 import '../globals.dart';
 import '../util.dart' as util;
@@ -333,38 +334,79 @@ class _LoginState extends State<Login> {
                           ),
                         ),
 
+                        //Forgot Password
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => PasswordRecovery()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Forgot Password?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                          child: DashedDivider(
+                                            width: 5,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                         // Sign up link text
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Register()));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Don\'t have an account?',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Register()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Don\'t have an account?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
-                                        child: DashedDivider(
-                                          width: 5,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    ],
-                                  )
-                              ),
-                            ],
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                          child: DashedDivider(
+                                            width: 5,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -600,38 +642,79 @@ class _LoginState extends State<Login> {
                           ),
                         ),
 
+                        //Forgot Password
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => PasswordRecovery()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Forgot Password?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                          child: DashedDivider(
+                                            width: 5,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                         // Sign up link text
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Register()));
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Don\'t have an account?',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Register()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Don\'t have an account?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
-                                        child: DashedDivider(
-                                          width: 5,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    ],
-                                  )
-                              ),
-                            ],
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 105, left: 105, top: 5),
+                                          child: DashedDivider(
+                                            width: 5,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],
