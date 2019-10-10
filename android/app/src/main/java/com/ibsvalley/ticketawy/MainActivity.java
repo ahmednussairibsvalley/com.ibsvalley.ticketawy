@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 import io.flutter.app.FlutterActivity;
+import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import retrofit2.Call;
@@ -33,30 +34,9 @@ public class MainActivity extends FlutterActivity {
     private static final int requestId = 666;
 
     private static final String CHANNEL = "fawry";
-
+    MethodChannel.Result result;
     private double total_price;
     private String merchantRefNumber;
-    static PayableItem e = new PayableItem() {
-        @Override
-        public String getFawryItemDescription() {
-            return "5";
-        }
-
-        @Override
-        public String getFawryItemSKU() {
-            return "54";
-        }
-
-        @Override
-        public String getFawryItemPrice() {
-            return "1";
-        }
-
-        @Override
-        public String getFawryItemQuantity() {
-            return "1";
-        }
-    };
     private String trxId1;
 
     @Override
@@ -74,17 +54,17 @@ public class MainActivity extends FlutterActivity {
                         List<PayableItem> items = new ArrayList<>();
 
                         Item item = new Item();
-                        item.setPrice(String.valueOf(total_price - 1));
+                        item.setPrice(String.valueOf(total_price));
                         item.setDescription("test2");
                         item.setQty("1");
                         item.setSku("1");
                         items.add(item);
-                        items.add(e);
 
 
                         FawrySdk.init(FawrySdk.Styles.STYLE1);
 
                         try {
+
                             Log.i("dfd", "onCreate2: " + "try");
 
                             FawrySdk.initialize(MainActivity.this,
@@ -96,6 +76,8 @@ public class MainActivity extends FlutterActivity {
                                             Log.i("gggg", "onSuccess: " + trxId + customParams);
                                             trxId1 = trxId;
                                             completedMethod();
+                                            result.success(5);
+
                                         }
 
                                         @Override
@@ -120,11 +102,12 @@ public class MainActivity extends FlutterActivity {
 
 
     }
-
+    //http //192.168.l.l
+    // 19216811.wiki
     private void completedMethod() {
         Log.i("sdsadsa", "completedMethod: ");
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("40.85.116.121:8607/api/")
+                .baseUrl("http://40.85.116.121:8607/api/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit build = builder.build();
         Api appConnections = build.create(Api.class);
@@ -135,7 +118,7 @@ public class MainActivity extends FlutterActivity {
             public void onResponse(Call<ResponeCompleted> call, Response<ResponeCompleted> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(MainActivity.this, response.body().getUserMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("sddsf", "onResponse: "+response.body().getUserMessage());
+                    Log.i("sddsf", "onResponse: " + response.body().getUserMessage());
                 }
             }
 

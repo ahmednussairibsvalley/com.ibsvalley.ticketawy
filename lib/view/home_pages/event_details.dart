@@ -474,7 +474,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
 
               print('$response');
-              platform.invokeMethod('initFawry', response);
+              var responseFromNative = await platform.invokeMethod('initFawry', response);
+
+              print('Response from native: ${responseFromNative.toString()}');
               Navigator.of(context).pop();
             },
             title: Container(
