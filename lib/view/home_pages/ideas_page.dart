@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:path/path.dart';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
+
+import 'package:flutter/services.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../util.dart' as util;
 
@@ -17,15 +21,14 @@ class IdeasPage extends StatelessWidget {
   IdeasPage({@required this.onPreviousPagePressed,
     @required this.onAllCategoriesPressed, @required this.onWillPop});
 
-//  test() async {
-//    Map response = await util.addIdeas(message: 'fdsssfds');
-//    print('$response');
-//  }
+  test() async {
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
-//    test();
     final _width = MediaQuery.of(context).size.width;
 //    Globals.pagesStack.push(PagesIndices.ideasPageIndex);
 
@@ -130,6 +133,12 @@ class IdeasForm extends StatefulWidget {
 class _IdeasFormState extends State<IdeasForm> {
   final TextEditingController _textEditingController = TextEditingController();
 
+  File image;
+
+  String _fileName = '';
+
+  bool _sending = false;
+
   _showNoConnectivityDialog(BuildContext context){
     showDialog(
         context: context,
@@ -186,94 +195,210 @@ class _IdeasFormState extends State<IdeasForm> {
     );
   }
 
+  _showResultDialog(BuildContext context, String message){
+    showDialog(
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text('$message',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text('Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final _width = MediaQuery.of(context).size.width;
-    return Center(
+    return Stack(
+      children: <Widget>[
+        Center(
 
-      // The title with the text area.
-      child: Column(
-        children: <Widget>[
+          // The title with the text area.
+          child: Column(
+            children: <Widget>[
 
 
 
-          // Ideas text area
-          Padding(
-            padding: const EdgeInsets.only(right: 50, left: 50),
-            child: Material(
-              elevation: 10.0, borderRadius: BorderRadius.circular(20),
-              shadowColor: Colors.black,
-              color: Colors.transparent,
-              child: TextField(
-                controller: _textEditingController,
-                keyboardType: TextInputType.multiline,
-                maxLines: 7,
-                decoration: InputDecoration(
-                  hintText: 'Describe your idea here ...',
+              // Ideas text area
+              Padding(
+                padding: const EdgeInsets.only(right: 50, left: 50),
+                child: Material(
+                  elevation: 10.0, borderRadius: BorderRadius.circular(20),
+                  shadowColor: Colors.black,
+                  color: Colors.transparent,
+                  child: TextField(
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 7,
+                    decoration: InputDecoration(
+                      hintText: 'Describe your idea here ...',
 
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),borderSide: BorderSide.none
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // Add photo
-          Container(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
-              child: Image.asset('assets/add_photo.png',
-                height: Platform.isIOS?30
-                    :_width> 360?42:28,
-                alignment: Alignment.centerLeft,
-              ),
-            ),
-          ),
-
-          // Send button
-          Padding(
-            padding: const EdgeInsets.only(right: 30, left: 30),
-            child: ListTile(
-              onTap: () async{
-                var connectivityResult = await Connectivity().checkConnectivity();
-                if (connectivityResult != ConnectivityResult.mobile &&
-                    connectivityResult != ConnectivityResult.wifi){
-                  _showNoConnectivityDialog(context);
-                  return;
-                }
-              },
-              title: Material(
-                shadowColor: Colors.black,
-                elevation: 10,
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text('Send!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: 'MyriadPro'
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),borderSide: BorderSide.none
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(20)
                   ),
                 ),
               ),
-            ),
-          )
 
-        ],
-      ),
+              // Add photo
+              _fileName.isEmpty?GestureDetector(
+                onTap: () async{
+                  File _file = await FilePicker.getFile(
+                      type: FileType.IMAGE, fileExtension: '');
+
+                  image = _file;
+                  print('File Path: ${_file}');
+                  print('File name: ${basename(_file.path)}');
+                  setState(() {
+                    _fileName = basename(_file.path);
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
+                    child: Image.asset('assets/add_photo.png',
+                      height: Platform.isIOS?30
+                          :_width> 360?42:28,
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ),
+                ),
+              ):
+              Padding(
+                padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(child: Text(_fileName)),
+                    GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          _fileName = '';
+                          image = null;
+                        });
+                      },
+                      child: Icon(Icons.clear, color: Colors.red,),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Send button
+              Padding(
+                padding: const EdgeInsets.only(right: 30, left: 30),
+                child: ListTile(
+                  onTap: () async{
+                    var connectivityResult = await Connectivity().checkConnectivity();
+                    if (connectivityResult != ConnectivityResult.mobile &&
+                        connectivityResult != ConnectivityResult.wifi){
+                      _showNoConnectivityDialog(context);
+                      return;
+                    }
+                    setState(() {
+                      _sending = true;
+                    });
+                    var response = await util.addIdeas(message: _textEditingController.text, imageFile: image);
+
+                    _showResultDialog(context, response['user_Message']);
+                    //print('$response');
+                    setState(() {
+                      _sending = false;
+                    });
+                  },
+                  title: Material(
+                    shadowColor: Colors.black,
+                    elevation: 10,
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      child: Text('Send!',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'MyriadPro'
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                    ),
+                  ),
+                ),
+              )
+
+            ],
+          ),
+        ),
+        _sending?Positioned(
+          left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
+          child: Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator()
+              ],
+            ),
+          ),
+        ):
+        Container(),
+      ],
     );
   }
 }
+
 
