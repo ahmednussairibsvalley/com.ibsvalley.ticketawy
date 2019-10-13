@@ -105,7 +105,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                               if(!regex.hasMatch(value)){
                                 return 'Invalid phone number';
                               }
-                              _phoneNumber = value;
+//                              _phoneNumber = value;
                               return null;
                             },
                           ),
