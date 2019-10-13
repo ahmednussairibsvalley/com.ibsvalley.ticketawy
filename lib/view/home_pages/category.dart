@@ -288,6 +288,7 @@ class _EventsSliderState extends State<EventsSlider> {
       items: child,
       viewportFraction: .95,
       aspectRatio: 1.1,
+      enableInfiniteScroll: false,
       onPageChanged: (index) {
         setState(() {
           _current = index;

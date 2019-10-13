@@ -140,6 +140,7 @@ class _EventsSliderState extends State<EventsSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,
+      enableInfiniteScroll: false,
       onPageChanged: (index) {
         setState(() {
           _current = index;
@@ -247,6 +248,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,
+      enableInfiniteScroll: false,
       onPageChanged: (index) {
         setState(() {
           _current = index;
@@ -412,6 +414,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,
+      enableInfiniteScroll: false,
       onPageChanged: (index) {
         setState(() {
           _current = index;

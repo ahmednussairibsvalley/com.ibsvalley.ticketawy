@@ -192,6 +192,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,
+      enableInfiniteScroll: false,
       aspectRatio: 1.0,
       onPageChanged: (index) {
         setState(() {
