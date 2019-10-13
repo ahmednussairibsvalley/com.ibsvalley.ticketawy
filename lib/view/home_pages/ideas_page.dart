@@ -338,6 +338,7 @@ class _IdeasFormState extends State<IdeasForm> {
                 padding: const EdgeInsets.only(right: 30, left: 30),
                 child: ListTile(
                   onTap: () async{
+                    FocusScope.of(context).requestFocus(FocusNode());
                     var connectivityResult = await Connectivity().checkConnectivity();
                     if (connectivityResult != ConnectivityResult.mobile &&
                         connectivityResult != ConnectivityResult.wifi){
@@ -353,7 +354,9 @@ class _IdeasFormState extends State<IdeasForm> {
                     print('$response');
                     setState(() {
                       _sending = false;
+                      _fileName = '';
                     });
+                    _textEditingController.value = _textEditingController.value.copyWith(text: '');
                   },
                   title: Material(
                     shadowColor: Colors.black,
@@ -385,6 +388,7 @@ class _IdeasFormState extends State<IdeasForm> {
         _sending?Positioned(
           left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
           child: Container(
+            color: Colors.black.withOpacity(0.0),
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

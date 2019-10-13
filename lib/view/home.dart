@@ -279,7 +279,7 @@ class _HomeState extends State<Home> {
               // The body
               Positioned(
                 bottom: 0.0, right: 0.0, left: 0.0,
-                child: GestureDetector(
+                child: InkWell(
                   onTap: (){
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
