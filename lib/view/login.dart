@@ -758,13 +758,14 @@ class _LoginState extends State<Login> {
                 setState(() {
                   _loggingIn = true;
                 });
-                Globals.skipped = true;
+
 //              Map userData = await getUserDetails();
 //
 //              Globals.controller.populateUser(userData);
                 List categoriesList = await categoryList();
 
                 Globals.controller.populateCategories(categoriesList);
+                Globals.skipped = true;
                 Navigator.of(context).pushReplacementNamed('/home');
               },
               child: Row(

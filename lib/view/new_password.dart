@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:ticketawy/view/new_password.dart';
 
-import '../util.dart' as util;
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
+import '../util.dart' as util;
 
-class PasswordRecovery extends StatefulWidget {
+class NewPassword extends StatefulWidget {
+
+  final String phone;
+  final String code;
+
+  NewPassword({@required this.phone, @required this.code});
   @override
-  _PasswordRecoveryState createState() => _PasswordRecoveryState();
+  _NewPasswordState createState() => _NewPasswordState();
 }
 
-class _PasswordRecoveryState extends State<PasswordRecovery> {
+class _NewPasswordState extends State<NewPassword> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _phoneController = TextEditingController();
-
-//  String _phoneNumber = '';
-
-  bool _recovering = false;
   @override
   Widget build(BuildContext context) {
 
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
+    bool _passwordUpdating = false;
+
+    String _newPassword = '';
+
     return Stack(
       children: <Widget>[
         Scaffold(
           body: Stack(
             children: <Widget>[
-              // The background
               Container(
                 height: _height,
                 width: _width,
@@ -62,56 +64,79 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                           color: Colors.white30,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: 20, right: 20),
-                        child: Text('Recover your password',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 45.0,
-                            right: 45.0,
-                            bottom: 8.0,
-                            top: 20.0,
-                          ),
-                          child: TextFormField(
-                            controller: _phoneController,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              prefixIcon: Icon(Icons.person_outline),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide(
-                                    style: BorderStyle.none,
-                                  )),
-                              labelStyle: TextStyle(
-                                fontSize: 15,
-                              ),
-                              hintText: 'Mobile Number',
 
+                      // New Password
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 45.0,
+                          right: 45.0,
+                          bottom: 8.0,
+                          top: 20.0,
+                        ),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            prefixIcon: Icon(Icons.lock_outline),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  style: BorderStyle.none,
+                                )),
+                            labelStyle: TextStyle(
+                              fontSize: 15,
                             ),
-                            validator: (value) {
-                              Pattern pattern =
-                                  r'(^(?:[+0]9)?[0-9]{11}$)';
-                              RegExp regex = new RegExp(pattern);
-                              if (value.isEmpty)
-                                return 'Please enter your mobile number.';
-                              if(!regex.hasMatch(value)){
-                                return 'Invalid phone number';
-                              }
-                              _phoneNumber = value;
-                              return null;
-                            },
+                            hintText: 'New Password',
+
                           ),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Please enter your new password.';
+                            _newPassword = value;
+                            return null;
+                          },
                         ),
                       ),
-                      // recover password button
+
+                      // Confirm new password
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 45.0,
+                          right: 45.0,
+                          bottom: 8.0,
+                          top: 20.0,
+                        ),
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            prefixIcon: Icon(Icons.lock_outline),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  style: BorderStyle.none,
+                                )),
+                            labelStyle: TextStyle(
+                              fontSize: 15,
+                            ),
+                            hintText: 'Confirm New Password',
+
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return 'Please confirm your password.';
+                            else if(_newPassword.isEmpty)
+                              return 'Please enter your password first and then confirm!';
+                            else if(value != _newPassword)
+                              return 'Password does not match!';
+                            return null;
+                          },
+                        ),
+                      ),
+
+                      // update password button
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 30.0,
@@ -123,28 +148,22 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             if(_formKey.currentState.validate()){
                               setState(() {
-                                _recovering = true;
+                                _passwordUpdating = true;
                               });
 
-                              Map response = await util.recoverPassword(_phoneController.text);
-
-                              print('$response');
+                              Map response = await util.updatePassword(
+                                  phoneNumber: widget.phone,
+                                  code: widget.code,
+                                  newPassword: _newPassword
+                              );
 
                               setState(() {
-                                _recovering = false;
+                                _passwordUpdating = false;
                               });
 
-                              if(response['result'] == true || response['result'] == 'true'){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
-                                  code: response['id'],
-                                  phone: _phoneController.text,
-                                )));
-
-                              } else {
-                                _showResultDialog(context, response['user_Message']);
-                              }
-
-
+                              _showResultDialog(context, response['user_Message'], (){
+                                Navigator.of(context).pop();
+                              }, response['result']);
                             }
 
                           },
@@ -156,7 +175,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Text(
-                                'Reset password',
+                                'Update password',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18,
@@ -191,7 +210,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
             ],
           ),
         ),
-        _recovering? Positioned(
+        _passwordUpdating? Positioned(
           top: 0.0, bottom: 0.0, left: 0.0, right: 0.0,
           child: Container(
             color: Colors.black.withOpacity(0.5),
@@ -210,7 +229,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
     );
   }
 
-  _showResultDialog(BuildContext context, String message){
+  _showResultDialog(BuildContext context, String message, Function onPasswordUpdate, bool passwordUpdated){
     showDialog(
         context: context,
         builder: (context){
@@ -240,6 +259,8 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                   ListTile(
                     onTap: (){
                       Navigator.of(context).pop();
+                      if(passwordUpdated)
+                        onPasswordUpdate();
                     },
                     title: Padding(
                       padding: const EdgeInsets.all(10),
