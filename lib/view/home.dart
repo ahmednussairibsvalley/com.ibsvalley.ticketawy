@@ -35,6 +35,8 @@ class _HomeState extends State<Home> {
 
   int index = PagesIndices.homePageIndex;
 
+  int _previousPageIndex = -1;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -486,6 +488,8 @@ class _HomeState extends State<Home> {
                             ):
                             index == PagesIndices.searchPageIndex?SearchResults(
                               onEventClicked: (id){
+                                FocusScope.of(context).requestFocus(FocusNode());
+                                _searchController.value = _searchController.value.copyWith(text: '');
                                 Globals.eventId = id;
                                 setState(() {
                                   index = PagesIndices.eventPageIndex;
@@ -512,11 +516,12 @@ class _HomeState extends State<Home> {
                   shadowColor: Colors.black,
                   child: TextFormField(
                     controller: _searchController,
-//                    onTap: (){
+                    onTap: (){
+                      _previousPageIndex = index;
 //                      setState(() {
 //                        index = -1;
 //                      });
-//                    },
+                    },
                     onChanged: (value) async{
                       var connectivityResult = await Connectivity().checkConnectivity();
                       if (connectivityResult != ConnectivityResult.mobile &&
@@ -524,9 +529,17 @@ class _HomeState extends State<Home> {
                         return;
                       }
                       Globals.keyWord = value;
-                      setState(() {
-                        index = PagesIndices.searchPageIndex;
-                      });
+
+                      if(Globals.keyWord.isEmpty){
+                        setState(() {
+                          index = _previousPageIndex;
+                        });
+                      } else {
+                        setState(() {
+                          index = PagesIndices.searchPageIndex;
+                        });
+                      }
+
                     },
                     decoration: InputDecoration(
                         hintText: 'Search for an event ...',
