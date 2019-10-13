@@ -4,6 +4,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 
+import '../../globals.dart';
 import '../../util.dart' as util;
 
 //import '../../globals.dart';
@@ -15,17 +16,18 @@ class ContactPage extends StatelessWidget {
   final Function onAllCategoriesPressed;
   final Function onWillPop;
 
-  ContactPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
+  ContactPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed,
+  @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-//    Globals.pagesStack.push(PagesIndices.contactPageIndex);
+    Globals.pagesStack.push(PagesIndices.contactPageIndex);
 
     return WillPopScope(
       onWillPop: () async{
         onWillPop();
-        return null;
+        return false;
       },
       child: Scaffold(
 //      resizeToAvoidBottomInset: false,

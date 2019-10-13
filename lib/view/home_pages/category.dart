@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:intl/intl.dart';
 import '../custom_widgets/CustomShowDialog.dart';
 
@@ -22,151 +21,158 @@ class CategoryPage extends StatelessWidget {
   final Function onBack;
   final Function(int) onCategoryPressed;
   final Function onAllCategoriesPressed;
+  final Function onWillPop;
   
   CategoryPage({@required this.onBack, @required this.onCategoryPressed,
-    @required this.onAllCategoriesPressed});
+    @required this.onAllCategoriesPressed, @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.categoryPageIndex);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return WillPopScope(
+      onWillPop: () async{
+        onWillPop();
+        return false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
 
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(Globals.currentCategoryName,
-                    style: TextStyle(
-                      color: Color(0xffff6600),
-                      fontSize: 17,
-                      fontFamily: 'Verdana'
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      _showFilterDialog(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffff6600),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(Globals.currentCategoryName,
+                      style: TextStyle(
+                          color: Color(0xffff6600),
+                          fontSize: 17,
+                          fontFamily: 'Verdana'
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
-                        child: Text('Filter By',
-                          style: TextStyle(
-                            color: Colors.white,
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        _showFilterDialog(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xffff6600),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
+                          child: Text('Filter By',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Flexible(
-              child: ListView(
-                children: <Widget>[
-                  FutureBuilder(
-                    future: util.getEventsList(Globals.categoryId),
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        Globals.controller.populateEvents(snapshot.data);
-                        return Globals.controller.events.length > 0?EventsSlider(
-                          eventsList: Globals.controller.events,
-                          onCategoryPressed: onCategoryPressed,
-                        ):
-                        Center(
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset('assets/sad_ticketawy.png', width: 200,),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('There is no events yet',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xfffe6700),
+              Flexible(
+                child: ListView(
+                  children: <Widget>[
+                    FutureBuilder(
+                      future: util.getEventsList(Globals.categoryId),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          Globals.controller.populateEvents(snapshot.data);
+                          return Globals.controller.events.length > 0?EventsSlider(
+                            eventsList: Globals.controller.events,
+                            onCategoryPressed: onCategoryPressed,
+                          ):
+                          Center(
+                            child: Column(
+                              children: <Widget>[
+                                Image.asset('assets/sad_ticketawy.png', width: 200,),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('There is no events yet',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xfffe6700),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Container(
+                          child: Column(
+                            children: <Widget>[
+                              CircularProgressIndicator(),
                             ],
                           ),
                         );
-                      }
-                      return Container(
-                        child: Column(
-                          children: <Widget>[
-                            CircularProgressIndicator(),
-                          ],
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: onBack,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xfffe6700),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset('assets/back.png', width: 30, height: 30,),
-                        Text(
-                          'Previous Page',
-                          style: TextStyle(
-                            color: Colors.white,
-                              fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
+                      },
+                    )
+                  ],
                 ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: onAllCategoriesPressed,
-                  child: Container(
-                    padding: EdgeInsets.all(15),
-                    color: Color(0xff4b3d7a),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset('assets/all_events.png', width: 30, height: 30,),
-                        Text(
-                          'All Categories',
-                          style: TextStyle(
-                            color: Colors.white,
-                              fontFamily: 'MyriadPro',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              )
             ],
+          ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: onBack,
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      color: Color(0xfffe6700),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Image.asset('assets/back.png', width: 30, height: 30,),
+                          Text(
+                            'Previous Page',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'MyriadPro',
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: onAllCategoriesPressed,
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      color: Color(0xff4b3d7a),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Image.asset('assets/all_events.png', width: 30, height: 30,),
+                          Text(
+                            'All Categories',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'MyriadPro',
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -465,8 +471,6 @@ class _FiterDialogState extends State<FiterDialog> {
 
   @override
   Widget build(BuildContext context) {
-
-    final _dateController = MaskedTextController(mask: '00/00/0000',);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,

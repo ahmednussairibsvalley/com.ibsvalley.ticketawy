@@ -18,167 +18,175 @@ class MyWishListPage extends StatelessWidget {
   final Function onBack;
   final Function(int) onCategoryPressed;
   final Function onAllCategoriesPressed;
+  final Function onWillPop;
 
   MyWishListPage(
       {@required this.onBack,
       @required this.onCategoryPressed,
-      @required this.onAllCategoriesPressed});
+      @required this.onAllCategoriesPressed,
+      @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.categoryPageIndex);
+    Globals.pagesStack.push(PagesIndices.myWishListPageIndex);
 
-    return FutureBuilder(
-      future: Connectivity().checkConnectivity(),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
-          if (snapshot.data == ConnectivityResult.mobile ||
-              snapshot.data == ConnectivityResult.wifi){
-            return Scaffold(
-              body: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'My wishlist',
-                          style: TextStyle(
-                              color: Color(0xffff6600),
-                              fontSize: 17,
-                              fontFamily: 'Verdana'),
-                        ),
-                      ],
+    return WillPopScope(
+      onWillPop: ()async{
+        onWillPop();
+        return false;
+      },
+      child: FutureBuilder(
+        future: Connectivity().checkConnectivity(),
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            if (snapshot.data == ConnectivityResult.mobile ||
+                snapshot.data == ConnectivityResult.wifi){
+              return Scaffold(
+                body: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'My wishlist',
+                            style: TextStyle(
+                                color: Color(0xffff6600),
+                                fontSize: 17,
+                                fontFamily: 'Verdana'),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Flexible(
-                    child: ListView(
-                      children: <Widget>[
-                        FutureBuilder(
-                          future: util.getWishList(),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              if(snapshot.hasData){
-                                List list = snapshot.data;
-                                print('${list.length}');
-                                if(list.length > 0){
-                                  Globals.controller.populateWishList(list);
-                                  return EventsSlider(
-                                    onCategoryPressed: onCategoryPressed,
-                                    list: Globals.controller.wishList,
+                    Flexible(
+                      child: ListView(
+                        children: <Widget>[
+                          FutureBuilder(
+                            future: util.getWishList(),
+                            builder: (context, snapshot){
+                              if(snapshot.connectionState == ConnectionState.done){
+                                if(snapshot.hasData){
+                                  List list = snapshot.data;
+                                  print('${list.length}');
+                                  if(list.length > 0){
+                                    Globals.controller.populateWishList(list);
+                                    return EventsSlider(
+                                      onCategoryPressed: onCategoryPressed,
+                                      list: Globals.controller.wishList,
+                                    );
+                                  }
+                                  return Center(
+                                    child: Image.asset('assets/sad_ticketawy.png'),
                                   );
+
                                 }
                                 return Center(
-                                  child: Image.asset('assets/sad_ticketawy.png'),
-                                );
-
-                              }
-                              return Center(
-                                child: Column(
-                                  children: <Widget>[
-                                    Image.asset('assets/sad_ticketawy.png', width: 200,),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('There is no events yet',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xfffe6700),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image.asset('assets/sad_ticketawy.png', width: 200,),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('There is no events yet',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0xfffe6700),
+                                          ),
                                         ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              return Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    CircularProgressIndicator(),
                                   ],
                                 ),
                               );
-                            }
-                            return Container(
-                              child: Column(
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                ],
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              bottomNavigationBar: BottomAppBar(
-                color: Colors.black,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: onBack,
-                        child: Container(
-                          padding: EdgeInsets.all(15),
-                          color: Color(0xfffe6700),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/back.png',
-                                width: 30,
-                                height: 30,
-                              ),
-                              Text(
-                                'Previous Page',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'MyriadPro',
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
+                            },
+                          )
+                        ],
                       ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: onAllCategoriesPressed,
-                        child: Container(
-                          padding: EdgeInsets.all(15),
-                          color: Color(0xff4b3d7a),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/all_events.png',
-                                width: 30,
-                                height: 30,
-                              ),
-                              Text(
-                                'All Categories',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'MyriadPro',
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              ),
+                bottomNavigationBar: BottomAppBar(
+                  color: Colors.black,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: onBack,
+                          child: Container(
+                            padding: EdgeInsets.all(15),
+                            color: Color(0xfffe6700),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Image.asset(
+                                  'assets/back.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
+                                Text(
+                                  'Previous Page',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'MyriadPro',
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: onAllCategoriesPressed,
+                          child: Container(
+                            padding: EdgeInsets.all(15),
+                            color: Color(0xff4b3d7a),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Image.asset(
+                                  'assets/all_events.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
+                                Text(
+                                  'All Categories',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'MyriadPro',
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return Center(
+              child: Text('There is no connection'),
             );
           }
-          return Center(
-            child: Text('There is no connection'),
-          );
-        }
-        return Container();
+          return Container();
 
-      },
+        },
+      ),
     );
   }
 }

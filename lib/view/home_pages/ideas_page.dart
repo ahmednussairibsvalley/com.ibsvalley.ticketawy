@@ -8,6 +8,7 @@ import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 
+import '../../globals.dart';
 import '../../util.dart' as util;
 
 //import '../../globals.dart';
@@ -21,21 +22,17 @@ class IdeasPage extends StatelessWidget {
   IdeasPage({@required this.onPreviousPagePressed,
     @required this.onAllCategoriesPressed, @required this.onWillPop});
 
-  test() async {
-
-
-  }
 
   @override
   Widget build(BuildContext context) {
 
     final _width = MediaQuery.of(context).size.width;
-//    Globals.pagesStack.push(PagesIndices.ideasPageIndex);
+    Globals.pagesStack.push(PagesIndices.ideasPageIndex);
 
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: ()async{
         onWillPop();
-        return null;
+        return false;
       },
       child: Scaffold(
 //      resizeToAvoidBottomInset: false,

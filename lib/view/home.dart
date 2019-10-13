@@ -37,12 +37,6 @@ class _HomeState extends State<Home> {
 
   int _previousPageIndex = -1;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   _showNoConnectivityDialog(){
     showDialog(
         context: context,
@@ -190,76 +184,70 @@ class _HomeState extends State<Home> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
-    return WillPopScope(
-      onWillPop: () async {
-
-        await _returnToPreviousPage();
-        return false;
-      },
-      child: SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          resizeToAvoidBottomPadding: false,
-          key: _scaffoldKey,
-          drawer: Drawer(
-            child: ListView(
-              children: <Widget>[
-                Image.asset('assets/drawer_header.png', fit: BoxFit.cover,),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Column(
-                    children: List.generate(leftDrawerMap.keys.toList().length, (index){
-                      return ListTile(
-                        title: _drawerItem(leftDrawerMap.keys.toList()[index]),
-                        onTap: leftDrawerMap['${leftDrawerMap.keys.toList()[index]}'],
-                      );
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: Stack(
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: ListView(
             children: <Widget>[
-
-              // The background.
-              Container(
-                height: _height,
-                width: _width,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage('assets/login.jpg')
-                    )
+              Image.asset('assets/drawer_header.png', fit: BoxFit.cover,),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  children: List.generate(leftDrawerMap.keys.toList().length, (index){
+                    return ListTile(
+                      title: _drawerItem(leftDrawerMap.keys.toList()[index]),
+                      onTap: leftDrawerMap['${leftDrawerMap.keys.toList()[index]}'],
+                    );
+                  }),
                 ),
               ),
+            ],
+          ),
+        ),
+        body: Stack(
+          children: <Widget>[
 
-              // The header.
-              Positioned(
-                right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
-                child: Image.asset('assets/header.png',
-                  height: Platform.isIOS? _width < 414 ?110 : 125
-                      :_width > 350?110:130,
-                ),
+            // The background.
+            Container(
+              height: _height,
+              width: _width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/login.jpg')
+                  )
               ),
+            ),
 
-              // The top left icon.
-              Positioned(
-                left: 0.0, top: 0.0,
-                child: Padding(
-                  padding: EdgeInsets.all(_width > 350? 13.0:12.0),
-                  child: GestureDetector(
-                    onTap: (){
-                      _scaffoldKey.currentState.openDrawer();
-                    },
-                    child: Image.asset('assets/top_left_list_icon.png',
-                      height: 40,
-                      width: 40,
-                      color: Colors.white,
-                    ),
+            // The header.
+            Positioned(
+              right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
+              child: Image.asset('assets/header.png',
+                height: Platform.isIOS? _width < 414 ?110 : 125
+                    :_width > 350?110:130,
+              ),
+            ),
+
+            // The top left icon.
+            Positioned(
+              left: 0.0, top: 0.0,
+              child: Padding(
+                padding: EdgeInsets.all(_width > 350? 13.0:12.0),
+                child: GestureDetector(
+                  onTap: (){
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                  child: Image.asset('assets/top_left_list_icon.png',
+                    height: 40,
+                    width: 40,
+                    color: Colors.white,
                   ),
                 ),
               ),
+            ),
 
 //            // The top right icon.
 //            Positioned(
@@ -278,312 +266,432 @@ class _HomeState extends State<Home> {
 
 
 
-              // The body
-              Positioned(
-                bottom: 0.0, right: 0.0, left: 0.0,
-                child: GestureDetector(
-                  onTap: (){
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    _searchController.value = _searchController.value.copyWith(text: '');
-                  },
-                  child: Column(
-                    children: <Widget>[
+            // The body
+            Positioned(
+              bottom: 0.0, right: 0.0, left: 0.0,
+              child: GestureDetector(
+                onTap: (){
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  _searchController.value = _searchController.value.copyWith(text: '');
+                },
+                child: Column(
+                  children: <Widget>[
 
-                      Stack(
-                        children: <Widget>[
-                          DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
-                        ],
-                      ),
+                    Stack(
+                      children: <Widget>[
+                        DrawerDivider(color: Colors.white, height: 2.3, width: 15,),
+                      ],
+                    ),
 
-                      Stack(
-                        children: <Widget>[
+                    Stack(
+                      children: <Widget>[
 
-                          // The white background.
-                          SizedBox(
-                            width: _width,
-                            height: _height * 0.75,
-                            child: Container(
-                              color: Colors.white,
-                            ),
+                        // The white background.
+                        SizedBox(
+                          width: _width,
+                          height: _height * 0.75,
+                          child: Container(
+                            color: Colors.white,
                           ),
+                        ),
 
-                          // Here is the events data.
-                          Positioned(
-                            left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
-                          index == PagesIndices.homePageIndex?2:35:
-                          index == PagesIndices.homePageIndex?1:30,
-                            child: index == PagesIndices.homePageIndex? HomePage(
-                              onPress: (id, categoryName){
-                                Globals.categoryId = id;
-                                Globals.currentCategoryName = categoryName;
-                                setState(() {
-                                  index = PagesIndices.categoryPageIndex;
-                                });
-                              },
-                              onEventPressed: (id){
-                                Globals.eventId = id;
-                                setState(() {
-                                  index = PagesIndices.eventPageIndex;
-                                });
-                              },
-                              onHotOfferPressed: (id){
-                                Globals.eventId = id;
-                                setState(() {
-                                  index = PagesIndices.eventPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.profilePageIndex? ProfilePage(
-                              onWillPop: (){
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              },
-                              onPreviousPagePressed: (){
-//                              Globals.pagesStack.pop();
-//                              setState(() {
-//                                index = Globals.pagesStack.pop();
-//                              });
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.ideasPageIndex? IdeasPage(
-                              onPreviousPagePressed: (){
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.faqPageIndex? FaqPage(
-                              onPreviousPagePressed: (){
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.contactPageIndex? ContactPage(
+                        // Here is the events data.
+                        Positioned(
+                          left: 0.0, right: 0.0, bottom: 0.0, top: _width> 360?
+                        index == PagesIndices.homePageIndex?2:35:
+                        index == PagesIndices.homePageIndex?1:30,
+                          child: index == PagesIndices.homePageIndex? HomePage(
+                            onPress: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
+                              setState(() {
+                                index = PagesIndices.categoryPageIndex;
+                              });
+                            },
+                            onEventPressed: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onHotOfferPressed: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.profilePageIndex? ProfilePage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              setState(() {
+                                index = Globals.pagesStack.pop();
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.ideasPageIndex? IdeasPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              setState(() {
+                                index = Globals.pagesStack.pop();
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.faqPageIndex? FaqPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              setState(() {
+                                index = Globals.pagesStack.pop();
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.contactPageIndex? ContactPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
 
-                              onPreviousPagePressed: () {
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
+                                setState(() {
+                                  index = Globals.pagesStack.pop();
+                                });
+                              } else {
                                 setState(() {
                                   index = PagesIndices.homePageIndex;
                                 });
-                              },
-                              onAllCategoriesPressed: (){
+                              }
+
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.categoryPageIndex? CategoryPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onBack: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
                                 setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
+                                  index = Globals.pagesStack.pop();
                                 });
-                              },
-                            ):
-                            index == PagesIndices.categoryPageIndex? CategoryPage(
-                              onBack: (){
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              },
-                              onCategoryPressed: (id){
-                                Globals.eventId = id;
-                                setState(() {
-                                  index = PagesIndices.eventPageIndex;
-                                });
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.eventPageIndex? EventDetails(
-                              onPreviousPagePressed: _returnToPreviousPage,
-                              onEventBooked: (){
-                                if(Globals.reservationOption == ReservationOptions.bySeats){
-                                  setState(() {
-                                    index = PagesIndices.selectSeatPageIndex;
-                                  });
-                                } else {
-                                  setState(() {
-                                    index = PagesIndices.buyTicketsPageIndex;
-                                  });
-                                }
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.selectSeatPageIndex? SelectSeat(
-                              onPreviousPagePressed: _returnToPreviousPage,
-                              onSeatsBooked: (){
-                                setState(() {
-                                  index = PagesIndices.paymentPageIndex;
-                                });
-                              },
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.buyTicketsPageIndex? BuyTickets(
-                              onPreviousPagePressed: _returnToPreviousPage(),
-                              onAllCategoriesPressed: (){
-                                setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
-                                });
-                              },
-                            ):
-                            index == PagesIndices.myWishListPageIndex? MyWishListPage(
-                              onCategoryPressed: (id){
-                                Globals.eventId = id;
-                                setState(() {
-                                  index = PagesIndices.eventPageIndex;
-                                });
-                              },
-                              onBack: (){
+                              } else {
                                 setState(() {
                                   index = PagesIndices.homePageIndex;
                                 });
-                              },
-                              onAllCategoriesPressed: (){
+                              }
+
+                            },
+                            onCategoryPressed: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.eventPageIndex? EventDetails(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onEventBooked: (){
+                              if(Globals.reservationOption == ReservationOptions.bySeats){
                                 setState(() {
-                                  index = PagesIndices.categoriesPageIndex;
+                                  index = PagesIndices.selectSeatPageIndex;
                                 });
-                              },
-                            ):
-                            index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
-                              onPreviousPagePressed: (){
+                              } else {
+                                setState(() {
+                                  index = PagesIndices.buyTicketsPageIndex;
+                                });
+                              }
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.selectSeatPageIndex? SelectSeat(
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
+                                setState(() {
+                                  index = Globals.pagesStack.pop();
+                                });
+                              } else {
                                 setState(() {
                                   index = PagesIndices.homePageIndex;
                                 });
-                              },
-                              onCategoryPressed: (id, categoryName){
-                                Globals.categoryId = id;
-                                Globals.currentCategoryName = categoryName;
+                              }
+
+                            },
+                            onSeatsBooked: (){
+                              setState(() {
+                                index = PagesIndices.paymentPageIndex;
+                              });
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.buyTicketsPageIndex? BuyTickets(
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
                                 setState(() {
-                                  index = PagesIndices.categoryPageIndex;
+                                  index = Globals.pagesStack.pop();
                                 });
-                              },
-                              onAllEventsPressed: (){
+                              } else {
                                 setState(() {
                                   index = PagesIndices.homePageIndex;
                                 });
-                              },
-                            ):
-                            index == PagesIndices.searchPageIndex?SearchResults(
-                              onEventClicked: (id){
-                                FocusScope.of(context).requestFocus(FocusNode());
-                                _searchController.value = _searchController.value.copyWith(text: '');
-                                Globals.eventId = id;
+                              }
+
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.myWishListPageIndex? MyWishListPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onCategoryPressed: (id){
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                            onBack: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
                                 setState(() {
-                                  index = PagesIndices.eventPageIndex;
+                                  index = Globals.pagesStack.pop();
                                 });
-                              },
-                            ):
-                            Container(),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                              } else {
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              }
+
+                            },
+                            onAllCategoriesPressed: (){
+                              setState(() {
+                                index = PagesIndices.categoriesPageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
+                            onWillPop: (){
+                              while(Globals.pagesStack.isNotEmpty){
+                                Globals.pagesStack.pop();
+                              }
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                            onPreviousPagePressed: (){
+                              Globals.pagesStack.pop();
+                              if(Globals.pagesStack.isNotEmpty){
+                                setState(() {
+                                  index = Globals.pagesStack.pop();
+                                });
+                              } else {
+                                setState(() {
+                                  index = PagesIndices.homePageIndex;
+                                });
+                              }
+
+                            },
+                            onCategoryPressed: (id, categoryName){
+                              Globals.categoryId = id;
+                              Globals.currentCategoryName = categoryName;
+                              setState(() {
+                                index = PagesIndices.categoryPageIndex;
+                              });
+                            },
+                            onAllEventsPressed: (){
+                              setState(() {
+                                index = PagesIndices.homePageIndex;
+                              });
+                            },
+                          ):
+                          index == PagesIndices.searchPageIndex?SearchResults(
+                            onEventClicked: (id){
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              _searchController.value = _searchController.value.copyWith(text: '');
+                              Globals.eventId = id;
+                              setState(() {
+                                index = PagesIndices.eventPageIndex;
+                              });
+                            },
+                          ):
+                          Container(),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
+            ),
 
 
-              // Search field
-              index != PagesIndices.homePageIndex?
-              Positioned(
-                right: 50.0, left: 50.0, bottom: _height * .71,
-                child: Material(
-                  color: Colors.transparent,
-                  elevation: 10.0,
-                  shadowColor: Colors.black,
-                  child: TextFormField(
-                    controller: _searchController,
-                    onTap: (){
-                      _previousPageIndex = index;
+            // Search field
+            index != PagesIndices.homePageIndex?
+            Positioned(
+              right: 50.0, left: 50.0, bottom: _height * .71,
+              child: Material(
+                color: Colors.transparent,
+                elevation: 10.0,
+                shadowColor: Colors.black,
+                child: TextFormField(
+                  controller: _searchController,
+                  onTap: (){
+                    _previousPageIndex = index;
 //                      setState(() {
 //                        index = -1;
 //                      });
-                    },
-                    onChanged: (value) async{
-                      var connectivityResult = await Connectivity().checkConnectivity();
-                      if (connectivityResult != ConnectivityResult.mobile &&
-                          connectivityResult != ConnectivityResult.wifi){
-                        return;
-                      }
-                      Globals.keyWord = value;
+                  },
+                  onChanged: (value) async{
+                    var connectivityResult = await Connectivity().checkConnectivity();
+                    if (connectivityResult != ConnectivityResult.mobile &&
+                        connectivityResult != ConnectivityResult.wifi){
+                      return;
+                    }
+                    Globals.keyWord = value;
 
-                      if(Globals.keyWord.isEmpty){
-                        setState(() {
-                          index = _previousPageIndex;
-                        });
-                      } else {
-                        setState(() {
-                          index = PagesIndices.searchPageIndex;
-                        });
-                      }
+                    if(Globals.keyWord.isEmpty){
+                      setState(() {
+                        index = _previousPageIndex;
+                      });
+                    } else {
+                      setState(() {
+                        index = PagesIndices.searchPageIndex;
+                      });
+                    }
 
-                    },
-                    decoration: InputDecoration(
-                        hintText: 'Search for an event ...',
-                        contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: GestureDetector(
-                              onTap: () async{
-                                FocusScope.of(context).requestFocus(FocusNode());
-                                var connectivityResult = await Connectivity().checkConnectivity();
-                                if (connectivityResult != ConnectivityResult.mobile &&
-                                    connectivityResult != ConnectivityResult.wifi){
-                                  _showNoConnectivityDialog();
-                                  return;
-                                }
-                                Globals.keyWord = _searchController.text;
-                                print('${Globals.keyWord}');
+                  },
+                  decoration: InputDecoration(
+                      hintText: 'Search for an event ...',
+                      contentPadding: EdgeInsets.only(right: 20, left: 20, bottom: _width > 360?20:10, top: _width > 360?20:10),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: GestureDetector(
+                            onTap: () async{
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              var connectivityResult = await Connectivity().checkConnectivity();
+                              if (connectivityResult != ConnectivityResult.mobile &&
+                                  connectivityResult != ConnectivityResult.wifi){
+                                _showNoConnectivityDialog();
+                                return;
+                              }
+                              Globals.keyWord = _searchController.text;
+
+                              if(Globals.keyWord.isNotEmpty){
                                 setState(() {
                                   index = -1;
                                 });
                                 setState(() {
                                   index = PagesIndices.searchPageIndex;
                                 });
-                              },
-                              child: Icon(Icons.search, size: 30,)
-                          ),
+                              }
+
+                            },
+                            child: Icon(Icons.search, size: 30,)
                         ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                width: 1, style: BorderStyle.none
-                            )
-                        )
-                    ),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                              width: 1, style: BorderStyle.none
+                          )
+                      )
                   ),
                 ),
-              ):
-              Container(),
+              ),
+            ):
+            Container(),
 
 
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -608,22 +716,6 @@ class _HomeState extends State<Home> {
         ),
       ],
     );
-  }
-
-  _returnToPreviousPage(){
-    if(Globals.pagesStack.isNotEmpty){
-      Globals.pagesStack.pop();
-      if(Globals.pagesStack.isNotEmpty){
-        setState(() {
-          index = Globals.pagesStack.pop();
-        });
-      } else {
-        exit(0);
-      }
-
-    } else {
-      exit(0);
-    }
   }
 }
 

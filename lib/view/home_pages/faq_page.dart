@@ -7,17 +7,18 @@ class FaqPage extends StatelessWidget {
   final Function onAllCategoriesPressed;
   final Function onWillPop;
 
-  FaqPage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
+  FaqPage({@required this.onPreviousPagePressed,
+    @required this.onAllCategoriesPressed, @required this.onWillPop});
 
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-//    Globals.pagesStack.push(PagesIndices.faqPageIndex);
+    Globals.pagesStack.push(PagesIndices.faqPageIndex);
 
     return WillPopScope(
       onWillPop: () async{
         onWillPop();
-        return null;
+        return false;
       },
       child: Scaffold(
         body: ListView(
