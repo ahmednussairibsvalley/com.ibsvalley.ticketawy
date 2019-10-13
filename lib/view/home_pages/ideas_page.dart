@@ -350,7 +350,7 @@ class _IdeasFormState extends State<IdeasForm> {
                     var response = await util.addIdeas(message: _textEditingController.text, imageFile: image);
 
                     _showResultDialog(context, response['user_Message']);
-                    //print('$response');
+                    print('$response');
                     setState(() {
                       _sending = false;
                     });
