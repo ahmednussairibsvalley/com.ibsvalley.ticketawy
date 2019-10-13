@@ -19,10 +19,12 @@ class _RegisterState extends State<Register> {
 
   bool _registering = false;
 
+  final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  String fullName = '';
   String phoneNumber = '';
   String password = '';
 
@@ -86,7 +88,8 @@ class _RegisterState extends State<Register> {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              // User name.
+
+                              // full name.
                               Padding(
                                 padding: const EdgeInsets.only(
                                   left: 45.0,
@@ -95,12 +98,45 @@ class _RegisterState extends State<Register> {
                                   top: 20.0,
                                 ),
                                 child: TextFormField(
+                                  controller: _fullNameController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    prefixIcon: Icon(Icons.person_outline),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          style: BorderStyle.none,
+                                        )),
+                                    labelStyle: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                    hintText: 'Mobile Number',
+                                  ),
+                                  validator: (value) {
+                                    if (value.isEmpty)
+                                      return 'Please enter your full name.';
+                                    fullName = value;
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              // mobile number.
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 45.0,
+                                  right: 45.0,
+                                  bottom: 8.0,
+                                  top: 8.0,
+                                ),
+                                child: TextFormField(
                                   controller: _phoneController,
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.person_outline),
+                                    prefixIcon: Icon(Icons.phone_android),
                                     border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(10),
                                         borderSide: BorderSide(
@@ -215,7 +251,7 @@ class _RegisterState extends State<Register> {
                                       setState(() {
                                         _registering = true;
                                       });
-                                      Map response = await util.register(
+                                      Map response = await util.register(fullName,
                                           phoneNumber, password);
 
                                       if (response['result']) {
@@ -229,6 +265,7 @@ class _RegisterState extends State<Register> {
                                           });
 
 //                                        _showRegistrationSuccessDialog(context,message: response['user_Message']);
+                                          _fullNameController.value = _fullNameController.value.copyWith(text: '');
                                           _phoneController.value = _phoneController.value.copyWith(text: '');
                                           _passwordController.value = _passwordController.value.copyWith(text: '');
                                           _confirmPasswordController.value = _confirmPasswordController.value.copyWith(text: '');

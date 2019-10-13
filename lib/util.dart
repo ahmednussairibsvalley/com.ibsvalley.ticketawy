@@ -40,7 +40,7 @@ Future<Map> login(String username, String password) async {
 }
 
 ///Calls the register API.
-Future<Map> register(String phone, String password) async {
+Future<Map> register(String fullName, String phone, String password) async {
 
   /*
   Failure Response:
@@ -65,6 +65,7 @@ Future<Map> register(String phone, String password) async {
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
   request.headers.set('content-type', 'application/json');
   Map jsonMap = {
+    'fullName':fullName,
     'Phone':phone,
     'Password':password,
   };
