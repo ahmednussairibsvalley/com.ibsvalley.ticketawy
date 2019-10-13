@@ -73,7 +73,7 @@ class EventsPage extends StatelessWidget {
                       Stack(
                         children: <Widget>[
                           Image.network(
-                            'http://40.85.116.121:8606/EventsLogo/${list[index]['logo']}',
+                            'https://beta.ticketawy.com/Media/Events_Logo/${list[index]['logo']}',
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),

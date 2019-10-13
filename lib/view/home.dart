@@ -282,6 +282,7 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                   onTap: (){
                     FocusScope.of(context).requestFocus(FocusNode());
+                    _searchController.value = _searchController.value.copyWith(text: '');
                   },
                   child: Column(
                     children: <Widget>[
@@ -511,11 +512,11 @@ class _HomeState extends State<Home> {
                   shadowColor: Colors.black,
                   child: TextFormField(
                     controller: _searchController,
-                    onTap: (){
-                      setState(() {
-                        index = -1;
-                      });
-                    },
+//                    onTap: (){
+//                      setState(() {
+//                        index = -1;
+//                      });
+//                    },
                     onChanged: (value) async{
                       var connectivityResult = await Connectivity().checkConnectivity();
                       if (connectivityResult != ConnectivityResult.mobile &&
