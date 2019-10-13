@@ -122,6 +122,8 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
 
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _mailPhoneController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
@@ -195,73 +197,90 @@ class _ContactFormState extends State<ContactForm> {
           // The title with the text area.
           child: Column(
             children: <Widget>[
-
-              //Email or Phone
-              Padding(
-                padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
-                child: Material(
-                  elevation: 10.0,
-                  shadowColor: Colors.black,
-                  color: Colors.transparent,
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _mailPhoneController,
-                    decoration: InputDecoration(
-                      hintText: 'Email or phone number',
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+              Form(
+                child: Column(
+                  children: <Widget>[
+                    //Email or Phone
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
+                      child: Material(
+                        elevation: 10.0,
+                        shadowColor: Colors.black,
+                        color: Colors.transparent,
+                        child: TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: _mailPhoneController,
+                          decoration: InputDecoration(
+                            hintText: 'Email or phone number',
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.all(10.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                            ),
+                          ),
+                          validator: (value){
+                            if(value.isEmpty){
+                              return 'Please enter your phone or email.';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              // Subject text field
-              Padding(
-                padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
-                child: Material(
-                  elevation: 10.0,
-                  shadowColor: Colors.black,
-                  color: Colors.transparent,
-                  child: TextField(
-                    controller: _subjectController,
-                    decoration: InputDecoration(
-                      hintText: 'Subject',
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                    // Subject text field
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40, left: 40, bottom: 10),
+                      child: Material(
+                        elevation: 10.0,
+                        shadowColor: Colors.black,
+                        color: Colors.transparent,
+                        child: TextFormField(
+                          controller: _subjectController,
+                          decoration: InputDecoration(
+                            hintText: 'Subject',
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.all(10.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),borderSide: BorderSide.none
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
 
-              // Message text area
-              Padding(
-                padding: const EdgeInsets.only(right: 40, left: 40),
-                child: Material(
-                  elevation: 10.0,
-                  shadowColor: Colors.black,
-                  color: Colors.transparent,
-                  child: TextField(
-                    controller: _messageController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      hintText: 'Your message here ...',
+                    // Message text area
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40, left: 40),
+                      child: Material(
+                        elevation: 10.0,
+                        shadowColor: Colors.black,
+                        color: Colors.transparent,
+                        child: TextFormField(
+                          controller: _messageController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                            hintText: 'Your message here ...',
 
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),borderSide: BorderSide.none
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),borderSide: BorderSide.none
+                            ),
+                          ),
+                          validator: (value){
+                            if(value.isEmpty)
+                              return 'Please enter your message';
+                            return null;
+                          },
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+                key: _formKey,
               ),
 
 //          // Add photo
@@ -282,30 +301,33 @@ class _ContactFormState extends State<ContactForm> {
                 padding: const EdgeInsets.only(right: 30, left: 30, top: 30),
                 child: ListTile(
                   onTap: () async{
+                    FocusScope.of(context).requestFocus(FocusNode());
                     var connectivityResult = await Connectivity().checkConnectivity();
                     if (connectivityResult != ConnectivityResult.mobile &&
                         connectivityResult != ConnectivityResult.wifi){
                       _showNoConnectivityDialog();
                       return;
                     }
+                    if(_formKey.currentState.validate()){
+                      setState(() {
+                        _sending = true;
+                      });
 
-                    setState(() {
-                      _sending = true;
-                    });
-
-                    Map response = await util.contactUs(phoneEmail: _mailPhoneController.text,
-                        subject: _subjectController.text,
-                        message: _messageController.text);
+                      Map response = await util.contactUs(phoneEmail: _mailPhoneController.text,
+                          subject: _subjectController.text,
+                          message: _messageController.text);
 
 
-                    setState(() {
-                      _sending = false;
-                    });
+                      setState(() {
+                        _sending = false;
+                      });
 
-                    _mailPhoneController.value = _mailPhoneController.value.copyWith(text: '');
-                    _subjectController.value = _subjectController.value.copyWith(text: '');
-                    _messageController.value = _messageController.value.copyWith(text: '');
-                    _showSuccessDialog(context, response);
+                      _mailPhoneController.value = _mailPhoneController.value.copyWith(text: '');
+                      _subjectController.value = _subjectController.value.copyWith(text: '');
+                      _messageController.value = _messageController.value.copyWith(text: '');
+                      _showSuccessDialog(context, response);
+                    }
+
 
                   },
                   title: Material(
@@ -338,6 +360,7 @@ class _ContactFormState extends State<ContactForm> {
         _sending? Positioned(
           top: 0.0, bottom: 0.0, left: 0.0, right: 0.0,
           child: Container(
+            color: Colors.black.withOpacity(0.0),
             alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
