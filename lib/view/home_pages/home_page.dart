@@ -646,10 +646,13 @@ class _HotOfferItemState extends State<HotOfferItem> {
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  widget.title,
-                  style: TextStyle(
-                      color: Color(0xff656565), fontFamily: 'MyriadPro'),
+                child: Container(
+                  height: 40,
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(
+                        color: Color(0xff656565), fontFamily: 'MyriadPro'),
+                  ),
                 ),
               ),
               Container(
