@@ -208,7 +208,7 @@ class _LoginState extends State<Login> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIcon: Icon(Icons.person_outline),
+                              prefixIcon: Icon(Icons.phone_android),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide(
@@ -503,7 +503,7 @@ class _LoginState extends State<Login> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
-                              prefixIcon: Icon(Icons.person_outline),
+                              prefixIcon: Icon(Icons.phone_android),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide(
