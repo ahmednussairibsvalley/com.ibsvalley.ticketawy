@@ -19,6 +19,7 @@ class AboutPage extends StatelessWidget {
 
   AboutPage({@required this.eventName, @required this.eventDescription,
     @required this.imageUrl, @required this.startDate, @required this.endDate});
+
   @override
   Widget build(BuildContext context) {
 
@@ -26,6 +27,8 @@ class AboutPage extends StatelessWidget {
     DateTime _endDate = DateTime.parse(endDate);
     String _startDateText = DateFormat.yMd().format(_startDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
+
+
 
     return ListView(
       children: <Widget>[
@@ -72,16 +75,7 @@ class AboutPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
                         height: 100,
-                        child: Scrollable(
-                          viewportBuilder: (BuildContext context, ViewportOffset position) {
-                            return SingleChildScrollView(
-                              child: Text(eventDescription,
-                                style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
-                              ),
-                            );
-                          },
-                          
-                        ),
+                        child: EventDescriptionViewer(eventDescription: eventDescription,),
                       ),
                     ),
                     Padding(
@@ -253,4 +247,72 @@ class _WishListButtonState extends State<WishListButton> {
     );
   }
 }
+
+class EventDescriptionViewer extends StatefulWidget {
+
+  final String eventDescription;
+
+  EventDescriptionViewer({@required this.eventDescription});
+  @override
+  _EventDescriptionViewerState createState() => _EventDescriptionViewerState();
+}
+
+class _EventDescriptionViewerState extends State<EventDescriptionViewer> {
+
+  ScrollController _scrollController = ScrollController();
+
+  ListView _listView;
+
+//  double _current = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _listView = ListView(
+      controller: _scrollController,
+      children: <Widget>[
+        Text(widget.eventDescription,
+          style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return NotificationListener(
+      child: Stack(
+        children: <Widget>[
+          _listView,
+//          _current > 0?
+//          Positioned(
+//            top: 0.0, right: 0.0,
+//            child: GestureDetector(
+//                onTap: (){
+//                },
+//                child: Icon(Icons.arrow_drop_up, size: 50,)
+//            ),
+//          ):Container(),
+//          _current < 100?
+//          Positioned(
+//            bottom: 0.0, right: 0.0,
+//            child: GestureDetector(
+//                onTap: (){
+//                },
+//                child: Icon(Icons.arrow_drop_down, size: 50,)
+//            ),
+//          ):Container(),
+        ],
+      ),
+      onNotification: (t){
+//        if (t is ScrollEndNotification) {
+//          print('${_scrollController.position.maxScrollExtent}');
+//        }
+        return null;
+      },
+    );
+  }
+}
+
 
