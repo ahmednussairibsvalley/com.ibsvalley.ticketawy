@@ -748,21 +748,21 @@ class _EventItemState extends State<EventItem> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 8.0,
-                    left: 30.0,
-                    child: Container(
-                      decoration: BoxDecoration(color: Colors.deepOrange),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          'Hot',
-                          style: TextStyle(
-                              color: Color(0xffeaeae7), fontSize: 18),
-                        ),
-                      ),
-                    ),
-                  ),
+//                  Positioned(
+//                    top: 8.0,
+//                    left: 30.0,
+//                    child: Container(
+//                      decoration: BoxDecoration(color: Colors.deepOrange),
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(15.0),
+//                        child: Text(
+//                          'Hot',
+//                          style: TextStyle(
+//                              color: Color(0xffeaeae7), fontSize: 18),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
 
                   //Wishlist Button
                   Globals.skipped?Container()

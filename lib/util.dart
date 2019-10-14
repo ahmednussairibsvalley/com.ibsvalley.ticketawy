@@ -330,7 +330,6 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
     // multipart that takes file
     var multipartFile = new http.MultipartFile('image', stream, length,
         filename: basename(imageFile.path));
-
     // add file to multipart
     request.files.add(multipartFile);
     request.fields.addAll({
@@ -339,7 +338,7 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 
     // send
     var response = await request.send();
-    print(response.statusCode);
+//    print(response.statusCode);
 
 //  // listen for response
 //  response.stream.transform(utf8.decoder).listen((value) {

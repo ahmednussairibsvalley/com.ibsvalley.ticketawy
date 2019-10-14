@@ -74,7 +74,7 @@ class AboutPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
-                        height: 100,
+//                        height: 70,
                         child: EventDescriptionViewer(eventDescription: eventDescription,),
                       ),
                     ),
@@ -259,56 +259,57 @@ class EventDescriptionViewer extends StatefulWidget {
 
 class _EventDescriptionViewerState extends State<EventDescriptionViewer> {
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
-  ListView _listView;
+  SingleChildScrollView _scrollView;
 
-//  double _current = 0;
+  double _current = 0;
+  double _max = 100;
 
   @override
   void initState() {
     super.initState();
-    _listView = ListView(
+    _scrollView = SingleChildScrollView(
       controller: _scrollController,
-      children: <Widget>[
-        Text(widget.eventDescription,
-          style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
-        ),
-      ],
+      child: Text(widget.eventDescription,
+        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return NotificationListener(
       child: Stack(
         children: <Widget>[
-          _listView,
+          _scrollView,
 //          _current > 0?
 //          Positioned(
 //            top: 0.0, right: 0.0,
 //            child: GestureDetector(
 //                onTap: (){
 //                },
-//                child: Icon(Icons.arrow_drop_up, size: 50,)
+//                child: Icon(Icons.arrow_drop_up, size: 50, color: Colors.black.withOpacity(0.3),)
 //            ),
 //          ):Container(),
-//          _current < 100?
+//          _current < _max?
 //          Positioned(
 //            bottom: 0.0, right: 0.0,
 //            child: GestureDetector(
 //                onTap: (){
 //                },
-//                child: Icon(Icons.arrow_drop_down, size: 50,)
+//                child: Icon(Icons.arrow_drop_down, size: 50, color: Colors.black.withOpacity(0.3),)
 //            ),
 //          ):Container(),
         ],
       ),
       onNotification: (t){
-//        if (t is ScrollEndNotification) {
-//          print('${_scrollController.position.maxScrollExtent}');
-//        }
+        if (t is ScrollEndNotification) {
+          _max = _scrollController.position.maxScrollExtent;
+          setState(() {
+            _current = _scrollController.position.pixels;
+          });
+        }
         return null;
       },
     );

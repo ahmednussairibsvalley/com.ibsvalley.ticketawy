@@ -294,8 +294,8 @@ class _IdeasFormState extends State<IdeasForm> {
                       type: FileType.IMAGE, fileExtension: '');
 
                   image = _file;
-                  print('File Path: ${_file}');
-                  print('File name: ${basename(_file.path)}');
+//                  print('File Path: ${_file}');
+//                  print('File name: ${basename(_file.path)}');
                   setState(() {
                     _fileName = basename(_file.path);
                   });
@@ -348,7 +348,7 @@ class _IdeasFormState extends State<IdeasForm> {
                     var response = await util.addIdeas(message: _textEditingController.text, imageFile: image);
 
                     _showResultDialog(context, response['user_Message']);
-                    print('$response');
+//                    print('$response');
                     setState(() {
                       _sending = false;
                       _fileName = '';
