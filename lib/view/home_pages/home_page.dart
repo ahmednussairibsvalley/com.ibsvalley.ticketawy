@@ -43,7 +43,6 @@ class HomePage extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
                         Globals.controller.populateHomeEvents(snapshot.data);
-                        Globals.controller.homeEvents[1].reservationOption = 1;
                         return EventsSlider(
                           onEventPressed: onEventPressed,
                           list: Globals.controller.homeEvents,
@@ -69,7 +68,6 @@ class HomePage extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasData) {
                         Globals.controller.populateHotEvents(snapshot.data);
-                        Globals.controller.hotEvents[1].reservationOption = 1;
                         return HotOffersSlider(
                           onEventPressed: onHotOfferPressed,
                           list: Globals.controller.hotEvents,

@@ -13,7 +13,7 @@ class Event{
     _title = json['name'];
     _imageUrl = 'https://beta.ticketawy.com/Media/Events_Logo/${json['logo']}';
     _price = json['price'];
-    _reservationOption = 0;
+    _reservationOption = json['haveSeats'] == null?0:1;
   }
 
   String get imageUrl => _imageUrl;
