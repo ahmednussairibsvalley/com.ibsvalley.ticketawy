@@ -52,7 +52,7 @@ class AboutPage extends StatelessWidget {
                             }
                             return Container();
                           }
-                          return Image.asset('assets/logo.png',
+                          return Image.asset('assets/loading.png',
                             height: 185,
                             fit: BoxFit.fill,
                           );

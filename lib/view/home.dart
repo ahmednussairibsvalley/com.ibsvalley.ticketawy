@@ -125,7 +125,7 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
-      'log in' : (){
+      'Login' : (){
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
       },
