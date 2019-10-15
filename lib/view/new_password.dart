@@ -28,6 +28,9 @@ class _NewPasswordState extends State<NewPassword> {
 
     String _newPassword = '';
 
+    print('The code: ${widget.code}');
+    print('The phone: ${widget.phone}');
+
     return Stack(
       children: <Widget>[
         Scaffold(
@@ -156,6 +159,8 @@ class _NewPasswordState extends State<NewPassword> {
                                   code: widget.code,
                                   newPassword: _newPassword
                               );
+
+                              print('$response');
 
                               setState(() {
                                 _passwordUpdating = false;

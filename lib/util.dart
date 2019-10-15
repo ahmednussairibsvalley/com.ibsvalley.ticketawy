@@ -297,7 +297,7 @@ Future<Map> addOrder({@required int eventId, @required List orders}) async {
 }
 
 Future<Map> recoverPassword(String phoneNumber) async{
-  String url = '$_baseUrl/api/AspNetUsers/Send_VerificationMessage';
+  String url = '$_baseUrl/api/AspNetUsers/ForgotPassword';
 
   HttpClient httpClient = new HttpClient();
   HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));

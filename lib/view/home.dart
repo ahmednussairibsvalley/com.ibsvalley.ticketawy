@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/home_pages/search_results.dart';
+import 'package:ticketawy/view/register.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
@@ -125,9 +126,13 @@ class _HomeState extends State<Home> {
         });
         Navigator.of(context).pop();
       },
-      'Login' : (){
+      'Sign In' : (){
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+      },
+      'Sign Up' : (){
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Register(openedFromHome: true,)));
       },
     }
     :{

@@ -25,6 +25,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
 
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return CustomAlertDialog(
             content: VerificationDialog(
@@ -250,7 +251,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                 children: <Widget>[
                   Expanded(
                       child: Container(
-                        child: Text('$message',
+                        child: Text(message != null?message:'The number is not registered',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0xfffe6700),

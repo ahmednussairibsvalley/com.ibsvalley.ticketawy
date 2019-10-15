@@ -829,6 +829,7 @@ class _EventItemState extends State<EventItem> {
                                   bottomLeft: Radius.circular(15)),
                             ),
                             width: widget.title.length > 20 ? 200 : 150,
+                            height: 50,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -841,6 +842,7 @@ class _EventItemState extends State<EventItem> {
                             ),
                           ),
                           Container(
+                            height: 50,
                             decoration: BoxDecoration(
                               color: Color(0xffe75d02),
                               borderRadius: BorderRadius.only(

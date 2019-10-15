@@ -7,9 +7,15 @@ import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
 
+import 'home.dart';
 import 'verification.dart';
 
 class Register extends StatefulWidget {
+
+  final bool openedFromHome;
+
+  Register({@required this.openedFromHome});
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -341,7 +347,10 @@ class _RegisterState extends State<Register> {
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      if(widget.openedFromHome)
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+                      else
+                        Navigator.of(context).pop();
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40, bottom: 40 , left: 20, right: 40),

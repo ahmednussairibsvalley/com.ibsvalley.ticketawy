@@ -378,7 +378,7 @@ class _LoginState extends State<Login> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Register()));
+                                  builder: (context) => Register(openedFromHome: false,)));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -630,7 +630,7 @@ class _LoginState extends State<Login> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
-                                  'login',
+                                  'Sign In',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
@@ -686,7 +686,7 @@ class _LoginState extends State<Login> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Register()));
+                                  builder: (context) => Register(openedFromHome: false,)));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
