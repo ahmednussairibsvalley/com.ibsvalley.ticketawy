@@ -190,7 +190,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 20, right: 20),
-                          child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text('Sign In',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
                         ),
 
                         // User name.
@@ -320,7 +320,7 @@ class _LoginState extends State<Login> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
-                                  'login',
+                                  'Sign In',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
@@ -485,7 +485,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 20, right: 20),
-                          child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text('Sign In',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
                         ),
 
                         // User name.
