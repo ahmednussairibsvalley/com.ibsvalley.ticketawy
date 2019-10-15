@@ -111,7 +111,7 @@ class _RegisterState extends State<Register> {
                                     labelStyle: TextStyle(
                                       fontSize: 15,
                                     ),
-                                    hintText: 'Mobile Number',
+                                    hintText: 'Full name',
                                   ),
                                   validator: (value) {
                                     if (value.isEmpty)
