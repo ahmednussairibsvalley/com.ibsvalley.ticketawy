@@ -41,6 +41,8 @@ class AboutPage extends StatelessWidget {
               children: <Widget>[
                 Column(
                   children: <Widget>[
+
+                    // Event Image
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FutureBuilder(
@@ -62,6 +64,8 @@ class AboutPage extends StatelessWidget {
                         },
                       ),
                     ),
+
+                    // Event Title
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(eventName,
@@ -71,6 +75,8 @@ class AboutPage extends StatelessWidget {
                         ),
                       ),
                     ),
+
+                    // Event Description
                     Padding(
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
@@ -78,6 +84,8 @@ class AboutPage extends StatelessWidget {
                         child: EventDescriptionViewer(eventDescription: eventDescription,),
                       ),
                     ),
+
+                    // Dashed Line Divider
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DashedDivider(
@@ -86,6 +94,8 @@ class AboutPage extends StatelessWidget {
                         color: Color(0xffb8b8b8),
                       ),
                     ),
+
+                    // Time and Duration
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
@@ -135,6 +145,8 @@ class AboutPage extends StatelessWidget {
                     )
                   ],
                 ),
+
+                // Event Date
                 Positioned(
                   top: 180.0, left: Platform.isIOS?70.0:70.0, right: Platform.isIOS?70.0:70.0,
                   child: Container(
@@ -153,6 +165,8 @@ class AboutPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Wishlist icon
                 Globals.skipped?Container():Positioned(
                     top: 15,
                     right: 25,
