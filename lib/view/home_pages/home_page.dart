@@ -660,7 +660,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${widget.price} EGP / Ticket',
+                    '${widget.price} EGP',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -828,8 +828,9 @@ class _EventItemState extends State<EventItem> {
                                   topLeft: Radius.circular(15),
                                   bottomLeft: Radius.circular(15)),
                             ),
-                            width: widget.title.length > 20 ? 200 : 150,
-                            height: 50,
+                            width: widget.title.length > 30 ? 200 : 150,
+                            height: widget.title.length > 30? 50 : 35,
+                            alignment: Alignment.center,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -842,13 +843,14 @@ class _EventItemState extends State<EventItem> {
                             ),
                           ),
                           Container(
-                            height: 50,
+                            height: widget.title.length > 30? 50 : 35,
                             decoration: BoxDecoration(
                               color: Color(0xffe75d02),
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(15),
                                   topRight: Radius.circular(15)),
                             ),
+                            alignment: Alignment.center,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(

@@ -100,6 +100,7 @@ class _HomeState extends State<Home> {
     final Map<String, Function> leftDrawerMap = Globals.skipped?
     {
       'Home' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         while(Globals.pagesStack.isNotEmpty){
           Globals.pagesStack.pop();
         }
@@ -115,12 +116,14 @@ class _HomeState extends State<Home> {
 //        Navigator.of(context).pop();
 //      },
       'Ideas' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.ideasPageIndex;
         });
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.contactPageIndex;
         });
@@ -137,6 +140,7 @@ class _HomeState extends State<Home> {
     }
     :{
       'Home' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         while(Globals.pagesStack.isNotEmpty){
           Globals.pagesStack.pop();
         }
@@ -146,12 +150,14 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'My Profile' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.profilePageIndex;
         });
         Navigator.of(context).pop();
       },
       'My Wishlist' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.myWishListPageIndex;
         });
@@ -164,12 +170,14 @@ class _HomeState extends State<Home> {
 //        Navigator.of(context).pop();
 //      },
       'Ideas' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.ideasPageIndex;
         });
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
+        _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.contactPageIndex;
         });
@@ -277,7 +285,8 @@ class _HomeState extends State<Home> {
               child: GestureDetector(
                 onTap: (){
                   FocusScope.of(context).requestFocus(FocusNode());
-                  _searchController.value = _searchController.value.copyWith(text: '');
+                  if(index != PagesIndices.searchPageIndex)
+                    _searchController.value = _searchController.value.copyWith(text: '');
                 },
                 child: Column(
                   children: <Widget>[

@@ -66,7 +66,7 @@ class _RegisterState extends State<Register> {
                     Image.asset(
                       'assets/header.png',
                       width: 300,
-                      height: 195,
+                      height: _width > 360?195: 150,
                     ),
                     Column(
                       children: <Widget>[
@@ -76,8 +76,8 @@ class _RegisterState extends State<Register> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(
-                                  top: 20,
-                                  bottom: 20,
+                                  top: _width > 360?20:10,
+                                  bottom: _width > 360?20:10,
                                   left: 50,
                                   right: 50,
                                 ),
@@ -90,7 +90,7 @@ class _RegisterState extends State<Register> {
                                 child: Text(
                                   'Register',
                                   style: TextStyle(
-                                      fontSize: 35, color: Colors.white),
+                                      fontSize: _width> 360?35:30, color: Colors.white),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -308,29 +308,32 @@ class _RegisterState extends State<Register> {
                               ),
 
                               // Sign in link text
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Text(
-                                      'Have an account?',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15.0, top: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Have an account?',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 105, left: 105, top: 5),
-                                      child: DashedDivider(
-                                        width: 5,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 105, left: 105, top: 5),
+                                        child: DashedDivider(
+                                          width: 5,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],

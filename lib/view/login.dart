@@ -22,8 +22,6 @@ class _LoginState extends State<Login> {
 
   bool _loggingIn = false;
 
-
-  
   _showLoginErrorDialog(BuildContext context, {String message}){
 
     showDialog(context: context, builder: (context){
@@ -181,10 +179,10 @@ class _LoginState extends State<Login> {
                         Image.asset(
                           'assets/header.png',
                           width: 300,
-                          height: 195,
+                          height: _width > 360?195:180,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
+                          padding: EdgeInsets.only(top: _width > 360? 20 : 10, bottom: _width > 360? 20 : 10, left: 50, right: 50,),
                           child: DashedDivider(
                             color: Colors.white30,
                           ),
@@ -463,7 +461,7 @@ class _LoginState extends State<Login> {
               Positioned(
                 left: 0.0,
                 right: 0.0,
-                top: _width > 360? _height / 11 : _height / 13,
+                top: _width > 360? _height / 11 : _height / 15,
                 bottom: 0.0,
                 child: GestureDetector(
                   onTap: (){
@@ -476,10 +474,10 @@ class _LoginState extends State<Login> {
                         Image.asset(
                           'assets/header.png',
                           width: 300,
-                          height: 195,
+                          height: _width > 360?195:180,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
+                          padding: EdgeInsets.only(top: _width > 360? 20 : 10, bottom: _width > 360? 20 : 10, left: 50, right: 50,),
                           child: DashedDivider(
                             color: Colors.white30,
                           ),
