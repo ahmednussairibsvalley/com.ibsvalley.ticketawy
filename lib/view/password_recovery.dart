@@ -88,7 +88,13 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                       Padding(
                         padding: EdgeInsets.only(
                             left: 20, right: 20),
-                        child: Text('Recover your password',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                        child: Text('Recover your password',
+                          style: TextStyle(
+                              fontSize: _width > 360?35:30,
+                              color: Colors.white
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       GestureDetector(
                         onTap: (){
