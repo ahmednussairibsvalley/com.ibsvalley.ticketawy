@@ -4,6 +4,7 @@ import 'package:ticketawy/view/new_password.dart';
 import '../util.dart' as util;
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
+import 'verification.dart';
 
 class PasswordRecovery extends StatefulWidget {
   @override
@@ -19,6 +20,27 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
 //  String _phoneNumber = '';
 
   bool _recovering = false;
+
+  _showVerificationDialog({String phoneNumber, String id, String password,}){
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: VerificationDialog(
+              phoneNumber: phoneNumber,
+              id: id, password: password,
+              onSuccess: (id , message , password ) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
+                  code: id,
+                  phone: phoneNumber,
+                )));
+              },
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -111,6 +133,8 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                           ),
                         ),
                       ),
+
+
                       // recover password button
                       Padding(
                         padding: const EdgeInsets.only(
@@ -135,10 +159,10 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                               });
 
                               if(response['result'] == true || response['result'] == 'true'){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
-                                  code: response['id'],
-                                  phone: _phoneController.text,
-                                )));
+                                _showVerificationDialog(
+                                  phoneNumber: _phoneController.text,
+                                  id: response['id'],
+                                );
 
                               } else {
                                 _showResultDialog(context, response['user_Message']);
