@@ -7,9 +7,8 @@ import '../util.dart' as util;
 class NewPassword extends StatefulWidget {
 
   final String phone;
-  final String code;
 
-  NewPassword({@required this.phone, @required this.code});
+  NewPassword({@required this.phone,});
   @override
   _NewPasswordState createState() => _NewPasswordState();
 }
@@ -28,7 +27,6 @@ class _NewPasswordState extends State<NewPassword> {
 
     String _newPassword = '';
 
-    print('The code: ${widget.code}');
     print('The phone: ${widget.phone}');
 
     return Stack(
@@ -156,7 +154,6 @@ class _NewPasswordState extends State<NewPassword> {
 
                               Map response = await util.updatePassword(
                                   phoneNumber: widget.phone,
-                                  code: widget.code,
                                   newPassword: _newPassword
                               );
 

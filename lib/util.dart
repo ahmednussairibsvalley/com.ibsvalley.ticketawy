@@ -107,18 +107,23 @@ Future<List> getUserList () async {
 
 /// Calls the VerificationMessage
 Future<Map> sendVerificationMessage (String phone) async{
-  String url = '$_baseUrl/api/AspNetUsers/Send_VerificationMessage';
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone' : phone
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Send_VerificationMessage';
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone' : phone
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } catch (e){
+    return null;
+  }
+
 }
 
 Future<Map> verifyPhone (String phone, String code) async {
@@ -372,7 +377,7 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 
 }
 
-Future<Map> updatePassword({@required String phoneNumber, @required String code, @required String newPassword}) async{
+Future<Map> updatePassword({@required String phoneNumber, @required String newPassword}) async{
   String url = '$_baseUrl/api/AspNetUsers/UpdatePassword';
 
   HttpClient httpClient = new HttpClient();
@@ -380,7 +385,6 @@ Future<Map> updatePassword({@required String phoneNumber, @required String code,
   request.headers.set('content-type', 'application/json');
   Map jsonMap = {
     'Phone':'$phoneNumber',
-    'Code':'$code',
     'Password':'$newPassword',
   };
   request.add(utf8.encode(json.encode(jsonMap)));
