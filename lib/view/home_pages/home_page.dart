@@ -17,22 +17,20 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class HomePage extends StatefulWidget {
-
   final Function(int, String) onPress;
   final Function(int) onEventPressed;
   final Function(int) onHotOfferPressed;
 
   HomePage(
       {@required this.onPress,
-        @required this.onEventPressed,
-        @required this.onHotOfferPressed});
+      @required this.onEventPressed,
+      @required this.onHotOfferPressed});
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   FutureBuilder _eventsSlider;
   FutureBuilder _hotOffersSlider;
 
@@ -49,7 +47,7 @@ class _HomePageState extends State<HomePage> {
             return EventsSlider(
               onEventPressed: widget.onEventPressed,
               list: Globals.controller.homeEvents,
-              onUpdateWisthList: (){
+              onUpdateWisthList: () {
                 _updateHoteOffers();
               },
             );
@@ -72,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             Globals.controller.populateHotEvents(snapshot.data);
             return HotOffersSlider(
-              onUpdateWishList: (){
+              onUpdateWishList: () {
                 _updateHotEvents();
               },
               onEventPressed: widget.onHotOfferPressed,
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _updateHotEvents(){
+  _updateHotEvents() {
     setState(() {
       _eventsSlider = FutureBuilder(
         future: util.getHomeEvents(),
@@ -103,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               return EventsSlider(
                 onEventPressed: widget.onEventPressed,
                 list: Globals.controller.homeEvents,
-                onUpdateWisthList: (){
+                onUpdateWisthList: () {
                   _updateHoteOffers();
                 },
               );
@@ -122,7 +120,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  _updateHoteOffers(){
+  _updateHoteOffers() {
     setState(() {
       _hotOffersSlider = FutureBuilder(
         future: util.getHotEvents(),
@@ -133,7 +131,7 @@ class _HomePageState extends State<HomePage> {
               return HotOffersSlider(
                 onEventPressed: widget.onHotOfferPressed,
                 list: Globals.controller.hotEvents,
-                onUpdateWishList: (){
+                onUpdateWishList: () {
                   _updateHotEvents();
                 },
               );
@@ -151,15 +149,16 @@ class _HomePageState extends State<HomePage> {
       );
     });
   }
+
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.homePageIndex);
     return FutureBuilder(
       future: Connectivity().checkConnectivity(),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           if (snapshot.data == ConnectivityResult.mobile ||
-              snapshot.data == ConnectivityResult.wifi){
+              snapshot.data == ConnectivityResult.wifi) {
             return ListView(
               children: <Widget>[
                 _eventsSlider,
@@ -180,12 +179,14 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
 class EventsSlider extends StatefulWidget {
   final Function onEventPressed;
   final List list;
   final Function onUpdateWisthList;
-  EventsSlider({@required this.onEventPressed, @required this.list, @required this.onUpdateWisthList});
+  EventsSlider(
+      {@required this.onEventPressed,
+      @required this.list,
+      @required this.onUpdateWisthList});
   @override
   _EventsSliderState createState() => _EventsSliderState(
         onEventPressed: onEventPressed,
@@ -216,7 +217,7 @@ class _EventsSliderState extends State<EventsSlider> {
           id: i.id,
           title: i.title,
           imageUrl: i.imageUrl,
-          onUpdateWishList: (){
+          onUpdateWishList: () {
             widget.onUpdateWisthList();
           },
         );
@@ -274,7 +275,6 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class EventItem extends StatefulWidget {
-
   final int id;
   final int reservationOption;
   final String imageUrl;
@@ -283,36 +283,39 @@ class EventItem extends StatefulWidget {
   final Function(int) onEventPressed;
   final Function onUpdateWishList;
 
-  EventItem({@required this.id, @required this.reservationOption,
-    @required this.onEventPressed, @required this.imageUrl,
-    @required this.title, @required this.price, @required this.onUpdateWishList});
+  EventItem(
+      {@required this.id,
+      @required this.reservationOption,
+      @required this.onEventPressed,
+      @required this.imageUrl,
+      @required this.title,
+      @required this.price,
+      @required this.onUpdateWishList});
   @override
   _EventItemState createState() => _EventItemState();
 }
 
 class _EventItemState extends State<EventItem> {
-
   bool _addedToWishList = false;
 
-  initValues() async{
+  initValues() async {
     List response = await util.getWishList();
-    if(response != null){
-      for(int i = 0; i < response.length ; i++){
-        if(response[i]['id'] == widget.id){
+    if (response != null) {
+      for (int i = 0; i < response.length; i++) {
+        if (response[i]['id'] == widget.id) {
           _addedToWishList = true;
           break;
         }
       }
     }
-
   }
 
   @override
   void initState() {
     super.initState();
-    if(!Globals.skipped)
-      initValues();
+    if (!Globals.skipped) initValues();
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -361,54 +364,63 @@ class _EventItemState extends State<EventItem> {
 //                  ),
 
                   //Wishlist Button
-                  Globals.skipped?Container()
-                      :Positioned(
-                      top: 25.0,
-                      right: 25,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepOrange),
-                        child: FutureBuilder(
-                          future: util.getWishList(),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return Container(
-                                width: 30,
-                                height: 30,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.deepOrange),
-                                child: IconButton(padding: EdgeInsets.only(top: 2),
-                                    icon: Icon(
-                                      _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ),
-                                    onPressed: () async{
-                                      Map response = await util.addToRemoveFromWishList(widget.id);
-                                      if(response['result']){
-                                        setState(() {
-
-                                          _addedToWishList = _addedToWishList?false: true;
-                                        });
-                                      }
-                                      widget.onUpdateWishList();
-                                    }),
-                              );
-                            }
-                            return Container(
-                              child: Column(
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )),
+                  Globals.skipped
+                      ? Container()
+                      : Positioned(
+                          top: 25.0,
+                          right: 25,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.deepOrange),
+                            child: FutureBuilder(
+                              future: util.getWishList(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.deepOrange),
+                                    child: IconButton(
+                                        padding: EdgeInsets.only(top: 2),
+                                        icon: Icon(
+                                          _addedToWishList
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 25,
+                                        ),
+                                        onPressed: () async {
+                                          Map response = await util
+                                              .addToRemoveFromWishList(
+                                                  widget.id);
+                                          if (response['result']) {
+                                            setState(() {
+                                              _addedToWishList =
+                                                  _addedToWishList
+                                                      ? false
+                                                      : true;
+                                            });
+                                          }
+                                          widget.onUpdateWishList();
+                                        }),
+                                  );
+                                }
+                                return Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      CircularProgressIndicator(),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )),
 
                   Positioned(
                     right: 0.0,
@@ -428,7 +440,8 @@ class _EventItemState extends State<EventItem> {
                                   bottomLeft: Radius.circular(15)),
                             ),
                             width: widget.title.length > 20 ? 200 : 150,
-                            height: 50,
+                            height: widget.title.length > 20 ? 50 : 35,
+                            alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -441,7 +454,8 @@ class _EventItemState extends State<EventItem> {
                             ),
                           ),
                           Container(
-                            height: 50,
+                            height: widget.title.length > 20 ? 50 : 35,
+                            alignment: Alignment.centerLeft,
                             decoration: BoxDecoration(
                               color: Color(0xffe75d02),
                               borderRadius: BorderRadius.only(
@@ -664,7 +678,10 @@ class HotOffersSlider extends StatefulWidget {
   final List list;
   final Function onUpdateWishList;
 
-  HotOffersSlider({@required this.onEventPressed, @required this.list, @required this.onUpdateWishList});
+  HotOffersSlider(
+      {@required this.onEventPressed,
+      @required this.list,
+      @required this.onUpdateWishList});
   @override
   _HotOffersSliderState createState() => _HotOffersSliderState();
 }
@@ -787,13 +804,16 @@ class HotOfferPage extends StatelessWidget {
   final Function(int) onEventPressed;
   final Function onUpdateWishList;
 
-  HotOfferPage({@required this.list, @required this.onEventPressed, @required this.onUpdateWishList});
+  HotOfferPage(
+      {@required this.list,
+      @required this.onEventPressed,
+      @required this.onUpdateWishList});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -820,7 +840,6 @@ class HotOfferPage extends StatelessWidget {
 }
 
 class HotOfferItem extends StatefulWidget {
-
   final int id;
   final Function(int) onEventPressed;
   final int reservationOption;
@@ -829,36 +848,38 @@ class HotOfferItem extends StatefulWidget {
   final double price;
   final Function onUpdateWishList;
 
-  HotOfferItem({@required this.id, @required this.onEventPressed,
-    @required this.reservationOption, @required this.imageUrl,
-  @required this.title, @required this.price, @required this.onUpdateWishList});
+  HotOfferItem(
+      {@required this.id,
+      @required this.onEventPressed,
+      @required this.reservationOption,
+      @required this.imageUrl,
+      @required this.title,
+      @required this.price,
+      @required this.onUpdateWishList});
 
   @override
   _HotOfferItemState createState() => _HotOfferItemState();
 }
 
 class _HotOfferItemState extends State<HotOfferItem> {
-
   bool _addedToWishList = false;
 
-  initValues() async{
+  initValues() async {
     List response = await util.getWishList();
-    if(response != null){
-      for(int i = 0; i < response.length ; i++){
-        if(response[i]['id'] == widget.id){
+    if (response != null) {
+      for (int i = 0; i < response.length; i++) {
+        if (response[i]['id'] == widget.id) {
           _addedToWishList = true;
           break;
         }
       }
     }
-
   }
 
   @override
   void initState() {
     super.initState();
-    if(!Globals.skipped)
-      initValues();
+    if (!Globals.skipped) initValues();
   }
 
   @override
@@ -890,8 +911,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                     Positioned(
                       left: 10.0,
                       child: Container(
-                        decoration:
-                        BoxDecoration(color: Colors.deepPurple),
+                        decoration: BoxDecoration(color: Colors.deepPurple),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
@@ -902,54 +922,63 @@ class _HotOfferItemState extends State<HotOfferItem> {
                         ),
                       ),
                     ),
-                    Globals.skipped?Container():
-                    Positioned(
-                        top: 5.0,
-                        right: 5,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepOrange),
-                          child: FutureBuilder(
-                            future: util.getWishList(),
-                            builder: (context, snapshot){
-                              if(snapshot.connectionState == ConnectionState.done){
-                                return Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.deepOrange),
-                                  child: IconButton(padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: () async{
-                                        Map response = await util.addToRemoveFromWishList(widget.id);
-                                        if(response['result']){
-                                          setState(() {
-
-                                            _addedToWishList = _addedToWishList?false: true;
-                                          });
-                                        }
-                                        widget.onUpdateWishList();
-                                      }),
-                                );
-                              }
-                              return Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    CircularProgressIndicator(),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )),
+                    Globals.skipped
+                        ? Container()
+                        : Positioned(
+                            top: 5.0,
+                            right: 5,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.deepOrange),
+                              child: FutureBuilder(
+                                future: util.getWishList(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    return Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.deepOrange),
+                                      child: IconButton(
+                                          padding: EdgeInsets.only(top: 2),
+                                          icon: Icon(
+                                            _addedToWishList
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
+                                          onPressed: () async {
+                                            Map response = await util
+                                                .addToRemoveFromWishList(
+                                                    widget.id);
+                                            if (response['result']) {
+                                              setState(() {
+                                                _addedToWishList =
+                                                    _addedToWishList
+                                                        ? false
+                                                        : true;
+                                              });
+                                            }
+                                            widget.onUpdateWishList();
+                                          }),
+                                    );
+                                  }
+                                  return Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        CircularProgressIndicator(),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )),
                   ],
                 ),
               ),
@@ -986,6 +1015,3 @@ class _HotOfferItemState extends State<HotOfferItem> {
     );
   }
 }
-
-
-
