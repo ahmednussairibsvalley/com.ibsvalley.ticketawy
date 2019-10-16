@@ -9,6 +9,7 @@ import 'event_details_pages/about.dart';
 import 'event_details_pages/location.dart';
 import 'event_details_pages/schedule.dart';
 
+import 'package:responsive_container/responsive_container.dart';
 import '../../globals.dart';
 import '../../util.dart' as util;
 
@@ -163,139 +164,128 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                top: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 6.0,
-                bottom: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 45,
-                    color: Color(0xfff0f0f0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = aboutPageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'About',
-                              style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
-                                fontFamily: 'Verdana',
-                                color: index == aboutPageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/seperator.png',
-                          height: 10,
-                          width: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = locationPageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'Location',
-                              style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
-                                fontFamily: 'Verdana',
-                                color: index == locationPageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/seperator.png',
-                          height: 10,
-                          width: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = schedulePageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'Schedule',
-                              style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
-                                fontFamily: 'Verdana',
-                                color: index == schedulePageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Buy Tickets Button
-//                BuyTicket(),
-                GestureDetector(
-                  onTap: () {
-                    if (Globals.skipped) {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Login()));
-                    } else {
-                      if (Globals.reservationOption ==
-                          ReservationOptions.byTickets)
-                        _showChooseTicketDialog(widget.onEventBooked);
-                      else if (Globals.reservationOption ==
-                          ReservationOptions.bySeats) widget.onEventBooked();
-                    }
-                  },
-                  child: Container(
-                    height: 45,
-                    color: Color(0xffff6600),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: _width > 350 ? 23 : 25,
-                          right: _width > 350 ? 23 : 20,
-                          top: 15,
-                          bottom: 15),
+      ResponsiveContainer(alignment: Alignment.centerRight,child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              height: 45,
+              color: Color(0xfff0f0f0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  ResponsiveContainer(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          index = aboutPageIndex;
+                        });
+                        _tabController.animateTo(index);
+                      },
                       child: Text(
-                        Globals.reservationOption ==
-                                ReservationOptions.byTickets
-                            ? 'Buy Tickets'
-                            : 'Buy Seats',
-                        textAlign: TextAlign.center,
+                        'About',
                         style: TextStyle(
-                            color: Colors.white, fontFamily: 'MyriadPro'),
+                          fontSize: 15,
+                          fontFamily: 'Verdana',
+                          color: index == aboutPageIndex
+                              ? Color(0xffff6600)
+                              : Color(0xff979797),
+                        ),
+                      ),
+                    ),
+                  widthPercent: 18, heightPercent: 6.5,alignment: Alignment.center,),
+                  Image.asset(
+                    'assets/seperator.png',
+                    height: 10,
+                    width: 10,
+                  ),
+                  ResponsiveContainer(
+                    widthPercent: 22, heightPercent: 6.5,alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          index = locationPageIndex;
+                        });
+                        _tabController.animateTo(index);
+                      },
+                      child: Text(
+                        'Location',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Verdana',
+                          color: index == locationPageIndex
+                              ? Color(0xffff6600)
+                              : Color(0xff979797),
+                        ),
                       ),
                     ),
                   ),
-                )
+                  Image.asset(
+                    'assets/seperator.png',
+                    height: 10,
+                    width: 10,
+                  ),
+                  ResponsiveContainer(
+                    widthPercent: 22, heightPercent: 6.5,alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          index = schedulePageIndex;
+                        });
+                        _tabController.animateTo(index);
+                      },
+                      child: Text(
+                        'Schedule',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'Verdana',
+                          color: index == schedulePageIndex
+                              ? Color(0xffff6600)
+                              : Color(0xff979797),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Buy Tickets Button
+//                BuyTicket(),
+          GestureDetector(
+            onTap: () {
+              if (Globals.skipped) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => Login()));
+              } else {
+                if (Globals.reservationOption ==
+                    ReservationOptions.byTickets)
+                  _showChooseTicketDialog(widget.onEventBooked);
+                else if (Globals.reservationOption ==
+                    ReservationOptions.bySeats) widget.onEventBooked();
+              }
+            },
+            child: Container(
+              height: 45,
+              color: Color(0xffff6600),
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: _width > 350 ? 23 : 25,
+                    right: _width > 350 ? 23 : 20,
+                    top: 15,
+                    bottom: 15),
+                child: Text(
+                  Globals.reservationOption ==
+                      ReservationOptions.byTickets
+                      ? 'Buy Tickets'
+                      : 'Buy Seats',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'MyriadPro'),
+                ),
+              ),
+            ),
+          )
 //                _expired?Container(
 //                  height: 45,
 //                  color: Color(0xff808B96),
@@ -332,13 +322,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 //                    ),
 //                  ),
 //                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: Platform.isIOS ? 10 : _width > 360 ? 25 : 20),
-          ),
+        ],
+      ),heightPercent: 6.5,widthPercent: 100,),
+
           Flexible(
             child: TabBarView(
               controller: _tabController,
