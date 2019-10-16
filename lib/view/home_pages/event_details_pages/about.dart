@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:responsive_container/responsive_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +31,7 @@ class AboutPage extends StatelessWidget {
 
 
 
-    return ListView(
+    return ResponsiveContainer(widthPercent: 90, heightPercent: 80,child: ListView(
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(top: Platform.isIOS?0.0:1.0, bottom: 8.0, right: 25, left: 25),
@@ -183,7 +184,7 @@ class AboutPage extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ),);
   }
 }
 
@@ -234,7 +235,7 @@ class _WishListButtonState extends State<WishListButton> {
                 }
               }
             }
-            return IconButton(padding: EdgeInsets.only(top: 2),
+            return IconButton(padding: EdgeInsets.only(top: 2),alignment: Alignment.center,
                 icon: Icon(
                   _addedToWishList?Icons.favorite:Icons.favorite_border,
                   color: Colors.white,

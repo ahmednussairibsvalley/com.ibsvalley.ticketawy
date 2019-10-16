@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:responsive_container/responsive_container.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:intl/intl.dart';
 
@@ -13,8 +14,8 @@ class SchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final _width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: EdgeInsets.only(right: _width> 360?80:40, left: _width> 360?80:40, top: Platform.isIOS?0.0:_width> 360?40:5, bottom: _width> 360?40:20),
+    return ResponsiveContainer(widthPercent: 90, heightPercent: 90,
+      padding: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
       child: Material(
         elevation: 10,
         shadowColor: Colors.black,

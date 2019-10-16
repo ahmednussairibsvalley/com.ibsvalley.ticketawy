@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
+import 'package:responsive_container/responsive_container.dart';
 
 import '../login.dart';
 import 'event_details_pages/about.dart';
@@ -162,13 +163,17 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    return Scaffold(
+
+    return
+      // the hole space
+      ResponsiveContainer(widthPercent: 100,heightPercent: 90, child: Scaffold(
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                top: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 6.0,
-                bottom: _width > 360 ? Platform.isIOS ? 6.0 : 10 : 0),
+
+          // event tabs
+          ResponsiveContainer(
+            widthPercent: 100,heightPercent: 8,
+
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -178,8 +183,11 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+
+                        // About
+                        ResponsiveContainer(
+                          widthPercent: 21,heightPercent: 8,
+                          alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -190,9 +198,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'About',
                               style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
+                                fontSize: 15,
                                 fontFamily: 'Verdana',
                                 color: index == aboutPageIndex
                                     ? Color(0xffff6600)
@@ -206,8 +212,11 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                           height: 10,
                           width: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+
+                        // Location
+                        ResponsiveContainer(
+                          widthPercent: 21,heightPercent: 8,
+                          alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -218,9 +227,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Location',
                               style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
+                                fontSize: 15,
                                 fontFamily: 'Verdana',
                                 color: index == locationPageIndex
                                     ? Color(0xffff6600)
@@ -234,8 +241,11 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                           height: 10,
                           width: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+
+                        // Schedule
+                        ResponsiveContainer(
+                          widthPercent: 21,heightPercent: 8,
+                          alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
                               setState(() {
@@ -246,9 +256,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                             child: Text(
                               'Schedule',
                               style: TextStyle(
-                                fontSize: _width > 360
-                                    ? Platform.isIOS ? 14 : 20
-                                    : 14,
+                                fontSize: 15,
                                 fontFamily: 'Verdana',
                                 color: index == schedulePageIndex
                                     ? Color(0xffff6600)
@@ -280,20 +288,17 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   child: Container(
                     height: 45,
                     color: Color(0xffff6600),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: _width > 350 ? 23 : 25,
-                          right: _width > 350 ? 23 : 20,
-                          top: 15,
-                          bottom: 15),
+                    child: ResponsiveContainer(
+                      widthPercent: 30,heightPercent: 8,
+                      alignment: Alignment.center,
                       child: Text(
                         Globals.reservationOption ==
-                                ReservationOptions.byTickets
+                            ReservationOptions.byTickets
                             ? 'Buy Tickets'
                             : 'Buy Seats',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: Colors.white, fontFamily: 'MyriadPro'),
+                            color: Colors.white, fontFamily: 'MyriadPro',fontSize: 15),
                       ),
                     ),
                   ),
@@ -337,17 +342,14 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: Platform.isIOS ? 10 : _width > 360 ? 25 : 20),
-          ),
+
           Flexible(
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
                 AboutPage(
                   imageUrl:
-                      '${Globals.imageBaseUrl}/${widget.data['logo']}',
+                  '${Globals.imageBaseUrl}/${widget.data['logo']}',
                   eventName: widget.data['name'],
                   eventDescription: widget.data['content'],
                   endDate: widget.data['endDate'],
@@ -366,7 +368,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
           ),
         ],
       ),
-    );
+    ),);
   }
 
 // End

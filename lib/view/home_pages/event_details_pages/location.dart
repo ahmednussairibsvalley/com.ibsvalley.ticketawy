@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:responsive_container/responsive_container.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'dashed_divider.dart';
@@ -20,8 +21,8 @@ class LocationPage extends StatelessWidget {
     DateTime _startDate = DateTime.parse(startDate);
     DateTime _endDate = DateTime.parse(endDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
-    return Padding(
-      padding: EdgeInsets.only(top: Platform.isIOS?0.0:8.0, bottom: 8.0, right: 15, left: 15,),
+    return ResponsiveContainer(widthPercent: 90, heightPercent: 80,
+      padding: EdgeInsets.only( right: 15, left: 15,),
       child: ListView(
         shrinkWrap: true,
         itemExtent: _width > 360?350:370,
