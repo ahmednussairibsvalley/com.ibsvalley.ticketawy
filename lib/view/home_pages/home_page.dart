@@ -16,7 +16,7 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final Function(int, String) onPress;
   final Function(int) onEventPressed;
   final Function(int) onHotOfferPressed;
@@ -27,63 +27,145 @@ class HomePage extends StatelessWidget {
       @required this.onHotOfferPressed});
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  FutureBuilder _eventsSlider;
+  FutureBuilder _hotOffersSlider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _eventsSlider = FutureBuilder(
+      future: util.getHomeEvents(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            Globals.controller.populateHomeEvents(snapshot.data);
+            return EventsSlider(
+              onEventPressed: widget.onEventPressed,
+              list: Globals.controller.homeEvents,
+              onUpdateWisthList: () {
+                _updateHoteOffers();
+              },
+            );
+          }
+          return Container();
+        }
+        return Container(
+          child: Column(
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+    _hotOffersSlider = FutureBuilder(
+      future: util.getHotEvents(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            Globals.controller.populateHotEvents(snapshot.data);
+            return HotOffersSlider(
+              onUpdateWishList: () {
+                _updateHotEvents();
+              },
+              onEventPressed: widget.onHotOfferPressed,
+              list: Globals.controller.hotEvents,
+            );
+          }
+          return Container();
+        }
+        return Container(
+          child: Column(
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _updateHotEvents() {
+    setState(() {
+      _eventsSlider = FutureBuilder(
+        future: util.getHomeEvents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              Globals.controller.populateHomeEvents(snapshot.data);
+              return EventsSlider(
+                onEventPressed: widget.onEventPressed,
+                list: Globals.controller.homeEvents,
+                onUpdateWisthList: () {
+                  _updateHoteOffers();
+                },
+              );
+            }
+            return Container();
+          }
+          return Container(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  _updateHoteOffers() {
+    setState(() {
+      _hotOffersSlider = FutureBuilder(
+        future: util.getHotEvents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              Globals.controller.populateHotEvents(snapshot.data);
+              return HotOffersSlider(
+                onEventPressed: widget.onHotOfferPressed,
+                list: Globals.controller.hotEvents,
+                onUpdateWishList: () {
+                  _updateHotEvents();
+                },
+              );
+            }
+            return Container();
+          }
+          return Container(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.homePageIndex);
     return FutureBuilder(
       future: Connectivity().checkConnectivity(),
-      builder: (context, snapshot){
-        if(snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
           if (snapshot.data == ConnectivityResult.mobile ||
-              snapshot.data == ConnectivityResult.wifi){
+              snapshot.data == ConnectivityResult.wifi) {
             return ListView(
               children: <Widget>[
-                FutureBuilder(
-                  future: util.getHomeEvents(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        Globals.controller.populateHomeEvents(snapshot.data);
-                        return EventsSlider(
-                          onEventPressed: onEventPressed,
-                          list: Globals.controller.homeEvents,
-                        );
-                      }
-                      return Container();
-                    }
-                    return Container(
-                      child: Column(
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                _eventsSlider,
                 CategoriesSlider(
-                  onPress: onPress,
+                  onPress: widget.onPress,
                 ),
-                FutureBuilder(
-                  future: util.getHotEvents(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        Globals.controller.populateHotEvents(snapshot.data);
-                        return HotOffersSlider(
-                          onEventPressed: onHotOfferPressed,
-                          list: Globals.controller.hotEvents,
-                        );
-                      }
-                      return Container();
-                    }
-                    return Container(
-                      child: Column(
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                _hotOffersSlider,
               ],
             );
           }
@@ -95,13 +177,16 @@ class HomePage extends StatelessWidget {
       },
     );
   }
-
 }
 
 class EventsSlider extends StatefulWidget {
   final Function onEventPressed;
   final List list;
-  EventsSlider({@required this.onEventPressed, @required this.list});
+  final Function onUpdateWisthList;
+  EventsSlider(
+      {@required this.onEventPressed,
+      @required this.list,
+      @required this.onUpdateWisthList});
   @override
   _EventsSliderState createState() => _EventsSliderState(
         onEventPressed: onEventPressed,
@@ -132,6 +217,9 @@ class _EventsSliderState extends State<EventsSlider> {
           id: i.id,
           title: i.title,
           imageUrl: i.imageUrl,
+          onUpdateWishList: () {
+            widget.onUpdateWisthList();
+          },
         );
       },
     ).toList();
@@ -182,6 +270,237 @@ class _EventsSliderState extends State<EventsSlider> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class EventItem extends StatefulWidget {
+  final int id;
+  final int reservationOption;
+  final String imageUrl;
+  final String title;
+  final double price;
+  final Function(int) onEventPressed;
+  final Function onUpdateWishList;
+
+  EventItem(
+      {@required this.id,
+      @required this.reservationOption,
+      @required this.onEventPressed,
+      @required this.imageUrl,
+      @required this.title,
+      @required this.price,
+      @required this.onUpdateWishList});
+  @override
+  _EventItemState createState() => _EventItemState();
+}
+
+class _EventItemState extends State<EventItem> {
+  bool _addedToWishList = false;
+
+  initValues() async {
+    List response = await util.getWishList();
+    if (response != null) {
+      for (int i = 0; i < response.length; i++) {
+        if (response[i]['id'] == widget.id) {
+          _addedToWishList = true;
+          break;
+        }
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (!Globals.skipped) initValues();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data) {
+            return GestureDetector(
+              onTap: () {
+                Globals.reservationOption = widget.reservationOption;
+                widget.onEventPressed(widget.id);
+              },
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      elevation: 5.0,
+                      shadowColor: Colors.black,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            widget.imageUrl,
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.height / 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+//                  Positioned(
+//                    top: 8.0,
+//                    left: 30.0,
+//                    child: Container(
+//                      decoration: BoxDecoration(color: Colors.deepOrange),
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(15.0),
+//                        child: Text(
+//                          'Hot',
+//                          style: TextStyle(
+//                              color: Color(0xffeaeae7), fontSize: 18),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+
+                  //Wishlist Button
+                  Globals.skipped
+                      ? Container()
+                      : Positioned(
+                          top: 25.0,
+                          right: 25,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.deepOrange),
+                            child: FutureBuilder(
+                              future: util.getWishList(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.deepOrange),
+                                    child: IconButton(
+                                        padding: EdgeInsets.only(top: 2),
+                                        icon: Icon(
+                                          _addedToWishList
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.white,
+                                          size: 25,
+                                        ),
+                                        onPressed: () async {
+                                          Map response = await util
+                                              .addToRemoveFromWishList(
+                                                  widget.id);
+                                          if (response['result']) {
+                                            setState(() {
+                                              _addedToWishList =
+                                                  _addedToWishList
+                                                      ? false
+                                                      : true;
+                                            });
+                                          }
+                                          widget.onUpdateWishList();
+                                        }),
+                                  );
+                                }
+                                return Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      CircularProgressIndicator(),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )),
+
+                  Positioned(
+                    right: 0.0,
+                    left: 0.0,
+                    bottom: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 35, left: 35, bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffff6600),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15)),
+                            ),
+                            width: widget.title.length > 20 ? 200 : 150,
+                            height: widget.title.length > 20 ? 50 : 35,
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${widget.title}',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: widget.title.length > 20 ? 50 : 35,
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: Color(0xffe75d02),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(15),
+                                  topRight: Radius.circular(15)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${widget.price} EGP',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Center(
+              child: Text(
+                'Image is not available',
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
+        }
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 50,
+              width: 50,
+              child: CircularProgressIndicator(),
+            )
+          ],
+        );
+      },
+      future: util.isImageUrlAvailable(widget.imageUrl),
     );
   }
 }
@@ -357,8 +676,12 @@ class CategoriesPage extends StatelessWidget {
 class HotOffersSlider extends StatefulWidget {
   final Function(int) onEventPressed;
   final List list;
+  final Function onUpdateWishList;
 
-  HotOffersSlider({@required this.onEventPressed, @required this.list});
+  HotOffersSlider(
+      {@required this.onEventPressed,
+      @required this.list,
+      @required this.onUpdateWishList});
   @override
   _HotOffersSliderState createState() => _HotOffersSliderState();
 }
@@ -405,6 +728,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
         return HotOfferPage(
           list: list,
           onEventPressed: widget.onEventPressed,
+          onUpdateWishList: widget.onUpdateWishList,
         );
       },
     ).toList();
@@ -478,14 +802,18 @@ class HotOfferPage extends StatelessWidget {
   final List list;
 
   final Function(int) onEventPressed;
+  final Function onUpdateWishList;
 
-  HotOfferPage({@required this.list, @required this.onEventPressed});
+  HotOfferPage(
+      {@required this.list,
+      @required this.onEventPressed,
+      @required this.onUpdateWishList});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 0),
       child: GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -503,6 +831,7 @@ class HotOfferPage extends StatelessWidget {
             onEventPressed: onEventPressed,
             price: list[index].price,
             reservationOption: list[index].reservationOption,
+            onUpdateWishList: onUpdateWishList,
           );
         }),
       ),
@@ -511,44 +840,46 @@ class HotOfferPage extends StatelessWidget {
 }
 
 class HotOfferItem extends StatefulWidget {
-
   final int id;
   final Function(int) onEventPressed;
   final int reservationOption;
   final String imageUrl;
   final String title;
   final double price;
+  final Function onUpdateWishList;
 
-  HotOfferItem({@required this.id, @required this.onEventPressed,
-    @required this.reservationOption, @required this.imageUrl,
-  @required this.title, @required this.price});
+  HotOfferItem(
+      {@required this.id,
+      @required this.onEventPressed,
+      @required this.reservationOption,
+      @required this.imageUrl,
+      @required this.title,
+      @required this.price,
+      @required this.onUpdateWishList});
 
   @override
   _HotOfferItemState createState() => _HotOfferItemState();
 }
 
 class _HotOfferItemState extends State<HotOfferItem> {
-
   bool _addedToWishList = false;
 
-  initValues() async{
+  initValues() async {
     List response = await util.getWishList();
-    if(response != null){
-      for(int i = 0; i < response.length ; i++){
-        if(response[i]['id'] == widget.id){
+    if (response != null) {
+      for (int i = 0; i < response.length; i++) {
+        if (response[i]['id'] == widget.id) {
           _addedToWishList = true;
           break;
         }
       }
     }
-
   }
 
   @override
   void initState() {
     super.initState();
-    if(!Globals.skipped)
-      initValues();
+    if (!Globals.skipped) initValues();
   }
 
   @override
@@ -580,8 +911,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                     Positioned(
                       left: 10.0,
                       child: Container(
-                        decoration:
-                        BoxDecoration(color: Colors.deepPurple),
+                        decoration: BoxDecoration(color: Colors.deepPurple),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
@@ -592,53 +922,63 @@ class _HotOfferItemState extends State<HotOfferItem> {
                         ),
                       ),
                     ),
-                    Globals.skipped?Container():
-                    Positioned(
-                        top: 5.0,
-                        right: 5,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.deepOrange),
-                          child: FutureBuilder(
-                            future: util.getWishList(),
-                            builder: (context, snapshot){
-                              if(snapshot.connectionState == ConnectionState.done){
-                                return Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.deepOrange),
-                                  child: IconButton(padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: () async{
-                                        Map response = await util.addToRemoveFromWishList(widget.id);
-                                        if(response['result']){
-                                          setState(() {
-
-                                            _addedToWishList = _addedToWishList?false: true;
-                                          });
-                                        }
-                                      }),
-                                );
-                              }
-                              return Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    CircularProgressIndicator(),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        )),
+                    Globals.skipped
+                        ? Container()
+                        : Positioned(
+                            top: 5.0,
+                            right: 5,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.deepOrange),
+                              child: FutureBuilder(
+                                future: util.getWishList(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    return Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.deepOrange),
+                                      child: IconButton(
+                                          padding: EdgeInsets.only(top: 2),
+                                          icon: Icon(
+                                            _addedToWishList
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: Colors.white,
+                                            size: 25,
+                                          ),
+                                          onPressed: () async {
+                                            Map response = await util
+                                                .addToRemoveFromWishList(
+                                                    widget.id);
+                                            if (response['result']) {
+                                              setState(() {
+                                                _addedToWishList =
+                                                    _addedToWishList
+                                                        ? false
+                                                        : true;
+                                              });
+                                            }
+                                            widget.onUpdateWishList();
+                                          }),
+                                    );
+                                  }
+                                  return Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        CircularProgressIndicator(),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            )),
                   ],
                 ),
               ),
@@ -660,7 +1000,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${widget.price} EGP',
+                    '${widget.price} EGP / Ticket',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -675,224 +1015,3 @@ class _HotOfferItemState extends State<HotOfferItem> {
     );
   }
 }
-
-class EventItem extends StatefulWidget {
-
-  final int id;
-  final int reservationOption;
-  final String imageUrl;
-  final String title;
-  final double price;
-  final Function(int) onEventPressed;
-
-  EventItem({@required this.id, @required this.reservationOption,
-    @required this.onEventPressed, @required this.imageUrl,
-    @required this.title, @required this.price,});
-  @override
-  _EventItemState createState() => _EventItemState();
-}
-
-class _EventItemState extends State<EventItem> {
-
-  bool _addedToWishList = false;
-
-  initValues() async{
-    List response = await util.getWishList();
-    if(response != null){
-      for(int i = 0; i < response.length ; i++){
-        if(response[i]['id'] == widget.id){
-          _addedToWishList = true;
-          break;
-        }
-      }
-    }
-
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if(!Globals.skipped)
-      initValues();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data) {
-            return GestureDetector(
-              onTap: () {
-                Globals.reservationOption = widget.reservationOption;
-                widget.onEventPressed(widget.id);
-              },
-              child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Material(
-                      elevation: 5.0,
-                      shadowColor: Colors.black,
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            widget.imageUrl,
-                            fit: BoxFit.cover,
-                            height: MediaQuery.of(context).size.height / 10,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-//                  Positioned(
-//                    top: 8.0,
-//                    left: 30.0,
-//                    child: Container(
-//                      decoration: BoxDecoration(color: Colors.deepOrange),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(15.0),
-//                        child: Text(
-//                          'Hot',
-//                          style: TextStyle(
-//                              color: Color(0xffeaeae7), fontSize: 18),
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-
-                  //Wishlist Button
-                  Globals.skipped?Container()
-                  :Positioned(
-                      top: 25.0,
-                      right: 25,
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: new BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.deepOrange),
-                        child: FutureBuilder(
-                          future: util.getWishList(),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return Container(
-                                width: 30,
-                                height: 30,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.deepOrange),
-                                child: IconButton(padding: EdgeInsets.only(top: 2),
-                                    icon: Icon(
-                                      _addedToWishList?Icons.favorite:Icons.favorite_border,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ),
-                                    onPressed: () async{
-                                      Map response = await util.addToRemoveFromWishList(widget.id);
-                                      if(response['result']){
-                                        setState(() {
-
-                                          _addedToWishList = _addedToWishList?false: true;
-                                        });
-                                      }
-                                    }),
-                              );
-                            }
-                            return Container(
-                              child: Column(
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )),
-
-                  Positioned(
-                    right: 0.0,
-                    left: 0.0,
-                    bottom: 0.0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 35, left: 35, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xffff6600),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  bottomLeft: Radius.circular(15)),
-                            ),
-                            width: widget.title.length > 30 ? 200 : 150,
-                            height: widget.title.length > 30? 50 : 35,
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '${widget.title}',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: widget.title.length > 30? 50 : 35,
-                            decoration: BoxDecoration(
-                              color: Color(0xffe75d02),
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(15),
-                                  topRight: Radius.circular(15)),
-                            ),
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '${widget.price} EGP',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return Center(
-              child: Text(
-                'Image is not available',
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
-        }
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 50,
-              width: 50,
-              child: CircularProgressIndicator(),
-            )
-          ],
-        );
-      },
-      future: util.isImageUrlAvailable(widget.imageUrl),
-    );
-  }
-}
-
-
-
