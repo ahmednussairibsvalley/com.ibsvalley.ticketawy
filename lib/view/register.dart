@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_container/responsive_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals.dart';
@@ -11,7 +12,6 @@ import 'home.dart';
 import 'verification.dart';
 
 class Register extends StatefulWidget {
-
   final bool openedFromHome;
 
   Register({@required this.openedFromHome});
@@ -56,52 +56,60 @@ class _RegisterState extends State<Register> {
               ),
 
               //The registration form
-              Positioned(
-                left: 0.0,
-                right: 0.0,
-                top: _width > 360 ? _height / 11 : _height / 25,
-                bottom: 0.0,
+              ResponsiveContainer(
+                heightPercent: 100,
+                widthPercent: 100,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 50),
                 child: ListView(
                   children: <Widget>[
-                    Image.asset(
-                      'assets/header.png',
-                      width: 300,
-                      height: _width > 360?195: 150,
+
+                    //Header Logo
+                    ResponsiveContainer(
+                      widthPercent: 25,
+                      heightPercent: 22,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        'assets/header.png',
+                      ),
                     ),
+
+
                     Column(
                       children: <Widget>[
                         Form(
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: _width > 360?20:10,
-                                  bottom: _width > 360?20:10,
-                                  left: 50,
-                                  right: 50,
-                                ),
+                              ResponsiveContainer(
                                 child: DashedDivider(
                                   color: Colors.white30,
                                 ),
+                                widthPercent: 90,
+                                heightPercent: 3,
+                                padding: EdgeInsets.only(left: 30, right: 30),
                               ),
-                              Padding(
+                              ResponsiveContainer(
+                                widthPercent: 40,
+                                heightPercent: 8,
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
-                                  'Register',
+                                  'Sign up',
                                   style: TextStyle(
-                                      fontSize: _width> 360?35:30, color: Colors.white),
+                                      fontSize: _width > 360 ? 35 : 30,
+                                      color: Colors.white),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
 
                               // full name.
-                              Padding(
+                              ResponsiveContainer(
+                                heightPercent: 10,
+                                widthPercent: 100,
                                 padding: const EdgeInsets.only(
                                   left: 45.0,
                                   right: 45.0,
-                                  bottom: 8.0,
-                                  top: 20.0,
+
                                 ),
                                 child: TextFormField(
                                   controller: _fullNameController,
@@ -129,12 +137,13 @@ class _RegisterState extends State<Register> {
                               ),
 
                               // mobile number.
-                              Padding(
+                              ResponsiveContainer(
+                                heightPercent: 10,
+                                widthPercent: 100,
                                 padding: const EdgeInsets.only(
                                   left: 45.0,
                                   right: 45.0,
-                                  bottom: 8.0,
-                                  top: 8.0,
+
                                 ),
                                 child: TextFormField(
                                   controller: _phoneController,
@@ -159,7 +168,7 @@ class _RegisterState extends State<Register> {
                                     RegExp regex = new RegExp(pattern);
                                     if (value.isEmpty)
                                       return 'Please enter your mobile number.';
-                                    if(!regex.hasMatch(value)){
+                                    if (!regex.hasMatch(value)) {
                                       return 'Invalid phone number';
                                     }
                                     phoneNumber = value;
@@ -169,12 +178,13 @@ class _RegisterState extends State<Register> {
                               ),
 
                               // Password.
-                              Padding(
+                              ResponsiveContainer(
+                                heightPercent: 10,
+                                widthPercent: 100,
                                 padding: const EdgeInsets.only(
                                   left: 45.0,
                                   right: 45.0,
-                                  bottom: 8.0,
-                                  top: 8.0,
+
                                 ),
                                 child: TextFormField(
                                   controller: _passwordController,
@@ -197,24 +207,24 @@ class _RegisterState extends State<Register> {
                                   validator: (value) {
                                     if (value.isEmpty)
                                       return 'Please enter your password';
-                                    else if (value.length< 6) {
+                                    else if (value.length < 6) {
                                       password = value;
                                       return 'Password must be at least six chacters ';
                                     }
                                     password = value;
                                     return null;
-
                                   },
                                 ),
                               ),
 
                               // Confirm Password
-                              Padding(
+                              ResponsiveContainer(
+                                heightPercent: 9,
+                                widthPercent: 100,
                                 padding: const EdgeInsets.only(
                                   left: 45.0,
                                   right: 45.0,
-                                  bottom: 8.0,
-                                  top: 8.0,
+
                                 ),
                                 child: TextFormField(
                                   controller: _confirmPasswordController,
@@ -244,7 +254,9 @@ class _RegisterState extends State<Register> {
                               ),
 
                               // register button
-                              Padding(
+                              ResponsiveContainer(
+                                heightPercent: 8,
+                                widthPercent: 100,
                                 padding: const EdgeInsets.only(
                                   left: 28.5,
                                   right: 28.5,
@@ -252,31 +264,44 @@ class _RegisterState extends State<Register> {
                                 child: ListTile(
                                   onTap: () async {
                                     Globals.skipped = false;
-                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
                                     if (_formKey.currentState.validate()) {
                                       setState(() {
                                         _registering = true;
                                       });
-                                      Map response = await util.register(fullName,
-                                          phoneNumber, password);
+                                      Map response = await util.register(
+                                          fullName, phoneNumber, password);
 
                                       if (response['result']) {
                                         String id = response['id'];
-                                        Map verificationResponse = await util.sendVerificationMessage(phoneNumber);
+                                        Map verificationResponse =
+                                            await util.sendVerificationMessage(
+                                                phoneNumber);
 
-                                        if(verificationResponse['result']){
-                                          _showVerificationDialog(id: id, password: password, phoneNumber: phoneNumber);
+                                        if (verificationResponse['result']) {
+                                          _showVerificationDialog(
+                                              id: id,
+                                              password: password,
+                                              phoneNumber: phoneNumber);
                                           setState(() {
                                             _registering = false;
                                           });
 
 //                                        _showRegistrationSuccessDialog(context,message: response['user_Message']);
-                                          _fullNameController.value = _fullNameController.value.copyWith(text: '');
-                                          _phoneController.value = _phoneController.value.copyWith(text: '');
-                                          _passwordController.value = _passwordController.value.copyWith(text: '');
-                                          _confirmPasswordController.value = _confirmPasswordController.value.copyWith(text: '');
+                                          _fullNameController.value =
+                                              _fullNameController.value
+                                                  .copyWith(text: '');
+                                          _phoneController.value =
+                                              _phoneController.value
+                                                  .copyWith(text: '');
+                                          _passwordController.value =
+                                              _passwordController.value
+                                                  .copyWith(text: '');
+                                          _confirmPasswordController.value =
+                                              _confirmPasswordController.value
+                                                  .copyWith(text: '');
                                         }
-
                                       } else {
                                         setState(() {
                                           _registering = false;
@@ -309,7 +334,8 @@ class _RegisterState extends State<Register> {
 
                               // Sign in link text
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 15.0, top: 5),
+                                padding:
+                                    const EdgeInsets.only(bottom: 15.0, top: 5),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).pop();
@@ -350,13 +376,15 @@ class _RegisterState extends State<Register> {
                 alignment: Alignment.topLeft,
                 child: GestureDetector(
                     onTap: () {
-                      if(widget.openedFromHome)
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+                      if (widget.openedFromHome)
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => Home()));
                       else
                         Navigator.of(context).pop();
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 40, bottom: 40 , left: 20, right: 40),
+                      padding: const EdgeInsets.only(
+                          top: 40, bottom: 40, left: 20, right: 40),
                       child: Icon(
                         Icons.arrow_back,
                         color: Colors.white,
@@ -390,25 +418,24 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  _showVerificationDialog({String phoneNumber, String id, String password}){
-
+  _showVerificationDialog({String phoneNumber, String id, String password}) {
     showDialog(
         context: context,
         builder: (context) {
           return CustomAlertDialog(
             content: VerificationDialog(
               phoneNumber: phoneNumber,
-              id: id, password: password,
-              onSuccess: (id , message , password ) {
-                _showRegistrationSuccessDialog(context, message: message,id: id, password: password);
+              id: id,
+              password: password,
+              onSuccess: (id, message, password) {
+                _showRegistrationSuccessDialog(context,
+                    message: message, id: id, password: password);
               },
             ),
           );
         });
   }
-
 }
-
 
 _showRegistrationErrorDialog(BuildContext context, {String message}) {
   showDialog(
@@ -470,7 +497,8 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
       });
 }
 
-_showRegistrationSuccessDialog(BuildContext context, {String message, String id, String password}) {
+_showRegistrationSuccessDialog(BuildContext context,
+    {String message, String id, String password}) {
   showDialog(
       context: context,
       builder: (context) {
@@ -483,9 +511,7 @@ _showRegistrationSuccessDialog(BuildContext context, {String message, String id,
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    message.isNotEmpty && message != null
-                        ? message
-                        : 'Success',
+                    message.isNotEmpty && message != null ? message : 'Success',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -508,11 +534,12 @@ _showRegistrationSuccessDialog(BuildContext context, {String message, String id,
                   ),
                 ),
                 ListTile(
-                  onTap: ()async {
+                  onTap: () async {
                     Globals.skipped = false;
-                    Globals.userPassword = password != null && password.isNotEmpty?password:'';
+                    Globals.userPassword =
+                        password != null && password.isNotEmpty ? password : '';
 //                    Globals.userId = response['id'];
-                    Globals.userId = id != null && id.isNotEmpty ?id:'';
+                    Globals.userId = id != null && id.isNotEmpty ? id : '';
                     Map userData = await getUserDetails();
 
                     Globals.controller.populateUser(userData);
@@ -520,11 +547,17 @@ _showRegistrationSuccessDialog(BuildContext context, {String message, String id,
 
                     Globals.controller.populateCategories(categoriesList);
 
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setString('userId', id != null && id.isNotEmpty ?id:'');
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString(
+                        'userId', id != null && id.isNotEmpty ? id : '');
                     prefs.setString('fullName', userData['fullName']);
                     prefs.setString('phoneNumber', userData['phoneNumber']);
-                    prefs.setString('password', password != null && password.isNotEmpty?password:'');
+                    prefs.setString(
+                        'password',
+                        password != null && password.isNotEmpty
+                            ? password
+                            : '');
 
                     Navigator.of(context).pop();
                     Navigator.of(context).pushReplacementNamed('/home');
