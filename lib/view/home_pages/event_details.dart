@@ -372,7 +372,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 // End
   _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
-//      barrierDismissible: false,
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return CustomAlertDialog(
@@ -409,103 +409,119 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Stack(
       children: <Widget>[
-        // The logo
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            'assets/logo.png',
-            width: 60,
-            height: 82,
-          ),
-        ),
+        ListView(
+          children: <Widget>[
+            // The logo
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/logo.png',
+                width: 60,
+                height: 82,
+              ),
+            ),
 
-        // Choose Ticket title
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Choose tickets',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 23,
-                fontFamily: 'GeometriqueSans',
-                color: Color(0xff878787)),
-          ),
-        ),
+            // Choose Ticket title
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Choose tickets',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 23,
+                    fontFamily: 'GeometriqueSans',
+                    color: Color(0xff878787)),
+              ),
+            ),
 
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder(
-            future: util.getServiceClasses(Globals.eventId),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(snapshot.data.length, (index) {
-                    return ClassItem(
-                        orderIndex: index,
-                        classId: snapshot.data[index]['id'],
-                        className: snapshot.data[index]['class_Name'],
-                        totalPrice: snapshot.data[index]['total_Price'],
-                        activityServiceId: snapshot.data[index]['activity_service_Id']);
-                  }),
-                );
-              }
-              return Container();
-            },
-          ),
-        ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder(
+                future: util.getServiceClasses(Globals.eventId),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(snapshot.data.length, (index) {
+                        return ClassItem(
+                            orderIndex: index,
+                            classId: snapshot.data[index]['id'],
+                            className: snapshot.data[index]['class_Name'],
+                            totalPrice: snapshot.data[index]['total_Price'],
+                            activityServiceId: snapshot.data[index]['activity_service_Id']);
+                      }),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ),
 
-        // Buy Button
-        Padding(
-          padding: const EdgeInsets.only(
-            right: 70,
-            left: 70,
-          ),
-          child: ListTile(
-            onTap: () async {
-              Navigator.of(context).pop();
-              List list = List();
-              for (int i = 0; i < orderTickets.length; i++) {
-                int numberOfTickets =
+            // Buy Button
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 70,
+                left: 70,
+              ),
+              child: ListTile(
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  List list = List();
+                  for (int i = 0; i < orderTickets.length; i++) {
+                    int numberOfTickets =
                     int.parse(orderTickets[i]['numberOfTickets'].toString());
-                if (numberOfTickets > 0) {
-                  list.add(orderTickets[i]);
-                }
-              }
-              orderTickets.clear();
+                    if (numberOfTickets > 0) {
+                      list.add(orderTickets[i]);
+                    }
+                  }
+                  orderTickets.clear();
 //              print('${Globals.userId}');
 //              print('${Globals.eventId}');
 //              print('${json.encode(list)}');
 
-              Map response =
+                  Map response =
                   await util.addOrder(eventId: Globals.eventId, orders: list);
 
-              print('$response');
-              var responseFromNative = await platform.invokeMethod('initFawry', response);
+                  print('$response');
+                  var responseFromNative = await platform.invokeMethod('initFawry', response);
 
-              print('Response from native: ${responseFromNative.toString()}');
+                  print('Response from native: ${responseFromNative.toString()}');
 
 
-            },
-            title: Container(
-              decoration: BoxDecoration(
-                color: Color(0xfffe6700),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Buy',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Verdana',
-                    fontSize: 20,
+                },
+                title: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xfffe6700),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Buy',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Verdana',
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
+        Positioned(
+          right: 0.0, top: 0.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+              child: Icon(Icons.close),
             ),
           ),
         ),

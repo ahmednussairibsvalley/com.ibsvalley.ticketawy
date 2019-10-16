@@ -420,6 +420,7 @@ class _RegisterState extends State<Register> {
 
   _showVerificationDialog({String phoneNumber, String id, String password}) {
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (context) {
           return CustomAlertDialog(
@@ -439,6 +440,7 @@ class _RegisterState extends State<Register> {
 
 _showRegistrationErrorDialog(BuildContext context, {String message}) {
   showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return CustomAlertDialog(
@@ -500,6 +502,7 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
 _showRegistrationSuccessDialog(BuildContext context,
     {String message, String id, String password}) {
   showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return CustomAlertDialog(

@@ -24,137 +24,139 @@ class _VerificationDialogState extends State<VerificationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Container(
-        width: 300.0,
-        height: 300.0,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'An SMS sent to you with verification code.'
-                    'Please enter the code and press OK',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'GeometriqueSans',
-                ),
-              ),
-            ),
-
-            // Divider
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DashedDivider(),
-            ),
-
-
-            TextFormField(
-              onTap: (){
-                setState(() {
-                  _message = '';
-                });
-              },
-              onChanged: (value){
-                setState(() {
-                  _message = '';
-                });
-              },
-              controller: _verificationController,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                hintText: 'Enter the verification code',
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _message.isNotEmpty?
-              Text(_message, textAlign: TextAlign.center,)
-                  : Padding(
-                padding: const EdgeInsets.all(15),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      children: <Widget>[
+        GestureDetector(
+          onTap: (){
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Container(
+            width: 300.0,
+            height: 300.0,
+            child: Column(
               children: <Widget>[
-
-                // Confirm
-                GestureDetector(
-                  onTap: () async{
-                    Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
-                    if(response['result']){
-                      Navigator.of(context).pop();
-//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                      widget.onSuccess(widget.id, response['user_Message'], widget.password);
-                    } else {
-                      setState(() {
-                        _message = response['user_Message'];
-                      });
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text('Confirm',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'An SMS sent to you with verification code.'
+                        'Please enter the code and press OK',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'GeometriqueSans',
                     ),
                   ),
                 ),
 
-                //Resend
-                GestureDetector(
-                  onTap: () async{
-                    FocusScope.of(context).requestFocus(FocusNode());
+                // Divider
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DashedDivider(),
+                ),
+
+
+                TextFormField(
+                  onTap: (){
                     setState(() {
-                      _message = 'Resending ..';
+                      _message = '';
                     });
-                    var response = await util.sendVerificationMessage(widget.phoneNumber);
-
-                    print('$response');
-                    if(response['result']){
-                      setState(() {
-                        _message = 'An SMS sent to you';
-                      });
-                    } else {
-                      _message = 'Error while resending a new SMS.';
-                    }
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(20),
+                  onChanged: (value){
+                    setState(() {
+                      _message = '';
+                    });
+                  },
+                  controller: _verificationController,
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text('Resend',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white
+                    hintText: 'Enter the verification code',
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: _message.isNotEmpty?
+                  Text(_message, textAlign: TextAlign.center,)
+                      : Padding(
+                    padding: const EdgeInsets.all(15),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                    // Confirm
+                    GestureDetector(
+                      onTap: () async{
+                        Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
+                        if(response['result']){
+                          Navigator.of(context).pop();
+//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
+                          widget.onSuccess(widget.id, response['user_Message'], widget.password);
+                        } else {
+                          setState(() {
+                            _message = response['user_Message'];
+                          });
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text('Confirm',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+
+                    //Resend
+                    GestureDetector(
+                      onTap: () async{
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        setState(() {
+                          _message = 'Resending ..';
+                        });
+                        var response = await util.sendVerificationMessage(widget.phoneNumber);
+
+                        print('$response');
+                        if(response['result']){
+                          setState(() {
+                            _message = 'An SMS sent to you';
+                          });
+                        } else {
+                          _message = 'Error while resending a new SMS.';
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text('Resend',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
 //                  ListTile(
 //                    onTap: () async{
 //
@@ -179,9 +181,21 @@ class _VerificationDialogState extends State<VerificationDialog> {
 //                      ),
 //                    ),
 //                  )
-          ],
+              ],
+            ),
+          ),
         ),
-      ),
+        Positioned(
+          top: 0.0,
+          right: 0.0,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.of(context).pop();
+            },
+              child: Icon(Icons.close)
+          ),
+        )
+      ],
     );
   }
 }
