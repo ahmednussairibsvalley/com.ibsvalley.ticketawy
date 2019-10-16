@@ -126,7 +126,7 @@ class EventTabs extends StatefulWidget {
   final Function onEventBooked;
   final Map data;
 
-  EventTabs({@required this.onEventBooked, @required this.data});
+  EventTabs({@required this.onEventBooked, @required this.data,});
 
   @override
   _EventTabsState createState() => _EventTabsState();
@@ -137,6 +137,19 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 
   TabController _tabController;
   bool _expired = false;
+
+  _createOrder(){
+    if (Globals.skipped) {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => Login()));
+    } else {
+      if (Globals.reservationOption ==
+          ReservationOptions.byTickets)
+        _showChooseTicketDialog(widget.onEventBooked);
+      else if (Globals.reservationOption ==
+          ReservationOptions.bySeats) widget.onEventBooked();
+    }
+  }
 
   @override
   void initState() {
@@ -161,6 +174,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -265,16 +279,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 //                BuyTicket(),
                 GestureDetector(
                   onTap: () {
-                    if (Globals.skipped) {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Login()));
-                    } else {
-                      if (Globals.reservationOption ==
-                          ReservationOptions.byTickets)
-                        _showChooseTicketDialog(widget.onEventBooked);
-                      else if (Globals.reservationOption ==
-                          ReservationOptions.bySeats) widget.onEventBooked();
-                    }
+                    _createOrder();
                   },
                   child: Container(
                     height: 45,
@@ -599,16 +604,6 @@ class _ClassItemState extends State<ClassItem> {
                   Flexible(
                     child: TicketQuantity(
                       onUpdateQuantity: (value) async {
-//                        Map response = await util.availableTickets(
-//                            quantity: value,
-//                            classId: widget.classId,
-//                            activityServiceId: widget.activityServiceId);
-//
-//                        print('$response');
-//
-//                        if(response['result']){
-//
-//                        }
                         setState(() {
                           _quantity = value;
                         });
@@ -688,15 +683,15 @@ class _TicketQuantityState extends State<TicketQuantity> {
                 });
                 widget.onUpdateQuantity(_current);
               }
-              Fluttertoast.showToast(
-                  msg: response['user_Message'],
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.black38,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
+//              Fluttertoast.showToast(
+//                  msg: response['user_Message'],
+//                  toastLength: Toast.LENGTH_LONG,
+//                  gravity: ToastGravity.BOTTOM,
+//                  timeInSecForIos: 1,
+//                  backgroundColor: Colors.black38,
+//                  textColor: Colors.white,
+//                  fontSize: 16.0
+//              );
 
             }
           },

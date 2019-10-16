@@ -25,6 +25,10 @@ import 'login.dart';
 
 
 class Home extends StatefulWidget {
+
+  final int currentPageIndex;
+
+  Home({this.currentPageIndex = -1,});
   @override
   _HomeState createState() => _HomeState();
 }
@@ -92,6 +96,12 @@ class _HomeState extends State<Home> {
           );
         }
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.currentPageIndex >= 0?widget.currentPageIndex:PagesIndices.homePageIndex;
   }
 
   @override

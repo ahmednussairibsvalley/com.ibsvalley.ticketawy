@@ -10,6 +10,7 @@ import '../util.dart' as util;
 
 import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
+import 'home.dart';
 import 'verification.dart';
 
 class Login extends StatefulWidget {
@@ -302,7 +303,13 @@ class _LoginState extends State<Login> {
 
                                   Globals.controller.populateCategories(categoriesList);
                                   Globals.skipped = false;
-                                  Navigator.of(context).pushReplacementNamed('/home');
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => Home(
+                                            currentPageIndex: PagesIndices.eventPageIndex,
+                                          )
+                                      )
+                                  );
                                 } else{
                                   setState(() {
                                     _loggingIn = false;
@@ -430,7 +437,12 @@ class _LoginState extends State<Login> {
                       List categoriesList = await categoryList();
 
                       Globals.controller.populateCategories(categoriesList);
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => Home(
+                            currentPageIndex: PagesIndices.eventPageIndex,
+                          )
+                        )
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 40, bottom: 40 , left: 20, right: 40),
