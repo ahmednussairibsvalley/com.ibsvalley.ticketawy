@@ -39,6 +39,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   _showNoConnectivityDialog(){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(

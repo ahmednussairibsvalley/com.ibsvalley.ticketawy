@@ -242,6 +242,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
 
   _showResultDialog(BuildContext context, String message){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(

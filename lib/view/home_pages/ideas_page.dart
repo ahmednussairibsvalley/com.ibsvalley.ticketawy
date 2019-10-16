@@ -138,6 +138,7 @@ class _IdeasFormState extends State<IdeasForm> {
 
   _showNoConnectivityDialog(BuildContext context){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(
@@ -194,6 +195,7 @@ class _IdeasFormState extends State<IdeasForm> {
 
   _showResultDialog(BuildContext context, String message){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(

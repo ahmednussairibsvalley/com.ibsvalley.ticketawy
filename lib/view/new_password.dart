@@ -233,6 +233,7 @@ class _NewPasswordState extends State<NewPassword> {
 
   _showResultDialog(BuildContext context, String message, Function onPasswordUpdate, bool passwordUpdated){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(

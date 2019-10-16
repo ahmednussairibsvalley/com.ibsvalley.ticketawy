@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
 
   _showNoConnectivityDialog(){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(

@@ -135,6 +135,7 @@ class _ContactFormState extends State<ContactForm> {
 
   _showNoConnectivityDialog(){
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(
@@ -381,6 +382,7 @@ class _ContactFormState extends State<ContactForm> {
 
 _showSuccessDialog(BuildContext context, Map data) {
   showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return CustomAlertDialog(
