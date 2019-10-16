@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../login.dart';
 import 'event_details_pages/about.dart';
 import 'event_details_pages/location.dart';

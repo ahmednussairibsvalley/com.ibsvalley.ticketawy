@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
 
 import 'dashed_divider.dart';
 
@@ -142,14 +142,15 @@ class _LocationMap2State extends State<LocationMap2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: Platform.isIOS?230:370,
-        width: Platform.isIOS?270:370,
-        child: WebView(
-          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=500 width=500 frameborder=0 align=middle allowfullscreen=true></iframe></center></body></html>', mimeType: 'text/html').toString(),
-          javascriptMode: JavascriptMode.unrestricted,
-
-
-        ));
+//        height: Platform.isIOS?230:370,
+//        width: Platform.isIOS?270:370,
+//        child: WebView(
+//          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=500 width=500 frameborder=0 align=middle allowfullscreen=true></iframe></center></body></html>', mimeType: 'text/html').toString(),
+//          javascriptMode: JavascriptMode.unrestricted,
+//
+//
+//        )
+    );
   }
 }
 
