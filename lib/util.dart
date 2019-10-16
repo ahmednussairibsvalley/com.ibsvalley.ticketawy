@@ -390,3 +390,16 @@ Future<Map> updatePassword({@required String phoneNumber, @required String code,
   httpClient.close();
   return json.decode(reply);
 }
+
+Future<Map> availableTickets({@required int quantity,
+  @required int classId,
+  @required int activityServiceId}) async{
+  String url = '$_baseUrl/api/Order/Available_Tickets?'
+      'Ticket_num=$quantity&Activity_service_Id=$activityServiceId'
+      '&class_id=$classId';
+
+  var response = await http.get(url);
+
+  var result = jsonDecode(response.body);
+  return result;
+}
