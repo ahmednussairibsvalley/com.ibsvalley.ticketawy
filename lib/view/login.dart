@@ -8,6 +8,7 @@ import 'package:ticketawy/view/register.dart';
 import '../globals.dart';
 import '../util.dart' as util;
 
+import 'package:responsive_container/responsive_container.dart';
 import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'home.dart';
@@ -23,6 +24,8 @@ class _LoginState extends State<Login> {
 
   bool _loggingIn = false;
 
+
+  
   _showLoginErrorDialog(BuildContext context, {String message}){
 
     showDialog(context: context, builder: (context){
@@ -164,11 +167,8 @@ class _LoginState extends State<Login> {
                         image: AssetImage('assets/login.jpg'))),
               ),
 
-              Positioned(
-                left: 0.0,
-                right: 0.0,
-                top: _width > 360? _height / 11 : _height / 13,
-                bottom: 0.0,
+              ResponsiveContainer(
+                heightPercent: 90,widthPercent: 100,alignment: Alignment.center,padding: EdgeInsets.only(top: 50),
                 child: GestureDetector(
                   onTap: (){
                     FocusScope.of(context).requestFocus(FocusNode());
@@ -177,30 +177,34 @@ class _LoginState extends State<Login> {
                     key: _formKey,
                     child: ListView(
                       children: <Widget>[
+                        ResponsiveContainer(child:
                         Image.asset(
                           'assets/header.png',
-                          width: 300,
-                          height: _width > 360?195:180,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: _width > 360? 20 : 10, bottom: _width > 360? 20 : 10, left: 50, right: 50,),
-                          child: DashedDivider(
+                        ),heightPercent: 25,widthPercent: 30,alignment: Alignment.center,),
+                        ResponsiveContainer(
+                          child:
+                          DashedDivider(
                             color: Colors.white30,
                           ),
+                          widthPercent: 0,
+                          heightPercent: 3,
+                          padding: EdgeInsets.only(left: 30 , right: 30),
                         ),
-                        Padding(
+                        ResponsiveContainer(
+                          widthPercent: 0,
+                          heightPercent: 8,
                           padding: EdgeInsets.only(
                               left: 20, right: 20),
-                          child: Text('Sign In',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text('login',style: TextStyle(color: Colors.white,fontSize: 35),textAlign: TextAlign.center,),
                         ),
 
                         // User name.
-                        Padding(
+                        ResponsiveContainer(
+                          heightPercent: 10,
+                          widthPercent: 0,
                           padding: const EdgeInsets.only(
                             left: 45.0,
                             right: 45.0,
-                            bottom: 8.0,
-                            top: 20.0,
                           ),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
@@ -230,12 +234,13 @@ class _LoginState extends State<Login> {
                         ),
 
                         // Password.
-                        Padding(
+                        ResponsiveContainer(
+                          heightPercent: 10,
+                          widthPercent: 0,
                           padding: const EdgeInsets.only(
                             left: 45.0,
                             right: 45.0,
-                            bottom: 8.0,
-                            top: 8.0,
+
                           ),
                           child: TextFormField(
 
@@ -267,11 +272,12 @@ class _LoginState extends State<Login> {
                         ),
 
                         // login button
-                        Padding(
+                        ResponsiveContainer(
+                          heightPercent: 9,
+                          widthPercent: 0,
                           padding: const EdgeInsets.only(
                             left: 30.0,
                             right: 30.0,
-                            top: 1.0,
                           ),
                           child: ListTile(
                             onTap: () async {
@@ -328,7 +334,7 @@ class _LoginState extends State<Login> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Text(
-                                  'Sign In',
+                                  'login',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
@@ -474,7 +480,7 @@ class _LoginState extends State<Login> {
               Positioned(
                 left: 0.0,
                 right: 0.0,
-                top: _width > 360? _height / 11 : _height / 15,
+                top: _width > 360? _height / 11 : _height / 13,
                 bottom: 0.0,
                 child: GestureDetector(
                   onTap: (){
@@ -487,10 +493,10 @@ class _LoginState extends State<Login> {
                         Image.asset(
                           'assets/header.png',
                           width: 300,
-                          height: _width > 360?195:180,
+                          height: 195,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: _width > 360? 20 : 10, bottom: _width > 360? 20 : 10, left: 50, right: 50,),
+                          padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
                           child: DashedDivider(
                             color: Colors.white30,
                           ),
@@ -498,7 +504,7 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 20, right: 20),
-                          child: Text('Sign In',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
+                          child: Text('login',style: TextStyle(fontSize: 35,color: Colors.white),textAlign: TextAlign.center,),
                         ),
 
                         // User name.
