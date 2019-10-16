@@ -33,7 +33,6 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
               id: id, password: password,
               onSuccess: (id , message , password ) {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
-                  code: id,
                   phone: phoneNumber,
                 )));
               },
@@ -157,7 +156,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                                 _recovering = true;
                               });
 
-                              Map response = await util.recoverPassword(_phoneController.text);
+                              Map response = await util.sendVerificationMessage(_phoneController.text);
 
                               print('$response');
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../login.dart';
 import 'event_details_pages/about.dart';
 import 'event_details_pages/location.dart';
@@ -30,6 +31,7 @@ class EventDetails extends StatelessWidget {
       @required this.onEventBooked,
       @required this.onAllCategoriesPressed,
       @required this.onWillPop,});
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +162,6 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -356,6 +357,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 // End
   _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
+//      barrierDismissible: false,
         context: context,
         builder: (context) {
           return CustomAlertDialog(
@@ -431,7 +433,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                         classId: snapshot.data[index]['id'],
                         className: snapshot.data[index]['class_Name'],
                         totalPrice: snapshot.data[index]['total_Price'],
-                        activity_service_Id: snapshot.data[index]['activity_service_Id']);
+                        activityServiceId: snapshot.data[index]['activity_service_Id']);
                   }),
                 );
               }
@@ -448,6 +450,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ),
           child: ListTile(
             onTap: () async {
+              Navigator.of(context).pop();
               List list = List();
               for (int i = 0; i < orderTickets.length; i++) {
                 int numberOfTickets =
@@ -464,12 +467,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
               Map response =
                   await util.addOrder(eventId: Globals.eventId, orders: list);
 
-
-//              print('$response');
+              print('$response');
               var responseFromNative = await platform.invokeMethod('initFawry', response);
 
               print('Response from native: ${responseFromNative.toString()}');
-              Navigator.of(context).pop();
+
+
             },
             title: Container(
               decoration: BoxDecoration(
@@ -501,14 +504,14 @@ class ClassItem extends StatefulWidget {
   final int classId;
   final String className;
   final double totalPrice;
-  final int activity_service_Id;
+  final int activityServiceId;
 
   ClassItem(
       {@required this.orderIndex,
       @required this.classId,
       @required this.className,
       @required this.totalPrice,
-      @required this.activity_service_Id});
+      @required this.activityServiceId});
 
   @override
   _ClassItemState createState() => _ClassItemState();
@@ -581,16 +584,30 @@ class _ClassItemState extends State<ClassItem> {
                   ),
                   Flexible(
                     child: TicketQuantity(
-                      onUpdateQuantity: (value) {
+                      onUpdateQuantity: (value) async {
+//                        Map response = await util.availableTickets(
+//                            quantity: value,
+//                            classId: widget.classId,
+//                            activityServiceId: widget.activityServiceId);
+//
+//                        print('$response');
+//
+//                        if(response['result']){
+//
+//                        }
                         setState(() {
                           _quantity = value;
                         });
                         orderTickets[widget.orderIndex]['classId'] =
-                            '${widget.classId}';
+                        '${widget.classId}';
                         orderTickets[widget.orderIndex]['numberOfTickets'] =
-                            '$value';
+                        '$value';
                         print('$orderTickets');
+
+
                       },
+                      activityServiceId: widget.activityServiceId,
+                      classId: widget.classId,
                     ),
                   ),
                 ],
@@ -605,16 +622,21 @@ class _ClassItemState extends State<ClassItem> {
 
 // Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {
+  final int classId;
+  final int activityServiceId;
   final Function(int) onUpdateQuantity;
 
-  TicketQuantity({@required this.onUpdateQuantity});
+  TicketQuantity({@required this.onUpdateQuantity, @required this.classId, @required this.activityServiceId});
 
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
 }
 
 class _TicketQuantityState extends State<TicketQuantity> {
-  int _current = 0;
+  int _current = 1;
+
+  bool _increasing = false;
+  bool _decreasing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -623,15 +645,52 @@ class _TicketQuantityState extends State<TicketQuantity> {
       children: <Widget>[
         //decrement
         GestureDetector(
-          onTap: () {
+          onTapDown: (details){
+            setState(() {
+              _decreasing = true;
+            });
+          },
+          onTapUp: (details){
+            setState(() {
+              _decreasing = false;
+            });
+          },
+          onTap: () async {
             if (_current > 0) {
-              setState(() {
-                _current--;
-              });
-              widget.onUpdateQuantity(_current);
+              int quantity = _current;
+
+              quantity--;
+
+              Map response = await util.availableTickets(
+                  quantity: quantity,
+                  classId: widget.classId,
+                  activityServiceId: widget.activityServiceId);
+
+              print('$response');
+
+              if(response['result']){
+                setState(() {
+                  _current = quantity;
+                });
+                widget.onUpdateQuantity(_current);
+              }
+              Fluttertoast.showToast(
+                  msg: response['user_Message'],
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.black38,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+
             }
           },
-          child: Icon(Icons.remove),
+          child: CircleAvatar(
+            backgroundColor: _decreasing?Colors.black12:Colors.transparent,
+            maxRadius: 15,
+            child: Icon(Icons.remove, color: Colors.black87,),
+          ),
         ),
 
         //Ticket Quantity
@@ -647,13 +706,55 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
         // increment
         GestureDetector(
-          onTap: () {
+          onTapDown: (details){
             setState(() {
-              _current++;
+              _increasing = true;
             });
-            widget.onUpdateQuantity(_current);
           },
-          child: Icon(Icons.add),
+          onTapUp: (details){
+            setState(() {
+              _increasing = false;
+            });
+          },
+          onTap: () async{
+
+            int quantity = _current;
+
+            quantity++;
+
+            Map response = await util.availableTickets(
+                quantity: quantity,
+                classId: widget.classId,
+                activityServiceId: widget.activityServiceId);
+
+
+
+            print('$response');
+
+            if(response['result']){
+              setState(() {
+                _current = quantity;
+              });
+              widget.onUpdateQuantity(_current);
+            }
+            Fluttertoast.showToast(
+                msg: response['user_Message'],
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.black38,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+
+
+          },
+          child: CircleAvatar(
+
+            backgroundColor: _increasing?Colors.black12:Colors.transparent,
+            maxRadius: 15,
+            child: Icon(Icons.add, color: Colors.black87,),
+          ),
         ),
       ],
     );

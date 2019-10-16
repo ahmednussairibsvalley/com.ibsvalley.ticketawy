@@ -274,7 +274,7 @@ class _LoginState extends State<Login> {
                           ),
                           child: ListTile(
                             onTap: () async {
-                              Globals.skipped = false;
+
                               FocusScope.of(context).requestFocus(FocusNode());
                               if(_formKey.currentState.validate()){
                                 setState(() {
@@ -301,6 +301,7 @@ class _LoginState extends State<Login> {
                                   List categoriesList = await categoryList();
 
                                   Globals.controller.populateCategories(categoriesList);
+                                  Globals.skipped = false;
                                   Navigator.of(context).pushReplacementNamed('/home');
                                 } else{
                                   setState(() {
