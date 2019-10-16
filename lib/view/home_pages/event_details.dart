@@ -462,6 +462,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ),
           child: ListTile(
             onTap: () async {
+              Navigator.of(context).pop();
               List list = List();
               for (int i = 0; i < orderTickets.length; i++) {
                 int numberOfTickets =
@@ -479,11 +480,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
                   await util.addOrder(eventId: Globals.eventId, orders: list);
 
 
-//              print('$response');
+              print('$response');
               var responseFromNative = await platform.invokeMethod('initFawry', response);
 
               print('Response from native: ${responseFromNative.toString()}');
-              Navigator.of(context).pop();
+
+
             },
             title: Container(
               decoration: BoxDecoration(
