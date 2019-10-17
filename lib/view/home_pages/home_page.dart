@@ -428,7 +428,7 @@ class _EventItemState extends State<EventItem> {
                     bottom: 0.0,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          right: 35, left: 35, bottom: 20),
+                          right: 35, left: 35, bottom: 25),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -440,13 +440,13 @@ class _EventItemState extends State<EventItem> {
                                   bottomLeft: Radius.circular(15)),
                             ),
                             width: widget.title.length > 20 ? 200 : 150,
-                            height: widget.title.length > 20 ? 50 : 35,
-                            alignment: Alignment.centerLeft,
+                            height: widget.title.length > 40 ? 50 : 35,
+                            alignment: Alignment.center,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 '${widget.title}',
-                                textAlign: TextAlign.start,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -454,7 +454,7 @@ class _EventItemState extends State<EventItem> {
                             ),
                           ),
                           Container(
-                            height: widget.title.length > 20 ? 50 : 35,
+                            height: widget.title.length > 40 ? 50 : 35,
                             alignment: Alignment.centerLeft,
                             decoration: BoxDecoration(
                               color: Color(0xffe75d02),
