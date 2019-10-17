@@ -496,10 +496,10 @@ class _LoginState extends State<Login> {
 //              Map userData = await getUserDetails();
 //
 //              Globals.controller.populateUser(userData);
-                                  List categoriesList = await categoryList();
-
-                                  Globals.controller
-                                      .populateCategories(categoriesList);
+//                                  List categoriesList = await categoryList();
+//
+//                                  Globals.controller
+//                                      .populateCategories(categoriesList);
                                   if(widget.openedFromHome)
                                     Navigator.of(context)
                                         .pushReplacement(MaterialPageRoute(
