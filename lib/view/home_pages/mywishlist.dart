@@ -28,7 +28,8 @@ class MyWishListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.myWishListPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.myWishListPageIndex)
+      Globals.pagesStack.push(PagesIndices.myWishListPageIndex);
 
     return WillPopScope(
       onWillPop: ()async{

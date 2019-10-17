@@ -15,7 +15,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.profilePageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.profilePageIndex)
+      Globals.pagesStack.push(PagesIndices.profilePageIndex);
 
     return WillPopScope(
       onWillPop: () async{

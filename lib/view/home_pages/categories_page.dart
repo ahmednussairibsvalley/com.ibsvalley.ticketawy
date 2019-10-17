@@ -23,7 +23,8 @@ class AllCategoriesPage extends StatelessWidget {
     @required this.onAllEventsPressed, @required this.onWillPop});
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.categoriesPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.categoriesPageIndex)
+      Globals.pagesStack.push(PagesIndices.categoriesPageIndex);
 
     return WillPopScope(
       onWillPop: () async{

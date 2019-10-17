@@ -22,7 +22,8 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    Globals.pagesStack.push(PagesIndices.contactPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.contactPageIndex)
+      Globals.pagesStack.push(PagesIndices.contactPageIndex);
 
     return WillPopScope(
       onWillPop: () async{

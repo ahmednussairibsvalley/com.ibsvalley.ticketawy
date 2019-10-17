@@ -83,7 +83,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    Globals.pagesStack.push(PagesIndices.categoryPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.categoryPageIndex)
+      Globals.pagesStack.push(PagesIndices.categoryPageIndex);
 
     return WillPopScope(
       onWillPop: () async {
