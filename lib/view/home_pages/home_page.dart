@@ -152,6 +152,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    while(Globals.pagesStack.isNotEmpty){
+      Globals.pagesStack.pop();
+    }
     Globals.pagesStack.push(PagesIndices.homePageIndex);
     return FutureBuilder(
       future: Connectivity().checkConnectivity(),

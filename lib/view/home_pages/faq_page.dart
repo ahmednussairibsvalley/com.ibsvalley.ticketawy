@@ -13,7 +13,8 @@ class FaqPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
-    Globals.pagesStack.push(PagesIndices.faqPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.faqPageIndex)
+      Globals.pagesStack.push(PagesIndices.faqPageIndex);
 
     return WillPopScope(
       onWillPop: () async{

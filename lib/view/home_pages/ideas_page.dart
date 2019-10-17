@@ -27,7 +27,8 @@ class IdeasPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final _width = MediaQuery.of(context).size.width;
-    Globals.pagesStack.push(PagesIndices.ideasPageIndex);
+    if(Globals.pagesStack.top() != PagesIndices.ideasPageIndex)
+      Globals.pagesStack.push(PagesIndices.ideasPageIndex);
 
     return WillPopScope(
       onWillPop: ()async{
@@ -70,7 +71,9 @@ class IdeasPage extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: GestureDetector(
-                  onTap: onPreviousPagePressed,
+                  onTap: (){
+                    onPreviousPagePressed();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(15),
                     color: Color(0xfffe6700),
