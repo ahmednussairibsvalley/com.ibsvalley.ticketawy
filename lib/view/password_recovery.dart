@@ -29,6 +29,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
         builder: (context) {
           return CustomAlertDialog(
             content: VerificationDialog(
+              forJustPhoneConfirmation: true,
               phoneNumber: phoneNumber,
               id: id, password: password,
               onSuccess: (id , message , password ) {

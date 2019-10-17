@@ -299,6 +299,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: ListTile(
                                   onTap: () async {
+
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     if (_formKey.currentState.validate()) {
@@ -309,7 +310,7 @@ class _LoginState extends State<Login> {
                                       Map response = await util.login(
                                           _userName, _password);
 
-                                      if (response['result']) {
+                                      if (response['result'] == true) {
                                         Globals.userPassword = _password;
                                         Globals.userId = response['id'];
 
@@ -352,6 +353,14 @@ class _LoginState extends State<Login> {
                                                 PagesIndices
                                                     .eventPageIndex,
                                               )));
+                                      } else if (response['result'] == 2) {
+                                        setState(() {
+                                          _loggingIn = false;
+                                        });
+
+                                        _showVerificationDialog(
+                                            phoneNumber: _userName,
+                                            password: _password);
                                       } else {
                                         setState(() {
                                           _loggingIn = false;

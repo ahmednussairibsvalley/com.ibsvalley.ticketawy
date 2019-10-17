@@ -10,8 +10,10 @@ class VerificationDialog extends StatefulWidget {
   final String id;
   final String password;
   final Function(String, String, String) onSuccess;
+  final bool forJustPhoneConfirmation;
 
-  VerificationDialog({@required this.phoneNumber, this.password, this.id, @required this.onSuccess});
+  VerificationDialog({@required this.phoneNumber, this.password, this.id,
+    @required this.onSuccess, this.forJustPhoneConfirmation = false});
   @override
   _VerificationDialogState createState() => _VerificationDialogState();
 }
@@ -94,16 +96,30 @@ class _VerificationDialogState extends State<VerificationDialog> {
                     // Confirm
                     GestureDetector(
                       onTap: () async{
-                        Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
-                        if(response['result']){
-                          Navigator.of(context).pop();
+                        if(widget.forJustPhoneConfirmation){
+                          Map response = await util.confirmPasswordCode(phoneNumber: widget.phoneNumber, code: _verificationController.text);
+                          if(response['result']){
+                            Navigator.of(context).pop();
 //                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                          widget.onSuccess(response['id'], response['user_Message'], widget.password);
+                            widget.onSuccess(response['id'], response['user_Message'], widget.password);
+                          } else {
+                            setState(() {
+                              _message = response['user_Message'];
+                            });
+                          }
                         } else {
-                          setState(() {
-                            _message = response['user_Message'];
-                          });
+                          Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
+                          if(response['result']){
+                            Navigator.of(context).pop();
+//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
+                            widget.onSuccess(response['id'], response['user_Message'], widget.password);
+                          } else {
+                            setState(() {
+                              _message = response['user_Message'];
+                            });
+                          }
                         }
+
                       },
                       child: Container(
                         decoration: BoxDecoration(
