@@ -134,9 +134,12 @@ class HistoryItem extends StatelessWidget {
   final String title;
   final String code;
 
+
   HistoryItem({Key key, @required this.imageUrl, @required this.title, @required this.code}):  super(key: key);
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -157,7 +160,7 @@ class HistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0),
                 child: Container(
-                  height: 50,
+                  height: title.length > 20 ? 90 : 50 ,
                   child: Text(title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -219,30 +222,32 @@ class HistoryItem extends StatelessWidget {
               ),
 
               // Delete history
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, right: 4.0, left: 4.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Color(0xfffe6700),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Image.asset('assets/delete_history.png', width: 35, height: 35,),
-                        Text('Delete history',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+//              Padding(
+//                padding: const EdgeInsets.only(top: 8.0, right: 4.0, left: 4.0),
+//                child: Container(
+//                  decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.circular(30),
+//                    color: Color(0xfffe6700),
+//                  ),
+//                  child: Padding(
+//                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
+//                    child: Row(
+//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                      children: <Widget>[
+//                        Image.asset('assets/delete_history.png', width: 35, height: 35,),
+//                        Text('Delete history',
+//                          textAlign: TextAlign.center,
+//                          style: TextStyle(
+//                            color: Colors.white,
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ),
+
+
             ],
           ),
         ),
