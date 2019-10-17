@@ -160,7 +160,7 @@ class HistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0),
                 child: Container(
-                  height: title.length > 20 ? 90 : 50 ,
+                  height: 90 ,
                   child: Text(title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
