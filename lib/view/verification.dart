@@ -98,7 +98,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                         if(response['result']){
                           Navigator.of(context).pop();
 //                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                          widget.onSuccess(widget.id, response['user_Message'], widget.password);
+                          widget.onSuccess(response['id'], response['user_Message'], widget.password);
                         } else {
                           setState(() {
                             _message = response['user_Message'];
