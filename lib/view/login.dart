@@ -674,6 +674,7 @@ class _LoginState extends State<Login> {
                                       _showNoConnectivityDialog();
                                       return;
                                     }
+
                                     if (_formKey.currentState.validate()) {
                                       setState(() {
                                         _loggingIn = true;
@@ -944,7 +945,7 @@ class _LoginState extends State<Login> {
               id: id != null ? id : '',
               password: password,
               onSuccess: (id, message, password) {
-                _showRegistrationSuccessDialog(context,
+                _showRegistrationSuccessDialog(context, id: id,
                     message: message, password: password);
               },
             ),

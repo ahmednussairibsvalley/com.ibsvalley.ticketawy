@@ -85,6 +85,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                     padding: const EdgeInsets.all(15),
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
