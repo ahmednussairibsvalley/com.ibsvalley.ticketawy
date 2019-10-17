@@ -18,6 +18,7 @@ import '../globals.dart';
 import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
+import 'package:responsive_container/responsive_container.dart';
 
 import 'dart:io';
 
@@ -247,8 +248,9 @@ class _HomeState extends State<Home> {
             ),
 
             // The header.
-            Positioned(
-              right: 0.0, left: 0.0, top: _width > 350?Platform.isIOS?6:12.0 : 5,
+            ResponsiveContainer(
+              heightPercent: 20, widthPercent: 100,
+              alignment: Alignment.center,
               child: GestureDetector(
                 onTap: (){
                   if(index != PagesIndices.homePageIndex){
@@ -258,8 +260,7 @@ class _HomeState extends State<Home> {
                   }
                 },
                 child: Image.asset('assets/header.png',
-                  height: Platform.isIOS? _width < 414 ?110 : 125
-                      :_width > 350?110:130,
+                  height: 110,
                 ),
               ),
             ),

@@ -386,7 +386,7 @@ class _EventItemState extends State<EventItem> {
                                     decoration: new BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.deepOrange),
-                                    child: IconButton(
+                                    child: IconButton(alignment: Alignment.center,
                                         padding: EdgeInsets.only(top: 2),
                                         icon: Icon(
                                           _addedToWishList
@@ -1000,9 +1000,10 @@ class _HotOfferItemState extends State<HotOfferItem> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${widget.price} EGP / Ticket',
+                    'Starts from ${widget.price} EGP',
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 12
                     ),
                     textAlign: TextAlign.center,
                   ),
