@@ -443,22 +443,22 @@ class _EventItemState extends State<EventItem> {
                                   bottomLeft: Radius.circular(15)),
                             ),
                             width: widget.title.length > 20 ? 200 : 150,
-                            height: widget.title.length > 40 ? 50 : 35,
+                            height: widget.title.length > 29 ? 48 : 31,
                             alignment: Alignment.center,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(0),
                               child: Text(
                                 '${widget.title}',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                              ),
+                              softWrap: true,),
                             ),
                           ),
                           Container(
-                            height: widget.title.length > 40 ? 50 : 35,
-                            alignment: Alignment.centerLeft,
+                            height: widget.title.length > 29 ? 48 : 31,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: Color(0xffe75d02),
                               borderRadius: BorderRadius.only(
@@ -469,7 +469,7 @@ class _EventItemState extends State<EventItem> {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 '${widget.price} EGP',
-                                textAlign: TextAlign.start,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
