@@ -49,16 +49,16 @@ class _CategoryPageState extends State<CategoryPage> {
                   onCategoryPressed: widget.onCategoryPressed,
                 )
               : Center(
-                  child: Column(
+                  child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
                     children: <Widget>[
                       Image.asset(
                         'assets/sad_ticketawy.png',
-                        width: 200,
+                        width: 120,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'There is no events yet',
+                          'There are no events yet',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -67,7 +67,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                       ),
                     ],
-                  ),
+                  ),),
                 );
         }
         return Container(
