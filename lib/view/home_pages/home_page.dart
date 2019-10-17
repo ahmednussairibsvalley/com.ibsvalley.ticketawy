@@ -165,8 +165,26 @@ class _HomePageState extends State<HomePage> {
             return ListView(
               children: <Widget>[
                 _eventsSlider,
-                CategoriesSlider(
-                  onPress: widget.onPress,
+                FutureBuilder(
+                  future: util.categoryList(),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.done){
+                      if(snapshot.hasData){
+                        Globals.controller.populateCategories(snapshot.data);
+                        return CategoriesSlider(
+                          onPress: widget.onPress,
+                        );
+                      }
+                      return Container();
+                    }
+                    return Container(
+                      child: Column(
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 _hotOffersSlider,
               ],

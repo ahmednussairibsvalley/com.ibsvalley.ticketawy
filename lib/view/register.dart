@@ -514,79 +514,120 @@ _showRegistrationSuccessDialog(BuildContext context,
           content: Container(
             width: 300.0,
             height: 200.0,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    message.isNotEmpty && message != null ? message : 'Success',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'GeometriqueSans',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DashedDivider(),
-                ),
-                Expanded(
-                  child: Text(
-                    'Registered With Success',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Verdana',
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  onTap: () async {
-                    Globals.skipped = false;
-                    Globals.userPassword =
-                        password != null && password.isNotEmpty ? password : '';
-//                    Globals.userId = response['id'];
-                    Globals.userId = id != null && id.isNotEmpty ? id : '';
-                    Map userData = await getUserDetails();
-
-                    Globals.controller.populateUser(userData);
-                    List categoriesList = await categoryList();
-
-                    Globals.controller.populateCategories(categoriesList);
-
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString(
-                        'userId', id != null && id.isNotEmpty ? id : '');
-                    prefs.setString('fullName', userData['fullName']);
-                    prefs.setString('phoneNumber', userData['phoneNumber']);
-                    prefs.setString(
-                        'password',
-                        password != null && password.isNotEmpty
-                            ? password
-                            : '');
-
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pushReplacementNamed('/home');
-                  },
-                  title: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xfffe6700),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Done',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+            child: RegistrationSuccessDialog(message: message, password: password, id: id),
           ),
         );
       });
 }
+
+class RegistrationSuccessDialog extends StatefulWidget {
+  final String message;
+  final String password;
+  final String id;
+
+  RegistrationSuccessDialog({@required this.message, @required this.password, @required this.id});
+  @override
+  _RegistrationSuccessDialogState createState() => _RegistrationSuccessDialogState();
+}
+
+class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
+
+  bool _confirming = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            widget.message.isNotEmpty && widget.message != null ? widget.message : 'Success',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'GeometriqueSans',
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DashedDivider(),
+        ),
+        Expanded(
+          child: Text(
+            'Registered With Success',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Verdana',
+              fontSize: 17,
+            ),
+          ),
+        ),
+        ListTile(
+          enabled: _confirming?false:true,
+          onTap: () async {
+            setState(() {
+              _confirming = true;
+            });
+            Globals.skipped = false;
+            Globals.userPassword =
+            widget.password != null && widget.password.isNotEmpty ? widget.password : '';
+//                    Globals.userId = response['id'];
+            Globals.userId = widget.id != null && widget.id.isNotEmpty ? widget.id : '';
+            Map userData = await getUserDetails();
+
+            Globals.controller.populateUser(userData);
+//                    List categoriesList = await categoryList();
+//
+//                    Globals.controller.populateCategories(categoriesList);
+
+            SharedPreferences prefs =
+            await SharedPreferences.getInstance();
+            prefs.setString(
+                'userId', widget.id != null && widget.id.isNotEmpty ? widget.id : '');
+            prefs.setString('fullName', userData['fullName']);
+            prefs.setString('phoneNumber', userData['phoneNumber']);
+            prefs.setString(
+                'password',
+                widget.password != null && widget.password.isNotEmpty
+                    ? widget.password
+                    : '');
+
+            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/home');
+          },
+          title: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: _confirming?Colors.grey:Color(0xfffe6700),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Done',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              _confirming?Positioned(
+                right: 0.0,
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              ):
+              Container(),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+

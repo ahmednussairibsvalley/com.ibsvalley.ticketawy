@@ -331,11 +331,11 @@ class _LoginState extends State<Login> {
                                             'phoneNumber', _userName);
                                         prefs.setString('password', _password);
 
-                                        List categoriesList =
-                                            await categoryList();
-
-                                        Globals.controller
-                                            .populateCategories(categoriesList);
+//                                        List categoriesList =
+//                                            await categoryList();
+//
+//                                        Globals.controller
+//                                            .populateCategories(categoriesList);
                                         Globals.skipped = false;
                                         if(widget.openedFromHome)
                                           Navigator.of(context)
@@ -714,11 +714,11 @@ class _LoginState extends State<Login> {
                                             'phoneNumber', _userName);
                                         prefs.setString('password', _password);
 
-                                        List categoriesList =
-                                            await categoryList();
-
-                                        Globals.controller
-                                            .populateCategories(categoriesList);
+//                                        List categoriesList =
+//                                            await categoryList();
+//
+//                                        Globals.controller
+//                                            .populateCategories(categoriesList);
                                         Navigator.of(context)
                                             .pushReplacementNamed('/home');
                                       } else if (response['result'] == 2) {
@@ -893,9 +893,9 @@ class _LoginState extends State<Login> {
 //              Map userData = await getUserDetails();
 //
 //              Globals.controller.populateUser(userData);
-                      List categoriesList = await categoryList();
-
-                      Globals.controller.populateCategories(categoriesList);
+//                      List categoriesList = await categoryList();
+//
+//                      Globals.controller.populateCategories(categoriesList);
                       Globals.skipped = true;
                       Navigator.of(context).pushReplacementNamed('/home');
                     },
