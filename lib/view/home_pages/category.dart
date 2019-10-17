@@ -16,23 +16,69 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
-class CategoryPage extends StatelessWidget {
-  
+class CategoryPage extends StatefulWidget {
   final Function onBack;
   final Function(int) onCategoryPressed;
   final Function onAllCategoriesPressed;
   final Function onWillPop;
-  
+
   CategoryPage({@required this.onBack, @required this.onCategoryPressed,
     @required this.onAllCategoriesPressed, @required this.onWillPop});
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
 
+class _CategoryPageState extends State<CategoryPage> {
+
+  FutureBuilder _eventsViewer;
+
+  @override
+  void initState() {
+    super.initState();
+    _eventsViewer = FutureBuilder(
+      future: util.getEventsList(Globals.categoryId),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          Globals.controller.populateEvents(snapshot.data);
+          return Globals.controller.events.length > 0?EventsSlider(
+            eventsList: Globals.controller.events,
+            onCategoryPressed: widget.onCategoryPressed,
+          ):
+          Center(
+            child: Column(
+              children: <Widget>[
+                Image.asset('assets/sad_ticketawy.png', width: 200,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('There is no events yet',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xfffe6700),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Container(
+          child: Column(
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     Globals.pagesStack.push(PagesIndices.categoryPageIndex);
 
     return WillPopScope(
       onWillPop: () async{
-        onWillPop();
+        widget.onWillPop();
         return false;
       },
       child: SafeArea(
@@ -77,42 +123,7 @@ class CategoryPage extends StatelessWidget {
               Flexible(
                 child: ListView(
                   children: <Widget>[
-                    FutureBuilder(
-                      future: util.getEventsList(Globals.categoryId),
-                      builder: (context, snapshot){
-                        if(snapshot.hasData){
-                          Globals.controller.populateEvents(snapshot.data);
-                          return Globals.controller.events.length > 0?EventsSlider(
-                            eventsList: Globals.controller.events,
-                            onCategoryPressed: onCategoryPressed,
-                          ):
-                          Center(
-                            child: Column(
-                              children: <Widget>[
-                                Image.asset('assets/sad_ticketawy.png', width: 200,),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text('There is no events yet',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xfffe6700),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return Container(
-                          child: Column(
-                            children: <Widget>[
-                              CircularProgressIndicator(),
-                            ],
-                          ),
-                        );
-                      },
-                    )
+                    _eventsViewer
                   ],
                 ),
               )
@@ -125,7 +136,7 @@ class CategoryPage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: GestureDetector(
-                    onTap: onBack,
+                    onTap: widget.onBack,
                     child: Container(
                       padding: EdgeInsets.all(15),
                       color: Color(0xfffe6700),
@@ -149,7 +160,7 @@ class CategoryPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: onAllCategoriesPressed,
+                    onTap: widget.onAllCategoriesPressed,
                     child: Container(
                       padding: EdgeInsets.all(15),
                       color: Color(0xff4b3d7a),
@@ -183,7 +194,7 @@ class CategoryPage extends StatelessWidget {
 
 
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context){
           return CustomAlertDialog(
@@ -191,7 +202,7 @@ class CategoryPage extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             content: Container(
               width: 300.0,
-              height: 400.0,
+              height: 450.0,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -205,6 +216,7 @@ class CategoryPage extends StatelessWidget {
     );
   }
 }
+
 
 class EventsSlider extends StatefulWidget {
   final Function(int) onCategoryPressed;
@@ -498,39 +510,84 @@ class _FiterDialogState extends State<FiterDialog> {
                 ),
               ),
 
-              // Date Filter
+              // From Date Filter
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left: 20.0),
-                    child: Text('Date',style: TextStyle(color: Color(0xff656565)),),
+                    child: Text('From',style: TextStyle(color: Color(0xff656565)),),
                   ),
                   Flexible(
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
-                      child: DateTimeField(
-                        format: DateFormat("yyyy-MM-dd"),
-                        decoration: InputDecoration(
-                          hintText: 'Press to set date',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                style: BorderStyle.none,
-                              )),
-                          labelStyle: TextStyle(
-                            fontSize: 15,
+                      child: Container(
+                        width: 195,
+                        child: DateTimeField(
+                          format: DateFormat("yyyy-MM-dd"),
+                          decoration: InputDecoration(
+                            hintText: 'Press to set date',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  style: BorderStyle.none,
+                                )),
+                            labelStyle: TextStyle(
+                              fontSize: 15,
+                            ),
                           ),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                                context: context,
+                                firstDate: DateTime(1900),
+                                initialDate: currentValue ?? DateTime.now(),
+                                lastDate: DateTime(2100));
+                          },
                         ),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                              context: context,
-                              firstDate: DateTime(1900),
-                              initialDate: currentValue ?? DateTime.now(),
-                              lastDate: DateTime(2100));
-                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // To Date Filter
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text('To',style: TextStyle(color: Color(0xff656565)),),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0, bottom: 15.0, left: 25.0),
+                      child: Container(
+                        width: 195,
+                        child: DateTimeField(
+                          format: DateFormat("yyyy-MM-dd"),
+                          decoration: InputDecoration(
+                            hintText: 'Press to set date',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  style: BorderStyle.none,
+                                )),
+                            labelStyle: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                                context: context,
+                                firstDate: DateTime(1900),
+                                initialDate: currentValue ?? DateTime.now(),
+                                lastDate: DateTime(2100));
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -605,7 +662,7 @@ class _FiterDialogState extends State<FiterDialog> {
                           children: <Widget>[
                             RangeSlider(
                               values: _values,
-                              min: 20.0,
+                              min: 0.0,
                               max: 1500.0,
                               onChanged: (RangeValues value) {
                                 setState(() {

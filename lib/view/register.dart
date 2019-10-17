@@ -9,6 +9,7 @@ import 'dashed_divider.dart';
 import '../util.dart' as util;
 
 import 'home.dart';
+import 'login.dart';
 import 'verification.dart';
 
 class Register extends StatefulWidget {
@@ -335,10 +336,13 @@ class _RegisterState extends State<Register> {
                               // Sign in link text
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(bottom: 15.0, top: 5),
+                                const EdgeInsets.only(bottom: 15.0, top: 5),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pop();
+                                    if(widget.openedFromHome)
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+                                    else
+                                      Navigator.of(context).pop();
                                   },
                                   child: Column(
                                     children: <Widget>[
@@ -362,6 +366,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                               )
+
                             ],
                           ),
                         )

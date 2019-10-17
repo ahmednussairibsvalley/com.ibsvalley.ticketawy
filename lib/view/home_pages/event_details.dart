@@ -276,7 +276,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   onTap: () {
                     if (Globals.skipped) {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Login()));
+                          MaterialPageRoute(builder: (context) => Login(openedFromHome: false,)));
                     } else {
                       if (Globals.reservationOption ==
                           ReservationOptions.byTickets)
@@ -666,7 +666,7 @@ class TicketQuantity extends StatefulWidget {
 }
 
 class _TicketQuantityState extends State<TicketQuantity> {
-  int _current = 1;
+  int _current = 0;
 
   bool _increasing = false;
   bool _decreasing = false;

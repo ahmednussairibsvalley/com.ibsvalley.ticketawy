@@ -15,6 +15,9 @@ import 'home.dart';
 import 'verification.dart';
 
 class Login extends StatefulWidget {
+  final bool openedFromHome;
+
+  Login({this.openedFromHome = true});
   @override
   _LoginState createState() => _LoginState();
 }
@@ -208,7 +211,7 @@ class _LoginState extends State<Login> {
                                 heightPercent: 8,
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
-                                  'login',
+                                  'Sign In',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 35),
                                   textAlign: TextAlign.center,
@@ -333,13 +336,22 @@ class _LoginState extends State<Login> {
                                         Globals.controller
                                             .populateCategories(categoriesList);
                                         Globals.skipped = false;
-                                        Navigator.of(context)
-                                            .pushReplacement(MaterialPageRoute(
-                                                builder: (context) => Home(
-                                                      currentPageIndex:
-                                                          PagesIndices
-                                                              .eventPageIndex,
-                                                    )));
+                                        if(widget.openedFromHome)
+                                          Navigator.of(context)
+                                              .pushReplacement(MaterialPageRoute(
+                                                  builder: (context) => Home(
+                                                        currentPageIndex:
+                                                            PagesIndices
+                                                                .homePageIndex,
+                                                      )));
+                                        else
+                                          Navigator.of(context)
+                                              .pushReplacement(MaterialPageRoute(
+                                              builder: (context) => Home(
+                                                currentPageIndex:
+                                                PagesIndices
+                                                    .eventPageIndex,
+                                              )));
                                       } else {
                                         setState(() {
                                           _loggingIn = false;
@@ -359,7 +371,7 @@ class _LoginState extends State<Login> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(15.0),
                                       child: Text(
-                                        'login',
+                                        'Sign In',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 18,
@@ -479,12 +491,20 @@ class _LoginState extends State<Login> {
 
                                   Globals.controller
                                       .populateCategories(categoriesList);
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                          builder: (context) => Home(
-                                                currentPageIndex:
-                                                    PagesIndices.eventPageIndex,
-                                              )));
+                                  if(widget.openedFromHome)
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                            builder: (context) => Home(
+                                                  currentPageIndex:
+                                                      PagesIndices.homePageIndex,
+                                                )));
+                                  else
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                        builder: (context) => Home(
+                                          currentPageIndex:
+                                          PagesIndices.eventPageIndex,
+                                        )));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -554,7 +574,7 @@ class _LoginState extends State<Login> {
                                 heightPercent: 8,
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
-                                  'login',
+                                  'Sign In',
                                   style: TextStyle(
                                       fontSize: 35, color: Colors.white),
                                   textAlign: TextAlign.center,
