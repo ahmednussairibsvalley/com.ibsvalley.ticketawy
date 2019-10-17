@@ -578,7 +578,7 @@ _showRegistrationSuccessDialog(BuildContext context,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Close',
+                        'Done',
                         textAlign: TextAlign.center,
                       ),
                     ),
