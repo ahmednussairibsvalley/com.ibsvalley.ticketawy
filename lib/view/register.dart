@@ -91,7 +91,7 @@ class _RegisterState extends State<Register> {
                                 padding: EdgeInsets.only(left: 30, right: 30),
                               ),
                               ResponsiveContainer(
-                                widthPercent: 40,
+                                widthPercent: 100,
                                 heightPercent: 8,
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Text(
