@@ -35,6 +35,8 @@ class CategoryPage extends StatefulWidget {
 class _CategoryPageState extends State<CategoryPage> {
   FutureBuilder _eventsViewer;
 
+  bool _noEvents = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Globals.controller.populateEvents(snapshot.data);
+          if(Globals.controller.events.length > 0) _noEvents = true;
           return Globals.controller.events.length > 0
               ? EventsSlider(
                   eventsList: Globals.controller.events,
@@ -107,7 +110,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           fontSize: 17,
                           fontFamily: 'Verdana'),
                     ),
-                    GestureDetector(
+                    _noEvents? Container():GestureDetector(
                       onTap: () {
                         _showFilterDialog(context);
                       },
