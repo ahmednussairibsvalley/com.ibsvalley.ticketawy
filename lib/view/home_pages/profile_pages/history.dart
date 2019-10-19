@@ -208,7 +208,7 @@ class HistoryItem extends StatelessWidget {
                       children: <Widget>[
                         Flexible(child: Image.asset('assets/ticket_type.png', width: 35, height: 35,)),
                         Flexible(
-                          child: Text('Class A 120 EGP',
+                          child: Text('Tickets Number',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
