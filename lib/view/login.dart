@@ -318,8 +318,7 @@ class _LoginState extends State<Login> {
 
                                         Map userData = await getUserDetails();
 
-                                        Globals.controller
-                                            .populateUser(userData);
+//                                        Globals.controller.populateUserFromJson(userData);
 
                                         SharedPreferences prefs =
                                             await SharedPreferences
@@ -703,8 +702,7 @@ class _LoginState extends State<Login> {
 
                                         Map userData = await getUserDetails();
 
-                                        Globals.controller
-                                            .populateUser(userData);
+//                                        Globals.controller.populateUserFromJson(userData);
 
                                         SharedPreferences prefs =
                                             await SharedPreferences
@@ -1015,10 +1013,10 @@ class _LoginState extends State<Login> {
                       Globals.userId = id != null && id.isNotEmpty ? id : '';
                       Map userData = await getUserDetails();
 
-                      Globals.controller.populateUser(userData);
-                      List categoriesList = await categoryList();
-
-                      Globals.controller.populateCategories(categoriesList);
+//                      Globals.controller.populateUserFromJson(userData);
+//                      List categoriesList = await categoryList();
+//
+//                      Globals.controller.populateCategories(categoriesList);
 
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();

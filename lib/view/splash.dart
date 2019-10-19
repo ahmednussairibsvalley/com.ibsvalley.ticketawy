@@ -66,12 +66,12 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           if (connectivityResult == ConnectivityResult.mobile ||
               connectivityResult == ConnectivityResult.wifi){
             Globals.userId = prefs.getString('userId');
-            Map userData = await getUserDetails();
-            print('$userData');
-            Globals.controller.populateUser(userData);
-            List categoriesList = await categoryList();
-
-            Globals.controller.populateCategories(categoriesList);
+//            Map userData = await getUserDetails();
+//            print('$userData');
+//            Globals.controller.populateUser(userData);
+//            List categoriesList = await categoryList();
+//
+//            Globals.controller.populateCategories(categoriesList);
           }
           Navigator.of(context).pushReplacementNamed('/home');
         }else

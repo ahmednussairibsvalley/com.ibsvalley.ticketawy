@@ -28,9 +28,10 @@ class Controller{
       _wishList.add(Event.fromJson(list[i]));
     }
   }
-  populateUser(Map userData){
-    _user = User.fromJson(userData);
-  }
+
+//  populateUserFromJson(Map userData){
+//    _user = User.fromJson(userData);
+//  }
 
   populateEvents(List eventsList){
     _events.clear();

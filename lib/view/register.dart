@@ -576,7 +576,7 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
             Globals.userId = widget.id != null && widget.id.isNotEmpty ? widget.id : '';
             Map userData = await getUserDetails();
 
-            Globals.controller.populateUser(userData);
+//            Globals.controller.populateUserFromJson(userData);
 //                    List categoriesList = await categoryList();
 //
 //                    Globals.controller.populateCategories(categoriesList);
