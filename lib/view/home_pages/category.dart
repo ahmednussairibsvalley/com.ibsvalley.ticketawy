@@ -45,7 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Globals.controller.populateEvents(snapshot.data);
-          if(Globals.controller.events.length > 0) _noEvents = true;
+          if(Globals.controller.events.length <= 0) _noEvents = true;
           return Globals.controller.events.length > 0
               ? EventsSlider(
                   eventsList: Globals.controller.events,
