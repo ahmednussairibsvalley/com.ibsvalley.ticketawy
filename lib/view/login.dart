@@ -227,6 +227,7 @@ class _LoginState extends State<Login> {
                                   right: 45.0,
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -262,6 +263,7 @@ class _LoginState extends State<Login> {
                                   right: 45.0,
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -599,6 +601,7 @@ class _LoginState extends State<Login> {
                                   right: 45.0,
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -634,6 +637,7 @@ class _LoginState extends State<Login> {
                                   right: 45.0,
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     filled: true,
