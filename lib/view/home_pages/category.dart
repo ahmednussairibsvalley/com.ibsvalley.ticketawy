@@ -45,33 +45,82 @@ class _CategoryPageState extends State<CategoryPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Globals.controller.populateEvents(snapshot.data);
-          if(Globals.controller.events.length <= 0) _noEvents = true;
-          return Globals.controller.events.length > 0
-              ? EventsSlider(
-                  eventsList: Globals.controller.events,
-                  onCategoryPressed: widget.onCategoryPressed,
-                )
-              : Center(
-                  child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/sad_ticketawy.png',
-                        width: 120,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'There are no events yet',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xfffe6700),
+          if(Globals.controller.events.length <= 0){
+            _noEvents = true;
+          }
+          return Column(
+            children: <Widget>[
+              Flexible(
+                child: ListView(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            Globals.currentCategoryName,
+                            style: TextStyle(
+                                color: Color(0xffff6600),
+                                fontSize: 17,
+                                fontFamily: 'Verdana'),
                           ),
-                        ),
+                          _noEvents? Container():
+                          GestureDetector(
+                            onTap: () {
+                              _showFilterDialog(context);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color(0xffff6600),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    right: 10, left: 10, top: 5, bottom: 5),
+                                child: Text(
+                                  'Filter By',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),),
-                );
+                    ),
+                    Globals.controller.events.length > 0
+                        ? EventsSlider(
+                      eventsList: Globals.controller.events,
+                      onCategoryPressed: widget.onCategoryPressed,
+                    )
+                        : Center(
+                      child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/sad_ticketawy.png',
+                            width: 120,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'There are no events yet',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xfffe6700),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
         }
         return Container(
           child: Column(
@@ -96,51 +145,7 @@ class _CategoryPageState extends State<CategoryPage> {
       },
       child: SafeArea(
         child: Scaffold(
-          body: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      Globals.currentCategoryName,
-                      style: TextStyle(
-                          color: Color(0xffff6600),
-                          fontSize: 17,
-                          fontFamily: 'Verdana'),
-                    ),
-                    _noEvents? Container():GestureDetector(
-                      onTap: () {
-                        _showFilterDialog(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xffff6600),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              right: 10, left: 10, top: 5, bottom: 5),
-                          child: Text(
-                            'Filter By',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Flexible(
-                child: ListView(
-                  children: <Widget>[_eventsViewer],
-                ),
-              )
-            ],
-          ),
+          body: _eventsViewer,
           bottomNavigationBar: BottomAppBar(
             color: Colors.black,
             child: Row(
