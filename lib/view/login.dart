@@ -9,7 +9,6 @@ import '../globals.dart';
 import '../util.dart' as util;
 
 import 'package:responsive_container/responsive_container.dart';
-import '../util.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'home.dart';
 import 'verification.dart';
@@ -316,7 +315,7 @@ class _LoginState extends State<Login> {
                                         Globals.userPassword = _password;
                                         Globals.userId = response['id'];
 
-                                        Map userData = await getUserDetails();
+                                        Map userData = await util.getUserDetails();
 
 //                                        Globals.controller.populateUserFromJson(userData);
 
@@ -700,7 +699,7 @@ class _LoginState extends State<Login> {
                                         Globals.userPassword = _password;
                                         Globals.userId = response['id'];
 
-                                        Map userData = await getUserDetails();
+                                        Map userData = await util.getUserDetails();
 
 //                                        Globals.controller.populateUserFromJson(userData);
 
@@ -1011,7 +1010,7 @@ class _LoginState extends State<Login> {
                               : '';
 //                    Globals.userId = response['id'];
                       Globals.userId = id != null && id.isNotEmpty ? id : '';
-                      Map userData = await getUserDetails();
+                      Map userData = await util.getUserDetails();
 
 //                      Globals.controller.populateUserFromJson(userData);
 //                      List categoriesList = await categoryList();

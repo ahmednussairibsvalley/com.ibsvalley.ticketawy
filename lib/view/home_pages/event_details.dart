@@ -46,13 +46,25 @@ class EventDetails extends StatelessWidget {
         body: FutureBuilder(
           future: util.getEventDetails(Globals.eventId),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return EventTabs(
-                data: snapshot.data,
-                onEventBooked: onEventBooked,
-              );
+            if(snapshot.connectionState == ConnectionState.done){
+              if (snapshot.hasData) {
+                return EventTabs(
+                  data: snapshot.data,
+                  onEventBooked: onEventBooked,
+                );
+              }
+              return Container();
             }
-            return Container();
+            return Container(
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
           },
         ),
         bottomNavigationBar: BottomAppBar(
