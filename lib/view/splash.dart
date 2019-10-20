@@ -6,7 +6,6 @@ import 'package:connectivity/connectivity.dart';
 
 import '../controller.dart';
 import '../globals.dart';
-import '../util.dart';
 
 class Splash extends StatefulWidget {
   @override

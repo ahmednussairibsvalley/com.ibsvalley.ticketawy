@@ -15,8 +15,9 @@ import 'verification.dart';
 
 class Login extends StatefulWidget {
   final bool openedFromHome;
+  final bool openedByDrawer;
 
-  Login({this.openedFromHome = true});
+  Login({this.openedFromHome = true, this.openedByDrawer = false});
   @override
   _LoginState createState() => _LoginState();
 }
@@ -153,346 +154,356 @@ class _LoginState extends State<Login> {
 
     String _userName = '';
     String _password = '';
-    return Stack(
-      children: <Widget>[
-        Globals.skipped
-            ? Scaffold(
-                body: Stack(
-                  children: <Widget>[
-                    // The background
-                    Container(
-                      height: _height,
-                      width: _width,
-                      decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                              image: AssetImage('assets/login.jpg'))),
-                    ),
+    return WillPopScope(
+      onWillPop: () async{
+        if(widget.openedByDrawer){
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => Home()));
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: Stack(
+        children: <Widget>[
+          Globals.skipped
+              ? Scaffold(
+            body: Stack(
+              children: <Widget>[
+                // The background
+                Container(
+                  height: _height,
+                  width: _width,
+                  decoration: BoxDecoration(
+                      color: Colors.deepPurple,
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
+                          image: AssetImage('assets/login.jpg'))),
+                ),
 
-                    ResponsiveContainer(
-                      heightPercent: 100,
-                      widthPercent: 100,
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.only(top: 50),
-                      child: GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Form(
-                          key: _formKey,
-                          child: ListView(
-                            children: <Widget>[
-                              // Header logo
-                              ResponsiveContainer(
-                                child: Image.asset(
-                                  'assets/header.png',
+                ResponsiveContainer(
+                  heightPercent: 100,
+                  widthPercent: 100,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 50),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          // Header logo
+                          ResponsiveContainer(
+                            child: Image.asset(
+                              'assets/header.png',
+                            ),
+                            heightPercent: 25,
+                            widthPercent: 30,
+                            alignment: Alignment.center,
+                          ),
+
+                          // Dashed line
+                          ResponsiveContainer(
+                            child: DashedDivider(
+                              color: Colors.white30,
+                            ),
+                            widthPercent: 0,
+                            heightPercent: 3,
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                          ),
+
+                          // Login Text
+                          ResponsiveContainer(
+                            widthPercent: 0,
+                            heightPercent: 8,
+                            padding: EdgeInsets.only(left: 20, right: 20),
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 35),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                          // User name.
+                          ResponsiveContainer(
+                            heightPercent: 10,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 45.0,
+                              right: 45.0,
+                            ),
+                            child: TextFormField(
+                              textInputAction: TextInputAction.go,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Icon(Icons.phone_android),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      style: BorderStyle.none,
+                                    )),
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
                                 ),
-                                heightPercent: 25,
-                                widthPercent: 30,
-                                alignment: Alignment.center,
+                                hintText: 'Mobile Number',
                               ),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return 'Please enter your mobile number';
+                                //                          else if(value != mobile)
+                                //                            return 'Wrong mobile number';
+                                _userName = value;
+                                return null;
+                              },
+                            ),
+                          ),
 
-                              // Dashed line
-                              ResponsiveContainer(
-                                child: DashedDivider(
-                                  color: Colors.white30,
+                          // Password.
+                          ResponsiveContainer(
+                            heightPercent: 10,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 45.0,
+                              right: 45.0,
+                            ),
+                            child: TextFormField(
+                              textInputAction: TextInputAction.go,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Icon(Icons.lock_outline),
+                                //                          suffixIcon: Icon(Icons.help_outline),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      style: BorderStyle.none,
+                                    )),
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
                                 ),
-                                widthPercent: 0,
-                                heightPercent: 3,
-                                padding: EdgeInsets.only(left: 30, right: 30),
+                                hintText: 'Password',
                               ),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return 'Please enter your password';
+                                //                          else if(value != password)
+                                //                            return 'Wrong password';
+                                _password = value;
+                                return null;
+                              },
+                            ),
+                          ),
 
-                              // Login Text
-                              ResponsiveContainer(
-                                widthPercent: 0,
-                                heightPercent: 8,
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                          // login button
+                          ResponsiveContainer(
+                            heightPercent: 9,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 30.0,
+                              right: 30.0,
+                            ),
+                            child: ListTile(
+                              onTap: () async {
 
-                              // User name.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.phone_android),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    hintText: 'Mobile Number',
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your mobile number';
-                                    //                          else if(value != mobile)
-                                    //                            return 'Wrong mobile number';
-                                    _userName = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    _loggingIn = true;
+                                  });
 
-                              // Password.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.lock_outline),
-                                    //                          suffixIcon: Icon(Icons.help_outline),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    hintText: 'Password',
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your password';
-                                    //                          else if(value != password)
-                                    //                            return 'Wrong password';
-                                    _password = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
+                                  Map response = await util.login(
+                                      _userName, _password);
 
-                              // login button
-                              ResponsiveContainer(
-                                heightPercent: 9,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 30.0,
-                                  right: 30.0,
-                                ),
-                                child: ListTile(
-                                  onTap: () async {
+                                  if (response['result'] == true) {
+                                    Globals.userPassword = _password;
+                                    Globals.userId = response['id'];
 
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() {
-                                        _loggingIn = true;
-                                      });
-
-                                      Map response = await util.login(
-                                          _userName, _password);
-
-                                      if (response['result'] == true) {
-                                        Globals.userPassword = _password;
-                                        Globals.userId = response['id'];
-
-                                        Map userData = await util.getUserDetails();
+                                    Map userData = await util.getUserDetails();
 
 //                                        Globals.controller.populateUserFromJson(userData);
 
-                                        SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
+                                    SharedPreferences prefs =
+                                    await SharedPreferences
+                                        .getInstance();
 
-                                        prefs.setString(
-                                            'userId', response['id']);
-                                        prefs.setString(
-                                            'fullName', userData['fullName']);
-                                        prefs.setString(
-                                            'phoneNumber', _userName);
-                                        prefs.setString('password', _password);
+                                    prefs.setString(
+                                        'userId', response['id']);
+                                    prefs.setString(
+                                        'fullName', userData['fullName']);
+                                    prefs.setString(
+                                        'phoneNumber', _userName);
+                                    prefs.setString('password', _password);
 
 //                                        List categoriesList =
 //                                            await categoryList();
 //
 //                                        Globals.controller
 //                                            .populateCategories(categoriesList);
-                                        Globals.skipped = false;
-                                        if(widget.openedFromHome)
-                                          Navigator.of(context)
-                                              .pushReplacement(MaterialPageRoute(
-                                                  builder: (context) => Home(
-                                                        currentPageIndex:
-                                                            PagesIndices
-                                                                .homePageIndex,
-                                                      )));
-                                        else
-                                          Navigator.of(context)
-                                              .pushReplacement(MaterialPageRoute(
-                                              builder: (context) => Home(
-                                                currentPageIndex:
-                                                PagesIndices
-                                                    .eventPageIndex,
-                                              )));
-                                      } else if (response['result'] == 2) {
-                                        setState(() {
-                                          _loggingIn = false;
-                                        });
+                                    Globals.skipped = false;
+                                    if(widget.openedFromHome)
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                          builder: (context) => Home(
+                                            currentPageIndex:
+                                            PagesIndices
+                                                .homePageIndex,
+                                          )));
+                                    else
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(
+                                          builder: (context) => Home(
+                                            currentPageIndex:
+                                            PagesIndices
+                                                .eventPageIndex,
+                                          )));
+                                  } else if (response['result'] == 2) {
+                                    setState(() {
+                                      _loggingIn = false;
+                                    });
 
-                                        _showVerificationDialog(
-                                            phoneNumber: _userName,
-                                            password: _password);
-                                      } else {
-                                        setState(() {
-                                          _loggingIn = false;
-                                        });
+                                    _showVerificationDialog(
+                                        phoneNumber: _userName,
+                                        password: _password);
+                                  } else {
+                                    setState(() {
+                                      _loggingIn = false;
+                                    });
 
-                                        _showLoginErrorDialog(context,
-                                            message: response['user_Message']);
-                                      }
-                                    }
-                                  },
-                                  title: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      color: Color(0xfffe6700),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        'Sign In',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                    _showLoginErrorDialog(context,
+                                        message: response['user_Message']);
+                                  }
+                                }
+                              },
+                              title: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                                  color: Color(0xfffe6700),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Text(
+                                    'Sign In',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
                               ),
-
-                              //Forgot Password
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PasswordRecovery()));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                'Forgot Password?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 105,
-                                                    left: 105,
-                                                    top: 5),
-                                                child: DashedDivider(
-                                                  width: 5,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              // Sign up link text
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => Register(
-                                                  openedFromHome: false,
-                                                )));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                'Don\'t have an account?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 105,
-                                                    left: 105,
-                                                    top: 5),
-                                                child: DashedDivider(
-                                                  width: 5,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
-                        ),
+
+                          //Forgot Password
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PasswordRecovery()));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Forgot Password?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 105,
+                                                left: 105,
+                                                top: 5),
+                                            child: DashedDivider(
+                                              width: 5,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          // Sign up link text
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                    builder: (context) => Register(
+                                      openedFromHome: false,
+                                    )));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Don\'t have an account?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 105,
+                                                left: 105,
+                                                top: 5),
+                                            child: DashedDivider(
+                                              width: 5,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
+                  ),
+                ),
 
-                    Globals.skipped
-                        ? //The back arrow
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: GestureDetector(
-                                onTap: () async {
-                                  if (_isUnderDevelopment) {
-                                    _showUnderDevelopmentDialog(context);
-                                    return;
-                                  }
-                                  Globals.skipped = true;
+                Globals.skipped
+                    ? //The back arrow
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                      onTap: () async {
+                        if (_isUnderDevelopment) {
+                          _showUnderDevelopmentDialog(context);
+                          return;
+                        }
+                        Globals.skipped = true;
 //              Map userData = await getUserDetails();
 //
 //              Globals.controller.populateUser(userData);
@@ -500,396 +511,396 @@ class _LoginState extends State<Login> {
 //
 //                                  Globals.controller
 //                                      .populateCategories(categoriesList);
-                                  if(widget.openedFromHome)
-                                    Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                            builder: (context) => Home(
-                                                  currentPageIndex:
-                                                      PagesIndices.homePageIndex,
-                                                )));
-                                  else
-                                    Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                        builder: (context) => Home(
-                                          currentPageIndex:
-                                          PagesIndices.eventPageIndex,
-                                        )));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 40, bottom: 40, left: 20, right: 40),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                )),
-                          )
-                        : Container(),
-                  ],
-                ),
-              )
-            : Scaffold(
-                body: Stack(
-                  children: <Widget>[
-                    // The background
-                    Container(
-                      height: _height,
-                      width: _width,
-                      decoration: BoxDecoration(
-                          color: Colors.deepPurple,
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
+                        if(widget.openedFromHome)
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                              builder: (context) => Home(
+                                currentPageIndex:
+                                PagesIndices.homePageIndex,
+                              )));
+                        else
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                              builder: (context) => Home(
+                                currentPageIndex:
+                                PagesIndices.eventPageIndex,
+                              )));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40, bottom: 40, left: 20, right: 40),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      )),
+                )
+                    : Container(),
+              ],
+            ),
+          )
+              : Scaffold(
+            body: Stack(
+              children: <Widget>[
+                // The background
+                Container(
+                  height: _height,
+                  width: _width,
+                  decoration: BoxDecoration(
+                      color: Colors.deepPurple,
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
 //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                              image: AssetImage('assets/login.jpg'))),
-                    ),
+                          image: AssetImage('assets/login.jpg'))),
+                ),
 
-                    ResponsiveContainer(
-                      heightPercent: 100,
-                      widthPercent: 100,
-                      padding: EdgeInsets.only(top: 50),
-                      alignment: Alignment.center,
-                      child: GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                        child: Form(
-                          key: _formKey,
-                          child: ListView(
-                            children: <Widget>[
+                ResponsiveContainer(
+                  heightPercent: 100,
+                  widthPercent: 100,
+                  padding: EdgeInsets.only(top: 50),
+                  alignment: Alignment.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
 
-                              // Header logo
-                              ResponsiveContainer(
-                                child: Image.asset(
-                                  'assets/header.png',
+                          // Header logo
+                          ResponsiveContainer(
+                            child: Image.asset(
+                              'assets/header.png',
+                            ),
+                            heightPercent: 25,
+                            widthPercent: 30,
+                            alignment: Alignment.center,
+                          ),
+                          // Dashed Line
+                          ResponsiveContainer(
+                            child: DashedDivider(
+                              color: Colors.white30,
+                            ),
+                            widthPercent: 0,
+                            heightPercent: 3,
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                          ),
+
+                          // Login Text
+                          ResponsiveContainer(
+                            widthPercent: 0,
+                            heightPercent: 8,
+                            padding: EdgeInsets.only(left: 20, right: 20),
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                  fontSize: 35, color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                          // User name.
+                          ResponsiveContainer(
+                            heightPercent: 10,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 45.0,
+                              right: 45.0,
+                            ),
+                            child: TextFormField(
+                              textInputAction: TextInputAction.go,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Icon(Icons.phone_android),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      style: BorderStyle.none,
+                                    )),
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
                                 ),
-                                heightPercent: 25,
-                                widthPercent: 30,
-                                alignment: Alignment.center,
+                                hintText: 'Mobile Number',
                               ),
-                              // Dashed Line
-                              ResponsiveContainer(
-                                child: DashedDivider(
-                                  color: Colors.white30,
-                                ),
-                                widthPercent: 0,
-                                heightPercent: 3,
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                              ),
-
-                              // Login Text
-                              ResponsiveContainer(
-                                widthPercent: 0,
-                                heightPercent: 8,
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                      fontSize: 35, color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-
-                              // User name.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.phone_android),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    hintText: 'Mobile Number',
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your mobile number';
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return 'Please enter your mobile number';
 //                          else if(value != mobile)
 //                            return 'Wrong mobile number';
-                                    _userName = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
+                                _userName = value;
+                                return null;
+                              },
+                            ),
+                          ),
 
-                              // Password.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.lock_outline),
+                          // Password.
+                          ResponsiveContainer(
+                            heightPercent: 10,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 45.0,
+                              right: 45.0,
+                            ),
+                            child: TextFormField(
+                              textInputAction: TextInputAction.go,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                prefixIcon: Icon(Icons.lock_outline),
 //                          suffixIcon: Icon(Icons.help_outline),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    hintText: 'Password',
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your password';
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      style: BorderStyle.none,
+                                    )),
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                                hintText: 'Password',
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty)
+                                  return 'Please enter your password';
 //                          else if(value != password)
 //                            return 'Wrong password';
-                                    _password = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
+                                _password = value;
+                                return null;
+                              },
+                            ),
+                          ),
 
-                              // login button
-                              ResponsiveContainer(
-                                heightPercent: 9,
-                                widthPercent: 0,
-                                padding: const EdgeInsets.only(
-                                  left: 30.0,
-                                  right: 30.0,
-                                ),
-                                child: ListTile(
-                                  onTap: () async {
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    var connectivityResult =
-                                        await Connectivity()
-                                            .checkConnectivity();
-                                    if (connectivityResult !=
-                                            ConnectivityResult.mobile &&
-                                        connectivityResult !=
-                                            ConnectivityResult.wifi) {
-                                      _showNoConnectivityDialog();
-                                      return;
-                                    }
+                          // login button
+                          ResponsiveContainer(
+                            heightPercent: 9,
+                            widthPercent: 0,
+                            padding: const EdgeInsets.only(
+                              left: 30.0,
+                              right: 30.0,
+                            ),
+                            child: ListTile(
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                var connectivityResult =
+                                await Connectivity()
+                                    .checkConnectivity();
+                                if (connectivityResult !=
+                                    ConnectivityResult.mobile &&
+                                    connectivityResult !=
+                                        ConnectivityResult.wifi) {
+                                  _showNoConnectivityDialog();
+                                  return;
+                                }
 
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() {
-                                        _loggingIn = true;
-                                      });
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    _loggingIn = true;
+                                  });
 
-                                      Map response = await util.login(
-                                          _userName, _password);
+                                  Map response = await util.login(
+                                      _userName, _password);
 
-                                      if (response['result'] == true) {
-                                        Globals.skipped = false;
-                                        Globals.userPassword = _password;
-                                        Globals.userId = response['id'];
+                                  if (response['result'] == true) {
+                                    Globals.skipped = false;
+                                    Globals.userPassword = _password;
+                                    Globals.userId = response['id'];
 
-                                        Map userData = await util.getUserDetails();
+                                    Map userData = await util.getUserDetails();
 
 //                                        Globals.controller.populateUserFromJson(userData);
 
-                                        SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
+                                    SharedPreferences prefs =
+                                    await SharedPreferences
+                                        .getInstance();
 
-                                        prefs.setString(
-                                            'userId', response['id']);
-                                        prefs.setString(
-                                            'fullName', userData['fullName']);
-                                        prefs.setString(
-                                            'phoneNumber', _userName);
-                                        prefs.setString('password', _password);
+                                    prefs.setString(
+                                        'userId', response['id']);
+                                    prefs.setString(
+                                        'fullName', userData['fullName']);
+                                    prefs.setString(
+                                        'phoneNumber', _userName);
+                                    prefs.setString('password', _password);
 
 //                                        List categoriesList =
 //                                            await categoryList();
 //
 //                                        Globals.controller
 //                                            .populateCategories(categoriesList);
-                                        Navigator.of(context)
-                                            .pushReplacementNamed('/home');
-                                      } else if (response['result'] == 2) {
-                                        setState(() {
-                                          _loggingIn = false;
-                                        });
-
-                                        _showVerificationDialog(
-                                            phoneNumber: _userName,
-                                            password: _password);
-                                      } else {
-                                        setState(() {
-                                          _loggingIn = false;
-                                        });
-
-                                        _showLoginErrorDialog(context,
-                                            message: response['user_Message']);
-                                      }
-                                    }
-                                  },
-                                  title: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      color: Color(0xfffe6700),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        'Sign In',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              //Forgot Password
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PasswordRecovery()));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                'Forgot Password?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 105,
-                                                    left: 105,
-                                                    top: 5),
-                                                child: DashedDivider(
-                                                  width: 5,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              // Sign up link text
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
                                     Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => Register(
-                                                  openedFromHome: false,
-                                                )));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                'Don\'t have an account?',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 105,
-                                                    left: 105,
-                                                    top: 5),
-                                                child: DashedDivider(
-                                                  width: 5,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          )),
-                                    ],
+                                        .pushReplacementNamed('/home');
+                                  } else if (response['result'] == 2) {
+                                    setState(() {
+                                      _loggingIn = false;
+                                    });
+
+                                    _showVerificationDialog(
+                                        phoneNumber: _userName,
+                                        password: _password);
+                                  } else {
+                                    setState(() {
+                                      _loggingIn = false;
+                                    });
+
+                                    _showLoginErrorDialog(context,
+                                        message: response['user_Message']);
+                                  }
+                                }
+                              },
+                              title: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                                  color: Color(0xfffe6700),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Text(
+                                    'Sign In',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
+
+                          //Forgot Password
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PasswordRecovery()));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Forgot Password?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 105,
+                                                left: 105,
+                                                top: 5),
+                                            child: DashedDivider(
+                                              width: 5,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          // Sign up link text
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                    builder: (context) => Register(
+                                      openedFromHome: false,
+                                    )));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Don\'t have an account?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 105,
+                                                left: 105,
+                                                top: 5),
+                                            child: DashedDivider(
+                                              width: 5,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-
-                    Globals.skipped
-                        ? //The back arrow
-                        Container(
-                            alignment: Alignment.topLeft,
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 40, bottom: 40, left: 20, right: 40),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                )),
-                          )
-                        : Container(),
-                  ],
+                  ),
                 ),
-                bottomNavigationBar: BottomAppBar(
-                  color: Colors.black,
+
+                Globals.skipped
+                    ? //The back arrow
+                Container(
+                  alignment: Alignment.topLeft,
                   child: GestureDetector(
-                    onTap: () async {
-                      if (_isUnderDevelopment) {
-                        _showUnderDevelopmentDialog(context);
-                        return;
-                      }
-                      var connectivityResult =
-                          await Connectivity().checkConnectivity();
-                      if (connectivityResult != ConnectivityResult.mobile &&
-                          connectivityResult != ConnectivityResult.wifi) {
-                        _showNoConnectivityDialog();
-                        return;
-                      }
-                      setState(() {
-                        _loggingIn = true;
-                      });
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 40, bottom: 40, left: 20, right: 40),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      )),
+                )
+                    : Container(),
+              ],
+            ),
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.black,
+              child: GestureDetector(
+                onTap: () async {
+                  if (_isUnderDevelopment) {
+                    _showUnderDevelopmentDialog(context);
+                    return;
+                  }
+                  var connectivityResult =
+                  await Connectivity().checkConnectivity();
+                  if (connectivityResult != ConnectivityResult.mobile &&
+                      connectivityResult != ConnectivityResult.wifi) {
+                    _showNoConnectivityDialog();
+                    return;
+                  }
+                  setState(() {
+                    _loggingIn = true;
+                  });
 
 //              Map userData = await getUserDetails();
 //
@@ -897,51 +908,52 @@ class _LoginState extends State<Login> {
 //                      List categoriesList = await categoryList();
 //
 //                      Globals.controller.populateCategories(categoriesList);
-                      Globals.skipped = true;
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.all(15),
-                            color: Color(0xfffe6700),
-                            child: Text(
-                              'Skip This Step',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                  Globals.skipped = true;
+                  Navigator.of(context).pushReplacementNamed('/home');
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(15),
+                        color: Color(0xfffe6700),
+                        child: Text(
+                          'Skip This Step',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-        _loggingIn
-            ? Positioned(
-                top: 0.0,
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-      ],
+            ),
+          ),
+          _loggingIn
+              ? Positioned(
+            top: 0.0,
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              color: Colors.black.withOpacity(0.5),
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                ],
+              ),
+            ),
+          )
+              : Container(),
+        ],
+      ),
     );
   }
 

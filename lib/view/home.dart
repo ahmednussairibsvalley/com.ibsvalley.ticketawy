@@ -20,8 +20,6 @@ import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
 import 'package:responsive_container/responsive_container.dart';
 
-import 'dart:io';
-
 import 'login.dart';
 
 
@@ -143,7 +141,7 @@ class _HomeState extends State<Home> {
       },
       'Sign In' : (){
         Navigator.of(context).pop();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login(openedByDrawer: true,)));
       },
       'Sign Up' : (){
         Navigator.of(context).pop();

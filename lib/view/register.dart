@@ -39,7 +39,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return Stack(
+    return WillPopScope(child: Stack(
       children: <Widget>[
         Scaffold(
           body: Stack(
@@ -281,8 +281,8 @@ class _RegisterState extends State<Register> {
                                       if (response['result']) {
                                         String id = response['id'];
                                         Map verificationResponse =
-                                            await util.sendVerificationMessage(
-                                                phoneNumber);
+                                        await util.sendVerificationMessage(
+                                            phoneNumber);
 
                                         if (verificationResponse['result']) {
                                           _showVerificationDialog(
@@ -319,7 +319,7 @@ class _RegisterState extends State<Register> {
                                   title: Container(
                                     decoration: BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(10)),
                                       color: Color(0xfffe6700),
                                     ),
                                     child: Padding(
@@ -406,25 +406,33 @@ class _RegisterState extends State<Register> {
         ),
         _registering
             ? Positioned(
-                top: 0.0,
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
-              )
+          top: 0.0,
+          bottom: 0.0,
+          left: 0.0,
+          right: 0.0,
+          child: Container(
+            color: Colors.black.withOpacity(0.5),
+            alignment: Alignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          ),
+        )
             : Container(),
       ],
-    );
+    ), onWillPop: ()async{
+      if(widget.openedFromHome){
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Home()));
+        return false;
+      } else {
+        return true;
+      }
+    });
   }
 
   _showVerificationDialog({String phoneNumber, String id, String password}) {
