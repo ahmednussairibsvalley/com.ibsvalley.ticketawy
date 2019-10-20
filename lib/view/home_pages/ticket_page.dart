@@ -74,7 +74,6 @@ class _TicketsSliderState extends State<TicketsSlider> {
 
   int _current = 0;
   static List _list = List();
-  CarouselSlider _carouselSlider;
   List child;
 
 
@@ -118,25 +117,15 @@ class _TicketsSliderState extends State<TicketsSlider> {
           children: map<Widget>(
             _list,
                 (index, url) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _current = index;
-                  });
-                  _carouselSlider.animateToPage(_current,
-                      duration: Duration(milliseconds: 200),
-                      curve: Curves.linear);
-                },
-                child: Container(
-                  width: _width > 350 ? 12.0 : 10.0,
-                  height: _width > 350 ? 12.0 : 10.0,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5.0),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _current == index
-                          ? Color(0xffed5e00)
-                          : Color(0xff7e7e7e)),
-                ),
+              return Container(
+                width: _width > 350 ? 12.0 : 10.0,
+                height: _width > 350 ? 12.0 : 10.0,
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5.0),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _current == index
+                        ? Color(0xffed5e00)
+                        : Color(0xff7e7e7e)),
               );
             },
           ),
