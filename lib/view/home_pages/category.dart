@@ -123,7 +123,10 @@ class _CategoryPageState extends State<CategoryPage> {
           );
         }
         return Container(
+          alignment: Alignment.center,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CircularProgressIndicator(),
             ],
@@ -337,7 +340,7 @@ class _EventsSliderState extends State<EventsSlider> {
     return Column(
       children: <Widget>[
         _carouselSlider,
-        Row(
+        paisList.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             paisList,
@@ -364,7 +367,7 @@ class _EventsSliderState extends State<EventsSlider> {
               );
             },
           ),
-        ),
+        ):Container(),
       ],
     );
   }
