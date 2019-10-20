@@ -134,7 +134,7 @@ class AboutPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text('Duration:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565))),
-                                Text('${_endDate.difference(_startDate).inDays} Days',
+                                Text('${_endDate.difference(_startDate).inDays} Day(s)',
                                   style: TextStyle(
                                       color: Color(0xffff6600),
                                       fontFamily: 'Verdana'
