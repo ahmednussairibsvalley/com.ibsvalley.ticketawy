@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
@@ -10,99 +11,107 @@ import 'package:ticketawy/globals.dart';
 
 final String _baseUrl = 'http://40.85.116.121:8607';
 
+final int timeOut = 5;
+
 /// Is the image URL available
 Future<bool> isImageUrlAvailable(String imageUrl) async{
-  var response = await http.get(imageUrl);
-  if(response.statusCode == 200){
-    return true;
+  try{
+    var response = await http.get(imageUrl).timeout(Duration(seconds: timeOut));
+
+    if(response.statusCode == 200){
+      return true;
+    }
+    return false;
+  } on TimeoutException catch(_){
+    return false;
   }
-  return false;
 }
 
 
 ///Calls the login API.
 Future<Map> login(String username, String password) async {
-  String url = '$_baseUrl/api/AspNetUsers/Login';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Login';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'UserName':username,
-    'Password':password,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'UserName':username,
+      'Password':password,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } on TimeoutException catch(_){
+    return null;
+  }
 
 }
 
 ///Calls the register API.
 Future<Map> register(String fullName, String phone, String password) async {
 
-  /*
-  Failure Response:
-  {
-      "succeeded": false,
-      "errors": [
-          {
-              "code": "DuplicateUserName",
-              "description": "User name '01157426778' is already taken."
-          }
-      ]
-  }
-  Success Response:
-  {
-      "succeeded": true,
-      "errors": []
-  }
-   */
-  String url = '$_baseUrl/api/AspNetUsers/Register';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Register';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'fullName':fullName,
-    'Phone':phone,
-    'Password':password,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'fullName':fullName,
+      'Phone':phone,
+      'Password':password,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } on TimeoutException catch(_){
+    return null;
+  }
 }
 
 ///Calls the event API specified by its id.
 Future<Map> getEventDetails(int id) async{
-  String url = '$_baseUrl/api/Event/Events_Details?id=$id';
+  try{
+    String url = '$_baseUrl/api/Event/Events_Details?id=$id';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  List result = json.decode(response.body);
-  return result[0];
+    List result = json.decode(response.body);
+    return result[0];
+  } on TimeoutException catch(_){
+    return null;
+  }
 }
 
 /// Calls the user details Api
 Future<Map> getUserDetails () async{
-  String url = '$_baseUrl/api/AspNetUsers/User_Details?id=${Globals.userId}';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/User_Details?id=${Globals.userId}';
 
-  var response = await http.get(url);
-
-//  print('${jsonDecode(response.body)}');
-  return jsonDecode(response.body);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
+    return jsonDecode(response.body);
+  } on TimeoutException catch(_){
+    return null;
+  }
 }
 
 /// Calls the user list Api
 Future<List> getUserList () async {
-  String url = '$_baseUrl/api/ApplicationUser/User_Details?id=null';
+  try{
+    String url = '$_baseUrl/api/ApplicationUser/User_Details?id=null';
 
-  http.Response response = await http.get(url);
+    http.Response response = await http.get(url).timeout(Duration(seconds: 2));
 
-  return jsonDecode(response.body);
+    return jsonDecode(response.body);
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 /// Calls the VerificationMessage
@@ -116,116 +125,152 @@ Future<Map> sendVerificationMessage (String phone) async{
       'Phone' : phone
     };
     request.add(utf8.encode(json.encode(jsonMap)));
-    HttpClientResponse response = await request.close();
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
     String reply = await response.transform(utf8.decoder).join();
     httpClient.close();
     return json.decode(reply);
-  } catch (e){
+  } on TimeoutException catch (_){
     return null;
   }
 
 }
 
 Future<Map> verifyPhone (String phone, String code) async {
-  String url = '$_baseUrl/api/AspNetUsers/Verify_Phone';
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone' : phone,
-    'Code' : code,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Verify_Phone';
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone' : phone,
+      'Code' : code,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 /// Calling the Category List
 Future<List> categoryList () async{
-  String url = '$_baseUrl/api/Event/Category_list';
+  try{
+    String url = '$_baseUrl/api/Event/Category_list';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  return jsonDecode(response.body);
+    return jsonDecode(response.body);
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> getHomeLists() async {
-  String url = '$_baseUrl/api/Home/Home_Lists';
+  try{
+    String url = '$_baseUrl/api/Home/Home_Lists';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  return jsonDecode(response.body);
+    return jsonDecode(response.body);
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getHomeEvents() async {
-  String url = '$_baseUrl/api/Home/Home_Lists';
+  try{
+    String url = '$_baseUrl/api/Home/Home_Lists';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result['homeEvents'];
+    var result = jsonDecode(response.body);
+    return result['homeEvents'];
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getHotEvents() async {
-  String url = '$_baseUrl/api/Home/Home_Lists';
+  try{
+    String url = '$_baseUrl/api/Home/Home_Lists';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result['hotEvents'];
+    var result = jsonDecode(response.body);
+    return result['hotEvents'];
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getServiceClasses(int id) async{
-  String url = '$_baseUrl/api/Order/Service_Class?id=$id';
+  try{
+    String url = '$_baseUrl/api/Order/Service_Class?id=$id';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result;
+    var result = jsonDecode(response.body);
+    return result;
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getEventsList(int categoryId) async{
-  String url = '$_baseUrl/api/Event/Events_List?categoryId=$categoryId';
+  try{
+    String url = '$_baseUrl/api/Event/Events_List?categoryId=$categoryId';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result;
+    var result = jsonDecode(response.body);
+    return result;
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> updateUserDetails({@required String fullName,
   @required String phoneNumber,@required String password}) async {
-  String url = '$_baseUrl/api/AspNetUsers/Update_User';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Update_User';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'fullName':fullName,
-    'PhoneNumber':phoneNumber,
-    'Password':password,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'fullName':fullName,
+      'PhoneNumber':phoneNumber,
+      'Password':password,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> addToRemoveFromWishList(int eventId) async {
-  String url = '$_baseUrl/api/Event/Add_Wishlist?Event_Id=$eventId&User_Id=${Globals.userId}';
+  try{
+    String url = '$_baseUrl/api/Event/Add_Wishlist?Event_Id=$eventId&User_Id=${Globals.userId}';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {};
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {};
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getWishList () async {
@@ -233,11 +278,11 @@ Future<List> getWishList () async {
   try{
     String url = '$_baseUrl/api/Event/Get_Wishlist?User_Id=${Globals.userId}';
 
-    var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
     var result = jsonDecode(response.body);
     return result;
-  }catch (e){
+  }on TimeoutException catch (_){
     return null;
   }
 }
@@ -245,77 +290,96 @@ Future<List> getWishList () async {
 
 /// Search
 Future<List> search(String keyWord) async {
-  String url = '$_baseUrl/api/Search/Search_Result?searchword=$keyWord';
+  try{
+    String url = '$_baseUrl/api/Search/Search_Result?searchword=$keyWord';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result;
+    var result = jsonDecode(response.body);
+    return result;
+  } on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<List> getOrdersHistory() async {
-  //String url = '$_baseUrl/api/Order/Order_History?id=e00a11e5-2c02-4ac9-b5db-c24ff9cbbb92';
-  String url = '$_baseUrl/api/Order/Order_History?id=${Globals.userId}';
-  var response = await http.get(url);
+  try{
+    String url = '$_baseUrl/api/Order/Order_History?id=${Globals.userId}';
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result;
+    var result = jsonDecode(response.body);
+    return result;
+  }on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> contactUs({@required String phoneEmail, @required String subject,
   @required String message}) async{
 
-  String url = '$_baseUrl/api/AspNetUsers/Contact_Us';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Contact_Us';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone_Email':phoneEmail,
-    'Subject':subject,
-    'Message':message,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone_Email':phoneEmail,
+      'Subject':subject,
+      'Message':message,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClientResponse response = await request.close();
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> addOrder({@required int eventId, @required List orders}) async {
-  String url = '$_baseUrl/api/Order/payment';
+  try{
+    String url = '$_baseUrl/api/Order/payment';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'EventId':'$eventId',
-    'userId':Globals.userId,
-    'Order_Tickets':orders,
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'EventId':'$eventId',
+      'userId':Globals.userId,
+      'Order_Tickets':orders,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
 
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch(_){
+    return null;
+  }
 }
 
 Future<Map> recoverPassword(String phoneNumber) async{
-  String url = '$_baseUrl/api/AspNetUsers/ForgotPassword';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/ForgotPassword';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone':'$phoneNumber',
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone':'$phoneNumber',
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
 
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  } on TimeoutException catch(_){
+    return null;
+  }
 }
 
 Future<Map> addIdeas({File imageFile, @required String message}) async {
@@ -378,50 +442,62 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 }
 
 Future<Map> updatePassword({@required String phoneNumber, @required String newPassword}) async{
-  String url = '$_baseUrl/api/AspNetUsers/UpdatePassword';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/UpdatePassword';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone':'$phoneNumber',
-    'Password':'$newPassword',
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone':'$phoneNumber',
+      'Password':'$newPassword',
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
 
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch(_){
+    return null;
+  }
 }
 
 Future<Map> availableTickets({@required int quantity,
   @required int classId,
   @required int activityServiceId}) async{
-  String url = '$_baseUrl/api/Order/Available_Tickets?'
-      'Ticket_num=$quantity&Activity_service_Id=$activityServiceId'
-      '&class_id=$classId';
+  try{
+    String url = '$_baseUrl/api/Order/Available_Tickets?'
+        'Ticket_num=$quantity&Activity_service_Id=$activityServiceId'
+        '&class_id=$classId';
 
-  var response = await http.get(url);
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
-  var result = jsonDecode(response.body);
-  return result;
+    var result = jsonDecode(response.body);
+    return result;
+  }on TimeoutException catch (_){
+    return null;
+  }
 }
 
 Future<Map> confirmPasswordCode({@required String phoneNumber, @required String code}) async{
-  String url = '$_baseUrl/api/AspNetUsers/Confirm_Password_Code';
+  try{
+    String url = '$_baseUrl/api/AspNetUsers/Confirm_Password_Code';
 
-  HttpClient httpClient = new HttpClient();
-  HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
-  request.headers.set('content-type', 'application/json');
-  Map jsonMap = {
-    'Phone':'$phoneNumber',
-    'Code':'$code',
-  };
-  request.add(utf8.encode(json.encode(jsonMap)));
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Phone':'$phoneNumber',
+      'Code':'$code',
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
 
-  HttpClientResponse response = await request.close();
-  String reply = await response.transform(utf8.decoder).join();
-  httpClient.close();
-  return json.decode(reply);
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch(_){
+    return null;
+  }
 }
