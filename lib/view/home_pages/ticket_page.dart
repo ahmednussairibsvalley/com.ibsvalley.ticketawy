@@ -241,7 +241,7 @@ class _TicketItemState extends State<TicketItem> {
                                     fontFamily: 'Verdana'),
                               ),
                               Text(
-                                '${widget.price} EGP',
+                                'Price',
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 20,
@@ -264,7 +264,7 @@ class _TicketItemState extends State<TicketItem> {
                               ),
                             ),
                             Text(
-                              '220 EGP',
+                              '${widget.price} EGP',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
                                   fontSize: 20,
