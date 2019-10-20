@@ -113,6 +113,7 @@ class _RegisterState extends State<Register> {
 
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   controller: _fullNameController,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -147,6 +148,7 @@ class _RegisterState extends State<Register> {
 
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   controller: _phoneController,
                                   keyboardType: TextInputType.phone,
                                   decoration: InputDecoration(
@@ -188,6 +190,7 @@ class _RegisterState extends State<Register> {
 
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   controller: _passwordController,
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -228,6 +231,7 @@ class _RegisterState extends State<Register> {
 
                                 ),
                                 child: TextFormField(
+                                  textInputAction: TextInputAction.go,
                                   controller: _confirmPasswordController,
                                   obscureText: true,
                                   decoration: InputDecoration(

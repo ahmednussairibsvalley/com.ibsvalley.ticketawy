@@ -107,6 +107,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
                 child: TextFormField(
+                  textInputAction: TextInputAction.go,
                   controller: _fullNameController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -131,6 +132,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
                 child: TextFormField(
+                  textInputAction: TextInputAction.go,
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -156,6 +158,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
               Padding(
                 padding: const EdgeInsets.only(right: 50, left: 50, top: 10, bottom: 10,),
                 child: TextFormField(
+                  textInputAction: TextInputAction.go,
                   enabled: false,
                   controller: _phoneNumberController,
                   keyboardType: TextInputType.phone,

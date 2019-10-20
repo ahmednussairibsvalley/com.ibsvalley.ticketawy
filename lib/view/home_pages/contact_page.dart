@@ -212,6 +212,7 @@ class _ContactFormState extends State<ContactForm> {
                         shadowColor: Colors.black,
                         color: Colors.transparent,
                         child: TextFormField(
+                          textInputAction: TextInputAction.go,
                           keyboardType: TextInputType.emailAddress,
                           controller: _mailPhoneController,
                           decoration: InputDecoration(
@@ -240,6 +241,7 @@ class _ContactFormState extends State<ContactForm> {
                         shadowColor: Colors.black,
                         color: Colors.transparent,
                         child: TextFormField(
+                          textInputAction: TextInputAction.go,
                           controller: _subjectController,
                           decoration: InputDecoration(
                             hintText: 'Subject',
@@ -262,6 +264,7 @@ class _ContactFormState extends State<ContactForm> {
                         shadowColor: Colors.black,
                         color: Colors.transparent,
                         child: TextFormField(
+                          textInputAction: TextInputAction.go,
                           controller: _messageController,
                           keyboardType: TextInputType.multiline,
                           maxLines: 5,

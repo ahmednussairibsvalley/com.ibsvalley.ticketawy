@@ -276,6 +276,7 @@ class _IdeasFormState extends State<IdeasForm> {
                   shadowColor: Colors.black,
                   color: Colors.transparent,
                   child: TextField(
+                    textInputAction: TextInputAction.go,
                     controller: _textEditingController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 7,
