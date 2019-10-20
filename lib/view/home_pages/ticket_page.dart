@@ -342,6 +342,7 @@ class _TicketItemState extends State<TicketItem> {
                             ),
                           ],
                         ),
+
                         SizedBox(
                           height: 10,
                         ),
