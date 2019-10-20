@@ -17,9 +17,8 @@ class _TicketsPageState extends State<TicketsPage> {
     return Scaffold(
         body: ResponsiveContainer(
           widthPercent: 100,
-          heightPercent: 100,
+          heightPercent: 62,
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 80),
           child: Material(
             elevation: 15,
             borderRadius: BorderRadius.circular(15),
@@ -32,7 +31,7 @@ class _TicketsPageState extends State<TicketsPage> {
               strokeWidth: 1.5,
               child: Container(
                 width: 300,
-                height: 450,
+                height: 420,
                 child: ListView(
                   children: <Widget>[
                     Container(
@@ -112,7 +111,7 @@ class _TicketsPageState extends State<TicketsPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 15.0),
                               child: Text(
-                                '2 Tickets',
+                                '1 Ticket',
                                 style: TextStyle(
                                     color: Color(0xfffe6600),
                                     fontSize: 20,
