@@ -4,7 +4,7 @@ import 'package:dashed_container/dashed_container.dart';
 
 import 'package:barcode_flutter/barcode_flutter.dart';
 import 'package:responsive_container/responsive_container.dart';
-
+import 'package:qr_flutter/qr_flutter.dart';
 import '../../globals.dart';
 import '../dashed_divider.dart';
 import '../../util.dart' as util;
@@ -225,7 +225,7 @@ class _TicketItemState extends State<TicketItem> {
                                   '${widget.eventName}',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: Colors.red,
                                       fontSize: 16,
                                       fontFamily: 'Verdana'),
                                 ),
@@ -254,18 +254,21 @@ class _TicketItemState extends State<TicketItem> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Text(
-                                'Numbers',
+                                'Quantity',
                                 style: TextStyle(
                                     color: Colors.grey,
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontFamily: 'Verdana'),
                               ),
-                              Text(
-                                'Price',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 20,
-                                    fontFamily: 'Verdana'),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 4),
+                                child: Text(
+                                  'Price',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontFamily: 'Verdana'),
+                                ),
                               ),
                             ],
                           ),
@@ -274,7 +277,7 @@ class _TicketItemState extends State<TicketItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                              padding: const EdgeInsets.only(left: 23.0),
                               child: Text(
                                 '1 Ticket',
                                 style: TextStyle(
@@ -298,19 +301,25 @@ class _TicketItemState extends State<TicketItem> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Text(
-                              'Date',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontFamily: 'Verdana'),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                'Date',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontFamily: 'Verdana'),
+                              ),
                             ),
-                            Text(
-                              'Time',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontFamily: 'Verdana'),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                'Time',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontFamily: 'Verdana'),
+                              ),
                             ),
                           ],
                         ),
@@ -341,15 +350,10 @@ class _TicketItemState extends State<TicketItem> {
                           color: Color(0xfffe6600),
                           width: 8,
                         ),
-                        ResponsiveContainer(widthPercent: 100, heightPercent: 15, child: BarCodeImage(
-                          data: "${widget.serialNumber}", // Code string. (required)
-                          codeType: BarCodeType.Code39, // Code type (required)
-                          lineWidth:
-                          .59, // width for a single black/white bar (default: 2.0)
-                          barHeight:
-                          80.0, // height for the entire widget (default: 100.0)
-                          hasText: true,
-                        ),),
+                        QrImage(data: '${widget.serialNumber}',
+                          version: QrVersions.auto,
+                          size: 150.0,
+                        )
                       ],
                     )
                   ],
