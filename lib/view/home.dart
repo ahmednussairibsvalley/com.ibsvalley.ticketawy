@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/home_pages/search_results.dart';
+import 'package:ticketawy/view/home_pages/ticket_page.dart';
 import 'package:ticketawy/view/register.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'home_pages/buy_tickets.dart';
@@ -355,6 +356,11 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.profilePageIndex? ProfilePage(
+                            onHistoryItemPressed: (){
+                              setState(() {
+                                index = PagesIndices.ticketPageIndex;
+                              });
+                            },
                             onWillPop: (){
                               while(Globals.pagesStack.isNotEmpty){
                                 Globals.pagesStack.pop();
@@ -635,6 +641,7 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ):
+                          index == PagesIndices.ticketPageIndex?TicketsPage():
                           Container(),
                         )
                       ],

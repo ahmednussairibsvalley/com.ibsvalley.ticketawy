@@ -6,6 +6,10 @@ import '../../../globals.dart';
 import '../../../util.dart' as util;
 
 class ProfileHistory extends StatelessWidget {
+
+  final Function onHistoryItemPressed;
+
+  ProfileHistory({@required this.onHistoryItemPressed});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -22,6 +26,7 @@ class ProfileHistory extends StatelessWidget {
                     if(snapshot.data.length > 0){
                       return HistorySlider(
                         list: snapshot.data,
+                        onHistoryItemPressed: onHistoryItemPressed,
                       );
                     }
                     return Center(
@@ -47,8 +52,9 @@ class ProfileHistory extends StatelessWidget {
 class HistorySlider extends StatefulWidget {
 
   final List list;
+  final Function onHistoryItemPressed;
 
-  HistorySlider({@required this.list});
+  HistorySlider({@required this.list, @required this.onHistoryItemPressed});
   @override
   _HistorySliderState createState() => _HistorySliderState();
 }
@@ -94,7 +100,7 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
         } else {
           list.add(widget.list[paisList[index]['first']]);
         }
-        return HistoryPage(list: list,);
+        return HistoryPage(list: list, onHistoryItemPressed: widget.onHistoryItemPressed,);
       }),
     );
   }
@@ -104,8 +110,9 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
 class HistoryPage extends StatelessWidget {
 
   final List list;
+  final Function onHistoryItemPressed;
 
-  HistoryPage({@required this.list});
+  HistoryPage({@required this.list, @required this.onHistoryItemPressed});
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -122,6 +129,8 @@ class HistoryPage extends StatelessWidget {
           imageUrl: '${Globals.imageBaseUrl}/${list[index]['event_Logo']}',
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
+          quantity: list[index]['number_of_tickets'],
+          onItemHistoryPressed: onHistoryItemPressed,
         );
       }),
     );
@@ -133,9 +142,12 @@ class HistoryItem extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String code;
+  final int quantity;
+  final Function onItemHistoryPressed;
 
 
-  HistoryItem({Key key, @required this.imageUrl, @required this.title, @required this.code}):  super(key: key);
+  HistoryItem({Key key, @required this.imageUrl, @required this.title,
+    @required this.code, @required this.quantity, @required this.onItemHistoryPressed}):  super(key: key);
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -196,26 +208,31 @@ class HistoryItem extends StatelessWidget {
               // Ticket Type
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Color(0xfffe6700),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Flexible(child: Image.asset('assets/ticket_type.png', width: 35, height: 35,)),
-                        Flexible(
-                          child: Text('Tickets Number',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
+                child: GestureDetector(
+                  onTap: (){
+                    onItemHistoryPressed();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Color(0xfffe6700),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Flexible(child: Image.asset('assets/ticket_type.png', width: 35, height: 35,)),
+                          Flexible(
+                            child: Text('$quantity Tickets',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

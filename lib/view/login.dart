@@ -578,6 +578,7 @@ class _LoginState extends State<Login> {
                             widthPercent: 30,
                             alignment: Alignment.center,
                           ),
+
                           // Dashed Line
                           ResponsiveContainer(
                             child: DashedDivider(

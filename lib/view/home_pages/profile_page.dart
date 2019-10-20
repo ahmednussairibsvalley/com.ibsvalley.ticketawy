@@ -10,8 +10,11 @@ class ProfilePage extends StatelessWidget {
   final Function onPreviousPagePressed;
   final Function onAllCategoriesPressed;
   final Function onWillPop;
+  final Function onHistoryItemPressed;
 
-  ProfilePage({@required this.onPreviousPagePressed, @required this.onAllCategoriesPressed, @required this.onWillPop});
+  ProfilePage({@required this.onPreviousPagePressed,
+    @required this.onAllCategoriesPressed,
+    @required this.onWillPop, @required this.onHistoryItemPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,9 @@ class ProfilePage extends StatelessWidget {
         return null;
       },
       child: Scaffold(
-        body: ProfileTabs(),
+        body: ProfileTabs(
+          onHistoryItemPressed: onHistoryItemPressed,
+        ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: Row(
@@ -85,6 +90,9 @@ class ProfilePage extends StatelessWidget {
 }
 
 class ProfileTabs extends StatefulWidget {
+  final Function onHistoryItemPressed;
+
+  ProfileTabs({@required this.onHistoryItemPressed});
   @override
   _ProfileTabsState createState() => _ProfileTabsState();
 }
@@ -209,7 +217,9 @@ class _ProfileTabsState extends State<ProfileTabs> with TickerProviderStateMixin
               physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
                 ProfileInfo(),
-                ProfileHistory(),
+                ProfileHistory(
+                  onHistoryItemPressed: widget.onHistoryItemPressed,
+                ),
               ],
             ),
           )
