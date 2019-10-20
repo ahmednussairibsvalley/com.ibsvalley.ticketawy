@@ -603,7 +603,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
       child: Column(
         children: <Widget>[
           _carouselSlider,
-          Row(
+          paisList.length > 1?Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: map<Widget>(
               paisList,
@@ -631,7 +631,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
                 );
               },
             ),
-          ),
+          ):Container(),
         ],
       ),
     );
@@ -786,7 +786,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
           ),
         ),
         _carouselSlider,
-        Row(
+        paisList.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             paisList,
@@ -813,7 +813,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
               );
             },
           ),
-        ),
+        ):Container(),
       ],
     );
   }
