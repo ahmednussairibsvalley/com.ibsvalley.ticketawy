@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -174,7 +173,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   //Begin
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
+//    final _width = MediaQuery.of(context).size.width;
 
     return
       // the hole space
