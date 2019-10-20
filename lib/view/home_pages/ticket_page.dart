@@ -8,6 +8,7 @@ import 'package:responsive_container/responsive_container.dart';
 import '../../globals.dart';
 import '../dashed_divider.dart';
 import '../../util.dart' as util;
+import 'package:intl/intl.dart';
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -157,6 +158,15 @@ class TicketItem extends StatefulWidget {
 
 class _TicketItemState extends State<TicketItem> {
 
+  String _dateItem;
+  String _timeItem;
+  @override
+  void initState() {
+    super.initState();
+    DateTime dateTime = DateTime.parse('${widget.date}');
+    _dateItem = DateFormat.yMMMd().format(dateTime);
+    _timeItem = DateFormat.jm().format(dateTime);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -298,14 +308,14 @@ class _TicketItemState extends State<TicketItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Text(
-                              '30-9-2019',
+                              '$_dateItem',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
                                   fontSize: 20,
                                   fontFamily: 'Verdana'),
                             ),
                             Text(
-                              '09:00am',
+                              '$_timeItem',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
                                   fontSize: 20,
