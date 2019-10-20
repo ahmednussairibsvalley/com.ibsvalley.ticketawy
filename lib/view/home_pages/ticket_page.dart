@@ -322,7 +322,7 @@ class _TicketItemState extends State<TicketItem> {
                           width: 8,
                         ),
                         BarCodeImage(
-                          data: "1234ABCD", // Code string. (required)
+                          data: "${widget.serialNumber}", // Code string. (required)
                           codeType: BarCodeType.Code93, // Code type (required)
                           lineWidth:
                           2.0, // width for a single black/white bar (default: 2.0)
