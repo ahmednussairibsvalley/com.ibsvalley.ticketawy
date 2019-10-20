@@ -356,7 +356,8 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.profilePageIndex? ProfilePage(
-                            onHistoryItemPressed: (){
+                            onHistoryItemPressed: (value){
+                              Globals.orderId = value;
                               setState(() {
                                 index = PagesIndices.ticketPageIndex;
                               });

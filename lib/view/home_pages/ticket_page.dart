@@ -1,10 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dashed_container/dashed_container.dart';
 
 import 'package:barcode_flutter/barcode_flutter.dart';
 import 'package:responsive_container/responsive_container.dart';
 
+import '../../globals.dart';
 import '../dashed_divider.dart';
+import '../../util.dart' as util;
+
+List<T> map<T>(List list, Function handler) {
+  List<T> result = [];
+  for (var i = 0; i < list.length; i++) {
+    result.add(handler(i, list[i]));
+  }
+
+  return result;
+}
 
 class TicketsPage extends StatefulWidget {
   @override
@@ -12,6 +24,139 @@ class TicketsPage extends StatefulWidget {
 }
 
 class _TicketsPageState extends State<TicketsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: util.getTicketDetails(Globals.orderId),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            return TicketsSlider(list: snapshot.data,);
+          }
+          return Container();
+        }
+        return Container(
+          alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class TicketsSlider extends StatefulWidget {
+
+  final List list;
+
+  TicketsSlider({@required this.list});
+  @override
+  _TicketsSliderState createState() => _TicketsSliderState();
+}
+
+class _TicketsSliderState extends State<TicketsSlider> {
+
+  int _current = 0;
+  static List _list = List();
+  CarouselSlider _carouselSlider;
+  List child;
+
+  @override
+  void initState() {
+    _list = widget.list;
+    super.initState();
+    child = map<Widget>(
+      _list,
+          (index, i) {
+        return TicketItem(
+          className: i['class_Name'],
+          price: i['price_per_Ticket'],
+          eventName: i['event_Name'],
+          date: i['date'],
+          orderId: '${i['order_Id']}',
+          serialNumber: i['serial_Number'],
+        );
+      },
+    ).toList();
+    _carouselSlider = CarouselSlider(
+      items: child,
+      viewportFraction: 1.0,
+      aspectRatio: 0.9,
+      enableInfiniteScroll: false,
+      onPageChanged: (index) {
+        setState(() {
+          _current = index;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
+    return Column(
+      children: <Widget>[
+        _carouselSlider,
+        _list.length > 1?Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: map<Widget>(
+            _list,
+                (index, url) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _current = index;
+                  });
+                  _carouselSlider.animateToPage(_current,
+                      duration: Duration(milliseconds: 200),
+                      curve: Curves.linear);
+                },
+                child: Container(
+                  width: _width > 350 ? 12.0 : 10.0,
+                  height: _width > 350 ? 12.0 : 10.0,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index
+                          ? Color(0xffed5e00)
+                          : Color(0xff7e7e7e)),
+                ),
+              );
+            },
+          ),
+        ):Container(),
+      ],
+    );
+  }
+}
+
+
+class TicketItem extends StatefulWidget {
+  final String orderId;
+  final String eventName;
+  final String serialNumber;
+  final String className;
+  final double price;
+  final String date;
+
+  TicketItem(
+      {@required this.orderId,
+        @required this.eventName,
+        @required this.serialNumber,
+        @required this.className,
+        @required this.price,
+        @required this.date});
+  @override
+  _TicketItemState createState() => _TicketItemState();
+}
+
+class _TicketItemState extends State<TicketItem> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +202,7 @@ class _TicketsPageState extends State<TicketsPage> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  'Event name here',
+                                  '${widget.eventName}',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.grey,
@@ -67,11 +212,11 @@ class _TicketsPageState extends State<TicketsPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('Serial Number here'),
+                                child: Text('${widget.serialNumber}'),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('Ticket type here',
+                                child: Text('${widget.className}',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Color(0xfffe6600),
@@ -96,7 +241,7 @@ class _TicketsPageState extends State<TicketsPage> {
                                     fontFamily: 'Verdana'),
                               ),
                               Text(
-                                'Price',
+                                '${widget.price} EGP',
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 20,

@@ -534,3 +534,16 @@ Future<String> readContent() async {
     return null;
   }
 }
+
+Future<List> getTicketDetails(String orderId) async{
+  try{
+    String url = '$_baseUrl/api/Tickets/Ticket_details?orderId=$orderId';
+
+    var response = await http.get(url).timeout(Duration(seconds: timeOut));
+
+    var result = jsonDecode(response.body);
+    return result;
+  }on TimeoutException catch (_){
+    return null;
+  }
+}

@@ -13,6 +13,7 @@ class Globals{
   static bool skipped = false;
   static String keyWord = '';
   static String imageBaseUrl = 'https://beta.ticketawy.com/Media/Events_Logo';
+  static String orderId = '';
 }
 
 class PagesIndices {

@@ -7,7 +7,7 @@ import '../../../util.dart' as util;
 
 class ProfileHistory extends StatelessWidget {
 
-  final Function onHistoryItemPressed;
+  final Function(String) onHistoryItemPressed;
 
   ProfileHistory({@required this.onHistoryItemPressed});
   @override
@@ -52,7 +52,7 @@ class ProfileHistory extends StatelessWidget {
 class HistorySlider extends StatefulWidget {
 
   final List list;
-  final Function onHistoryItemPressed;
+  final Function(String) onHistoryItemPressed;
 
   HistorySlider({@required this.list, @required this.onHistoryItemPressed});
   @override
@@ -110,7 +110,7 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
 class HistoryPage extends StatelessWidget {
 
   final List list;
-  final Function onHistoryItemPressed;
+  final Function(String) onHistoryItemPressed;
 
   HistoryPage({@required this.list, @required this.onHistoryItemPressed});
   @override
@@ -127,6 +127,7 @@ class HistoryPage extends StatelessWidget {
       children: List.generate(list.length, (index) {
         return HistoryItem(
           imageUrl: '${Globals.imageBaseUrl}/${list[index]['event_Logo']}',
+          orderId: '${list[index]['order_Id']}',
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
           quantity: list[index]['number_of_tickets'],
@@ -139,14 +140,15 @@ class HistoryPage extends StatelessWidget {
 
 class HistoryItem extends StatelessWidget {
 
+  final String orderId;
   final String imageUrl;
   final String title;
   final String code;
   final int quantity;
-  final Function onItemHistoryPressed;
+  final Function(String) onItemHistoryPressed;
 
 
-  HistoryItem({Key key, @required this.imageUrl, @required this.title,
+  HistoryItem({Key key, @required this.orderId, @required this.imageUrl, @required this.title,
     @required this.code, @required this.quantity, @required this.onItemHistoryPressed}):  super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -210,7 +212,7 @@ class HistoryItem extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 8.0),
                 child: GestureDetector(
                   onTap: (){
-                    onItemHistoryPressed();
+                    onItemHistoryPressed(orderId);
                   },
                   child: Container(
                     decoration: BoxDecoration(

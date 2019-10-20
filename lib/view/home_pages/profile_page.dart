@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
   final Function onPreviousPagePressed;
   final Function onAllCategoriesPressed;
   final Function onWillPop;
-  final Function onHistoryItemPressed;
+  final Function(String) onHistoryItemPressed;
 
   ProfilePage({@required this.onPreviousPagePressed,
     @required this.onAllCategoriesPressed,
@@ -90,7 +90,7 @@ class ProfilePage extends StatelessWidget {
 }
 
 class ProfileTabs extends StatefulWidget {
-  final Function onHistoryItemPressed;
+  final Function(String) onHistoryItemPressed;
 
   ProfileTabs({@required this.onHistoryItemPressed});
   @override
