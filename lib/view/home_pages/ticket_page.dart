@@ -77,6 +77,7 @@ class _TicketsSliderState extends State<TicketsSlider> {
   CarouselSlider _carouselSlider;
   List child;
 
+
   @override
   void initState() {
     _list = widget.list;
@@ -94,17 +95,6 @@ class _TicketsSliderState extends State<TicketsSlider> {
         );
       },
     ).toList();
-    _carouselSlider = CarouselSlider(
-      items: child,
-      viewportFraction: 1.0,
-      aspectRatio: 0.75,
-      enableInfiniteScroll: false,
-      onPageChanged: (index) {
-        setState(() {
-          _current = index;
-        });
-      },
-    );
   }
 
   @override
@@ -112,7 +102,17 @@ class _TicketsSliderState extends State<TicketsSlider> {
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
-        _carouselSlider,
+        CarouselSlider(
+          items: child,
+          viewportFraction: 1.0,
+          aspectRatio: MediaQuery.of(context).size.width> 360?0.75:0.81,
+          enableInfiniteScroll: false,
+          onPageChanged: (index) {
+            setState(() {
+              _current = index;
+            });
+          },
+        ),
         _list.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
