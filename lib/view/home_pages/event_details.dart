@@ -480,7 +480,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
               ),
               child: ListTile(
                 onTap: () async {
-                  Navigator.of(context).pop();
+
                   List list = List();
                   for (int i = 0; i < orderTickets.length; i++) {
                     int numberOfTickets =
@@ -489,18 +489,33 @@ class _ChooseTicketState extends State<ChooseTicket> {
                       list.add(orderTickets[i]);
                     }
                   }
-                  orderTickets.clear();
+
 //              print('${Globals.userId}');
 //              print('${Globals.eventId}');
 //              print('${json.encode(list)}');
 
-                  Map response =
-                  await util.addOrder(eventId: Globals.eventId, orders: list);
+                  if(list.length > 0){
+                    Navigator.of(context).pop();
+                    orderTickets.clear();
+                    Map response =
+                    await util.addOrder(eventId: Globals.eventId, orders: list);
 
-                  print('$response');
-                  var responseFromNative = await platform.invokeMethod('initFawry', response);
+                    print('$response');
+                    var responseFromNative = await platform.invokeMethod('initFawry', response);
 
-                  print('Response from native: ${responseFromNative.toString()}');
+                    print('Response from native: ${responseFromNative.toString()}');
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: 'Please order at least one ticket',
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIos: 1,
+                        backgroundColor: Colors.black38,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                  }
+
 
 
                 },

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_html/flutter_html.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -82,7 +83,9 @@ class AboutPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left:8.0, right: 8.0),
                       child: Container(
 //                        height: 70,
-                        child: EventDescriptionViewer(eventDescription: eventDescription,),
+                        child: Html(
+                          data: eventDescription,
+                        ),
                       ),
                     ),
 
@@ -263,72 +266,72 @@ class _WishListButtonState extends State<WishListButton> {
   }
 }
 
-class EventDescriptionViewer extends StatefulWidget {
-
-  final String eventDescription;
-
-  EventDescriptionViewer({@required this.eventDescription});
-  @override
-  _EventDescriptionViewerState createState() => _EventDescriptionViewerState();
-}
-
-class _EventDescriptionViewerState extends State<EventDescriptionViewer> {
-
-  final ScrollController _scrollController = ScrollController();
-
-  SingleChildScrollView _scrollView;
-
-  double _current = 0;
-  double _max = 100;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollView = SingleChildScrollView(
-      controller: _scrollController,
-      child: Text(widget.eventDescription,
-        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return NotificationListener(
-      child: Stack(
-        children: <Widget>[
-          _scrollView,
-//          _current > 0?
-//          Positioned(
-//            top: 0.0, right: 0.0,
-//            child: GestureDetector(
-//                onTap: (){
-//                },
-//                child: Icon(Icons.arrow_drop_up, size: 50, color: Colors.black.withOpacity(0.3),)
-//            ),
-//          ):Container(),
-//          _current < _max?
-//          Positioned(
-//            bottom: 0.0, right: 0.0,
-//            child: GestureDetector(
-//                onTap: (){
-//                },
-//                child: Icon(Icons.arrow_drop_down, size: 50, color: Colors.black.withOpacity(0.3),)
-//            ),
-//          ):Container(),
-        ],
-      ),
-      onNotification: (t){
-        if (t is ScrollEndNotification) {
-          _max = _scrollController.position.maxScrollExtent;
-          setState(() {
-            _current = _scrollController.position.pixels;
-          });
-        }
-        return null;
-      },
-    );
-  }
-}
+//class EventDescriptionViewer extends StatefulWidget {
+//
+//  final String eventDescription;
+//
+//  EventDescriptionViewer({@required this.eventDescription});
+//  @override
+//  _EventDescriptionViewerState createState() => _EventDescriptionViewerState();
+//}
+//
+//class _EventDescriptionViewerState extends State<EventDescriptionViewer> {
+//
+//  final ScrollController _scrollController = ScrollController();
+//
+//  SingleChildScrollView _scrollView;
+//
+//  double _current = 0;
+//  double _max = 100;
+//
+//  @override
+//  void initState() {
+//    super.initState();
+////    _scrollView = SingleChildScrollView(
+////      controller: _scrollController,
+////      child: Text(widget.eventDescription,
+////        style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),
+////      ),
+////    );
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return NotificationListener(
+//      child: Stack(
+//        children: <Widget>[
+//          Html(data: widget.eventDescription,),
+////          _current > 0?
+////          Positioned(
+////            top: 0.0, right: 0.0,
+////            child: GestureDetector(
+////                onTap: (){
+////                },
+////                child: Icon(Icons.arrow_drop_up, size: 50, color: Colors.black.withOpacity(0.3),)
+////            ),
+////          ):Container(),
+////          _current < _max?
+////          Positioned(
+////            bottom: 0.0, right: 0.0,
+////            child: GestureDetector(
+////                onTap: (){
+////                },
+////                child: Icon(Icons.arrow_drop_down, size: 50, color: Colors.black.withOpacity(0.3),)
+////            ),
+////          ):Container(),
+//        ],
+//      ),
+//      onNotification: (t){
+//        if (t is ScrollEndNotification) {
+//          _max = _scrollController.position.maxScrollExtent;
+//          setState(() {
+//            _current = _scrollController.position.pixels;
+//          });
+//        }
+//        return null;
+//      },
+//    );
+//  }
+//}
 
 

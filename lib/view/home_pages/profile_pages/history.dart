@@ -14,34 +14,46 @@ class ProfileHistory extends StatelessWidget {
     return FutureBuilder(
       future: Connectivity().checkConnectivity(),
       builder: (context, snapshot){
-        if(snapshot.hasData){
+        if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
-            if (snapshot.data == ConnectivityResult.mobile ||
-                snapshot.data == ConnectivityResult.wifi){
-              return FutureBuilder(
-                future: util.getOrdersHistory(),
-                builder: (context, snapshot){
-                  if(snapshot.hasData){
-                    if(snapshot.data.length > 0){
-                      return HistorySlider(
-                        list: snapshot.data,
-                        onHistoryItemPressed: onHistoryItemPressed,
+            if(snapshot.hasData){
+              if (snapshot.data == ConnectivityResult.mobile ||
+                  snapshot.data == ConnectivityResult.wifi){
+                return FutureBuilder(
+                  future: util.getOrdersHistory(),
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      if(snapshot.data.length > 0){
+                        return HistorySlider(
+                          list: snapshot.data,
+                          onHistoryItemPressed: onHistoryItemPressed,
+                        );
+                      }
+                      return Center(
+                        child: Text('You don\'t have any orders'),
                       );
                     }
-                    return Center(
-                      child: Text('You don\'t have any orders'),
-                    );
-                  }
-                  return Container();
-                },
+                    return Container();
+                  },
+                );
+              }
+              return Center(
+                child: Text('There is no connection'),
               );
             }
-            return Center(
-              child: Text('There is no connection'),
-            );
           }
+          return Container();
         }
-        return Container();
+        return Container(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
       },
     );
   }
