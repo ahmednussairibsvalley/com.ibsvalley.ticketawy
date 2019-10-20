@@ -414,7 +414,7 @@ class _EventItemState extends State<EventItem> {
                                               ? Icons.favorite
                                               : Icons.favorite_border,
                                           color: Colors.white,
-                                          size: 25,
+                                          size: 32,
                                         ),
                                         onPressed: () async {
                                           Map response = await util
@@ -972,7 +972,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                                                 ? Icons.favorite
                                                 : Icons.favorite_border,
                                             color: Colors.white,
-                                            size: 25,
+                                            size: 32,
                                           ),
                                           onPressed: () async {
                                             Map response = await util
