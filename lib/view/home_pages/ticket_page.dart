@@ -97,7 +97,7 @@ class _TicketsSliderState extends State<TicketsSlider> {
     _carouselSlider = CarouselSlider(
       items: child,
       viewportFraction: 1.0,
-      aspectRatio: 0.9,
+      aspectRatio: 0.75,
       enableInfiniteScroll: false,
       onPageChanged: (index) {
         setState(() {
@@ -226,7 +226,7 @@ class _TicketItemState extends State<TicketItem> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.grey,
-                                      fontSize: 25,
+                                      fontSize: 16,
                                       fontFamily: 'Verdana'),
                                 ),
                               ),
@@ -240,7 +240,7 @@ class _TicketItemState extends State<TicketItem> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Color(0xfffe6600),
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontFamily: 'Verdana')),
                               ),
                             ],
@@ -279,7 +279,7 @@ class _TicketItemState extends State<TicketItem> {
                                 '1 Ticket',
                                 style: TextStyle(
                                     color: Color(0xfffe6600),
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontFamily: 'Verdana'),
                               ),
                             ),
@@ -287,7 +287,7 @@ class _TicketItemState extends State<TicketItem> {
                               '${widget.price} EGP',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontFamily: 'Verdana'),
                             ),
                           ],
@@ -302,14 +302,14 @@ class _TicketItemState extends State<TicketItem> {
                               'Date',
                               style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontFamily: 'Verdana'),
                             ),
                             Text(
                               'Time',
                               style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontFamily: 'Verdana'),
                             ),
                           ],
@@ -321,14 +321,14 @@ class _TicketItemState extends State<TicketItem> {
                               '$_dateItem',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontFamily: 'Verdana'),
                             ),
                             Text(
                               '$_timeItem',
                               style: TextStyle(
                                   color: Color(0xfffe6600),
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontFamily: 'Verdana'),
                             ),
                           ],
@@ -341,15 +341,15 @@ class _TicketItemState extends State<TicketItem> {
                           color: Color(0xfffe6600),
                           width: 8,
                         ),
-                        BarCodeImage(
+                        ResponsiveContainer(widthPercent: 100, heightPercent: 15, child: BarCodeImage(
                           data: "${widget.serialNumber}", // Code string. (required)
-                          codeType: BarCodeType.Code93, // Code type (required)
+                          codeType: BarCodeType.Code39, // Code type (required)
                           lineWidth:
-                          2.0, // width for a single black/white bar (default: 2.0)
+                          .59, // width for a single black/white bar (default: 2.0)
                           barHeight:
-                          90.0, // height for the entire widget (default: 100.0)
+                          80.0, // height for the entire widget (default: 100.0)
                           hasText: true,
-                        ),
+                        ),),
                       ],
                     )
                   ],
