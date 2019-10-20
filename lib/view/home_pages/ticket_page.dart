@@ -20,6 +20,10 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class TicketsPage extends StatefulWidget {
+
+  final Function onWillPop;
+
+  TicketsPage({@required this.onWillPop});
   @override
   _TicketsPageState createState() => _TicketsPageState();
 }
@@ -27,26 +31,32 @@ class TicketsPage extends StatefulWidget {
 class _TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: util.getTicketDetails(Globals.orderId),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            return TicketsSlider(list: snapshot.data,);
-          }
-          return Container();
-        }
-        return Container(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(),
-            ],
-          ),
-        );
+    return WillPopScope(
+      onWillPop: () async{
+        widget.onWillPop();
+        return false;
       },
+      child: FutureBuilder(
+        future: util.getTicketDetails(Globals.orderId),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              return TicketsSlider(list: snapshot.data,);
+            }
+            return Container();
+          }
+          return Container(
+            alignment: Alignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

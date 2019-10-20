@@ -14,7 +14,8 @@ class ProfilePage extends StatelessWidget {
 
   ProfilePage({@required this.onPreviousPagePressed,
     @required this.onAllCategoriesPressed,
-    @required this.onWillPop, @required this.onHistoryItemPressed});
+    @required this.onWillPop,
+    @required this.onHistoryItemPressed,});
 
   @override
   Widget build(BuildContext context) {

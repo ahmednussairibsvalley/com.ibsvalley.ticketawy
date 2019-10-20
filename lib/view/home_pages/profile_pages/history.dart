@@ -8,8 +8,7 @@ import '../../../util.dart' as util;
 class ProfileHistory extends StatelessWidget {
 
   final Function(String) onHistoryItemPressed;
-
-  ProfileHistory({@required this.onHistoryItemPressed});
+  ProfileHistory({@required this.onHistoryItemPressed,});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -149,7 +148,7 @@ class HistoryItem extends StatelessWidget {
 
 
   HistoryItem({Key key, @required this.orderId, @required this.imageUrl, @required this.title,
-    @required this.code, @required this.quantity, @required this.onItemHistoryPressed}):  super(key: key);
+    @required this.code, @required this.quantity, @required this.onItemHistoryPressed,}):  super(key: key);
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;

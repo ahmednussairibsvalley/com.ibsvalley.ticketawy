@@ -642,7 +642,13 @@ class _HomeState extends State<Home> {
                               });
                             },
                           ):
-                          index == PagesIndices.ticketPageIndex?TicketsPage():
+                          index == PagesIndices.ticketPageIndex?TicketsPage(
+                            onWillPop: (){
+                              setState(() {
+                                index = PagesIndices.profilePageIndex;
+                              });
+                            },
+                          ):
                           Container(),
                         )
                       ],
