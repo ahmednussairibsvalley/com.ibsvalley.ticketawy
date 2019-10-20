@@ -96,6 +96,18 @@ class _TicketsSliderState extends State<TicketsSlider> {
     ).toList();
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -104,7 +116,7 @@ class _TicketsSliderState extends State<TicketsSlider> {
         CarouselSlider(
           items: child,
           viewportFraction: 1.0,
-          aspectRatio: MediaQuery.of(context).size.width> 360?0.75:0.81,
+          aspectRatio: MediaQuery.of(context).size.width> 350?0.75:0.81,
           enableInfiniteScroll: false,
           onPageChanged: (index) {
             setState(() {
