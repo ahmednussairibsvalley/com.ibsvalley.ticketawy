@@ -11,6 +11,7 @@ import '../util.dart' as util;
 import 'package:responsive_container/responsive_container.dart';
 import 'custom_widgets/CustomShowDialog.dart';
 import 'home.dart';
+import 'registration_success.dart';
 import 'verification.dart';
 
 class Login extends StatefulWidget {
@@ -985,82 +986,7 @@ class _LoginState extends State<Login> {
             content: Container(
               width: 300.0,
               height: 200.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      message.isNotEmpty && message != null
-                          ? message
-                          : 'Success',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'GeometriqueSans',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Registered With Success',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Verdana',
-                        fontSize: 17,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () async {
-                      Globals.skipped = false;
-                      Globals.userPassword =
-                          password != null && password.isNotEmpty
-                              ? password
-                              : '';
-//                    Globals.userId = response['id'];
-                      Globals.userId = id != null && id.isNotEmpty ? id : '';
-                      Map userData = await util.getUserDetails();
-
-//                      Globals.controller.populateUserFromJson(userData);
-//                      List categoriesList = await categoryList();
-//
-//                      Globals.controller.populateCategories(categoriesList);
-
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString(
-                          'userId', id != null && id.isNotEmpty ? id : '');
-                      prefs.setString('fullName', userData['fullName']);
-                      prefs.setString('phoneNumber', userData['phoneNumber']);
-                      prefs.setString(
-                          'password',
-                          password != null && password.isNotEmpty
-                              ? password
-                              : '');
-
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed('/home');
-                    },
-                    title: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xfffe6700),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Close',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              child: RegistrationSuccessDialog(message: message, password: password, id: id),
             ),
           );
         });
@@ -1125,3 +1051,4 @@ class _LoginState extends State<Login> {
         });
   }
 }
+
