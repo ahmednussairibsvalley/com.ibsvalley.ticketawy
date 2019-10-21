@@ -18,7 +18,7 @@ final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
 final int schedulePageIndex = 2;
 
-List orderTickets = [];
+
 
 class EventDetails extends StatelessWidget {
   final Function onPreviousPagePressed;
@@ -73,7 +73,12 @@ class EventDetails extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: GestureDetector(
-                  onTap: onPreviousPagePressed,
+                  onTap: (){
+                    if(Globals.orderTickets.length > 0){
+                      Globals.orderTickets.clear();
+                    }
+                    onPreviousPagePressed();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(15),
                     color: Color(0xfffe6700),
@@ -101,7 +106,9 @@ class EventDetails extends StatelessWidget {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: onAllCategoriesPressed,
+                  onTap: (){
+                    onAllCategoriesPressed();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(15),
                     color: Color(0xff4b3d7a),
@@ -421,6 +428,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
   static const platform = const MethodChannel('fawry');
 
   @override
+  void dispose() {
+    super.dispose();
+    Globals.orderTickets.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
@@ -455,15 +468,59 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 future: util.getServiceClasses(Globals.eventId),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    List ticketsList = snapshot.data;
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(snapshot.data.length, (index) {
-                        return ClassItem(
-                            orderIndex: index,
-                            classId: snapshot.data[index]['id'],
-                            className: snapshot.data[index]['class_Name'],
-                            totalPrice: snapshot.data[index]['total_Price'],
-                            activityServiceId: snapshot.data[index]['activity_service_Id']);
+                      children: List.generate(ticketsList.length, (index) {
+                        return FutureBuilder(
+                          future: util.availableTickets(quantity: 1,
+                              classId: ticketsList[index]['id'],
+                              activityServiceId: ticketsList[index]['activity_service_Id']),
+                          builder: (context, snapshot){
+                            if(snapshot.connectionState == ConnectionState.done){
+                              if(snapshot.hasData){
+                                if(snapshot.data['result'] == true){
+                                  return ClassItem(
+                                      orderIndex: index,
+                                      classId: ticketsList[index]['id'],
+                                      className: ticketsList[index]['class_Name'],
+                                      totalPrice: ticketsList[index]['total_Price'],
+                                      activityServiceId: ticketsList[index]['activity_service_Id']);
+                                }
+
+                                return Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: DashedDivider(),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('Sold Out!',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+
+                              }
+                              return Container();
+                            }
+                            return Container(
+                              alignment: Alignment.center,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
+                            );
+                          },
+                        );
                       }),
                     );
                   }
@@ -482,11 +539,11 @@ class _ChooseTicketState extends State<ChooseTicket> {
                 onTap: () async {
 
                   List list = List();
-                  for (int i = 0; i < orderTickets.length; i++) {
+                  for (int i = 0; i < Globals.orderTickets.length; i++) {
                     int numberOfTickets =
-                    int.parse(orderTickets[i]['numberOfTickets'].toString());
+                    int.parse(Globals.orderTickets[i]['numberOfTickets'].toString());
                     if (numberOfTickets > 0) {
-                      list.add(orderTickets[i]);
+                      list.add(Globals.orderTickets[i]);
                     }
                   }
 
@@ -496,7 +553,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
                   if(list.length > 0){
                     Navigator.of(context).pop();
-                    orderTickets.clear();
+                    Globals.orderTickets.clear();
                     Map response =
                     await util.addOrder(eventId: Globals.eventId, orders: list);
 
@@ -505,6 +562,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
 
                     print('Response from native: ${responseFromNative.toString()}');
                   } else {
+                    Globals.orderTickets.clear();
                     Fluttertoast.showToast(
                         msg: 'Please order at least one ticket',
                         toastLength: Toast.LENGTH_LONG,
@@ -585,13 +643,13 @@ class _ClassItemState extends State<ClassItem> {
     Map item = {"classId": widget.classId, "numberOfTickets": 0};
     bool itemAddedBefore = false;
 
-    for (int i = 0; i < orderTickets.length; i++) {
-      if (orderTickets[i]['classId'] == item['classId']) {
+    for (int i = 0; i < Globals.orderTickets.length; i++) {
+      if (Globals.orderTickets[i]['classId'] == item['classId']) {
         itemAddedBefore = true;
         break;
       }
     }
-    if (!itemAddedBefore) orderTickets.add(item);
+    if (!itemAddedBefore) Globals.orderTickets.add(item);
   }
 
   @override
@@ -657,11 +715,11 @@ class _ClassItemState extends State<ClassItem> {
                         setState(() {
                           _quantity = value;
                         });
-                        orderTickets[widget.orderIndex]['classId'] =
+                        Globals.orderTickets[widget.orderIndex]['classId'] =
                         '${widget.classId}';
-                        orderTickets[widget.orderIndex]['numberOfTickets'] =
+                        Globals.orderTickets[widget.orderIndex]['numberOfTickets'] =
                         '$value';
-                        print('$orderTickets');
+                        print('${Globals.orderTickets}');
 
 
                       },

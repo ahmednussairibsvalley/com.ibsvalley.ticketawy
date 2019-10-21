@@ -14,6 +14,7 @@ class Globals{
   static String keyWord = '';
   static String imageBaseUrl = 'https://beta.ticketawy.com/Media/Events_Logo';
   static String orderId = '';
+  static List orderTickets = [];
 }
 
 class PagesIndices {

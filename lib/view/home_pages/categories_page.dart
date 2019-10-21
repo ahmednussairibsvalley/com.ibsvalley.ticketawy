@@ -208,7 +208,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
       children: <Widget>[
 
         _carouselSlider,
-        Row(
+        paisList.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             paisList,
@@ -233,7 +233,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
               );
             },
           ),
-        ),
+        ):Container(),
       ],
     );
   }
