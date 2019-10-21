@@ -15,7 +15,7 @@ class Register extends StatefulWidget {
   final bool openedFromHome;
   final bool openedFromEventDescription;
 
-  Register({@required this.openedFromHome, this.openedFromEventDescription = false});
+  Register({@required this.openedFromHome, this.openedFromEventDescription = false,});
 
   @override
   _RegisterState createState() => _RegisterState();

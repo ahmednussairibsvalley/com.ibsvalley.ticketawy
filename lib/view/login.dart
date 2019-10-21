@@ -28,6 +28,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
+  final _phoneNumberController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   bool _loggingIn = false;
 
   _showLoginErrorDialog(BuildContext context, {String message}) {
@@ -157,6 +160,7 @@ class _LoginState extends State<Login> {
 
     String _userName = '';
     String _password = '';
+
     return WillPopScope(
       onWillPop: () async{
         if(widget.openedByDrawer){
@@ -240,6 +244,7 @@ class _LoginState extends State<Login> {
                               right: 45.0,
                             ),
                             child: TextFormField(
+                              controller: _phoneNumberController,
                               textInputAction: TextInputAction.go,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -276,6 +281,7 @@ class _LoginState extends State<Login> {
                               right: 45.0,
                             ),
                             child: TextFormField(
+                              controller: _passwordController,
                               textInputAction: TextInputAction.go,
                               obscureText: true,
                               decoration: InputDecoration(
@@ -454,6 +460,8 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
+                                _phoneNumberController.value = _phoneNumberController.value.copyWith(text: '');
+                                _passwordController.value = _passwordController.value.copyWith(text: '');
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(
                                     builder: (context) => Register(
@@ -616,6 +624,7 @@ class _LoginState extends State<Login> {
                               right: 45.0,
                             ),
                             child: TextFormField(
+                              controller: _phoneNumberController,
                               textInputAction: TextInputAction.go,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -652,6 +661,7 @@ class _LoginState extends State<Login> {
                               right: 45.0,
                             ),
                             child: TextFormField(
+                              controller: _passwordController,
                               textInputAction: TextInputAction.go,
                               obscureText: true,
                               decoration: InputDecoration(
@@ -829,6 +839,8 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
+                                _phoneNumberController.value = _phoneNumberController.value.copyWith(text: '');
+                                _passwordController.value = _passwordController.value.copyWith(text: '');
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(
                                     builder: (context) => Register(

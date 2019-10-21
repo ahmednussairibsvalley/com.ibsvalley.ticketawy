@@ -7,6 +7,7 @@ import 'package:responsive_container/responsive_container.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'dashed_divider.dart';
+import 'event_map.dart';
 
 class LocationPage extends StatelessWidget {
   final String mapUrl;
@@ -37,6 +38,22 @@ class LocationPage extends StatelessWidget {
                   Flexible(
                     child: LocationMap2(
                       mapUrl: mapUrl,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LargerMap(url: mapUrl,)));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('View Larger Map',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
@@ -146,13 +163,13 @@ class _LocationMap2State extends State<LocationMap2> {
         height: Platform.isIOS?230:370,
         width: Platform.isIOS?270:370,
         child: WebView(
-          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=500 width=500 frameborder=0 align=middle allowfullscreen=true></iframe></center></body></html>', mimeType: 'text/html').toString(),
+          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=500 width=500 frameborder=0 style=border:0; align=middle allowfullscreen="" scrolling=no marginheight=0 marginwidth=0></iframe></center></body></html>', mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
 
 
-        )
+        ),
     );
   }
 }
 
-
+//Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LargerMap(url: widget.mapUrl,)));
