@@ -110,27 +110,27 @@ class _CategoryPageState extends State<CategoryPage> {
                           fontSize: 17,
                           fontFamily: 'Verdana'),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _showFilterDialog(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xffff6600),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              right: 10, left: 10, top: 5, bottom: 5),
-                          child: Text(
-                            'Filter By',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+//                    GestureDetector(
+//                      onTap: () {
+//                        _showFilterDialog(context);
+//                      },
+//                      child: Container(
+//                        decoration: BoxDecoration(
+//                          borderRadius: BorderRadius.circular(20),
+//                          color: Color(0xffff6600),
+//                        ),
+//                        child: Padding(
+//                          padding: EdgeInsets.only(
+//                              right: 10, left: 10, top: 5, bottom: 5),
+//                          child: Text(
+//                            'Filter By',
+//                            style: TextStyle(
+//                              color: Colors.white,
+//                            ),
+//                          ),
+//                        ),
+//                      ),
+//                    ),
                   ],
                 ),
               ),
