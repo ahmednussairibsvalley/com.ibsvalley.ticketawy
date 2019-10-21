@@ -291,7 +291,7 @@ class _EventsSliderState extends State<EventsSlider> {
     return Column(
       children: <Widget>[
         _carouselSlider,
-        Row(
+        paisList.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             paisList,
@@ -318,7 +318,7 @@ class _EventsSliderState extends State<EventsSlider> {
               );
             },
           ),
-        ),
+        ):Container(),
       ],
     );
   }
@@ -390,7 +390,10 @@ class EventsPage extends StatelessWidget {
                       )),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text('${list[index].title}'),
+                        child: Container(
+                          height: 50,
+                            child: Text('${list[index].title}')
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -399,7 +402,7 @@ class EventsPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            '${list[index].price} EGP / Ticket',
+                            '${list[index].price} EGP/Ticket',
                             style: TextStyle(
                               color: Colors.white,
                             ),
