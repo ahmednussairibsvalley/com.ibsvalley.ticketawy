@@ -740,13 +740,17 @@ class _LoginState extends State<Login> {
                                     Navigator.of(context)
                                         .pushReplacementNamed('/home');
                                   } else if (response != null && response['result'] == 2) {
-                                    setState(() {
-                                      _loggingIn = false;
-                                    });
+                                    Map verificationResponse = await util.sendVerificationMessage(_userName);
+                                    if (verificationResponse['result']){
+                                      setState(() {
+                                        _loggingIn = false;
+                                      });
 
-                                    _showVerificationDialog(
-                                        phoneNumber: _userName,
-                                        password: _password);
+                                      _showVerificationDialog(
+                                          phoneNumber: _userName,
+                                          password: _password);
+                                    }
+
                                   } else {
                                     setState(() {
                                       _loggingIn = false;

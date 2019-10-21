@@ -117,7 +117,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                             widget.onSuccess(response['id'], response['user_Message'], widget.password);
                           } else {
                             setState(() {
-                              _message = response != null?response['user_Message']:'';
+                              _message = response != null?response['user_Message']:'Error Confirming The Code';
                             });
                           }
                         }
@@ -143,23 +143,29 @@ class _VerificationDialogState extends State<VerificationDialog> {
                     //Resend
                     GestureDetector(
                       onTap: () async{
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        setState(() {
-                          _message = 'Resending ..';
-                          _resending = true;
-                        });
-                        var response = await util.sendVerificationMessage(widget.phoneNumber);
-
-                        print('$response');
-                        if(response != null && response['result']){
+                        if(!_resending){
+                          FocusScope.of(context).requestFocus(FocusNode());
                           setState(() {
-                            _message = 'An SMS sent to you';
-                            _resending = false;
+                            _message = 'Resending ..';
+                            _resending = true;
                           });
-                        } else {
-                          _message = 'Error while resending a new SMS.';
-                          _resending = false;
+                          var response = await util.sendVerificationMessage(widget.phoneNumber);
+
+                          print('$response');
+                          if(response != null && response['result']){
+                            setState(() {
+                              _message = 'An SMS sent to you';
+                              _resending = false;
+                            });
+                          } else {
+                            setState(() {
+                              _message = 'Error while resending a new SMS.';
+                              _resending = false;
+                            });
+
+                          }
                         }
+
                       },
                       child: Container(
                         decoration: BoxDecoration(
