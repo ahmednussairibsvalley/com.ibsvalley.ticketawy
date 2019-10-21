@@ -670,7 +670,8 @@ class _HomeState extends State<Home> {
                 child: TextFormField(
                   controller: _searchController,
                   onTap: (){
-                    _previousPageIndex = index;
+                    if(index != PagesIndices.searchPageIndex)
+                      _previousPageIndex = index;
 //                      setState(() {
 //                        index = -1;
 //                      });
@@ -710,10 +711,11 @@ class _HomeState extends State<Home> {
                               }
                               Globals.keyWord = _searchController.text;
 
-                              if(Globals.keyWord.isNotEmpty){
+                              if(Globals.keyWord.isEmpty){
                                 setState(() {
-                                  index = -1;
+                                  index = _previousPageIndex;
                                 });
+                              } else {
                                 setState(() {
                                   index = PagesIndices.searchPageIndex;
                                 });

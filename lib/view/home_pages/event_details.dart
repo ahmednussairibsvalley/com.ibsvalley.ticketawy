@@ -366,6 +366,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
           Flexible(
             child: TabBarView(
               controller: _tabController,
+              physics: AlwaysScrollableScrollPhysics(),
               children: <Widget>[
                 AboutPage(
                   imageUrl:
@@ -439,7 +440,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        ListView(
+        Column(
           children: <Widget>[
             // The logo
             Padding(
@@ -464,70 +465,76 @@ class _ChooseTicketState extends State<ChooseTicket> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FutureBuilder(
-                future: util.getServiceClasses(Globals.eventId),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List ticketsList = snapshot.data;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(ticketsList.length, (index) {
-                        return FutureBuilder(
-                          future: util.availableTickets(quantity: 1,
-                              classId: ticketsList[index]['id'],
-                              activityServiceId: ticketsList[index]['activity_service_Id']),
-                          builder: (context, snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              if(snapshot.hasData){
-                                if(snapshot.data['result'] == true){
-                                  return ClassItem(
-                                      orderIndex: index,
-                                      classId: ticketsList[index]['id'],
-                                      className: ticketsList[index]['class_Name'],
-                                      totalPrice: ticketsList[index]['total_Price'],
-                                      activityServiceId: ticketsList[index]['activity_service_Id']);
-                                }
+            Flexible(
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FutureBuilder(
+                      future: util.getServiceClasses(Globals.eventId),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List ticketsList = snapshot.data;
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(ticketsList.length, (index) {
+                              return FutureBuilder(
+                                future: util.availableTickets(quantity: 1,
+                                    classId: ticketsList[index]['id'],
+                                    activityServiceId: ticketsList[index]['activity_service_Id']),
+                                builder: (context, snapshot){
+                                  if(snapshot.connectionState == ConnectionState.done){
+                                    if(snapshot.hasData){
+                                      if(snapshot.data['result'] == true){
+                                        return ClassItem(
+                                            orderIndex: index,
+                                            classId: ticketsList[index]['id'],
+                                            className: ticketsList[index]['class_Name'],
+                                            totalPrice: ticketsList[index]['total_Price'],
+                                            activityServiceId: ticketsList[index]['activity_service_Id']);
+                                      }
 
-                                return Column(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: DashedDivider(),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Sold Out!',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
+                                      return Column(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: DashedDivider(),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text('Sold Out!',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
 
-                              }
-                              return Container();
-                            }
-                            return Container(
-                              alignment: Alignment.center,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      }),
-                    );
-                  }
-                  return Container();
-                },
+                                    }
+                                    return Container();
+                                  }
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        CircularProgressIndicator(),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -793,15 +800,15 @@ class _TicketQuantityState extends State<TicketQuantity> {
                 });
                 widget.onUpdateQuantity(_current);
               }
-              Fluttertoast.showToast(
-                  msg: response['user_Message'],
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.black38,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
+//              Fluttertoast.showToast(
+//                  msg: response['user_Message'],
+//                  toastLength: Toast.LENGTH_LONG,
+//                  gravity: ToastGravity.BOTTOM,
+//                  timeInSecForIos: 1,
+//                  backgroundColor: Colors.black38,
+//                  textColor: Colors.white,
+//                  fontSize: 16.0
+//              );
 
             }
           },

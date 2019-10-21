@@ -81,7 +81,7 @@ public class MainActivity extends FlutterActivity {
                                     new FawrySdkCallback() {
                                         public void onSuccess(String trxId, Object customParams) {
                                             Log.i("dfd", "onCreate: " + "onSuccess");
-                                            Toast.makeText(MainActivity.this, trxId, Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(MainActivity.this, trxId, Toast.LENGTH_SHORT).show();
                                             Log.i("gggg", "onSuccess: " + trxId + customParams);
                                             trxId1 = trxId;
                                             completedMethod();
@@ -92,7 +92,7 @@ public class MainActivity extends FlutterActivity {
                                         @Override
                                         public void onFailure(String errorMessage) {
                                             Log.i("dfd", "onCreate: " + "onFailure");
-                                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                                         }
 
                                     }, merchantID, merchantRefNumber, items,
@@ -139,7 +139,7 @@ public class MainActivity extends FlutterActivity {
                                     new FawrySdkCallback() {
                                         public void onSuccess(String trxId, Object customParams) {
                                             Log.i("dfd", "onCreate: " + "onSuccess");
-                                            Toast.makeText(MainActivity.this, trxId, Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(MainActivity.this, trxId, Toast.LENGTH_SHORT).show();
                                             Log.i("gggg", "onSuccess: " + trxId + customParams);
                                             trxId1 = trxId;
                                             completedMethod();
@@ -150,7 +150,7 @@ public class MainActivity extends FlutterActivity {
                                         @Override
                                         public void onFailure(String errorMessage) {
                                             Log.i("dfd", "onCreate: " + "onFailure");
-                                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                                         }
 
                                     }, merchantID, merchantRefNumber, items,
@@ -208,7 +208,7 @@ public class MainActivity extends FlutterActivity {
             @Override
             public void onResponse(Call<ResponeCompleted> call, Response<ResponeCompleted> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, response.body().getUserMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, response.body().getUserMessage(), Toast.LENGTH_SHORT).show();
                     Log.i("sddsf", "onResponse: " + response.body().getUserMessage());
                 }
             }
