@@ -381,7 +381,7 @@ class _LoginState extends State<Login> {
                                     });
 
                                     _showLoginErrorDialog(context,
-                                        message: response['user_Message']);
+                                        message: response != null?response['user_Message']:'');
                                   }
 
                                 }
@@ -711,7 +711,7 @@ class _LoginState extends State<Login> {
                                   Map response = await util.login(
                                       _userName, _password);
 
-                                  if (response['result'] == true) {
+                                  if (response != null && response['result'] == true) {
                                     Globals.skipped = false;
                                     Globals.userPassword = _password;
                                     Globals.userId = response['id'];
@@ -739,7 +739,7 @@ class _LoginState extends State<Login> {
 //                                            .populateCategories(categoriesList);
                                     Navigator.of(context)
                                         .pushReplacementNamed('/home');
-                                  } else if (response['result'] == 2) {
+                                  } else if (response != null && response['result'] == 2) {
                                     setState(() {
                                       _loggingIn = false;
                                     });
@@ -753,7 +753,7 @@ class _LoginState extends State<Login> {
                                     });
 
                                     _showLoginErrorDialog(context,
-                                        message: response['user_Message']);
+                                        message: response != null?response['user_Message']:'');
                                   }
                                 }
                               },

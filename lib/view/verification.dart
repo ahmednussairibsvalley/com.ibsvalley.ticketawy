@@ -24,6 +24,8 @@ class _VerificationDialogState extends State<VerificationDialog> {
 
   String _message = '';
 
+  bool _resending = false;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -144,6 +146,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                         FocusScope.of(context).requestFocus(FocusNode());
                         setState(() {
                           _message = 'Resending ..';
+                          _resending = true;
                         });
                         var response = await util.sendVerificationMessage(widget.phoneNumber);
 
@@ -151,14 +154,16 @@ class _VerificationDialogState extends State<VerificationDialog> {
                         if(response != null && response['result']){
                           setState(() {
                             _message = 'An SMS sent to you';
+                            _resending = false;
                           });
                         } else {
                           _message = 'Error while resending a new SMS.';
+                          _resending = false;
                         }
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xfffe6700),
+                          color: _resending?Colors.grey:Color(0xfffe6700),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
