@@ -312,7 +312,7 @@ class _RegisterState extends State<Register> {
                                           _registering = false;
                                         });
                                         _showRegistrationErrorDialog(context,
-                                            message: response['user_Message']);
+                                            message: response != null?response['user_Message']:'');
                                       }
                                     }
                                   },
