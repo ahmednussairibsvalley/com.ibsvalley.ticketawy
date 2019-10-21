@@ -26,6 +26,8 @@ Future<bool> isImageUrlAvailable(String imageUrl) async{
     return false;
   } on TimeoutException catch(_){
     return false;
+  } catch (e){
+    return null;
   }
 }
 
@@ -48,6 +50,8 @@ Future<Map> login(String username, String password) async {
     httpClient.close();
     return json.decode(reply);
   } on TimeoutException catch(_){
+    return null;
+  } catch (e){
     return null;
   }
 
@@ -74,6 +78,8 @@ Future<Map> register(String fullName, String phone, String password) async {
     return json.decode(reply);
   } on TimeoutException catch(_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -88,6 +94,8 @@ Future<Map> getEventDetails(int id) async{
     return result[0];
   } on TimeoutException catch(_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -99,6 +107,8 @@ Future<Map> getUserDetails () async{
     var response = await http.get(url).timeout(Duration(seconds: timeOut));
     return jsonDecode(response.body);
   } on TimeoutException catch(_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -112,6 +122,8 @@ Future<List> getUserList () async {
 
     return jsonDecode(response.body);
   } on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -132,6 +144,8 @@ Future<Map> sendVerificationMessage (String phone) async{
     httpClient.close();
     return json.decode(reply);
   } on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 
@@ -154,6 +168,8 @@ Future<Map> verifyPhone (String phone, String code) async {
     return json.decode(reply);
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -167,6 +183,8 @@ Future<List> categoryList () async{
     return jsonDecode(response.body);
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -178,6 +196,8 @@ Future<Map> getHomeLists() async {
 
     return jsonDecode(response.body);
   } on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -192,6 +212,8 @@ Future<List> getHomeEvents() async {
     return result['homeEvents'];
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -204,6 +226,8 @@ Future<List> getHotEvents() async {
     var result = jsonDecode(response.body);
     return result['hotEvents'];
   } on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -218,6 +242,8 @@ Future<List> getServiceClasses(int id) async{
     return result;
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -230,6 +256,8 @@ Future<List> getEventsList(int categoryId) async{
     var result = jsonDecode(response.body);
     return result;
   } on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -254,6 +282,8 @@ Future<Map> updateUserDetails({@required String fullName,
     return json.decode(reply);
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -272,6 +302,8 @@ Future<Map> addToRemoveFromWishList(int eventId) async {
     return json.decode(reply);
   }on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -285,6 +317,8 @@ Future<List> getWishList () async {
     var result = jsonDecode(response.body);
     return result;
   }on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -301,6 +335,8 @@ Future<List> search(String keyWord) async {
     return result;
   } on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -312,6 +348,8 @@ Future<List> getOrdersHistory() async {
     var result = jsonDecode(response.body);
     return result;
   }on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -337,6 +375,8 @@ Future<Map> contactUs({@required String phoneEmail, @required String subject,
     return json.decode(reply);
   }on TimeoutException catch (_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -360,6 +400,8 @@ Future<Map> addOrder({@required int eventId, @required List orders}) async {
     return json.decode(reply);
   }on TimeoutException catch(_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -380,6 +422,8 @@ Future<Map> recoverPassword(String phoneNumber) async{
     httpClient.close();
     return json.decode(reply);
   } on TimeoutException catch(_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -462,6 +506,8 @@ Future<Map> updatePassword({@required String phoneNumber, @required String newPa
     return json.decode(reply);
   }on TimeoutException catch(_){
     return null;
+  } catch (e){
+    return null;
   }
 }
 
@@ -478,6 +524,8 @@ Future<Map> availableTickets({@required int quantity,
     var result = jsonDecode(response.body);
     return result;
   }on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -500,6 +548,8 @@ Future<Map> confirmPasswordCode({@required String phoneNumber, @required String 
     httpClient.close();
     return json.decode(reply);
   }on TimeoutException catch(_){
+    return null;
+  } catch (e){
     return null;
   }
 }
@@ -545,6 +595,8 @@ Future<List> getTicketDetails(String orderId) async{
     var result = jsonDecode(response.body);
     return result;
   }on TimeoutException catch (_){
+    return null;
+  } catch (e){
     return null;
   }
 }

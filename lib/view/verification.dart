@@ -98,24 +98,24 @@ class _VerificationDialogState extends State<VerificationDialog> {
                       onTap: () async{
                         if(widget.forJustPhoneConfirmation){
                           Map response = await util.confirmPasswordCode(phoneNumber: widget.phoneNumber, code: _verificationController.text);
-                          if(response['result']){
+                          if(response != null && response['result']){
                             Navigator.of(context).pop();
 //                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
                             widget.onSuccess(response['id'], response['user_Message'], widget.password);
                           } else {
                             setState(() {
-                              _message = response['user_Message'];
+                              _message = response != null?response['user_Message']:'';
                             });
                           }
                         } else {
                           Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
-                          if(response['result']){
+                          if(response != null && response['result']){
                             Navigator.of(context).pop();
 //                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
                             widget.onSuccess(response['id'], response['user_Message'], widget.password);
                           } else {
                             setState(() {
-                              _message = response['user_Message'];
+                              _message = response != null?response['user_Message']:'';
                             });
                           }
                         }
@@ -148,7 +148,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                         var response = await util.sendVerificationMessage(widget.phoneNumber);
 
                         print('$response');
-                        if(response['result']){
+                        if(response != null && response['result']){
                           setState(() {
                             _message = 'An SMS sent to you';
                           });
