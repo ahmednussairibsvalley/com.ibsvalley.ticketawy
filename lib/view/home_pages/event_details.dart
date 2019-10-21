@@ -294,7 +294,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   onTap: () {
                     if (Globals.skipped) {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Login(openedFromHome: false,)));
+                          MaterialPageRoute(builder: (context) => Login(openedFromHome: false,
+                            openedFromEventDescription: true,
+                          )));
                     } else {
                       if (Globals.reservationOption ==
                           ReservationOptions.byTickets)

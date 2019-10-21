@@ -13,8 +13,9 @@ import 'verification.dart';
 
 class Register extends StatefulWidget {
   final bool openedFromHome;
+  final bool openedFromEventDescription;
 
-  Register({@required this.openedFromHome});
+  Register({@required this.openedFromHome, this.openedFromEventDescription = false});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -277,7 +278,7 @@ class _RegisterState extends State<Register> {
                                       Map response = await util.register(
                                           fullName, phoneNumber, password);
 
-                                      if (response['result']) {
+                                      if (response != null && response['result']) {
                                         String id = response['id'];
                                         Map verificationResponse =
                                         await util.sendVerificationMessage(
@@ -446,7 +447,8 @@ class _RegisterState extends State<Register> {
               password: password,
               onSuccess: (id, message, password) {
                 _showRegistrationSuccessDialog(context,
-                    message: message, id: id, password: password);
+                    message: message, id: id, password: password,
+                    openedFromEventDescription: widget.openedFromEventDescription);
               },
             ),
           );
@@ -516,7 +518,7 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
 }
 
 _showRegistrationSuccessDialog(BuildContext context,
-    {String message, String id, String password}) {
+    {String message, String id, String password, bool openedFromEventDescription = false}) {
   showDialog(
       barrierDismissible: false,
       context: context,
@@ -525,7 +527,8 @@ _showRegistrationSuccessDialog(BuildContext context,
           content: Container(
             width: 300.0,
             height: 200.0,
-            child: RegistrationSuccessDialog(message: message, password: password, id: id),
+            child: RegistrationSuccessDialog(message: message, password: password,
+              id: id, openedFromEventDescription: openedFromEventDescription,),
           ),
         );
       });

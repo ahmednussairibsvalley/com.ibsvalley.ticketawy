@@ -17,8 +17,10 @@ import 'verification.dart';
 class Login extends StatefulWidget {
   final bool openedFromHome;
   final bool openedByDrawer;
+  final bool openedFromEventDescription;
 
-  Login({this.openedFromHome = true, this.openedByDrawer = false});
+  Login({this.openedFromHome = true,
+    this.openedByDrawer = false, this.openedFromEventDescription = false});
   @override
   _LoginState createState() => _LoginState();
 }
@@ -57,7 +59,7 @@ class _LoginState extends State<Login> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        message.isEmpty ? 'Invalid login' : message,
+                        message.isEmpty ? 'Error when signing in' : message,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Verdana',
@@ -323,7 +325,7 @@ class _LoginState extends State<Login> {
                                   Map response = await util.login(
                                       _userName, _password);
 
-                                  if (response['result'] == true) {
+                                  if (response != null && response['result'] == true) {
                                     Globals.userPassword = _password;
                                     Globals.userId = response['id'];
 
@@ -365,7 +367,7 @@ class _LoginState extends State<Login> {
                                             PagesIndices
                                                 .eventPageIndex,
                                           )));
-                                  } else if (response['result'] == 2) {
+                                  } else if (response != null && response['result'] == 2) {
                                     setState(() {
                                       _loggingIn = false;
                                     });
@@ -381,6 +383,7 @@ class _LoginState extends State<Login> {
                                     _showLoginErrorDialog(context,
                                         message: response['user_Message']);
                                   }
+
                                 }
                               },
                               title: Container(
@@ -455,6 +458,7 @@ class _LoginState extends State<Login> {
                                     .push(MaterialPageRoute(
                                     builder: (context) => Register(
                                       openedFromHome: false,
+                                      openedFromEventDescription: widget.openedFromEventDescription,
                                     )));
                               },
                               child: Column(

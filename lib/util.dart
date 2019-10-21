@@ -11,7 +11,9 @@ import 'package:ticketawy/globals.dart';
 
 final String _baseUrl = 'http://40.85.116.121:8607';
 
-final int timeOut = 5;
+
+/// Time-out in seconds
+final int timeOut = 60;
 
 /// Is the image URL available
 Future<bool> isImageUrlAvailable(String imageUrl) async{

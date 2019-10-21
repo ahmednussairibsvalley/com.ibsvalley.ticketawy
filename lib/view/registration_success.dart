@@ -3,13 +3,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../globals.dart';
 import '../util.dart' as util;
 import 'dashed_divider.dart';
+import 'home.dart';
 
 class RegistrationSuccessDialog extends StatefulWidget {
   final String message;
   final String password;
   final String id;
+  final bool openedFromEventDescription;
 
-  RegistrationSuccessDialog({@required this.message, @required this.password, @required this.id});
+  RegistrationSuccessDialog({@required this.message, @required this.password,
+    @required this.id, this.openedFromEventDescription = false});
   @override
   _RegistrationSuccessDialogState createState() => _RegistrationSuccessDialogState();
 }
@@ -78,7 +81,16 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
                     : '');
 
             Navigator.of(context).pop();
-            Navigator.of(context).pushReplacementNamed('/home');
+            if(widget.openedFromEventDescription)
+              Navigator.of(context)
+                  .pushReplacement(MaterialPageRoute(
+                  builder: (context) => Home(
+                    currentPageIndex:
+                    PagesIndices
+                        .eventPageIndex,
+                  )));
+            else
+              Navigator.of(context).pushReplacementNamed('/home');
           },
           title: Stack(
             alignment: Alignment.center,
