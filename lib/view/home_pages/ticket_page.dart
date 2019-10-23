@@ -171,6 +171,8 @@ class _TicketItemState extends State<TicketItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
         body: ResponsiveContainer(
           widthPercent: 100,
           heightPercent: 62,
