@@ -23,7 +23,7 @@ class LocationPage extends StatelessWidget {
     DateTime _endDate = DateTime.parse(endDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
     return ResponsiveContainer(widthPercent: 90, heightPercent: 80,
-      padding: EdgeInsets.only( right: 15, left: 15,),
+      padding: EdgeInsets.only( right: 15, left: 15, bottom: 15),
 //      child: LocationMap2(mapUrl: mapUrl),
       child: Column(
 //        shrinkWrap: true,
