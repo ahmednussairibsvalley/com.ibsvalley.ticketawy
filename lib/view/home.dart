@@ -682,17 +682,24 @@ class _HomeState extends State<Home> {
                         connectivityResult != ConnectivityResult.wifi){
                       return;
                     }
-                    Globals.keyWord = value;
+                    if(value.length > 2){
+                      Globals.keyWord = value;
 
-                    if(Globals.keyWord.isEmpty){
+                      if(Globals.keyWord.isEmpty){
+                        setState(() {
+                          index = _previousPageIndex;
+                        });
+                      } else {
+                        setState(() {
+                          index = PagesIndices.searchPageIndex;
+                        });
+                      }
+                    }else {
                       setState(() {
                         index = _previousPageIndex;
                       });
-                    } else {
-                      setState(() {
-                        index = PagesIndices.searchPageIndex;
-                      });
                     }
+
 
                   },
                   decoration: InputDecoration(
