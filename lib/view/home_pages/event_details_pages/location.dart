@@ -25,22 +25,23 @@ class LocationPage extends StatelessWidget {
     return ResponsiveContainer(widthPercent: 90, heightPercent: 80,
       padding: EdgeInsets.only( right: 15, left: 15,),
 //      child: LocationMap2(mapUrl: mapUrl),
-      child: ListView(
-        shrinkWrap: true,
-        itemExtent: _width > 360?350:370,
+      child: Column(
+//        shrinkWrap: true,
+//        itemExtent: _width > 360?350:370,
         children: <Widget>[
-          Material(
-            elevation: 10,
-            shadowColor: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Flexible(
-                    child: LocationMap2(
-                      mapUrl: mapUrl,
+          Flexible(
+            child: Material(
+              elevation: 10,
+              shadowColor: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Flexible(
+                      child: LocationMap2(
+                        mapUrl: mapUrl,
+                      ),
                     ),
-                  ),
 //                  GestureDetector(
 //                    onTap: (){
 //                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LargerMap(url: mapUrl,)));
@@ -57,62 +58,63 @@ class LocationPage extends StatelessWidget {
 //                      ),
 //                    ),
 //                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(
-                      height: 1,
-                      width: 5,
-                      color: Color(0xffb8b8b8),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DashedDivider(
+                        height: 1,
+                        width: 5,
+                        color: Color(0xffb8b8b8),
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('assets/event_time.png', width: 25, height: 25,),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Starts at:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
-                              Text(_startTimeText,
-                                style: TextStyle(
-                                  color: Color(0xffff6600),
-                                  fontFamily: 'Verdana',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('assets/event_time.png', width: 25, height: 25,),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Starts at:',style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
+                                Text(_startTimeText,
+                                  style: TextStyle(
+                                    color: Color(0xffff6600),
+                                    fontFamily: 'Verdana',
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
 
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.asset('assets/event_duration.png', width: 25, height: 25,),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Duration:', style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
-                              Text('${_endDate.difference(_startDate).inDays} Days',
-                                style: TextStyle(
-                                  color: Color(0xffff6600),
-                                  fontFamily: 'Verdana',
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset('assets/event_duration.png', width: 25, height: 25,),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Duration:', style: TextStyle(fontFamily: 'Verdana',color: Color(0xff656565)),),
+                                Text('${_endDate.difference(_startDate).inDays} Days',
+                                  style: TextStyle(
+                                    color: Color(0xffff6600),
+                                    fontFamily: 'Verdana',
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
 
-                      ),
-                    ],
-                  )
-                ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           )
@@ -169,7 +171,7 @@ class _LocationMap2State extends State<LocationMap2> {
         width: _width,
         child: WebView(
 
-          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=$_height width=$_width frameborder=0 style=border:0; align=middle allowfullscreen="" scrolling=no marginheight=0 marginwidth=0></iframe></center></body></html>', mimeType: 'text/html').toString(),
+          initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=$_height width=$_width frameborder=0 style=border:0; align=middle allowfullscreen="" marginheight=0 marginwidth=0></iframe></center></body></html>', mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
 
 
