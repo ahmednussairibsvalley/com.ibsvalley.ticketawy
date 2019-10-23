@@ -367,6 +367,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               physics: index == locationPageIndex? NeverScrollableScrollPhysics():AlwaysScrollableScrollPhysics(),
+//              physics: AlwaysScrollableScrollPhysics(),
               children: <Widget>[
                 AboutPage(
                   imageUrl:
