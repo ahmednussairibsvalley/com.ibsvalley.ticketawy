@@ -37,9 +37,13 @@ class AllCategoriesPage extends StatelessWidget {
           builder: (context, snapshot){
             if(snapshot.hasData){
               Globals.controller.populateCategories(snapshot.data);
-              return CategoriesPager(
-                onCategoryPressed: onCategoryPressed,
-                categoriesList: Globals.controller.categories,
+              return ListView(
+                children: <Widget>[
+                  CategoriesPager(
+                    onCategoryPressed: onCategoryPressed,
+                    categoriesList: Globals.controller.categories,
+                  )
+                ],
               );
             }
             return Container();
