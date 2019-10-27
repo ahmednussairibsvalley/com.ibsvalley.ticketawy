@@ -420,7 +420,7 @@ class EventsPage extends StatelessWidget {
                           heightPercent: 3, widthPercent: 35,
                           alignment: Alignment.center,
                           child: Text(
-                            'Start from ${list[index].price} EGP',
+                            'Starts from ${list[index].price} EGP',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_container/responsive_container.dart';
 
 import '../../globals.dart';
 import '../../util.dart' as util;
@@ -362,10 +363,13 @@ class EventsPage extends StatelessWidget {
                       Expanded(
                           child: Stack(
                         children: <Widget>[
-                          Image.network(
-                            list[index].imageUrl,
-                            fit: BoxFit.cover,
-                          ),
+                          ResponsiveContainer(
+                              heightPercent: 10, widthPercent: 40,
+                              child: Image.network(
+                                list[index].imageUrl,
+                                fit: BoxFit.fill,
+
+                              )),
                           Positioned(
                               top: 3.0,
                               right: 3,
@@ -391,8 +395,7 @@ class EventsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
-                          height: 50,
-                            child: Text('${list[index].title}')
+                            child: Text('${list[index].title}',style: TextStyle(fontSize: 12),)
                         ),
                       ),
                       Container(
@@ -402,9 +405,10 @@ class EventsPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            '${list[index].price} EGP/Ticket',
+                            'Starts from ${list[index].price} EGP',
                             style: TextStyle(
                               color: Colors.white,
+                              fontSize: 12,
                             ),
                             textAlign: TextAlign.center,
                           ),
