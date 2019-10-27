@@ -33,15 +33,15 @@ class SchedulePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('* ${scheduleList[index]['actTitle']}',
-                          style: TextStyle(
-                            color: Color(0xffff6600),
-                            fontFamily: 'MyriadPro',
-                          ),
-                        ),
-                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.all(8.0),
+//                        child: Text('* ${scheduleList[index]['actTitle']}',
+//                          style: TextStyle(
+//                            color: Color(0xffff6600),
+//                            fontFamily: 'MyriadPro',
+//                          ),
+//                        ),
+//                      ),
                       Column(
                         children: List.generate(agendaList.length, (index){
                           DateTime startTime = DateTime.parse('${agendaList[index]['start']}');
