@@ -143,6 +143,7 @@ class HistoryPage extends StatelessWidget {
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
           quantity: list[index]['number_of_tickets'],
+          payment: list[index]['total_Price'],
           onItemHistoryPressed: onHistoryItemPressed,
         );
       }),
@@ -156,6 +157,7 @@ class HistoryItem extends StatelessWidget {
   final String title;
   final String code;
   final int quantity;
+  final double payment;
   final Function(String) onItemHistoryPressed;
 
   HistoryItem({
@@ -165,6 +167,7 @@ class HistoryItem extends StatelessWidget {
     @required this.title,
     @required this.code,
     @required this.quantity,
+    @required this.payment,
     @required this.onItemHistoryPressed,
   }) : super(key: key);
   @override
@@ -216,7 +219,7 @@ class HistoryItem extends StatelessWidget {
               Text('Orderdate: XX/XX/XXXX',style: TextStyle(fontSize: 16),),
 
               // Payment
-              Text('Payment: ------',style: TextStyle(fontSize: 16),),
+              Text('Payment: ${payment.toStringAsFixed(0)} EGP',style: TextStyle(fontSize: 16),),
 
               // Status
               Text('Status: ------',style: TextStyle(fontSize: 16),),
