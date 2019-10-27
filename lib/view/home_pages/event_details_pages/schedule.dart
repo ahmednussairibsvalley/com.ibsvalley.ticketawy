@@ -44,8 +44,11 @@ class SchedulePage extends StatelessWidget {
                       ),
                       Column(
                         children: List.generate(agendaList.length, (index){
-                          DateTime dateTime = DateTime.parse('${agendaList[index]['start']}');
-                          String _startTimeText = DateFormat.jm().format(dateTime);
+                          DateTime startTime = DateTime.parse('${agendaList[index]['start']}');
+                          String _startTimeText = '${startTime.year}-${startTime.month}-${startTime.day} ${DateFormat.jm().format(startTime)}';
+
+                          DateTime endTime = DateTime.parse('${agendaList[index]['end']}');
+                          String _endTimeText = '${endTime.year}-${endTime.month}-${endTime.day} ${DateFormat.jm().format(endTime)}';
 
                           return Padding(
                             padding: const EdgeInsets.only(left: 15.0),
@@ -59,7 +62,7 @@ class SchedulePage extends StatelessWidget {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
-                                    child: Text('$_startTimeText',
+                                    child: Text('starts at: $_startTimeText\nends at: $_endTimeText',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Verdana',

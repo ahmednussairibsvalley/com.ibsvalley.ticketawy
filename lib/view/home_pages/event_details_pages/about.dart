@@ -160,7 +160,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: Text(_startDateText,
+                      child: Text('${_startDate.year}-${_startDate.month}-${_startDate.day}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white
