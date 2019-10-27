@@ -6,24 +6,25 @@ import '../../../globals.dart';
 import '../../../util.dart' as util;
 
 class ProfileHistory extends StatelessWidget {
-
   final Function(String) onHistoryItemPressed;
-  ProfileHistory({@required this.onHistoryItemPressed,});
+  ProfileHistory({
+    @required this.onHistoryItemPressed,
+  });
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Connectivity().checkConnectivity(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            if(snapshot.hasData){
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            if (snapshot.hasData) {
               if (snapshot.data == ConnectivityResult.mobile ||
-                  snapshot.data == ConnectivityResult.wifi){
+                  snapshot.data == ConnectivityResult.wifi) {
                 return FutureBuilder(
                   future: util.getOrdersHistory(),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      if(snapshot.data.length > 0){
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data.length > 0) {
                         return HistorySlider(
                           list: snapshot.data,
                           onHistoryItemPressed: onHistoryItemPressed,
@@ -59,9 +60,7 @@ class ProfileHistory extends StatelessWidget {
   }
 }
 
-
 class HistorySlider extends StatefulWidget {
-
   final List list;
   final Function(String) onHistoryItemPressed;
 
@@ -70,8 +69,8 @@ class HistorySlider extends StatefulWidget {
   _HistorySliderState createState() => _HistorySliderState();
 }
 
-class _HistorySliderState extends State<HistorySlider> with TickerProviderStateMixin{
-
+class _HistorySliderState extends State<HistorySlider>
+    with TickerProviderStateMixin {
   TabController _tabController;
   List<Map> paisList = List();
 
@@ -99,11 +98,12 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
       length: paisList.length,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return TabBarView(
       controller: _tabController,
-      children: List.generate(_tabController.length, (index){
+      children: List.generate(_tabController.length, (index) {
         List list = List();
         if (paisList[index]['second'] > 0) {
           list.add(widget.list[paisList[index]['first']]);
@@ -111,15 +111,16 @@ class _HistorySliderState extends State<HistorySlider> with TickerProviderStateM
         } else {
           list.add(widget.list[paisList[index]['first']]);
         }
-        return HistoryPage(list: list, onHistoryItemPressed: widget.onHistoryItemPressed,);
+        return HistoryPage(
+          list: list,
+          onHistoryItemPressed: widget.onHistoryItemPressed,
+        );
       }),
     );
   }
 }
 
-
 class HistoryPage extends StatelessWidget {
-
   final List list;
   final Function(String) onHistoryItemPressed;
 
@@ -150,7 +151,6 @@ class HistoryPage extends StatelessWidget {
 }
 
 class HistoryItem extends StatelessWidget {
-
   final String orderId;
   final String imageUrl;
   final String title;
@@ -158,9 +158,15 @@ class HistoryItem extends StatelessWidget {
   final int quantity;
   final Function(String) onItemHistoryPressed;
 
-
-  HistoryItem({Key key, @required this.orderId, @required this.imageUrl, @required this.title,
-    @required this.code, @required this.quantity, @required this.onItemHistoryPressed,}):  super(key: key);
+  HistoryItem({
+    Key key,
+    @required this.orderId,
+    @required this.imageUrl,
+    @required this.title,
+    @required this.code,
+    @required this.quantity,
+    @required this.onItemHistoryPressed,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
@@ -172,10 +178,10 @@ class HistoryItem extends StatelessWidget {
         shadowColor: Colors.black,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-
-              Image.network(imageUrl,
+              Image.network(
+                imageUrl,
                 height: MediaQuery.of(context).size.height / 10,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fill,
@@ -185,17 +191,35 @@ class HistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0),
                 child: Container(
-                  height: 90 ,
-                  child: Text(title,
+                  height: 23,
+                  child: Text(
+                    title,
+                    softWrap: true,
+                    maxLines: 1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18
-                    ),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ),
 
+              // Divider
+              Padding(
+                padding: EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0),
+                child: DashedDivider(
+                  height: 1,
+                  width: 5,
+                  color: Colors.grey,
+                ),
+              ),
 
+             // Order date
+              Text('Orderdate: XX/XX/XXXX',style: TextStyle(fontSize: 16),),
+
+              // Payment
+              Text('Payment: ------',style: TextStyle(fontSize: 16),),
+
+              // Status
+              Text('Status: ------',style: TextStyle(fontSize: 16),),
 
               // Divider
               Padding(
@@ -210,11 +234,10 @@ class HistoryItem extends StatelessWidget {
               // code
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0),
-                child: Text(code,
+                child: Text('Code: $code'
+                  ,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 18
-                  ),
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
 
@@ -222,7 +245,7 @@ class HistoryItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4.0, right: 4.0, left: 8.0),
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     onItemHistoryPressed(orderId);
                   },
                   child: Container(
@@ -231,18 +254,42 @@ class HistoryItem extends StatelessWidget {
                       color: Color(0xfffe6700),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
+                      padding: const EdgeInsets.only(
+                          top: 4, bottom: 4, left: 9, right: 9),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Flexible(child: Image.asset('assets/ticket_type.png', width: 35, height: 35,)),
                           Flexible(
-                            child: Text('$quantity Tickets',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
+                              child: Image.asset(
+                            'assets/ticket_type.png',
+                            width: 35,
+                            height: 35,
+                          )),
+                          Flexible(
+                            child: Column(children: <Widget>[
+                              Text(
+                                'T Price',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0,bottom: 4),
+                                child: DashedDivider(
+                                  height: 1,
+                                  width: 5,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                '$quantity Tickets',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],),
                           ),
                         ],
                       ),
@@ -276,8 +323,6 @@ class HistoryItem extends StatelessWidget {
 //                  ),
 //                ),
 //              ),
-
-
             ],
           ),
         ),
@@ -285,4 +330,3 @@ class HistoryItem extends StatelessWidget {
     );
   }
 }
-
