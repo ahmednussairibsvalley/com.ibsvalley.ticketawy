@@ -667,8 +667,8 @@ class _LoginState extends State<Login> {
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
-                                prefixIcon: Icon(Icons.lock_outline),
-//                          suffixIcon: Icon(Icons.help_outline),
+                                prefixIcon: Icon(Icons.lock_outline,),
+                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
@@ -689,6 +689,7 @@ class _LoginState extends State<Login> {
                               },
                             ),
                           ),
+
 
                           // login button
                           ResponsiveContainer(

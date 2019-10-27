@@ -15,7 +15,10 @@ class Register extends StatefulWidget {
   final bool openedFromHome;
   final bool openedFromEventDescription;
 
-  Register({@required this.openedFromHome, this.openedFromEventDescription = false,});
+  Register({
+    @required this.openedFromHome,
+    this.openedFromEventDescription = false,
+  });
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -39,405 +42,418 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return WillPopScope(child: Stack(
-      children: <Widget>[
-        Scaffold(
-          body: Stack(
-            children: <Widget>[
-              // The background
-              Container(
-                height: _height,
-                width: _width,
-                decoration: BoxDecoration(
-                    color: Colors.deepPurple,
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
+    return WillPopScope(
+        child: Stack(
+          children: <Widget>[
+            Scaffold(
+              body: Stack(
+                children: <Widget>[
+                  // The background
+                  Container(
+                    height: _height,
+                    width: _width,
+                    decoration: BoxDecoration(
+                        color: Colors.deepPurple,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
 //                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                        image: AssetImage('assets/login.jpg'))),
-              ),
+                            image: AssetImage('assets/login.jpg'))),
+                  ),
 
-              //The registration form
-              ResponsiveContainer(
-                heightPercent: 100,
-                widthPercent: 100,
-                alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 50),
-                child: ListView(
-                  children: <Widget>[
-
-                    //Header Logo
-                    ResponsiveContainer(
-                      widthPercent: 25,
-                      heightPercent: 22,
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        'assets/header.png',
-                      ),
-                    ),
-
-
-                    Column(
+                  //The registration form
+                  ResponsiveContainer(
+                    heightPercent: 100,
+                    widthPercent: 100,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 50),
+                    child: ListView(
                       children: <Widget>[
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            children: <Widget>[
-                              ResponsiveContainer(
-                                child: DashedDivider(
-                                  color: Colors.white30,
-                                ),
-                                widthPercent: 90,
-                                heightPercent: 3,
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                              ),
-                              ResponsiveContainer(
-                                widthPercent: 100,
-                                heightPercent: 8,
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                      fontSize: _width > 360 ? 35 : 30,
-                                      color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                        //Header Logo
+                        ResponsiveContainer(
+                          widthPercent: 25,
+                          heightPercent: 22,
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/header.png',
+                          ),
+                        ),
 
-                              // full name.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 100,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  controller: _fullNameController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.person_outline),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
+                        Column(
+                          children: <Widget>[
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                children: <Widget>[
+                                  ResponsiveContainer(
+                                    child: DashedDivider(
+                                      color: Colors.white30,
                                     ),
-                                    hintText: 'Full name',
+                                    widthPercent: 90,
+                                    heightPercent: 3,
+                                    padding:
+                                        EdgeInsets.only(left: 30, right: 30),
                                   ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your full name.';
-                                    fullName = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
-
-                              // mobile number.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 100,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  controller: _phoneController,
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.phone_android),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
+                                  ResponsiveContainer(
+                                    widthPercent: 100,
+                                    heightPercent: 8,
+                                    padding:
+                                        EdgeInsets.only(left: 20, right: 20),
+                                    child: Text(
+                                      'Sign up',
+                                      style: TextStyle(
+                                          fontSize: _width > 360 ? 35 : 30,
+                                          color: Colors.white),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    hintText: 'Mobile Number',
                                   ),
-                                  validator: (value) {
-                                    Pattern pattern =
-                                        r'(^(?:[+0]9)?[0-9]{11}$)';
-                                    RegExp regex = new RegExp(pattern);
-                                    if (value.isEmpty)
-                                      return 'Please enter your mobile number.';
-                                    if (!regex.hasMatch(value)) {
-                                      return 'Invalid phone number';
-                                    }
-                                    phoneNumber = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
 
-                              // Password.
-                              ResponsiveContainer(
-                                heightPercent: 10,
-                                widthPercent: 100,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  controller: _passwordController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.lock_outline),
-//                                  suffixIcon: Icon(Icons.help_outline),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
+                                  // full name.
+                                  ResponsiveContainer(
+                                    heightPercent: 10,
+                                    widthPercent: 100,
+                                    padding: const EdgeInsets.only(
+                                      left: 45.0,
+                                      right: 45.0,
                                     ),
-                                    hintText: 'Password',
-                                  ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please enter your password';
-                                    else if (value.length < 6) {
-                                      password = value;
-                                      return 'Password must be at least six chacters ';
-                                    }
-                                    password = value;
-                                    return null;
-                                  },
-                                ),
-                              ),
-
-                              // Confirm Password
-                              ResponsiveContainer(
-                                heightPercent: 9,
-                                widthPercent: 100,
-                                padding: const EdgeInsets.only(
-                                  left: 45.0,
-                                  right: 45.0,
-
-                                ),
-                                child: TextFormField(
-                                  textInputAction: TextInputAction.go,
-                                  controller: _confirmPasswordController,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.lock_outline),
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        borderSide: BorderSide(
-                                          style: BorderStyle.none,
-                                        )),
-                                    labelStyle: TextStyle(
-                                      fontSize: 15,
+                                    child: TextFormField(
+                                      textInputAction: TextInputAction.go,
+                                      controller: _fullNameController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        prefixIcon: Icon(Icons.person_outline),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              style: BorderStyle.none,
+                                            )),
+                                        labelStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        hintText: 'Full name',
+                                      ),
+                                      validator: (value) {
+                                        if (value.isEmpty)
+                                          return 'Please enter your full name.';
+                                        fullName = value;
+                                        return null;
+                                      },
                                     ),
-                                    hintText: 'Confirm Password',
                                   ),
-                                  validator: (value) {
-                                    if (value.isEmpty)
-                                      return 'Please confirm your password';
-                                    else if (value != password)
-                                      return 'The password does not match your password';
-                                    return null;
-                                  },
-                                ),
-                              ),
 
-                              // register button
-                              ResponsiveContainer(
-                                heightPercent: 8,
-                                widthPercent: 100,
-                                padding: const EdgeInsets.only(
-                                  left: 28.5,
-                                  right: 28.5,
-                                ),
-                                child: ListTile(
-                                  onTap: () async {
-                                    Globals.skipped = false;
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() {
-                                        _registering = true;
-                                      });
-                                      Map response = await util.register(
-                                          fullName, phoneNumber, password);
+                                  // mobile number.
+                                  ResponsiveContainer(
+                                    heightPercent: 10,
+                                    widthPercent: 100,
+                                    padding: const EdgeInsets.only(
+                                      left: 45.0,
+                                      right: 45.0,
+                                    ),
+                                    child: TextFormField(
+                                      textInputAction: TextInputAction.go,
+                                      controller: _phoneController,
+                                      keyboardType: TextInputType.phone,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        prefixIcon: Icon(Icons.phone_android),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              style: BorderStyle.none,
+                                            )),
+                                        labelStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        hintText: 'Mobile Number',
+                                      ),
+                                      validator: (value) {
+                                        Pattern pattern =
+                                            r'(^(?:[+0]9)?[0-9]{11}$)';
+                                        RegExp regex = new RegExp(pattern);
+                                        if (value.isEmpty)
+                                          return 'Please enter your mobile number.';
+                                        if (!regex.hasMatch(value)) {
+                                          return 'Invalid phone number';
+                                        }
+                                        phoneNumber = value;
+                                        return null;
+                                      },
+                                    ),
+                                  ),
 
-                                      if (response != null && response['result']) {
-                                        String id = response['id'];
-                                        Map verificationResponse =
-                                        await util.sendVerificationMessage(
-                                            phoneNumber);
+                                  // Password.
+                                  ResponsiveContainer(
+                                    heightPercent: 10,
+                                    widthPercent: 100,
+                                    padding: const EdgeInsets.only(
+                                      left: 45.0,
+                                      right: 45.0,
+                                    ),
+                                    child: TextFormField(
+                                      textInputAction: TextInputAction.go,
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        prefixIcon: Icon(Icons.lock_outline),
+                                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              style: BorderStyle.none,
+                                            )),
+                                        labelStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        hintText: 'Password',
+                                      ),
+                                      validator: (value) {
+                                        if (value.isEmpty)
+                                          return 'Please enter your password';
+                                        else if (value.length < 6) {
+                                          password = value;
+                                          return 'Password must be at least six chacters ';
+                                        }
+                                        password = value;
+                                        return null;
+                                      },
+                                    ),
+                                  ),
 
-                                        if (verificationResponse['result']) {
-                                          _showVerificationDialog(
-                                              id: id,
-                                              password: password,
-                                              phoneNumber: phoneNumber);
+                                  // Confirm Password
+                                  ResponsiveContainer(
+                                    heightPercent: 9,
+                                    widthPercent: 100,
+                                    padding: const EdgeInsets.only(
+                                      left: 45.0,
+                                      right: 45.0,
+                                    ),
+                                    child: TextFormField(
+                                      textInputAction: TextInputAction.go,
+                                      controller: _confirmPasswordController,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        prefixIcon: Icon(Icons.lock_outline),
+                                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                              style: BorderStyle.none,
+                                            )),
+                                        labelStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        hintText: 'Confirm Password',
+                                      ),
+                                      validator: (value) {
+                                        if (value.isEmpty)
+                                          return 'Please confirm your password';
+                                        else if (value != password)
+                                          return 'The password does not match your password';
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+
+                                  // register button
+                                  ResponsiveContainer(
+                                    heightPercent: 8,
+                                    widthPercent: 100,
+                                    padding: const EdgeInsets.only(
+                                      left: 28.5,
+                                      right: 28.5,
+                                    ),
+                                    child: ListTile(
+                                      onTap: () async {
+                                        Globals.skipped = false;
+                                        FocusScope.of(context)
+                                            .requestFocus(FocusNode());
+                                        if (_formKey.currentState.validate()) {
                                           setState(() {
-                                            _registering = false;
+                                            _registering = true;
                                           });
+                                          Map response = await util.register(
+                                              fullName, phoneNumber, password);
+
+                                          if (response != null &&
+                                              response['result']) {
+                                            String id = response['id'];
+                                            Map verificationResponse =
+                                                await util
+                                                    .sendVerificationMessage(
+                                                        phoneNumber);
+
+                                            if (verificationResponse[
+                                                'result']) {
+                                              _showVerificationDialog(
+                                                  id: id,
+                                                  password: password,
+                                                  phoneNumber: phoneNumber);
+                                              setState(() {
+                                                _registering = false;
+                                              });
 
 //                                        _showRegistrationSuccessDialog(context,message: response['user_Message']);
-                                          _fullNameController.value =
-                                              _fullNameController.value
-                                                  .copyWith(text: '');
-                                          _phoneController.value =
-                                              _phoneController.value
-                                                  .copyWith(text: '');
-                                          _passwordController.value =
-                                              _passwordController.value
-                                                  .copyWith(text: '');
-                                          _confirmPasswordController.value =
-                                              _confirmPasswordController.value
-                                                  .copyWith(text: '');
+                                              _fullNameController.value =
+                                                  _fullNameController.value
+                                                      .copyWith(text: '');
+                                              _phoneController.value =
+                                                  _phoneController.value
+                                                      .copyWith(text: '');
+                                              _passwordController.value =
+                                                  _passwordController.value
+                                                      .copyWith(text: '');
+                                              _confirmPasswordController.value =
+                                                  _confirmPasswordController
+                                                      .value
+                                                      .copyWith(text: '');
+                                            }
+                                          } else {
+                                            setState(() {
+                                              _registering = false;
+                                            });
+                                            _showRegistrationErrorDialog(
+                                                context,
+                                                message: response != null
+                                                    ? response['user_Message']
+                                                    : '');
+                                          }
                                         }
-                                      } else {
-                                        setState(() {
-                                          _registering = false;
-                                        });
-                                        _showRegistrationErrorDialog(context,
-                                            message: response != null?response['user_Message']:'');
-                                      }
-                                    }
-                                  },
-                                  title: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                      color: Color(0xfffe6700),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Text(
-                                        'Sign Up',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
+                                      },
+                                      title: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          color: Color(0xfffe6700),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Text(
+                                            'Sign Up',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
+
+                                  // Sign in link text
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 15.0, top: 5),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (widget.openedFromHome)
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Login()));
+                                        else
+                                          Navigator.of(context).pop();
+                                      },
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'Have an account?',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 105, left: 105, top: 5),
+                                            child: DashedDivider(
+                                              width: 5,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-
-                              // Sign in link text
-                              Padding(
-                                padding:
-                                const EdgeInsets.only(bottom: 15.0, top: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    if(widget.openedFromHome)
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login()));
-                                    else
-                                      Navigator.of(context).pop();
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'Have an account?',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 105, left: 105, top: 5),
-                                        child: DashedDivider(
-                                          width: 5,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-
-                            ],
-                          ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-              ),
+                    ),
+                  ),
 
-              //The back arrow
-              Container(
-                alignment: Alignment.topLeft,
-                child: GestureDetector(
-                    onTap: () {
-                      if (widget.openedFromHome)
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => Home()));
-                      else
-                        Navigator.of(context).pop();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 40, bottom: 40, left: 20, right: 40),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    )),
+                  //The back arrow
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                        onTap: () {
+                          if (widget.openedFromHome)
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Home()));
+                          else
+                            Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 40, bottom: 40, left: 20, right: 40),
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        )),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        _registering
-            ? Positioned(
-          top: 0.0,
-          bottom: 0.0,
-          left: 0.0,
-          right: 0.0,
-          child: Container(
-            color: Colors.black.withOpacity(0.5),
-            alignment: Alignment.center,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircularProgressIndicator(),
-              ],
             ),
-          ),
-        )
-            : Container(),
-      ],
-    ), onWillPop: ()async{
-      if(widget.openedFromHome){
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Home()));
-        return false;
-      } else {
-        return true;
-      }
-    });
+            _registering
+                ? Positioned(
+                    top: 0.0,
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                      alignment: Alignment.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+        onWillPop: () async {
+          if (widget.openedFromHome) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Home()));
+            return false;
+          } else {
+            return true;
+          }
+        });
   }
 
   _showVerificationDialog({String phoneNumber, String id, String password}) {
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return CustomAlertDialog(
@@ -447,8 +463,11 @@ class _RegisterState extends State<Register> {
               password: password,
               onSuccess: (id, message, password) {
                 _showRegistrationSuccessDialog(context,
-                    message: message, id: id, password: password,
-                    openedFromEventDescription: widget.openedFromEventDescription);
+                    message: message,
+                    id: id,
+                    password: password,
+                    openedFromEventDescription:
+                        widget.openedFromEventDescription);
               },
             ),
           );
@@ -518,7 +537,10 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
 }
 
 _showRegistrationSuccessDialog(BuildContext context,
-    {String message, String id, String password, bool openedFromEventDescription = false}) {
+    {String message,
+    String id,
+    String password,
+    bool openedFromEventDescription = false}) {
   showDialog(
       barrierDismissible: false,
       context: context,
@@ -527,11 +549,13 @@ _showRegistrationSuccessDialog(BuildContext context,
           content: Container(
             width: 300.0,
             height: 200.0,
-            child: RegistrationSuccessDialog(message: message, password: password,
-              id: id, openedFromEventDescription: openedFromEventDescription,),
+            child: RegistrationSuccessDialog(
+              message: message,
+              password: password,
+              id: id,
+              openedFromEventDescription: openedFromEventDescription,
+            ),
           ),
         );
       });
 }
-
-
