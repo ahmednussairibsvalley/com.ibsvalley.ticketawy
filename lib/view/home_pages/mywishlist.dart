@@ -64,52 +64,8 @@ class MyWishListPage extends StatelessWidget {
                     Flexible(
                       child: ListView(
                         children: <Widget>[
-                          FutureBuilder(
-                            future: util.getWishList(),
-                            builder: (context, snapshot){
-                              if(snapshot.connectionState == ConnectionState.done){
-                                if(snapshot.hasData){
-                                  List list = snapshot.data;
-                                  print('${list.length}');
-                                  if(list.length > 0){
-                                    Globals.controller.populateWishList(list);
-                                    return EventsSlider(
-                                      onCategoryPressed: onCategoryPressed,
-                                      list: Globals.controller.wishList,
-                                    );
-                                  }
-                                  return Center(
-                                    child: Image.asset('assets/sad_ticketawy.png'),
-                                  );
-
-                                }
-                                return Center(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Image.asset('assets/sad_ticketawy.png', width: 200,),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text('There is no events yet',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color(0xfffe6700),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                              return Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    CircularProgressIndicator(),
-                                  ],
-                                ),
-                              );
-                            },
-                          )
+                          WishListViewer(onCategoryPressed: onCategoryPressed,
+                          ),
                         ],
                       ),
                     )
@@ -193,11 +149,140 @@ class MyWishListPage extends StatelessWidget {
   }
 }
 
+class WishListViewer extends StatefulWidget {
+
+  final Function onCategoryPressed;
+
+  WishListViewer({@required this.onCategoryPressed,});
+  @override
+  _WishListViewerState createState() => _WishListViewerState();
+}
+
+class _WishListViewerState extends State<WishListViewer> {
+
+  FutureBuilder _eventsSlider;
+
+  @override
+  void initState() {
+    super.initState();
+    _eventsSlider = FutureBuilder(
+      future: util.getWishList(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            List list = snapshot.data;
+            if(list.length > 0){
+              Globals.controller.populateWishList(list);
+              return EventsSlider(
+                onCategoryPressed: widget.onCategoryPressed,
+                list: Globals.controller.wishList,
+                onUpdateWishList: (){
+                  _updateEventSlider();
+                },
+              );
+            }
+            return Center(
+              child: Image.asset('assets/sad_ticketawy.png'),
+            );
+
+          }
+          return Center(
+            child: Column(
+              children: <Widget>[
+                Image.asset('assets/sad_ticketawy.png', width: 200,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('There is no events yet',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xfffe6700),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Container(
+          child: Column(
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _updateEventSlider(){
+    setState(() {
+      _eventsSlider = FutureBuilder(
+        future: util.getWishList(),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              List list = snapshot.data;
+              if(list.length > 0){
+                Globals.controller.populateWishList(list);
+                return EventsSlider(
+                  onCategoryPressed: widget.onCategoryPressed,
+                  list: Globals.controller.wishList,
+                  onUpdateWishList: (){
+                    _updateEventSlider();
+                  },
+                );
+              }
+              return Center(
+                child: Image.asset('assets/sad_ticketawy.png'),
+              );
+
+            }
+            return Center(
+              child: Column(
+                children: <Widget>[
+                  Image.asset('assets/sad_ticketawy.png', width: 200,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('There is no events yet',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xfffe6700),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return Container(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
+      );
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return _eventsSlider;
+  }
+}
+
+
 class EventsSlider extends StatefulWidget {
   final Function(int) onCategoryPressed;
+  final Function onUpdateWishList;
   final List list;
 
-  EventsSlider({@required this.onCategoryPressed, @required this.list});
+  EventsSlider({@required this.onCategoryPressed,
+    @required this.list, @required this.onUpdateWishList});
   @override
   _EventsSliderState createState() => _EventsSliderState();
 }
@@ -270,6 +355,7 @@ class _EventsSliderState extends State<EventsSlider> {
         return EventsPage(
           list: list,
           onCategoryPressed: widget.onCategoryPressed,
+          onUpdateWishList: widget.onUpdateWishList,
         );
       },
     ).toList();
@@ -329,8 +415,9 @@ class EventsPage extends StatelessWidget {
 //  List list = Globals.controller.events;
   final List list;
   final Function(int) onCategoryPressed;
+  final Function onUpdateWishList;
 
-  EventsPage({@required this.list, @required this.onCategoryPressed});
+  EventsPage({@required this.list, @required this.onCategoryPressed, @required this.onUpdateWishList});
 
   @override
   Widget build(BuildContext context) {
@@ -379,17 +466,21 @@ class EventsPage extends StatelessWidget {
                                 decoration: new BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.deepOrange),
-                                child: GestureDetector(
-                                  child: IconButton(
-                                      padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        Icons.favorite,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: (){Icon(Icons.favorite_border);}),
-                                ),
-                              )),
+                                child: IconButton(
+                                    padding: EdgeInsets.only(top: 2),
+                                    icon: Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                      size: 25,
+                                    ),
+                                    onPressed: () async{
+                                      await util.addToRemoveFromWishList(list[index].id);
+                                      onUpdateWishList();
+
+                                    }
+                                    ),
+                              )
+                          ),
                         ],
                       )),
                       Padding(
