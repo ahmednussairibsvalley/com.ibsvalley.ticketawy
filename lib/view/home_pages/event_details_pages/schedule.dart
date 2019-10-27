@@ -45,45 +45,64 @@ class SchedulePage extends StatelessWidget {
                       Column(
                         children: List.generate(agendaList.length, (index){
                           DateTime startTime = DateTime.parse('${agendaList[index]['start']}');
-                          String _startTimeText = '${startTime.year}-${startTime.month}-${startTime.day} ${DateFormat.jm().format(startTime)}';
+                          String _startTimeText = '${DateFormat.jm().format(startTime)}';
 
                           DateTime endTime = DateTime.parse('${agendaList[index]['end']}');
-                          String _endTimeText = '${endTime.year}-${endTime.month}-${endTime.day} ${DateFormat.jm().format(endTime)}';
+                          String _endTimeText = '${DateFormat.jm().format(endTime)}';
 
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff4b3d7a),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
-                                    child: Text('starts at: $_startTimeText\nends at: $_endTimeText',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Verdana',
+                          String _description = agendaList[index]['description'];
+                          if(_description != null){
+                            if(_description.isNotEmpty){
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Color(0xff4b3d7a),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 3.0, bottom: 3.0,),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text('starts at: $_startTimeText',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Verdana',
+                                              ),
+                                            ),
+                                            Text('ends at: $_endTimeText',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: 'Verdana',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    Text('${agendaList[index]['description']}',
+                                      style: TextStyle(
+                                          fontFamily: 'Verdana',
+                                          color: Color(0xff656565)
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
+                                      child: DashedDivider(),
+                                    ),
+                                  ],
                                 ),
-                                Text('${agendaList[index]['description'] != null? agendaList[index]['description'].isEmpty?
-                                agendaList[index]['description']: 'There is no description': 'There is no description'}',
-                                  style: TextStyle(
-                                      fontFamily: 'Verdana',
-                                      color: Color(0xff656565)
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 16, right: 16, top: 14, bottom: 13),
-                                  child: DashedDivider(),
-                                ),
-                              ],
-                            ),
-                          );
+                              );
+                            }
+                            return Container();
+                          } else {
+                            return Container();
+                          }
                         }),
                       )
                     ],
