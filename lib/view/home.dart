@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/home_pages/search_results.dart';
 import 'package:ticketawy/view/home_pages/ticket_page.dart';
@@ -722,6 +723,15 @@ class _HomeState extends State<Home> {
                                 setState(() {
                                   index = _previousPageIndex;
                                 });
+                                Fluttertoast.showToast(
+                                    msg: 'Search field is empty',
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIos: 1,
+                                    backgroundColor: Colors.black38,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
                               } else {
                                 setState(() {
                                   index = PagesIndices.searchPageIndex;
