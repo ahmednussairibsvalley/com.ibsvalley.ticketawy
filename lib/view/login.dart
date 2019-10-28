@@ -290,13 +290,16 @@ class _LoginState extends State<Login> {
                                 filled: true,
                                 fillColor: Colors.white,
                                 prefixIcon: Icon(Icons.lock_outline),
-                                suffixIcon: IconButton(
-                                  icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
-                                  onPressed: (){
-                                    setState(() {
-                                      _passwordShown = _passwordShown?false:true;
-                                    });
-                                  },
+                                suffixIcon: Tooltip(
+                                  message: _passwordShown?'Hide Password':'Show Password',
+                                  child: IconButton(
+                                    icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                    onPressed: (){
+                                      setState(() {
+                                        _passwordShown = _passwordShown?false:true;
+                                      });
+                                    },
+                                  ),
                                 ),
 
                                 border: OutlineInputBorder(
@@ -678,13 +681,16 @@ class _LoginState extends State<Login> {
                                 filled: true,
                                 fillColor: Colors.white,
                                 prefixIcon: Icon(Icons.lock_outline,),
-                                suffixIcon: IconButton(
-                                  icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
-                                  onPressed: (){
-                                    setState(() {
-                                      _passwordShown = _passwordShown?false:true;
-                                    });
-                                  },
+                                suffixIcon: Tooltip(
+                                  message: _passwordShown?'Hide Password':'Show Password',
+                                  child: IconButton(
+                                    icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                    onPressed: (){
+                                      setState(() {
+                                        _passwordShown = _passwordShown?false:true;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
