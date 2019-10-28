@@ -32,6 +32,7 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   bool _loggingIn = false;
+  bool _passwordShown = false;
 
   _showLoginErrorDialog(BuildContext context, {String message}) {
     showDialog(
@@ -158,6 +159,7 @@ class _LoginState extends State<Login> {
 
     bool _isUnderDevelopment = false;
 
+
     String _userName = '';
     String _password = '';
 
@@ -283,12 +285,19 @@ class _LoginState extends State<Login> {
                             child: TextFormField(
                               controller: _passwordController,
                               textInputAction: TextInputAction.go,
-                              obscureText: true,
+                              obscureText: _passwordShown?false:true,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 prefixIcon: Icon(Icons.lock_outline),
-                                //                          suffixIcon: Icon(Icons.help_outline),
+                                suffixIcon: IconButton(
+                                  icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                  onPressed: (){
+                                    setState(() {
+                                      _passwordShown = _passwordShown?false:true;
+                                    });
+                                  },
+                                ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
@@ -663,12 +672,19 @@ class _LoginState extends State<Login> {
                             child: TextFormField(
                               controller: _passwordController,
                               textInputAction: TextInputAction.go,
-                              obscureText: true,
+                              obscureText: _passwordShown?false:true,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 prefixIcon: Icon(Icons.lock_outline,),
-                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
+                                suffixIcon: IconButton(
+                                  icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                  onPressed: (){
+                                    setState(() {
+                                      _passwordShown = _passwordShown?false:true;
+                                    });
+                                  },
+                                ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(

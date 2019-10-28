@@ -28,6 +28,8 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
 
   bool _registering = false;
+  bool _passwordShown = false;
+  bool _passwordConfirmationShown = false;
 
   final _fullNameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -195,12 +197,19 @@ class _RegisterState extends State<Register> {
                                     child: TextFormField(
                                       textInputAction: TextInputAction.go,
                                       controller: _passwordController,
-                                      obscureText: true,
+                                      obscureText: _passwordShown?false:true,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
                                         prefixIcon: Icon(Icons.lock_outline),
-                                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                          onPressed: (){
+                                            setState(() {
+                                              _passwordShown = _passwordShown?false:true;
+                                            });
+                                          },
+                                        ),
                                         border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -236,12 +245,19 @@ class _RegisterState extends State<Register> {
                                     child: TextFormField(
                                       textInputAction: TextInputAction.go,
                                       controller: _confirmPasswordController,
-                                      obscureText: true,
+                                      obscureText: _passwordConfirmationShown?false:true,
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
                                         prefixIcon: Icon(Icons.lock_outline),
-                                          suffixIcon:  IconButton(icon: Icon(Icons.check_circle_outline,), onPressed: (){},),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(_passwordConfirmationShown?Icons.visibility:Icons.visibility_off),
+                                          onPressed: (){
+                                            setState(() {
+                                              _passwordConfirmationShown = _passwordConfirmationShown?false:true;
+                                            });
+                                          },
+                                        ),
                                         border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
