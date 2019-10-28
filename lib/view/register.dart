@@ -210,6 +210,7 @@ class _RegisterState extends State<Register> {
                                             });
                                           },
                                         ),
+
                                         border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
