@@ -25,11 +25,13 @@ class EventDetails extends StatelessWidget {
   final Function onEventBooked;
   final Function onAllCategoriesPressed;
   final Function onWillPop;
+  final Function onOrderCompleted;
 
   EventDetails(
       {@required this.onPreviousPagePressed,
       @required this.onEventBooked,
       @required this.onAllCategoriesPressed,
+        @required this.onOrderCompleted,
       @required this.onWillPop,});
 
 
@@ -50,6 +52,7 @@ class EventDetails extends StatelessWidget {
                 return EventTabs(
                   data: snapshot.data,
                   onEventBooked: onEventBooked,
+                  onOrderCompleted: onOrderCompleted,
                 );
               }
               return Container();
@@ -144,9 +147,10 @@ class EventDetails extends StatelessWidget {
 
 class EventTabs extends StatefulWidget {
   final Function onEventBooked;
+  final Function(String) onOrderCompleted;
   final Map data;
 
-  EventTabs({@required this.onEventBooked, @required this.data});
+  EventTabs({@required this.onEventBooked, @required this.data, @required this.onOrderCompleted});
 
   @override
   _EventTabsState createState() => _EventTabsState();
@@ -412,6 +416,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
               ),
               child: ChooseTicket(
                 onTicketChosen: onTicketChosen,
+                onOrderCompleted: widget.onOrderCompleted,
               ),
             ),
           );
@@ -421,8 +426,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 
 class ChooseTicket extends StatefulWidget {
   final Function onTicketChosen;
+  final Function(String) onOrderCompleted;
 
-  ChooseTicket({@required this.onTicketChosen});
+  ChooseTicket({@required this.onTicketChosen, @required this.onOrderCompleted});
 
   @override
   _ChooseTicketState createState() => _ChooseTicketState();
@@ -583,6 +589,10 @@ class _ChooseTicketState extends State<ChooseTicket> {
                       if(onPaymentComplete != null){
                         print('$onPaymentComplete');
                         if(onPaymentComplete['result']){
+
+                          List history = await util.getOrdersHistory();
+
+                          widget.onOrderCompleted('${history[0]['order_Id']}');
                           Fluttertoast.showToast(
                               msg: '${onPaymentComplete['user_Message']}',
                               toastLength: Toast.LENGTH_LONG,

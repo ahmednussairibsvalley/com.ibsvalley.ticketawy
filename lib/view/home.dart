@@ -489,6 +489,13 @@ class _HomeState extends State<Home> {
                             },
                           ):
                           index == PagesIndices.eventPageIndex? EventDetails(
+                            onOrderCompleted: (value){
+                              Globals.orderId = value;
+                              Globals.ticketsPageOpenedAfterOrder = true;
+                              setState(() {
+                                index = PagesIndices.ticketPageIndex;
+                              });
+                            },
                             onWillPop: (){
                               while(Globals.pagesStack.isNotEmpty){
                                 Globals.pagesStack.pop();
@@ -646,7 +653,10 @@ class _HomeState extends State<Home> {
                           index == PagesIndices.ticketPageIndex?TicketsPage(
                             onWillPop: (){
                               setState(() {
-                                index = PagesIndices.profilePageIndex;
+                                if(Globals.ticketsPageOpenedAfterOrder)
+                                  index = PagesIndices.homePageIndex;
+                                else
+                                  index = PagesIndices.profilePageIndex;
                               });
                             },
                           ):

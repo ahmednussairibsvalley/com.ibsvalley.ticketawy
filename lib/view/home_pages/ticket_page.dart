@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dashed_container/dashed_container.dart';
 
-import 'package:barcode_flutter/barcode_flutter.dart';
+//import 'package:barcode_flutter/barcode_flutter.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../globals.dart';
@@ -33,6 +33,7 @@ class TicketsPage extends StatefulWidget {
 class _TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
+    Globals.ticketsPageOpenedAfterOrder = false;
     return WillPopScope(
       onWillPop: () async{
         widget.onWillPop();
