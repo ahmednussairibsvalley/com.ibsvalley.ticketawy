@@ -48,7 +48,7 @@ public class MainActivity extends FlutterActivity {
         super.onCreate(savedInstanceState);
         FawrySdk.init(FawrySdk.Styles.STYLE1);
         GeneratedPluginRegistrant.registerWith(this);
-       // FawryPluginAppClass.enableLogging = false;
+        // FawryPluginAppClass.enableLogging = false;
         initFawry();
         Log.i("abdo", "abdo " + "onCreate");
 
@@ -86,6 +86,7 @@ public class MainActivity extends FlutterActivity {
                                             trxId1 = trxId;
                                             completedMethod();
                                             result.success(5);
+
 
                                         }
 
@@ -203,7 +204,8 @@ public class MainActivity extends FlutterActivity {
         Retrofit build = builder.build();
         Api appConnections = build.create(Api.class);
 
-        Call<ResponeCompleted> Callww = appConnections.responeCompleted("true", trxId1, String.valueOf(2));
+        Call<ResponeCompleted> Callww = appConnections.responeCompleted(true, Integer.parseInt(merchantRefNumber)
+                , "fwarey", trxId1);
         Callww.enqueue(new Callback<ResponeCompleted>() {
             @Override
             public void onResponse(Call<ResponeCompleted> call, Response<ResponeCompleted> response) {

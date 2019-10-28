@@ -139,11 +139,13 @@ class HistoryPage extends StatelessWidget {
       children: List.generate(list.length, (index) {
         return HistoryItem(
           imageUrl: '${Globals.imageBaseUrl}/${list[index]['event_Logo']}',
+          orderDate: list[index]['orderdate'],
           orderId: '${list[index]['order_Id']}',
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
+          status: list[index]['status'],
           quantity: list[index]['number_of_tickets'],
-          payment: list[index]['total_Price'],
+          payment: list[index]['paymentMethod'],
           onItemHistoryPressed: onHistoryItemPressed,
         );
       }),
@@ -157,7 +159,9 @@ class HistoryItem extends StatelessWidget {
   final String title;
   final String code;
   final int quantity;
-  final double payment;
+  final String orderDate;
+  final String payment;
+  final String status;
   final Function(String) onItemHistoryPressed;
 
   HistoryItem({
@@ -166,13 +170,17 @@ class HistoryItem extends StatelessWidget {
     @required this.imageUrl,
     @required this.title,
     @required this.code,
+    @required this.orderDate,
     @required this.quantity,
     @required this.payment,
+    @required this.status,
     @required this.onItemHistoryPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
+
+    DateTime _orderDate = DateTime.parse(orderDate);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -215,14 +223,23 @@ class HistoryItem extends StatelessWidget {
                 ),
               ),
 
-             // Order date
-              Text('Orderdate: XX/XX/XXXX',style: TextStyle(fontSize: 16),),
+              // Order date
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text('Date: ${_orderDate.year}-${_orderDate.month}-${_orderDate.day}',style: TextStyle(fontSize: 16),),
+              ),
 
               // Payment
-              Text('Payment: ${payment.toStringAsFixed(0)} EGP',style: TextStyle(fontSize: 16),),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text('Payment: $payment',style: TextStyle(fontSize: 16),),
+              ),
 
               // Status
-              Text('Status: ------',style: TextStyle(fontSize: 16),),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text('Status: $status',style: TextStyle(fontSize: 16),),
+              ),
 
               // Divider
               Padding(

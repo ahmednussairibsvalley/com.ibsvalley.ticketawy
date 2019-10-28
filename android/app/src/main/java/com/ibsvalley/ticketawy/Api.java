@@ -8,8 +8,9 @@ import retrofit2.http.POST;
 public interface Api {
     @FormUrlEncoded
     @POST("Order/payment_successful")
-    Call<ResponeCompleted> responeCompleted(@Field("Paymentresult") String Paymentresult,
-                                            @Field("transaction_Id") String transaction_Id,
-                                            @Field("payment_type") String payment_type
+    Call<ResponeCompleted> responeCompleted(@Field("Paymentresult") boolean Paymentresult,
+                                            @Field("transaction_Id") int transaction_Id,
+                                            @Field("payment_type") String payment_type,
+                                            @Field("fawryRefNumber") String fawryRefNumber
     );
 }
