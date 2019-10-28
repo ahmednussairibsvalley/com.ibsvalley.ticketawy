@@ -103,17 +103,17 @@ class _TicketsSliderState extends State<TicketsSlider> {
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
-        CarouselSlider(
+        ResponsiveContainer(widthPercent: 100, heightPercent: 65, child: CarouselSlider(
           items: child,
           viewportFraction: 1.0,
-          aspectRatio: Platform.isIOS?0.9:MediaQuery.of(context).size.width > 360?0.75:0.81,
+          aspectRatio: Platform.isIOS?0.9:MediaQuery.of(context).size.width > 352.5?0.78:0.81,
           enableInfiniteScroll: false,
           onPageChanged: (index) {
             setState(() {
               _current = index;
             });
           },
-        ),
+        ),),
         _list.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(

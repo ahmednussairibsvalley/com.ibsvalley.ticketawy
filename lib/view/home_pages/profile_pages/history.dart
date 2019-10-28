@@ -295,7 +295,7 @@ class HistoryItem extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0,bottom: 4),
+                                padding: EdgeInsets.only(top: 3.0, right: 4.0, left: 4.0,bottom: 3),
                                 child: DashedDivider(
                                   height: 1,
                                   width: 5,
