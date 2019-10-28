@@ -141,6 +141,7 @@ class HistoryPage extends StatelessWidget {
           imageUrl: '${Globals.imageBaseUrl}/${list[index]['event_Logo']}',
           orderDate: list[index]['orderdate'],
           orderId: '${list[index]['order_Id']}',
+          totalPrice: list[index]['total_Price'],
           title: list[index]['event_Name'],
           code: '#${list[index]['order_Id']}',
           status: list[index]['status'],
@@ -159,6 +160,7 @@ class HistoryItem extends StatelessWidget {
   final String title;
   final String code;
   final int quantity;
+  final double totalPrice;
   final String orderDate;
   final String payment;
   final String status;
@@ -170,6 +172,7 @@ class HistoryItem extends StatelessWidget {
     @required this.imageUrl,
     @required this.title,
     @required this.code,
+    @required this.totalPrice,
     @required this.orderDate,
     @required this.quantity,
     @required this.payment,
@@ -288,7 +291,7 @@ class HistoryItem extends StatelessWidget {
                           Flexible(
                             child: Column(children: <Widget>[
                               Text(
-                                'T Price',
+                                '${totalPrice.toStringAsFixed(0)} EGP',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
