@@ -653,8 +653,10 @@ class _HomeState extends State<Home> {
                           index == PagesIndices.ticketPageIndex?TicketsPage(
                             onWillPop: (){
                               setState(() {
-                                if(Globals.ticketsPageOpenedAfterOrder)
+                                if(Globals.ticketsPageOpenedAfterOrder) {
                                   index = PagesIndices.homePageIndex;
+                                  Globals.ticketsPageOpenedAfterOrder = false;
+                                }
                                 else
                                   index = PagesIndices.profilePageIndex;
                               });

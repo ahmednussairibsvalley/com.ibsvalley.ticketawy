@@ -33,7 +33,6 @@ class TicketsPage extends StatefulWidget {
 class _TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
-    Globals.ticketsPageOpenedAfterOrder = false;
     return WillPopScope(
       onWillPop: () async{
         widget.onWillPop();
