@@ -291,12 +291,13 @@ class HistoryItem extends StatelessWidget {
                           Flexible(
                             child: Column(children: <Widget>[
                               Text(
-                                '${totalPrice.toStringAsFixed(0)} EGP',
+                                '$quantity Tickets',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
+
                               Padding(
                                 padding: EdgeInsets.only(top: 4.0, right: 4.0, left: 4.0,bottom: 4),
                                 child: DashedDivider(
@@ -306,7 +307,7 @@ class HistoryItem extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '$quantity Tickets',
+                                '${totalPrice.toStringAsFixed(0)} EGP',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,

@@ -568,13 +568,50 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     await util.addOrder(eventId: Globals.eventId, orders: list);
 
                     print('$response');
-                    var responseFromNative = await platform.invokeMethod('initFawry', response);
+                    Map responseFromNative = await platform.invokeMethod('initFawry', response);
 
-                    print('Response from native: ${responseFromNative.toString()}');
+                    if(responseFromNative != null){
+                      print('Response from native: ${responseFromNative.toString()}');
+
+                      Map onPaymentComplete = await util.onPaymentSuccessful(
+                        paymentResult: responseFromNative['Paymentresult'] == "true",
+                        transactionId: responseFromNative['transaction_Id'],
+                        paymentType: responseFromNative['payment_type'],
+                        refNumber: responseFromNative['fawryRefNumber'],
+                      );
+
+                      if(onPaymentComplete != null){
+                        print('$onPaymentComplete');
+                        if(onPaymentComplete['result']){
+                          Fluttertoast.showToast(
+                              msg: '${onPaymentComplete['user_Message']}',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Colors.black38,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: 'Please order at least one ticket',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIos: 1,
+                              backgroundColor: Colors.black38,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                        }
+                      }
+                    } else {
+                      print ('Unfortunately, there is no response from native');
+                    }
+
                   } else {
                     Globals.orderTickets.clear();
                     Fluttertoast.showToast(
-                        msg: 'Please order at least one ticket',
+                        msg: 'There is a problem adding new order',
                         toastLength: Toast.LENGTH_LONG,
                         gravity: ToastGravity.BOTTOM,
                         timeInSecForIos: 1,

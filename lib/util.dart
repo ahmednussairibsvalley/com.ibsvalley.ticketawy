@@ -600,3 +600,34 @@ Future<List> getTicketDetails(String orderId) async{
     return null;
   }
 }
+
+Future<Map> onPaymentSuccessful({
+    @required bool paymentResult,
+    @required String transactionId,
+    @required String paymentType,
+    @required String refNumber,}) async{
+
+  try{
+    String url = '$_baseUrl/api/Order/payment_successful';
+
+    HttpClient httpClient = new HttpClient();
+    HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
+    request.headers.set('content-type', 'application/json');
+    Map jsonMap = {
+      'Paymentresult':'$paymentResult',
+      'transaction_Id':'$transactionId',
+      'payment_type':paymentType,
+      'fawryRefNumber':refNumber,
+    };
+    request.add(utf8.encode(json.encode(jsonMap)));
+
+    HttpClientResponse response = await request.close().timeout(Duration(seconds: timeOut));
+    String reply = await response.transform(utf8.decoder).join();
+    httpClient.close();
+    return json.decode(reply);
+  }on TimeoutException catch(_){
+    return null;
+  } catch (e){
+    return null;
+  }
+}

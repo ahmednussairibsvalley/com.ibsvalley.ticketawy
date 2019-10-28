@@ -17,7 +17,9 @@ import com.emeint.android.fawryplugin.utils.UiUtils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import io.flutter.app.FlutterActivity;
@@ -29,6 +31,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
 
 import static com.emeint.android.fawryplugin.Plugininterfacing.FawrySdk.language;
 
@@ -84,8 +87,18 @@ public class MainActivity extends FlutterActivity {
 //                                            Toast.makeText(MainActivity.this, trxId, Toast.LENGTH_SHORT).show();
                                             Log.i("gggg", "onSuccess: " + trxId + customParams);
                                             trxId1 = trxId;
-                                            completedMethod();
-                                            result.success(5);
+//                                            completedMethod();
+
+
+//
+                                            Map<String,String> stringStringMap=new HashMap<>();
+                                            stringStringMap.put("Paymentresult","true");
+                                            stringStringMap.put("transaction_Id",merchantRefNumber);
+                                            stringStringMap.put("payment_type","Fawry");
+                                            stringStringMap.put("fawryRefNumber",trxId);
+
+
+                                            result.success(stringStringMap);
 
 
                                         }
@@ -94,6 +107,7 @@ public class MainActivity extends FlutterActivity {
                                         public void onFailure(String errorMessage) {
                                             Log.i("dfd", "onCreate: " + "onFailure");
 //                                            Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                                        result.error(null,null,null);
                                         }
 
                                     }, merchantID, merchantRefNumber, items,
@@ -197,29 +211,29 @@ public class MainActivity extends FlutterActivity {
     }
 
     private void completedMethod() {
-        Log.i("sdsadsa", "completedMethod: ");
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://40.85.116.121:8607/api/")
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit build = builder.build();
-        Api appConnections = build.create(Api.class);
-
-        Call<ResponeCompleted> Callww = appConnections.responeCompleted(true, Integer.parseInt(merchantRefNumber)
-                , "fwarey", trxId1);
-        Callww.enqueue(new Callback<ResponeCompleted>() {
-            @Override
-            public void onResponse(Call<ResponeCompleted> call, Response<ResponeCompleted> response) {
-                if (response.isSuccessful()) {
-//                    Toast.makeText(MainActivity.this, response.body().getUserMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("sddsf", "onResponse: " + response.body().getUserMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponeCompleted> call, Throwable t) {
-
-            }
-        });
+//        Log.i("sdsadsa", "completedMethod: ");
+//        Retrofit.Builder builder = new Retrofit.Builder()
+//                .baseUrl("http://40.85.116.121:8607/api/")
+//                .addConverterFactory(GsonConverterFactory.create());
+//        Retrofit build = builder.build();
+//        Api appConnections = build.create(Api.class);
+//
+//        Call<ResponeCompleted> Callww = appConnections.responeCompleted(
+//
+//        Callww.enqueue(new Callback<ResponeCompleted>() {
+//            @Override
+//            public void onResponse(Call<ResponeCompleted> call, Response<ResponeCompleted> response) {
+//                if (response.isSuccessful()) {
+////                    Toast.makeText(MainActivity.this, response.body().getUserMessage(), Toast.LENGTH_SHORT).show();
+//                    Log.i("sddsf", "onResponse: " + response.body().getUserMessage());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponeCompleted> call, Throwable t) {
+//
+//            }
+//        });
 
 
     }
