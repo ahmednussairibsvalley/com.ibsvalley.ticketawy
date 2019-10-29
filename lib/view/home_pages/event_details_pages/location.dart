@@ -48,12 +48,14 @@ class LocationPage extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Colors.red[400],
+                        borderRadius: BorderRadius.circular(10)
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text('View Larger Map',
                           textAlign: TextAlign.center,
+                          style: TextStyle(fontFamily: 'Verdana'),
                         ),
                       ),
                     ),
