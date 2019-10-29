@@ -42,22 +42,22 @@ class LocationPage extends StatelessWidget {
                         mapUrl: mapUrl,
                       ),
                     ),
-//                  GestureDetector(
-//                    onTap: (){
-//                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LargerMap(url: mapUrl,)));
-//                    },
-//                    child: Container(
-//                      decoration: BoxDecoration(
-//                        color: Colors.grey,
-//                      ),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(8.0),
-//                        child: Text('View Larger Map',
-//                          textAlign: TextAlign.center,
-//                        ),
-//                      ),
-//                    ),
-//                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LargerMap(url: mapUrl,)));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('View Larger Map',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: DashedDivider(
