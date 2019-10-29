@@ -344,220 +344,7 @@ class _EventItemState extends State<EventItem> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data) {
-              return SmartRefresher(
-                controller: _refreshController,
-                onLoading: _onLoading,
-                onRefresh: _onRefresh,
-                enablePullDown: true,
-                enablePullUp: true,
-                child: GestureDetector(
-                  onTap: () {
-                    Globals.reservationOption = widget.reservationOption;
-                    widget.onEventPressed(widget.id);
-                  },
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Material(
-                          elevation: 5.0,
-                          shadowColor: Colors.black,
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                widget.imageUrl,
-                                fit: BoxFit.cover,
-                                height: MediaQuery.of(context).size.height / 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-//                  Positioned(
-//                    top: 8.0,
-//                    left: 30.0,
-//                    child: Container(
-//                      decoration: BoxDecoration(color: Colors.deepOrange),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(15.0),
-//                        child: Text(
-//                          'Hot',
-//                          style: TextStyle(
-//                              color: Color(0xffeaeae7), fontSize: 18),
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-
-                      //Wishlist Button
-                      Globals.skipped
-                          ? Container()
-                          : Positioned(
-                          top: 25.0,
-                          right: 25,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.deepOrange),
-                            child: FutureBuilder(
-                              future: util.getWishList(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  return Container(
-                                    width: 30,
-                                    height: 30,
-                                    decoration: new BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.deepOrange),
-                                    child: IconButton(alignment: Alignment.center,
-                                        padding: EdgeInsets.only(top: 2),
-                                        icon: Icon(
-                                          _addedToWishList
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: Colors.white,
-                                          size: 32,
-                                        ),
-                                        onPressed: () async {
-                                          Map response = await util
-                                              .addToRemoveFromWishList(
-                                              widget.id);
-                                          if (response['result']) {
-                                            setState(() {
-                                              _addedToWishList =
-                                              _addedToWishList
-                                                  ? false
-                                                  : true;
-                                            });
-                                          }
-                                          widget.onUpdateWishList();
-                                        }),
-                                  );
-                                }
-                                return Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      CircularProgressIndicator(),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          )),
-
-                      Positioned(
-                        right: 0.0,
-                        left: 0.0,
-                        bottom: 0.0,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              right: 35, left: 35, bottom: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffff6600),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(15),
-                                      bottomLeft: Radius.circular(15)),
-                                ),
-                                width: widget.title.length > 20 ? 200 : 150,
-                                height: widget.title.length > 29 ? 48 : 31,
-                                alignment: Alignment.center,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: Text(
-                                    '${widget.title}',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    softWrap: true,),
-                                ),
-                              ),
-                              Container(
-                                height: widget.title.length > 29 ? 48 : 31,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Color(0xffe75d02),
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(15),
-                                      topRight: Radius.circular(15)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${widget.price} EGP',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return Center(
-                child: Text(
-                  'Image is not available',
-                  textAlign: TextAlign.center,
-                ),
-              );
-            }
-          }
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 50,
-                width: 50,
-                child: CircularProgressIndicator(),
-              )
-            ],
-          );
-        },
-        future: util.isImageUrlAvailable(widget.imageUrl),
-      );
-    });
-    _refreshController.refreshCompleted();
-  }
-
-  void _onLoading() async{
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    print('loaded');
-    _refreshController.loadComplete();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (!Globals.skipped) initValues();
-    _eventItem = FutureBuilder(
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data) {
-            return SmartRefresher(
-              controller: _refreshController,
-              onLoading: _onLoading,
-              onRefresh: _onRefresh,
-              enablePullDown: true,
-              enablePullUp: true,
-              child: GestureDetector(
+              return GestureDetector(
                 onTap: () {
                   Globals.reservationOption = widget.reservationOption;
                   widget.onEventPressed(widget.id);
@@ -714,6 +501,205 @@ class _EventItemState extends State<EventItem> {
                     ),
                   ],
                 ),
+              );
+            } else {
+              return Center(
+                child: Text(
+                  'Image is not available',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            }
+          }
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 50,
+                width: 50,
+                child: CircularProgressIndicator(),
+              )
+            ],
+          );
+        },
+        future: util.isImageUrlAvailable(widget.imageUrl),
+      );
+    });
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async{
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    print('loaded');
+    _refreshController.loadComplete();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (!Globals.skipped) initValues();
+    _eventItem = FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data) {
+            return GestureDetector(
+              onTap: () {
+                Globals.reservationOption = widget.reservationOption;
+                widget.onEventPressed(widget.id);
+              },
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      elevation: 5.0,
+                      shadowColor: Colors.black,
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            widget.imageUrl,
+                            fit: BoxFit.cover,
+                            height: MediaQuery.of(context).size.height / 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+//                  Positioned(
+//                    top: 8.0,
+//                    left: 30.0,
+//                    child: Container(
+//                      decoration: BoxDecoration(color: Colors.deepOrange),
+//                      child: Padding(
+//                        padding: const EdgeInsets.all(15.0),
+//                        child: Text(
+//                          'Hot',
+//                          style: TextStyle(
+//                              color: Color(0xffeaeae7), fontSize: 18),
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+
+                  //Wishlist Button
+                  Globals.skipped
+                      ? Container()
+                      : Positioned(
+                      top: 25.0,
+                      right: 25,
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.deepOrange),
+                        child: FutureBuilder(
+                          future: util.getWishList(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return Container(
+                                width: 30,
+                                height: 30,
+                                decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.deepOrange),
+                                child: IconButton(alignment: Alignment.center,
+                                    padding: EdgeInsets.only(top: 2),
+                                    icon: Icon(
+                                      _addedToWishList
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                    onPressed: () async {
+                                      Map response = await util
+                                          .addToRemoveFromWishList(
+                                          widget.id);
+                                      if (response['result']) {
+                                        setState(() {
+                                          _addedToWishList =
+                                          _addedToWishList
+                                              ? false
+                                              : true;
+                                        });
+                                      }
+                                      widget.onUpdateWishList();
+                                    }),
+                              );
+                            }
+                            return Container(
+                              child: Column(
+                                children: <Widget>[
+                                  CircularProgressIndicator(),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      )),
+
+                  Positioned(
+                    right: 0.0,
+                    left: 0.0,
+                    bottom: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 35, left: 35, bottom: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffff6600),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15)),
+                            ),
+                            width: widget.title.length > 20 ? 200 : 150,
+                            height: widget.title.length > 29 ? 48 : 31,
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                '${widget.title}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                softWrap: true,),
+                            ),
+                          ),
+                          Container(
+                            height: widget.title.length > 29 ? 48 : 31,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Color(0xffe75d02),
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(15),
+                                  topRight: Radius.circular(15)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${widget.price} EGP',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           } else {
@@ -930,7 +916,14 @@ class _EventItemState extends State<EventItem> {
 //  }
   @override
   Widget build(BuildContext context) {
-    return _eventItem;
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: _eventItem,
+    );
   }
 }
 

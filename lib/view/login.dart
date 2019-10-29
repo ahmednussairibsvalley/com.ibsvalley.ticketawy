@@ -350,8 +350,6 @@ class _LoginState extends State<Login> {
 
                                     Map userData = await util.getUserDetails();
 
-//                                        Globals.controller.populateUserFromJson(userData);
-
                                     SharedPreferences prefs =
                                     await SharedPreferences
                                         .getInstance();
@@ -364,11 +362,6 @@ class _LoginState extends State<Login> {
                                         'phoneNumber', _userName);
                                     prefs.setString('password', _password);
 
-//                                        List categoriesList =
-//                                            await categoryList();
-//
-//                                        Globals.controller
-//                                            .populateCategories(categoriesList);
                                     Globals.skipped = false;
                                     if(widget.openedFromHome)
                                       Navigator.of(context)
@@ -530,13 +523,7 @@ class _LoginState extends State<Login> {
                           return;
                         }
                         Globals.skipped = true;
-//              Map userData = await getUserDetails();
-//
-//              Globals.controller.populateUser(userData);
-//                                  List categoriesList = await categoryList();
-//
-//                                  Globals.controller
-//                                      .populateCategories(categoriesList);
+
                         if(widget.openedFromHome)
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
@@ -752,8 +739,6 @@ class _LoginState extends State<Login> {
 
                                     Map userData = await util.getUserDetails();
 
-//                                        Globals.controller.populateUserFromJson(userData);
-
                                     SharedPreferences prefs =
                                     await SharedPreferences
                                         .getInstance();
@@ -766,11 +751,6 @@ class _LoginState extends State<Login> {
                                         'phoneNumber', _userName);
                                     prefs.setString('password', _password);
 
-//                                        List categoriesList =
-//                                            await categoryList();
-//
-//                                        Globals.controller
-//                                            .populateCategories(categoriesList);
                                     Navigator.of(context)
                                         .pushReplacementNamed('/home');
                                   } else if (response != null && response['result'] == 2) {
@@ -948,12 +928,6 @@ class _LoginState extends State<Login> {
                     _loggingIn = true;
                   });
 
-//              Map userData = await getUserDetails();
-//
-//              Globals.controller.populateUser(userData);
-//                      List categoriesList = await categoryList();
-//
-//                      Globals.controller.populateCategories(categoriesList);
                   Globals.skipped = true;
                   Navigator.of(context).pushReplacementNamed('/home');
                 },
