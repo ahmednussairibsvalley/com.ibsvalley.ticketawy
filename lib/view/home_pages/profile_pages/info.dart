@@ -19,6 +19,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
   final _phoneNumberController = TextEditingController();
 
   bool _updating = false;
+  bool _passwordShown = false;
 
   @override
   void initState() {
@@ -134,10 +135,21 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 child: TextFormField(
                   textInputAction: TextInputAction.go,
                   controller: _passwordController,
-                  obscureText: true,
+                  obscureText: _passwordShown?false:true,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
+                    suffixIcon: Tooltip(
+                      message: _passwordShown?'Hide Password':'Show Password',
+                      child: IconButton(
+                        icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                        onPressed: (){
+                          setState(() {
+                            _passwordShown = _passwordShown?false:true;
+                          });
+                        },
+                      ),
+                    ),
                     contentPadding: EdgeInsets.all(10.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
