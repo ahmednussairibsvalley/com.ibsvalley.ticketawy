@@ -353,8 +353,12 @@ class _IdeasFormState extends State<IdeasForm> {
                     });
                     var response = await util.addIdeas(message: _textEditingController.text, imageFile: image);
 
-                    _showResultDialog(context, response['user_Message']);
-//                    print('$response');
+                    if(response != null){
+                      _showResultDialog(context, response['user_Message']);
+                      print('$response');
+                    } else {
+                      _showResultDialog(context, 'Error while sending. Please try again');
+                    }
                     setState(() {
                       _sending = false;
                       _fileName = '';

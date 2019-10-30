@@ -80,23 +80,7 @@ class EventsPage extends StatelessWidget {
                           Globals.skipped?Container():Positioned(
                               top: 3.0,
                               right: 3,
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.deepOrange),
-                                child: GestureDetector(
-                                  child: IconButton(
-                                      padding: EdgeInsets.only(top: 2),
-                                      icon: Icon(
-                                        Icons.favorite,
-                                        color: Colors.white,
-                                        size: 25,
-                                      ),
-                                      onPressed: (){Icon(Icons.favorite_border);}),
-                                ),
-                              )),
+                              child: WishListButton(eventId: list[index]['event_Id'])),
                         ],
                       ),
                       Padding(
@@ -125,6 +109,94 @@ class EventsPage extends StatelessWidget {
             ),
           );
         }),
+      ),
+    );
+  }
+}
+
+class WishListButton extends StatefulWidget {
+
+  final int eventId;
+
+  WishListButton({@required this.eventId,});
+
+  @override
+  _WishListButtonState createState() => _WishListButtonState();
+}
+
+class _WishListButtonState extends State<WishListButton> {
+
+  bool _addedToWishList = false;
+
+  initValues() async{
+    List response = await util.getWishList();
+    if(response != null){
+      for(int i = 0; i < response.length ; i++){
+        if(response[i]['id'] == widget.eventId){
+          _addedToWishList = true;
+          break;
+        }
+      }
+    }
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if(!Globals.skipped)
+      initValues();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: FutureBuilder(
+        future: util.getWishList(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              List list = snapshot.data;
+              if(list != null){
+                for (int i = 0; i < list.length ; i++){
+                  if(list[i]['id'] == widget.eventId){
+                    _addedToWishList = true;
+                    break;
+                  }
+                }
+              }
+            }
+            return Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.deepOrange,
+              ),
+              child: IconButton(padding: EdgeInsets.only(top: 2),alignment: Alignment.center,
+                  icon: Icon(
+                    _addedToWishList?Icons.favorite:Icons.favorite_border,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () async{
+                    Map response = await util.addToRemoveFromWishList(widget.eventId);
+                    if(response['result']){
+                      setState(() {
+                        _addedToWishList = _addedToWishList?false:true;
+                      });
+                    }
+                  }),
+            );
+          }
+          return Container(
+            child: Column(
+              children: <Widget>[
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
