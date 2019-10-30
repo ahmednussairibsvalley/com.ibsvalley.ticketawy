@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,8 +16,6 @@ import '../../util.dart' as util;
 final int aboutPageIndex = 0;
 final int locationPageIndex = 1;
 final int schedulePageIndex = 2;
-
-
 
 class EventDetails extends StatelessWidget {
   final Function onPreviousPagePressed;
@@ -206,18 +203,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
 
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Image.asset(
-                            'assets/seperator.png',
-                            height: 10,
-                            width: 10,
-                          ),
-                        ),
-
                         // About
                         ResponsiveContainer(
-                          widthPercent: 21,heightPercent: 8,
+                          widthPercent: 18,heightPercent: 8,
                           alignment: Alignment.center,
                           child: GestureDetector(
                             onTap: () {
