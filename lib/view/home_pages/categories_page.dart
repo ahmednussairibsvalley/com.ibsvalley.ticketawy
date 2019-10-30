@@ -117,8 +117,10 @@ class CategoriesPager extends StatefulWidget {
 
   final Function(int, String) onCategoryPressed;
   final List categoriesList;
+  final int currentPage;
 
-  CategoriesPager({@required this.onCategoryPressed, @required this.categoriesList});
+  CategoriesPager({@required this.onCategoryPressed,
+    @required this.categoriesList, this.currentPage = 0,});
 
   @override
   _CategoriesPagerState createState() => _CategoriesPagerState();
@@ -135,6 +137,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
   @override
   void initState() {
     super.initState();
+    _current = Globals.currentCategoryPageIndex;
     _list = widget.categoriesList;
     for(int i = 0; i < _list.length; i++){
       Map pairs = Map();
@@ -196,18 +199,22 @@ class _CategoriesPagerState extends State<CategoriesPager> {
 
     _carouselSlider = CarouselSlider(
       items: child,
+      initialPage: _current,
       viewportFraction: 1.0,
       enableInfiniteScroll: false,
       aspectRatio: 1.0,
       onPageChanged: (index) {
         setState(() {
           _current = index;
+          Globals.currentCategoryPageIndex = index;
         });
+
       },
     );
   }
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
 
@@ -221,8 +228,10 @@ class _CategoriesPagerState extends State<CategoriesPager> {
                 onTap: (){
                   setState(() {
                     _current = index;
+                    Globals.currentCategoryPageIndex = index;
                   });
                   _carouselSlider.animateToPage(_current, duration: Duration(milliseconds: 100), curve: Curves.linear);
+
                 },
                 child: Container(
                   width: 15.0,

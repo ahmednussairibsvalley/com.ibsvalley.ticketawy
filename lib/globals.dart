@@ -16,6 +16,7 @@ class Globals{
   static String orderId = '';
   static List orderTickets = [];
   static bool ticketsPageOpenedAfterOrder = false;
+  static int currentCategoryPageIndex = 0;
 }
 
 class PagesIndices {

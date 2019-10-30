@@ -112,6 +112,7 @@ class _HomeState extends State<Home> {
     final Map<String, Function> leftDrawerMap = Globals.skipped?
     {
       'Home' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         while(Globals.pagesStack.isNotEmpty){
           Globals.pagesStack.pop();
@@ -128,6 +129,7 @@ class _HomeState extends State<Home> {
 //        Navigator.of(context).pop();
 //      },
       'Ideas' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.ideasPageIndex;
@@ -135,6 +137,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.contactPageIndex;
@@ -142,16 +145,19 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'Sign In' : (){
+        Globals.currentCategoryPageIndex = 0;
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login(openedByDrawer: true,)));
       },
       'Sign Up' : (){
+        Globals.currentCategoryPageIndex = 0;
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Register(openedFromHome: true,)));
       },
     }
     :{
       'Home' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         while(Globals.pagesStack.isNotEmpty){
           Globals.pagesStack.pop();
@@ -162,6 +168,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'My Profile' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.profilePageIndex;
@@ -169,6 +176,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'My Wishlist' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.myWishListPageIndex;
@@ -182,6 +190,7 @@ class _HomeState extends State<Home> {
 //        Navigator.of(context).pop();
 //      },
       'Ideas' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.ideasPageIndex;
@@ -189,6 +198,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'Contact Us' : (){
+        Globals.currentCategoryPageIndex = 0;
         _searchController.value = _searchController.value.copyWith(text: '');
         setState(() {
           index = PagesIndices.contactPageIndex;
@@ -196,6 +206,7 @@ class _HomeState extends State<Home> {
         Navigator.of(context).pop();
       },
       'Sign Out' : () async{
+        Globals.currentCategoryPageIndex = 0;
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('userId');
         prefs.remove('fullName');
@@ -607,6 +618,7 @@ class _HomeState extends State<Home> {
                           ):
                           index == PagesIndices.categoriesPageIndex? AllCategoriesPage(
                             onWillPop: (){
+                              Globals.currentCategoryPageIndex = 0;
                               while(Globals.pagesStack.isNotEmpty){
                                 Globals.pagesStack.pop();
                               }
@@ -615,6 +627,7 @@ class _HomeState extends State<Home> {
                               });
                             },
                             onPreviousPagePressed: (){
+                              Globals.currentCategoryPageIndex = 0;
                               Globals.pagesStack.pop();
                               if(Globals.pagesStack.isNotEmpty){
                                 setState(() {
