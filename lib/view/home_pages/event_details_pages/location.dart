@@ -55,7 +55,7 @@ class LocationPage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text('View Larger Map',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontFamily: 'Verdana'),
+                          style: TextStyle(fontFamily: 'Verdana', color: Colors.white),
                         ),
                       ),
                     ),
@@ -175,7 +175,6 @@ class _LocationMap2State extends State<LocationMap2> {
 
           initialUrl: Uri.dataFromString('<html><body><center><iframe src=${widget.mapUrl} height=$_height width=$_width frameborder=0 style=border:0; align=middle allowfullscreen="" marginheight=0 marginwidth=0></iframe></center></body></html>', mimeType: 'text/html').toString(),
           javascriptMode: JavascriptMode.unrestricted,
-
 
         ),
     );
