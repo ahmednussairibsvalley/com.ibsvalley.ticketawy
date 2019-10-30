@@ -206,6 +206,15 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
 
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Image.asset(
+                            'assets/seperator.png',
+                            height: 10,
+                            width: 10,
+                          ),
+                        ),
+
                         // About
                         ResponsiveContainer(
                           widthPercent: 21,heightPercent: 8,
