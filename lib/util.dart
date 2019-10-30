@@ -312,12 +312,10 @@ Future<List> getWishList () async {
   try{
     String url = '$_baseUrl/api/Event/Get_Wishlist?User_Id=${Globals.userId}';
 
-    var response = await http.get(url).timeout(Duration(seconds: timeOut));
+    var response = await http.get(url);
 
     var result = jsonDecode(response.body);
     return result;
-  }on TimeoutException catch (_){
-    return null;
   } catch (e){
     return null;
   }
