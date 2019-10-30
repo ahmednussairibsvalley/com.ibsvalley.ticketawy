@@ -601,7 +601,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                           );
                         } else {
                           Fluttertoast.showToast(
-                              msg: 'Please order at least one ticket',
+                              msg: 'There is a problem adding new order',
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIos: 1,
@@ -616,9 +616,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     }
 
                   } else {
-                    Globals.orderTickets.clear();
+//                    Globals.orderTickets.clear();
                     Fluttertoast.showToast(
-                        msg: 'There is a problem adding new order',
+                        msg: 'Please order at least one ticket',
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                         timeInSecForIos: 1,
