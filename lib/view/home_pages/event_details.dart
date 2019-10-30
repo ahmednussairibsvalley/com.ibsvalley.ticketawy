@@ -592,7 +592,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                           widget.onOrderCompleted('${history[0]['order_Id']}');
                           Fluttertoast.showToast(
                               msg: '${onPaymentComplete['user_Message']}',
-                              toastLength: Toast.LENGTH_LONG,
+                              toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIos: 1,
                               backgroundColor: Colors.black38,
@@ -602,7 +602,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                         } else {
                           Fluttertoast.showToast(
                               msg: 'Please order at least one ticket',
-                              toastLength: Toast.LENGTH_LONG,
+                              toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIos: 1,
                               backgroundColor: Colors.black38,
@@ -619,7 +619,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     Globals.orderTickets.clear();
                     Fluttertoast.showToast(
                         msg: 'There is a problem adding new order',
-                        toastLength: Toast.LENGTH_LONG,
+                        toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                         timeInSecForIos: 1,
                         backgroundColor: Colors.black38,
@@ -910,7 +910,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
             }
             Fluttertoast.showToast(
                 msg: response['user_Message'],
-                toastLength: Toast.LENGTH_LONG,
+                toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.BOTTOM,
                 timeInSecForIos: 1,
                 backgroundColor: Colors.black38,

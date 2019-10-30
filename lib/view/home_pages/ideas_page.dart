@@ -296,15 +296,19 @@ class _IdeasFormState extends State<IdeasForm> {
               // Add photo
               _fileName.isEmpty?GestureDetector(
                 onTap: () async{
-                  File _file = await FilePicker.getFile(
-                      type: FileType.IMAGE, fileExtension: '');
+                  try{
+                    File _file = await FilePicker.getFile(
+                        type: FileType.IMAGE, fileExtension: '');
 
-                  image = _file;
+                    image = _file;
 //                  print('File Path: ${_file}');
 //                  print('File name: ${basename(_file.path)}');
-                  setState(() {
-                    _fileName = basename(_file.path);
-                  });
+                    setState(() {
+                      _fileName = basename(_file.path);
+                    });
+                  } catch (e){
+
+                  }
                 },
                 child: Container(
                   alignment: Alignment.centerLeft,
