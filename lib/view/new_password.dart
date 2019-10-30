@@ -29,8 +29,6 @@ class _NewPasswordState extends State<NewPassword> {
 
     String _newPassword = '';
 
-    print('The phone: ${widget.phone}');
-
     return Stack(
       children: <Widget>[
         Scaffold(
