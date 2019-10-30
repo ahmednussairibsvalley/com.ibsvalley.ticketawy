@@ -165,7 +165,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     DateTime _expirationDate = DateTime.parse(widget.data['expirationDate']);
     DateTime _currentDate = DateTime.now();
     _expired =
-        _expirationDate.difference(_currentDate).inDays > 0 ? false : true;
+        _expirationDate.difference(_currentDate).inDays >= 0 ? false : true;
     _tabController = TabController(
       length: 3,
       vsync: this,
