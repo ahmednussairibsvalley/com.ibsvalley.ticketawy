@@ -16,7 +16,8 @@ class NewPassword extends StatefulWidget {
 class _NewPasswordState extends State<NewPassword> {
 
   final _formKey = GlobalKey<FormState>();
-
+  bool _passwordShown = false;
+  bool _passwordConfirmationShown = false;
   @override
   Widget build(BuildContext context) {
 
@@ -24,6 +25,7 @@ class _NewPasswordState extends State<NewPassword> {
     final _width = MediaQuery.of(context).size.width;
 
     bool _passwordUpdating = false;
+
 
     String _newPassword = '';
 
@@ -75,11 +77,22 @@ class _NewPasswordState extends State<NewPassword> {
                           top: 20.0,
                         ),
                         child: TextFormField(
-                          obscureText: true,
+                          obscureText: _passwordShown?false:true,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
                             prefixIcon: Icon(Icons.lock_outline),
+                            suffixIcon: Tooltip(
+                              message: _passwordShown?'Hide Password':'Show Password',
+                              child: IconButton(
+                                icon: Icon(_passwordShown?Icons.visibility:Icons.visibility_off),
+                                onPressed: (){
+                                  setState(() {
+                                    _passwordShown = _passwordShown?false:true;
+                                  });
+                                },
+                              ),
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide: BorderSide(
@@ -109,11 +122,22 @@ class _NewPasswordState extends State<NewPassword> {
                           top: 20.0,
                         ),
                         child: TextFormField(
-                          obscureText: true,
+                          obscureText: _passwordConfirmationShown?false:true,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
                             prefixIcon: Icon(Icons.lock_outline),
+                            suffixIcon: Tooltip(
+                              message: _passwordConfirmationShown?'Hide Password':'Show Password',
+                              child: IconButton(
+                                icon: Icon(_passwordConfirmationShown?Icons.visibility:Icons.visibility_off),
+                                onPressed: (){
+                                  setState(() {
+                                    _passwordConfirmationShown = _passwordConfirmationShown?false:true;
+                                  });
+                                },
+                              ),
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide: BorderSide(
