@@ -4,7 +4,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:responsive_container/responsive_container.dart';
 
 import '../../globals.dart';
 import '../../util.dart' as util;
@@ -535,14 +534,15 @@ class _EventItemState extends State<EventItem> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-
-                    ResponsiveContainer(heightPercent: 6, widthPercent: 55, child: Container(
+                    Container(
                       decoration: BoxDecoration(
                         color: Color(0xffff6600),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
                             bottomLeft: Radius.circular(15)),
                       ),
+                      width: widget.title.length > 20 ? 200 : 150,
+                      height: widget.title.length > 29 ? 48 : 31,
                       alignment: Alignment.center,
                       child: Padding(
                         padding: const EdgeInsets.all(0),
@@ -554,9 +554,9 @@ class _EventItemState extends State<EventItem> {
                           ),
                           softWrap: true,),
                       ),
-                    ),),
-                    ResponsiveContainer(widthPercent: 25, heightPercent: 6, child: Container(
-
+                    ),
+                    Container(
+                      height: widget.title.length > 29 ? 48 : 31,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Color(0xffe75d02),
@@ -574,7 +574,7 @@ class _EventItemState extends State<EventItem> {
                           ),
                         ),
                       ),
-                    ), )
+                    ),
                   ],
                 ),
               ),
@@ -970,20 +970,20 @@ class _HotOfferItemState extends State<HotOfferItem> {
                           ? 150 //for IOS
                           : 150, // for Android
                     ),
-//                    Positioned(
-//                      left: 10.0,
-//                      child: Container(
-//                        decoration: BoxDecoration(color: Colors.deepPurple),
-//                        child: Padding(
-//                          padding: const EdgeInsets.all(10.0),
-//                          child: Text(
-//                            'Sale',
-//                            style: TextStyle(
-//                                color: Color(0xffeaeae7), fontSize: 18),
-//                          ),
-//                        ),
-//                      ),
-//                    ),
+                    Positioned(
+                      left: 10.0,
+                      child: Container(
+                        decoration: BoxDecoration(color: Colors.deepPurple),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Sale',
+                            style: TextStyle(
+                                color: Color(0xffeaeae7), fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ),
                     Globals.skipped
                         ? Container()
                         : Positioned(

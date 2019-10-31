@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
@@ -243,7 +244,16 @@ class _NewPasswordState extends State<NewPassword> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

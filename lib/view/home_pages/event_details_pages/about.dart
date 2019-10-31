@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -256,7 +257,16 @@ class _WishListButtonState extends State<WishListButton> {
           return Container(
             child: Column(
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );

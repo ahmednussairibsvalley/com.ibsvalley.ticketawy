@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 
@@ -265,7 +266,16 @@ class _ProfileInfoState extends State<ProfileInfo> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Container(height: 50, width: 50,child: CircularProgressIndicator()),
+                Container(height: 50, width: 50,child: SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                )),
               ],
             ),
           ),

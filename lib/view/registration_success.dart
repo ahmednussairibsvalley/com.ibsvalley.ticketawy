@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../globals.dart';
 import '../util.dart' as util;
@@ -114,7 +115,16 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
                 child: Container(
                   child: Column(
                     children: <Widget>[
-                      CircularProgressIndicator(),
+                      SpinKitFadingCircle(
+                        itemBuilder: (context , int index) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xffff6600),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

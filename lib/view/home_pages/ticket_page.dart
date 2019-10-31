@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:dashed_container/dashed_container.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //import 'package:barcode_flutter/barcode_flutter.dart';
 import 'package:responsive_container/responsive_container.dart';
@@ -53,7 +54,16 @@ class _TicketsPageState extends State<TicketsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );
