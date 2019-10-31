@@ -428,7 +428,6 @@ class _EventItemState extends State<EventItem> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: true,
       onLoading: _onLoading,
       onRefresh: _onRefresh,
       controller: _refreshController,
@@ -557,7 +556,7 @@ class _EventItemState extends State<EventItem> {
                     ),
                     Container(
                       height: widget.title.length > 29 ? 48 : 31,
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                         color: Color(0xffe75d02),
                         borderRadius: BorderRadius.only(
