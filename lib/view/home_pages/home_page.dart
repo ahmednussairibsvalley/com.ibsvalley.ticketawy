@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../globals.dart';
@@ -32,122 +33,100 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FutureBuilder _eventsSlider;
-  FutureBuilder _hotOffersSlider;
+
+  FutureBuilder _sliders;
 
   @override
   void initState() {
     super.initState();
-    _eventsSlider = FutureBuilder(
+
+    _sliders = FutureBuilder(
       future: util.getHomeLists(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-//            Globals.controller.populateHomeEvents(snapshot.data);
-            return EventsSlider(
-              onEventPressed: widget.onEventPressed,
-              list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
-              onUpdateWisthList: () {
-                _updateHoteOffers();
-              },
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            return ListView(
+              children: <Widget>[
+                EventsSlider(
+                  onEventPressed: widget.onEventPressed,
+                  list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
+                  onUpdateWisthList: () {
+                    _updateSliders();
+                  },
+                ),
+                CategoriesSlider(
+                  list: snapshot.data['homeCategories'],
+                  onPress: widget.onPress,
+                ),
+                HotOffersSlider(
+                  onUpdateWishList: () {
+                    _updateSliders();
+                  },
+                  onEventPressed: widget.onHotOfferPressed,
+                  list: snapshot.data['hotEvents'],
+                ),
+              ],
             );
           }
           return Container();
         }
-        return Container(
-          child: Column(
-            children: <Widget>[
-              CircularProgressIndicator(),
-            ],
-          ),
-        );
-      },
-    );
-    _hotOffersSlider = FutureBuilder(
-      future: util.getHomeLists(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-//            Globals.controller.populateHotEvents(snapshot.data);
-            return HotOffersSlider(
-              onUpdateWishList: () {
-                _updateHotEvents();
-              },
-              onEventPressed: widget.onHotOfferPressed,
-              list: snapshot.data['hotEvents'],
+        return SpinKitFadingCircle(
+          itemBuilder: (context , int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.deepOrange,
+              ),
             );
-          }
-          return Container();
-        }
-        return Container(
-          child: Column(
-            children: <Widget>[
-              CircularProgressIndicator(),
-            ],
-          ),
+          },
         );
       },
     );
   }
 
-  _updateHotEvents() {
-    setState(() {
-      _eventsSlider = FutureBuilder(
-        future: util.getHomeEvents(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              Globals.controller.populateHomeEvents(snapshot.data);
-              return EventsSlider(
-                onEventPressed: widget.onEventPressed,
-                list: Globals.controller.homeEvents,
-                onUpdateWisthList: () {
-                  _updateHoteOffers();
-                },
-              );
-            }
-            return Container();
-          }
-          return Container(
-            child: Column(
+  _updateSliders(){
+    _sliders = FutureBuilder(
+      future: util.getHomeLists(),
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done){
+          if(snapshot.hasData){
+            return ListView(
               children: <Widget>[
-                CircularProgressIndicator(),
+                EventsSlider(
+                  onEventPressed: widget.onEventPressed,
+                  list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
+                  onUpdateWisthList: () {
+                    _updateSliders();
+                  },
+                ),
+                CategoriesSlider(
+                  list: snapshot.data['homeCategories'],
+                  onPress: widget.onPress,
+                ),
+                HotOffersSlider(
+                  onUpdateWishList: () {
+                    _updateSliders();
+                  },
+                  onEventPressed: widget.onHotOfferPressed,
+                  list: snapshot.data['hotEvents'],
+                ),
               ],
-            ),
-          );
-        },
-      );
-    });
-  }
-
-  _updateHoteOffers() {
-    setState(() {
-      _hotOffersSlider = FutureBuilder(
-        future: util.getHotEvents(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              Globals.controller.populateHotEvents(snapshot.data);
-              return HotOffersSlider(
-                onEventPressed: widget.onHotOfferPressed,
-                list: Globals.controller.hotEvents,
-                onUpdateWishList: () {
-                  _updateHotEvents();
-                },
-              );
-            }
-            return Container();
+            );
           }
-          return Container(
-            child: Column(
-              children: <Widget>[
-                CircularProgressIndicator(),
-              ],
-            ),
-          );
-        },
-      );
-    });
+          return Container();
+        }
+        return SpinKitFadingCircle(
+          itemBuilder: (context , int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.deepOrange,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -162,34 +141,7 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.hasData) {
           if (snapshot.data == ConnectivityResult.mobile ||
               snapshot.data == ConnectivityResult.wifi) {
-            return ListView(
-              children: <Widget>[
-                _eventsSlider,
-                FutureBuilder(
-                  future: util.getHomeLists(),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done){
-                      if(snapshot.hasData){
-//                        Globals.controller.populateCategories(snapshot.data);
-                        return CategoriesSlider(
-                          list: snapshot.data['homeCategories'],
-                          onPress: widget.onPress,
-                        );
-                      }
-                      return Container();
-                    }
-                    return Container(
-                      child: Column(
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                _hotOffersSlider,
-              ],
-            );
+            return _sliders;
           }
           return Center(
             child: Text('There is no connection'),
