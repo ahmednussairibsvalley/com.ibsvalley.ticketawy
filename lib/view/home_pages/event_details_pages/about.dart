@@ -254,21 +254,15 @@ class _WishListButtonState extends State<WishListButton> {
                   }
                 });
           }
-          return Container(
-            child: Column(
-              children: <Widget>[
-                SpinKitFadingCircle(
-                  itemBuilder: (context , int index) {
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffff6600),
-                      ),
-                    );
-                  },
+          return SpinKitFadingCircle(
+            itemBuilder: (context , int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xffff6600),
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
