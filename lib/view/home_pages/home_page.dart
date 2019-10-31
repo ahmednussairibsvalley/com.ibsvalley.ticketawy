@@ -664,6 +664,19 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
       color: Color(0xfff0f0f0),
       child: Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(7.0),
+            child: Text(
+              'Categories',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xfffe6700),
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Verdana',
+              ),
+            ),
+          ),
           _carouselSlider,
           paisList.length > 1?Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -858,7 +871,7 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
       children: <Widget>[
         // The title
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(7.0),
           child: Text(
             'Hot offers!',
             textAlign: TextAlign.center,
