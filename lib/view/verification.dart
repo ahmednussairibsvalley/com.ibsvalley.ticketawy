@@ -42,8 +42,8 @@ class _VerificationDialogState extends State<VerificationDialog> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30,bottom: 8 , left: 8 ,right: 8),
                   child: Text(
-                    'An SMS sent to you with verification code.'
-                        'Please enter the code and press OK',
+                    'An SMS sent to you with a verification code, '
+                        'please enter the code and press confirm',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
