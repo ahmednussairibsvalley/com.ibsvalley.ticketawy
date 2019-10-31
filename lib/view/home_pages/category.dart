@@ -24,6 +24,7 @@ class CategoryPage extends StatefulWidget {
   final Function onAllCategoriesPressed;
   final Function onWillPop;
 
+
   CategoryPage(
       {@required this.onBack,
       @required this.onCategoryPressed,
@@ -42,53 +43,67 @@ class _CategoryPageState extends State<CategoryPage> {
     _eventsViewer = FutureBuilder(
       future: util.getEventsList(Globals.categoryId),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          Globals.controller.populateEvents(snapshot.data);
-          return Globals.controller.events.length > 0
-              ? EventsSlider(
-                  eventsList: Globals.controller.events,
-                  onCategoryPressed: widget.onCategoryPressed,
-                )
-              : Center(
-                  child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/sad_ticketawy.png',
-                        width: 120,
+        if(snapshot.connectionState == ConnectionState.done){
+          if (snapshot.hasData) {
+//          Globals.controller.populateEvents(snapshot.data);
+            return snapshot.data.length > 0
+                ? EventsSlider(
+              eventsList: snapshot.data,
+              onCategoryPressed: widget.onCategoryPressed,
+            )
+                : Center(
+              child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    'assets/sad_ticketawy.png',
+                    width: 120,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'There are no events yet',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xfffe6700),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'There are no events yet',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xfffe6700),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),),
-                );
-        }
-        return Container(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SpinKitFadingCircle(
-                itemBuilder: (context , int index) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xffff6600),
                     ),
-                  );
-                },
+                  ),
+                ],
+              ),),
+            );
+          }
+          return Center(
+            child: ResponsiveContainer(heightPercent: 50, widthPercent: 70, padding: EdgeInsets.only(top: 70), child: Column(
+              children: <Widget>[
+                Image.asset(
+                  'assets/sad_ticketawy.png',
+                  width: 120,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'There are no events yet',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xfffe6700),
+                    ),
+                  ),
+                ),
+              ],
+            ),),
+          );
+        }
+        return SpinKitFadingCircle(
+          itemBuilder: (context , int index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.deepOrange,
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -413,14 +428,14 @@ class EventsPage extends StatelessWidget {
                       ResponsiveContainer(
                         heightPercent: 10, widthPercent: 40,
                           child: Image.network(
-                        list[index].imageUrl,
+                        '${Globals.imageBaseUrl}/${list[index]['logo']}',
                         fit: BoxFit.fill,
 
                       )),
                       ResponsiveContainer(
                         heightPercent: 4.5, widthPercent: 100,
                         alignment: Alignment.center,
-                        child: Text('${list[index].title}',style: TextStyle(fontSize: 12),textAlign: TextAlign.center,),
+                        child: Text('${list[index]['name']}',style: TextStyle(fontSize: 12),textAlign: TextAlign.center,),
                       ),
                       Container(
                         decoration: BoxDecoration(
@@ -430,7 +445,7 @@ class EventsPage extends StatelessWidget {
                           heightPercent: 3, widthPercent: 35,
                           alignment: Alignment.center,
                           child: Text(
-                            'Starts from ${list[index].price} EGP',
+                            'Starts from ${list[index]['price']} EGP',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

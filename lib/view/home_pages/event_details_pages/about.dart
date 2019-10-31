@@ -28,7 +28,7 @@ class AboutPage extends StatelessWidget {
 
     DateTime _startDate = DateTime.parse(startDate);
     DateTime _endDate = DateTime.parse(endDate);
-    String _startDateText = DateFormat.yMd().format(_startDate);
+//    String _startDateText = DateFormat.yMd().format(_startDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
 
 

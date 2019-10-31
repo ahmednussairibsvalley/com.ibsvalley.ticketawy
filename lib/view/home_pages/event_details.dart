@@ -47,6 +47,7 @@ class EventDetails extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return EventTabs(
+                  haveSeats: snapshot.data['haveSeats'] == null?false:true,
                   data: snapshot.data,
                   onEventBooked: onEventBooked,
                   onOrderCompleted: onOrderCompleted,
@@ -155,11 +156,13 @@ class EventTabs extends StatefulWidget {
   final Function onEventBooked;
   final Function(String) onOrderCompleted;
   final Map data;
+  final bool haveSeats;
 
   EventTabs(
       {@required this.onEventBooked,
       @required this.data,
-      @required this.onOrderCompleted});
+      @required this.onOrderCompleted,
+      @required this.haveSeats,});
 
   @override
   _EventTabsState createState() => _EventTabsState();
@@ -367,11 +370,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                                         openedFromEventDescription: true,
                                       )));
                             } else {
-                              if (Globals.reservationOption ==
-                                  ReservationOptions.byTickets)
+                              if (!widget.haveSeats)
                                 _showChooseTicketDialog(widget.onEventBooked);
-                              else if (Globals.reservationOption ==
-                                  ReservationOptions.bySeats)
+                              else
                                 widget.onEventBooked();
                             }
                           },
@@ -385,9 +386,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                                   top: 15,
                                   bottom: 15),
                               child: Text(
-                                Globals.reservationOption ==
-                                        ReservationOptions.byTickets
-                                    ? 'Buy Tickets'
+                                !widget.haveSeats? 'Buy Tickets'
                                     : 'Buy Seats',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(

@@ -39,14 +39,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _eventsSlider = FutureBuilder(
-      future: util.getHomeEvents(),
+      future: util.getHomeLists(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            Globals.controller.populateHomeEvents(snapshot.data);
+//            Globals.controller.populateHomeEvents(snapshot.data);
             return EventsSlider(
               onEventPressed: widget.onEventPressed,
-              list: Globals.controller.homeEvents,
+              list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
               onUpdateWisthList: () {
                 _updateHoteOffers();
               },
@@ -64,17 +64,17 @@ class _HomePageState extends State<HomePage> {
       },
     );
     _hotOffersSlider = FutureBuilder(
-      future: util.getHotEvents(),
+      future: util.getHomeLists(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            Globals.controller.populateHotEvents(snapshot.data);
+//            Globals.controller.populateHotEvents(snapshot.data);
             return HotOffersSlider(
               onUpdateWishList: () {
                 _updateHotEvents();
               },
               onEventPressed: widget.onHotOfferPressed,
-              list: Globals.controller.hotEvents,
+              list: snapshot.data['hotEvents'],
             );
           }
           return Container();
@@ -166,12 +166,13 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 _eventsSlider,
                 FutureBuilder(
-                  future: util.categoryList(),
+                  future: util.getHomeLists(),
                   builder: (context, snapshot){
                     if(snapshot.connectionState == ConnectionState.done){
                       if(snapshot.hasData){
-                        Globals.controller.populateCategories(snapshot.data);
+//                        Globals.controller.populateCategories(snapshot.data);
                         return CategoriesSlider(
+                          list: snapshot.data['homeCategories'],
                           onPress: widget.onPress,
                         );
                       }
@@ -232,12 +233,11 @@ class _EventsSliderState extends State<EventsSlider> {
       _list,
           (index, i) {
         return EventItem(
-          reservationOption: i.reservationOption,
-          price: i.price,
+          price: i['price'],
           onEventPressed: onEventPressed,
-          id: i.id,
-          title: i.title,
-          imageUrl: i.imageUrl,
+          id: i['id'],
+          title: i['name'],
+          imageUrl: '${Globals.imageBaseUrl}/${i['logo']}',
           onUpdateWishList: () {
             widget.onUpdateWisthList();
           },
@@ -297,7 +297,7 @@ class _EventsSliderState extends State<EventsSlider> {
 
 class EventItem extends StatefulWidget {
   final int id;
-  final int reservationOption;
+//  final int reservationOption;
   final String imageUrl;
   final String title;
   final double price;
@@ -306,7 +306,7 @@ class EventItem extends StatefulWidget {
 
   EventItem(
       {@required this.id,
-        @required this.reservationOption,
+//        @required this.reservationOption,
         @required this.onEventPressed,
         @required this.imageUrl,
         @required this.title,
@@ -434,7 +434,8 @@ class _EventItemState extends State<EventItem> {
       controller: _refreshController,
       child: GestureDetector(
         onTap: () {
-          Globals.reservationOption = widget.reservationOption;
+//          Globals.reservationOption = widget.reservationOption;
+//          Globals.reservationOption = 0;
           widget.onEventPressed(widget.id);
         },
         child: Stack(
@@ -588,7 +589,8 @@ class _EventItemState extends State<EventItem> {
 
 class CategoriesSlider extends StatefulWidget {
   final Function(int, String) onPress;
-  CategoriesSlider({@required this.onPress});
+  final List list;
+  CategoriesSlider({@required this.onPress, @required this.list});
   @override
   _CategoriesSliderState createState() =>
       _CategoriesSliderState(onPress: onPress);
@@ -596,7 +598,7 @@ class CategoriesSlider extends StatefulWidget {
 
 class _CategoriesSliderState extends State<CategoriesSlider> {
   int _current = 0;
-  static final List _list = Globals.controller.categories;
+  static List _list;
   CarouselSlider _carouselSlider;
   List child;
   List<Map> paisList = List();
@@ -608,7 +610,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   @override
   void initState() {
     super.initState();
-
+    _list = widget.list;
     for (int i = 0; i < _list.length; i++) {
       Map pairs = Map();
       int first = i * 2;
@@ -706,6 +708,8 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return GridView(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -716,9 +720,30 @@ class CategoriesPage extends StatelessWidget {
       scrollDirection: Axis.vertical,
       physics: NeverScrollableScrollPhysics(),
       children: List.generate(list.length, (index) {
+        String imageUrl = 'assets/loading.png';
+        switch(list[index]['categoryName']){
+          case 'MUSIC':
+            imageUrl = 'assets/category_music.jpg';
+            break;
+          case 'THEATERS':
+            imageUrl = 'assets/category_theatre.jpg';
+            break;
+          case 'COURSES':
+            imageUrl = 'assets/category_courses.jpg';
+            break;
+          case 'SPORTING':
+            imageUrl = 'assets/category_sporting.jpg';
+            break;
+          case 'ENTERTAINMENT':
+            imageUrl = 'assets/category_entertainment.jpg';
+            break;
+          case 'OTHERS':
+            imageUrl = 'assets/category_others.jpg';
+            break;
+        }
         return GestureDetector(
           onTap: () {
-            onPress(list[index].id, list[index].title);
+            onPress(list[index]['id'], list[index]['categoryName']);
           },
           child: Padding(
             padding: EdgeInsets.all(5),
@@ -732,13 +757,13 @@ class CategoriesPage extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                         child: Image.asset(
-                          list[index].imageUrl,
+                          imageUrl,
                           fit: BoxFit.cover,
                         )),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        '${list[index].title}',
+                        '${list[index]['categoryName']}',
                         style: TextStyle(
                             color: Color(0xff656565), fontFamily: 'MyriadPro'),
                       ),
@@ -906,12 +931,11 @@ class HotOfferPage extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(list.length, (index) {
           return HotOfferItem(
-            imageUrl: list[index].imageUrl,
-            title: list[index].title,
-            id: list[index].id,
+            imageUrl: '${Globals.imageBaseUrl}/${list[index]['logo']}',
+            title: list[index]['name'],
+            id: list[index]['id'],
             onEventPressed: onEventPressed,
-            price: list[index].price,
-            reservationOption: list[index].reservationOption,
+            price: list[index]['price'],
             onUpdateWishList: onUpdateWishList,
           );
         }),
@@ -923,7 +947,6 @@ class HotOfferPage extends StatelessWidget {
 class HotOfferItem extends StatefulWidget {
   final int id;
   final Function(int) onEventPressed;
-  final int reservationOption;
   final String imageUrl;
   final String title;
   final double price;
@@ -932,7 +955,6 @@ class HotOfferItem extends StatefulWidget {
   HotOfferItem(
       {@required this.id,
         @required this.onEventPressed,
-        @required this.reservationOption,
         @required this.imageUrl,
         @required this.title,
         @required this.price,
@@ -953,7 +975,6 @@ class _HotOfferItemState extends State<HotOfferItem> {
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onTap: () {
-            Globals.reservationOption = widget.reservationOption;
             widget.onEventPressed(widget.id);
           },
           child: Column(

@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
           return CustomAlertDialog(
             content: Container(
               width: 300.0,
-              height: 150.0,
+              height: 170.0,
               child: Column(
                 children: <Widget>[
                   Padding(
