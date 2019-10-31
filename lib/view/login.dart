@@ -166,8 +166,21 @@ class _LoginState extends State<Login> {
     return WillPopScope(
       onWillPop: () async{
         if(widget.openedByDrawer){
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => Home()));
+          if(widget.openedFromHome)
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(
+                builder: (context) => Home(
+                  currentPageIndex:
+                  PagesIndices.homePageIndex,
+                )));
+          else
+            Navigator.of(context)
+                .pushReplacement(MaterialPageRoute(
+                builder: (context) => Home(
+                  currentPageIndex:
+                  PagesIndices.eventPageIndex,
+                ))
+            );
           return false;
         } else {
           return true;
@@ -424,6 +437,8 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
+                                _phoneNumberController.value = _phoneNumberController.value.copyWith(text: '');
+                                _passwordController.value = _passwordController.value.copyWith(text: '');
                                 Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>
@@ -537,7 +552,8 @@ class _LoginState extends State<Login> {
                               builder: (context) => Home(
                                 currentPageIndex:
                                 PagesIndices.eventPageIndex,
-                              )));
+                              ))
+                          );
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -801,6 +817,8 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
+                                _phoneNumberController.value = _phoneNumberController.value.copyWith(text: '');
+                                _passwordController.value = _passwordController.value.copyWith(text: '');
                                 Navigator.of(context).push(
                                     MaterialPageRoute(
                                         builder: (context) =>

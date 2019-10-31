@@ -24,17 +24,16 @@ class EventDetails extends StatelessWidget {
   final Function onWillPop;
   final Function onOrderCompleted;
 
-  EventDetails(
-      {@required this.onPreviousPagePressed,
-      @required this.onEventBooked,
-      @required this.onAllCategoriesPressed,
-        @required this.onOrderCompleted,
-      @required this.onWillPop,});
-
+  EventDetails({
+    @required this.onPreviousPagePressed,
+    @required this.onEventBooked,
+    @required this.onAllCategoriesPressed,
+    @required this.onOrderCompleted,
+    @required this.onWillPop,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async {
         onWillPop();
@@ -44,7 +43,7 @@ class EventDetails extends StatelessWidget {
         body: FutureBuilder(
           future: util.getEventDetails(Globals.eventId),
           builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.done){
+            if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return EventTabs(
                   data: snapshot.data,
@@ -73,8 +72,8 @@ class EventDetails extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: GestureDetector(
-                  onTap: (){
-                    if(Globals.orderTickets.length > 0){
+                  onTap: () {
+                    if (Globals.orderTickets.length > 0) {
                       Globals.orderTickets.clear();
                     }
                     onPreviousPagePressed();
@@ -106,7 +105,7 @@ class EventDetails extends StatelessWidget {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     onAllCategoriesPressed();
                   },
                   child: Container(
@@ -147,7 +146,10 @@ class EventTabs extends StatefulWidget {
   final Function(String) onOrderCompleted;
   final Map data;
 
-  EventTabs({@required this.onEventBooked, @required this.data, @required this.onOrderCompleted});
+  EventTabs(
+      {@required this.onEventBooked,
+      @required this.data,
+      @required this.onOrderCompleted});
 
   @override
   _EventTabsState createState() => _EventTabsState();
@@ -184,112 +186,116 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     final _width = MediaQuery.of(context).size.width;
 
     return
-      // the hole space
-      ResponsiveContainer(widthPercent: 100,heightPercent: 90, child: Scaffold(
-      body: Column(
-        children: <Widget>[
-
-          // event tabs
-          ResponsiveContainer(
-            widthPercent: 100,heightPercent: 8,
-
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    height: 45,
-                    color: Color(0xfff0f0f0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-
-                        // About
-                        ResponsiveContainer(
-                          widthPercent: 18,heightPercent: 8,
-                          alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = aboutPageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'About',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Verdana',
-                                color: index == aboutPageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
+        // the hole space
+        ResponsiveContainer(
+      widthPercent: 100,
+      heightPercent: 90,
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            // event tabs
+            ResponsiveContainer(
+              widthPercent: 100,
+              heightPercent: 8,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      height: 45,
+                      color: Color(0xfff0f0f0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          // About
+                          ResponsiveContainer(
+                            widthPercent: 18,
+                            heightPercent: 8,
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  index = aboutPageIndex;
+                                });
+                                _tabController.animateTo(index);
+                              },
+                              child: Text(
+                                'About',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Verdana',
+                                  color: index == aboutPageIndex
+                                      ? Color(0xffff6600)
+                                      : Color(0xff979797),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Image.asset(
-                          'assets/seperator.png',
-                          height: 10,
-                          width: 10,
-                        ),
+                          Image.asset(
+                            'assets/seperator.png',
+                            height: 10,
+                            width: 10,
+                          ),
 
-                        // Location
-                        ResponsiveContainer(
-                          widthPercent: 21,heightPercent: 8,
-                          alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = locationPageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'Location',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Verdana',
-                                color: index == locationPageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
+                          // Location
+                          ResponsiveContainer(
+                            widthPercent: 21,
+                            heightPercent: 8,
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  index = locationPageIndex;
+                                });
+                                _tabController.animateTo(index);
+                              },
+                              child: Text(
+                                'Location',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Verdana',
+                                  color: index == locationPageIndex
+                                      ? Color(0xffff6600)
+                                      : Color(0xff979797),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Image.asset(
-                          'assets/seperator.png',
-                          height: 10,
-                          width: 10,
-                        ),
+                          Image.asset(
+                            'assets/seperator.png',
+                            height: 10,
+                            width: 10,
+                          ),
 
-                        // Schedule
-                        ResponsiveContainer(
-                          widthPercent: 21,heightPercent: 8,
-                          alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                index = schedulePageIndex;
-                              });
-                              _tabController.animateTo(index);
-                            },
-                            child: Text(
-                              'Schedule',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Verdana',
-                                color: index == schedulePageIndex
-                                    ? Color(0xffff6600)
-                                    : Color(0xff979797),
+                          // Schedule
+                          ResponsiveContainer(
+                            widthPercent: 21,
+                            heightPercent: 8,
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  index = schedulePageIndex;
+                                });
+                                _tabController.animateTo(index);
+                              },
+                              child: Text(
+                                'Schedule',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Verdana',
+                                  color: index == schedulePageIndex
+                                      ? Color(0xffff6600)
+                                      : Color(0xff979797),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                // Buy Tickets Button
+                  // Buy Tickets Button
 //                BuyTicket(),
 //                GestureDetector(
 //                  onTap: () {
@@ -324,80 +330,103 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
 //                    ),
 //                  ),
 //                )
-                _expired?Container(
-                  height: 45,
-                  color: Color(0xff808B96),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
-                    child: Text('Expired',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
-                    ),
-                  ),
-                )
-                :GestureDetector(
-                  onTap: () {
-                    if(Globals.skipped){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
-                    } else {
-                      if(Globals.reservationOption == ReservationOptions.byTickets)
-                        _showChooseTicketDialog(widget.onEventBooked);
-                      else if(Globals.reservationOption == ReservationOptions.bySeats)
-                        widget.onEventBooked();
-                    }
-
-                  },
-                  child: Container(
-                    height: 45,
-                    color: Color(0xffff6600),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: _width > 350?23:25,right: _width > 350?23:20,top: 15,bottom: 15),
-                      child: Text(
-                        Globals.reservationOption == ReservationOptions.byTickets? 'Buy Tickets' : 'Buy Seats',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontFamily: 'MyriadPro'),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                  _expired
+                      ? Container(
+                          height: 45,
+                          color: Color(0xff808B96),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: _width > 350 ? 23 : 25,
+                                right: _width > 350 ? 23 : 20,
+                                top: 15,
+                                bottom: 15),
+                            child: Text(
+                              'Expired',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white, fontFamily: 'MyriadPro'),
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            if (Globals.skipped) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Login(
+                                        openedFromHome: false,
+                                        openedFromEventDescription: true,
+                                      )));
+                            } else {
+                              if (Globals.reservationOption ==
+                                  ReservationOptions.byTickets)
+                                _showChooseTicketDialog(widget.onEventBooked);
+                              else if (Globals.reservationOption ==
+                                  ReservationOptions.bySeats)
+                                widget.onEventBooked();
+                            }
+                          },
+                          child: Container(
+                            height: 45,
+                            color: Color(0xffff6600),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: _width > 350 ? 23 : 25,
+                                  right: _width > 350 ? 23 : 20,
+                                  top: 15,
+                                  bottom: 15),
+                              child: Text(
+                                Globals.reservationOption ==
+                                        ReservationOptions.byTickets
+                                    ? 'Buy Tickets'
+                                    : 'Buy Seats',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'MyriadPro'),
+                              ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
 
-          Flexible(
-            child: TabBarView(
-              controller: _tabController,
-              physics: index == locationPageIndex? NeverScrollableScrollPhysics():AlwaysScrollableScrollPhysics(),
+            Flexible(
+              child: TabBarView(
+                controller: _tabController,
+                physics: index == locationPageIndex
+                    ? NeverScrollableScrollPhysics()
+                    : AlwaysScrollableScrollPhysics(),
 //              physics: AlwaysScrollableScrollPhysics(),
-              children: <Widget>[
-                AboutPage(
-                  imageUrl:
-                  '${Globals.imageBaseUrl}/${widget.data['logo']}',
-                  eventName: widget.data['name'],
-                  eventDescription: widget.data['content'],
-                  endDate: widget.data['endDate'],
-                  startDate: widget.data['startDate'],
-                ),
-                LocationPage(
-                  mapUrl: widget.data['locationGmap'],
-                  endDate: widget.data['endDate'],
-                  startDate: widget.data['startDate'],
-                ),
-                SchedulePage(
-                  scheduleList: widget.data['schedules'],
-                ),
-              ],
+                children: <Widget>[
+                  AboutPage(
+                    imageUrl: '${Globals.imageBaseUrl}/${widget.data['logo']}',
+                    eventName: widget.data['name'],
+                    eventDescription: widget.data['content'],
+                    endDate: widget.data['endDate'],
+                    startDate: widget.data['startDate'],
+                  ),
+                  LocationPage(
+                    mapUrl: widget.data['locationGmap'],
+                    endDate: widget.data['endDate'],
+                    startDate: widget.data['startDate'],
+                  ),
+                  SchedulePage(
+                    scheduleList: widget.data['schedules'],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),);
+    );
   }
 
 // End
   _showChooseTicketDialog(Function onTicketChosen) {
     showDialog(
-      barrierDismissible: false,
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return CustomAlertDialog(
@@ -425,7 +454,8 @@ class ChooseTicket extends StatefulWidget {
   final Function onTicketChosen;
   final Function(String) onOrderCompleted;
 
-  ChooseTicket({@required this.onTicketChosen, @required this.onOrderCompleted});
+  ChooseTicket(
+      {@required this.onTicketChosen, @required this.onOrderCompleted});
 
   @override
   _ChooseTicketState createState() => _ChooseTicketState();
@@ -481,21 +511,29 @@ class _ChooseTicketState extends State<ChooseTicket> {
                           List ticketsList = snapshot.data;
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(ticketsList.length, (index) {
+                            children:
+                                List.generate(ticketsList.length, (index) {
                               return FutureBuilder(
-                                future: util.availableTickets(quantity: 1,
+                                future: util.availableTickets(
+                                    quantity: 1,
                                     classId: ticketsList[index]['id'],
-                                    activityServiceId: ticketsList[index]['activity_service_Id']),
-                                builder: (context, snapshot){
-                                  if(snapshot.connectionState == ConnectionState.done){
-                                    if(snapshot.hasData){
-                                      if(snapshot.data['result'] == true){
+                                    activityServiceId: ticketsList[index]
+                                        ['activity_service_Id']),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (snapshot.hasData) {
+                                      if (snapshot.data['result'] == true) {
                                         return ClassItem(
                                             orderIndex: index,
                                             classId: ticketsList[index]['id'],
-                                            className: ticketsList[index]['class_Name'],
-                                            totalPrice: ticketsList[index]['total_Price'],
-                                            activityServiceId: ticketsList[index]['activity_service_Id']);
+                                            className: ticketsList[index]
+                                                ['class_Name'],
+                                            totalPrice: ticketsList[index]
+                                                ['total_Price'],
+                                            activityServiceId:
+                                                ticketsList[index]
+                                                    ['activity_service_Id']);
                                       }
 
                                       return Column(
@@ -506,7 +544,8 @@ class _ChooseTicketState extends State<ChooseTicket> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text('Sold Out!',
+                                            child: Text(
+                                              'Sold Out!',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.red,
@@ -515,15 +554,16 @@ class _ChooseTicketState extends State<ChooseTicket> {
                                           ),
                                         ],
                                       );
-
                                     }
                                     return Container();
                                   }
                                   return Container(
                                     alignment: Alignment.center,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         CircularProgressIndicator(),
                                       ],
@@ -550,11 +590,10 @@ class _ChooseTicketState extends State<ChooseTicket> {
               ),
               child: ListTile(
                 onTap: () async {
-
                   List list = List();
                   for (int i = 0; i < Globals.orderTickets.length; i++) {
-                    int numberOfTickets =
-                    int.parse(Globals.orderTickets[i]['numberOfTickets'].toString());
+                    int numberOfTickets = int.parse(
+                        Globals.orderTickets[i]['numberOfTickets'].toString());
                     if (numberOfTickets > 0) {
                       list.add(Globals.orderTickets[i]);
                     }
@@ -564,29 +603,31 @@ class _ChooseTicketState extends State<ChooseTicket> {
 //              print('${Globals.eventId}');
 //              print('${json.encode(list)}');
 
-                  if(list.length > 0){
+                  if (list.length > 0) {
                     Navigator.of(context).pop();
                     Globals.orderTickets.clear();
-                    Map response =
-                    await util.addOrder(eventId: Globals.eventId, orders: list);
+                    Map response = await util.addOrder(
+                        eventId: Globals.eventId, orders: list);
 
                     print('$response');
-                    Map responseFromNative = await platform.invokeMethod('initFawry', response);
+                    Map responseFromNative =
+                        await platform.invokeMethod('initFawry', response);
 
-                    if(responseFromNative != null){
-                      print('Response from native: ${responseFromNative.toString()}');
+                    if (responseFromNative != null) {
+                      print(
+                          'Response from native: ${responseFromNative.toString()}');
 
                       Map onPaymentComplete = await util.onPaymentSuccessful(
-                        paymentResult: responseFromNative['Paymentresult'] == "true",
+                        paymentResult:
+                            responseFromNative['Paymentresult'] == "true",
                         transactionId: responseFromNative['transaction_Id'],
                         paymentType: responseFromNative['payment_type'],
                         refNumber: responseFromNative['fawryRefNumber'],
                       );
 
-                      if(onPaymentComplete != null){
+                      if (onPaymentComplete != null) {
                         print('$onPaymentComplete');
-                        if(onPaymentComplete['result']){
-
+                        if (onPaymentComplete['result']) {
                           List history = await util.getOrdersHistory();
 
                           widget.onOrderCompleted('${history[0]['order_Id']}');
@@ -597,8 +638,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                               timeInSecForIos: 1,
                               backgroundColor: Colors.black38,
                               textColor: Colors.white,
-                              fontSize: 16.0
-                          );
+                              fontSize: 16.0);
                         } else {
                           Fluttertoast.showToast(
                               msg: 'There is a problem adding new order',
@@ -607,14 +647,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
                               timeInSecForIos: 1,
                               backgroundColor: Colors.black38,
                               textColor: Colors.white,
-                              fontSize: 16.0
-                          );
+                              fontSize: 16.0);
                         }
                       }
                     } else {
-                      print ('Unfortunately, there is no response from native');
+                      print('Unfortunately, there is no response from native');
                     }
-
                   } else {
 //                    Globals.orderTickets.clear();
                     Fluttertoast.showToast(
@@ -624,12 +662,8 @@ class _ChooseTicketState extends State<ChooseTicket> {
                         timeInSecForIos: 1,
                         backgroundColor: Colors.black38,
                         textColor: Colors.white,
-                        fontSize: 16.0
-                    );
+                        fontSize: 16.0);
                   }
-
-
-
                 },
                 title: Container(
                   decoration: BoxDecoration(
@@ -654,11 +688,12 @@ class _ChooseTicketState extends State<ChooseTicket> {
           ],
         ),
         Positioned(
-          right: 0.0, top: 0.0,
+          right: 0.0,
+          top: 0.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pop();
               },
               child: Icon(Icons.close),
@@ -745,7 +780,7 @@ class _ClassItemState extends State<ClassItem> {
                         bottom: 3.0,
                       ),
                       child: Text(
-                        '${_quantity > 0 ?widget.totalPrice * _quantity:widget.totalPrice} EGP',
+                        '${_quantity > 0 ? widget.totalPrice * _quantity : widget.totalPrice} EGP',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Verdana',
@@ -770,12 +805,10 @@ class _ClassItemState extends State<ClassItem> {
                           _quantity = value;
                         });
                         Globals.orderTickets[widget.orderIndex]['classId'] =
-                        '${widget.classId}';
-                        Globals.orderTickets[widget.orderIndex]['numberOfTickets'] =
-                        '$value';
+                            '${widget.classId}';
+                        Globals.orderTickets[widget.orderIndex]
+                            ['numberOfTickets'] = '$value';
                         print('${Globals.orderTickets}');
-
-
                       },
                       activityServiceId: widget.activityServiceId,
                       classId: widget.classId,
@@ -797,7 +830,10 @@ class TicketQuantity extends StatefulWidget {
   final int activityServiceId;
   final Function(int) onUpdateQuantity;
 
-  TicketQuantity({@required this.onUpdateQuantity, @required this.classId, @required this.activityServiceId});
+  TicketQuantity(
+      {@required this.onUpdateQuantity,
+      @required this.classId,
+      @required this.activityServiceId});
 
   @override
   _TicketQuantityState createState() => _TicketQuantityState();
@@ -816,12 +852,12 @@ class _TicketQuantityState extends State<TicketQuantity> {
       children: <Widget>[
         //decrement
         GestureDetector(
-          onTapDown: (details){
+          onTapDown: (details) {
             setState(() {
               _decreasing = true;
             });
           },
-          onTapUp: (details){
+          onTapUp: (details) {
             setState(() {
               _decreasing = false;
             });
@@ -839,7 +875,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
               print('$response');
 
-              if(response['result']){
+              if (response['result']) {
                 setState(() {
                   _current = quantity;
                 });
@@ -858,9 +894,12 @@ class _TicketQuantityState extends State<TicketQuantity> {
             }
           },
           child: CircleAvatar(
-            backgroundColor: _decreasing?Colors.black12:Colors.transparent,
+            backgroundColor: _decreasing ? Colors.black12 : Colors.transparent,
             maxRadius: 15,
-            child: Icon(Icons.remove, color: Colors.black87,),
+            child: Icon(
+              Icons.remove,
+              color: Colors.black87,
+            ),
           ),
         ),
 
@@ -877,18 +916,17 @@ class _TicketQuantityState extends State<TicketQuantity> {
 
         // increment
         GestureDetector(
-          onTapDown: (details){
+          onTapDown: (details) {
             setState(() {
               _increasing = true;
             });
           },
-          onTapUp: (details){
+          onTapUp: (details) {
             setState(() {
               _increasing = false;
             });
           },
-          onTap: () async{
-
+          onTap: () async {
             int quantity = _current;
 
             quantity++;
@@ -898,11 +936,9 @@ class _TicketQuantityState extends State<TicketQuantity> {
                 classId: widget.classId,
                 activityServiceId: widget.activityServiceId);
 
-
-
             print('$response');
 
-            if(response['result']){
+            if (response['result']) {
               setState(() {
                 _current = quantity;
               });
@@ -915,16 +951,15 @@ class _TicketQuantityState extends State<TicketQuantity> {
                 timeInSecForIos: 1,
                 backgroundColor: Colors.black38,
                 textColor: Colors.white,
-                fontSize: 16.0
-            );
-
-
+                fontSize: 16.0);
           },
           child: CircleAvatar(
-
-            backgroundColor: _increasing?Colors.black12:Colors.transparent,
+            backgroundColor: _increasing ? Colors.black12 : Colors.transparent,
             maxRadius: 15,
-            child: Icon(Icons.add, color: Colors.black87,),
+            child: Icon(
+              Icons.add,
+              color: Colors.black87,
+            ),
           ),
         ),
       ],

@@ -146,8 +146,15 @@ class _HomeState extends State<Home> {
       },
       'Sign In' : (){
         Globals.currentCategoryPageIndex = 0;
+        int _index = index;
         Navigator.of(context).pop();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login(openedByDrawer: true,)));
+        if(_index == PagesIndices.eventPageIndex)
+          Navigator.of(context).pushReplacement(MaterialPageRoute
+            (builder: (context) => Login(openedByDrawer: true, openedFromHome: false,
+            openedFromEventDescription: true,)));
+        else
+          Navigator.of(context).pushReplacement(MaterialPageRoute
+            (builder: (context) => Login(openedByDrawer: true,)));
       },
       'Sign Up' : (){
         Globals.currentCategoryPageIndex = 0;
