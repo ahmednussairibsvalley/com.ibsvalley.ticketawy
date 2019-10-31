@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
 import 'package:ticketawy/view/password_recovery.dart';
@@ -984,7 +985,16 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircularProgressIndicator(),
+                  SpinKitFadingCircle(
+                    itemBuilder: (context , int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffff6600),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

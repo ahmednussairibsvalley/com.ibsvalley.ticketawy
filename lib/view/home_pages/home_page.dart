@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../globals.dart';
@@ -57,7 +58,16 @@ class _HomePageState extends State<HomePage> {
         return Container(
           child: Column(
             children: <Widget>[
-              CircularProgressIndicator(),
+              SpinKitFadingCircle(
+                itemBuilder: (context , int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffff6600),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         );
@@ -82,7 +92,16 @@ class _HomePageState extends State<HomePage> {
         return Container(
           child: Column(
             children: <Widget>[
-              CircularProgressIndicator(),
+              SpinKitFadingCircle(
+                itemBuilder: (context , int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffff6600),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         );
@@ -111,7 +130,16 @@ class _HomePageState extends State<HomePage> {
           return Container(
             child: Column(
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );
@@ -141,7 +169,16 @@ class _HomePageState extends State<HomePage> {
           return Container(
             child: Column(
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );
@@ -180,7 +217,16 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       child: Column(
                         children: <Widget>[
-                          CircularProgressIndicator(),
+                          SpinKitFadingCircle(
+                            itemBuilder: (context , int index) {
+                              return DecoratedBox(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xffff6600),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     );
@@ -361,7 +407,16 @@ class _EventItemState extends State<EventItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );
@@ -416,7 +471,16 @@ class _EventItemState extends State<EventItem> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircularProgressIndicator(),
+              SpinKitFadingCircle(
+                itemBuilder: (context , int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffff6600),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         );
@@ -1111,7 +1175,16 @@ class _WishListButtonState extends State<WishListButton> {
           return Container(
             child: Column(
               children: <Widget>[
-                CircularProgressIndicator(),
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           );

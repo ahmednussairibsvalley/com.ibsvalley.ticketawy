@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path/path.dart';
 
 import 'package:connectivity/connectivity.dart';
@@ -405,7 +406,16 @@ class _IdeasFormState extends State<IdeasForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircularProgressIndicator()
+                SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xffff6600),
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ticketawy/view/custom_widgets/CustomShowDialog.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
@@ -59,7 +60,16 @@ class EventDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  CircularProgressIndicator(),
+                  SpinKitFadingCircle(
+                    itemBuilder: (context , int index) {
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xffff6600),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             );
@@ -565,7 +575,16 @@ class _ChooseTicketState extends State<ChooseTicket> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        CircularProgressIndicator(),
+                                        SpinKitFadingCircle(
+                                          itemBuilder: (context , int index) {
+                                            return DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xffff6600),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ],
                                     ),
                                   );

@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ticketawy/view/home_pages/event_details_pages/dashed_divider.dart';
 
 import '../../../globals.dart';
@@ -51,7 +52,16 @@ class ProfileHistory extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              CircularProgressIndicator(),
+              SpinKitFadingCircle(
+                itemBuilder: (context , int index) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xffff6600),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         );
