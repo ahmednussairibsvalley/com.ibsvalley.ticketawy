@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
                       'Error',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18.5,
                         fontFamily: 'GeometriqueSans',
                       ),
                     ),
@@ -65,10 +65,10 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         message.isEmpty ? 'Error when signing in' : message,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: 'Verdana',
-                          fontSize: 17,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -315,7 +315,6 @@ class _LoginState extends State<Login> {
                                     },
                                   ),
                                 ),
-
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     borderSide: BorderSide(
