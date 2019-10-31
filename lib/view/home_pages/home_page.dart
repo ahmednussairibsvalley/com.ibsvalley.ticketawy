@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     _sliders = FutureBuilder(
       future: util.getHomeLists(),
       builder: (context, snapshot){
@@ -982,7 +981,7 @@ class _HotOfferItemState extends State<HotOfferItem> {
                         top: 5.0,
                         right: 5,
                         child: WishListButton(
-                          onUpdateWishList: widget.onUpdateWishList,
+                            onUpdateWishList: widget.onUpdateWishList,
                             eventId: widget.id
                         )
                     ),
