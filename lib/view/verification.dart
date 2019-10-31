@@ -40,7 +40,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(top: 30,bottom: 8 , left: 8 ,right: 8),
                   child: Text(
                     'An SMS sent to you with verification code.'
                         'Please enter the code and press OK',
@@ -59,34 +59,37 @@ class _VerificationDialogState extends State<VerificationDialog> {
                 ),
 
 
-                TextFormField(
-                  onTap: (){
-                    setState(() {
-                      _message = '';
-                    });
-                  },
-                  onChanged: (value){
-                    setState(() {
-                      _message = '';
-                    });
-                  },
-                  controller: _verificationController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    onTap: (){
+                      setState(() {
+                        _message = '';
+                      });
+                    },
+                    onChanged: (value){
+                      setState(() {
+                        _message = '';
+                      });
+                    },
+                    controller: _verificationController,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      hintText: 'Enter the verification code',
                     ),
-                    hintText: 'Enter the verification code',
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: _message.isNotEmpty?
                   Text(_message, textAlign: TextAlign.center,)
                       : Padding(
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(5),
                   ),
                 ),
 
@@ -216,6 +219,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
         Positioned(
           top: 0.0,
           right: 0.0,
+
           child: GestureDetector(
             onTap: (){
               Navigator.of(context).pop();
