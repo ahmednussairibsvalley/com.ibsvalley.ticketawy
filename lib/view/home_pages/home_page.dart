@@ -309,12 +309,15 @@ class _EventItemState extends State<EventItem> {
           }
           return Container(
             alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                CircularProgressIndicator(),
-              ],
+            child: SpinKitFadingCircle(
+              itemBuilder: (context , int index) {
+                return DecoratedBox(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.deepOrange,
+                  ),
+                );
+              },
             ),
           );
         },
@@ -364,12 +367,15 @@ class _EventItemState extends State<EventItem> {
         }
         return Container(
           alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              CircularProgressIndicator(),
-            ],
+          child: SpinKitFadingCircle(
+            itemBuilder: (context , int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.deepOrange,
+                ),
+              );
+            },
           ),
         );
       },
@@ -1095,12 +1101,15 @@ class _WishListButtonState extends State<WishListButton> {
                   }),
             );
           }
-          return Container(
-            child: Column(
-              children: <Widget>[
-                CircularProgressIndicator(),
-              ],
-            ),
+          return SpinKitFadingCircle(
+            itemBuilder: (context , int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.deepOrange,
+                ),
+              );
+            },
           );
         },
       ),
