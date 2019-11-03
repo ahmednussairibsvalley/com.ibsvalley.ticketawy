@@ -627,13 +627,13 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     Map response = await util.addOrder(
                         eventId: Globals.eventId, orders: list);
 
-                    print('$response');
+//                    print('$response');
                     Map responseFromNative =
                         await platform.invokeMethod('initFawry', response);
 
                     if (responseFromNative != null) {
-                      print(
-                          'Response from native: ${responseFromNative.toString()}');
+//                      print(
+//                          'Response from native: ${responseFromNative.toString()}');
 
                       Map onPaymentComplete = await util.onPaymentSuccessful(
                         paymentResult:
@@ -644,7 +644,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                       );
 
                       if (onPaymentComplete != null) {
-                        print('$onPaymentComplete');
+//                        print('$onPaymentComplete');
                         if (onPaymentComplete['result']) {
                           List history = await util.getOrdersHistory();
 
@@ -669,7 +669,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                         }
                       }
                     } else {
-                      print('Unfortunately, there is no response from native');
+//                      print('Unfortunately, there is no response from native');
                     }
                   } else {
 //                    Globals.orderTickets.clear();
@@ -826,7 +826,7 @@ class _ClassItemState extends State<ClassItem> {
                             '${widget.classId}';
                         Globals.orderTickets[widget.orderIndex]
                             ['numberOfTickets'] = '$value';
-                        print('${Globals.orderTickets}');
+//                        print('${Globals.orderTickets}');
                       },
                       activityServiceId: widget.activityServiceId,
                       classId: widget.classId,
@@ -891,7 +891,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
                   classId: widget.classId,
                   activityServiceId: widget.activityServiceId);
 
-              print('$response');
+//              print('$response');
 
               if (response['result']) {
                 setState(() {
@@ -954,7 +954,7 @@ class _TicketQuantityState extends State<TicketQuantity> {
                 classId: widget.classId,
                 activityServiceId: widget.activityServiceId);
 
-            print('$response');
+//            print('$response');
 
             if (response['result']) {
               setState(() {

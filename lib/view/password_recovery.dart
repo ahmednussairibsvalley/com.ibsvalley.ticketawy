@@ -160,7 +160,7 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
 
                               Map response = await util.sendVerificationMessage(_phoneController.text);
 
-                              print('$response');
+//                              print('$response');
 
                               setState(() {
                                 _recovering = false;

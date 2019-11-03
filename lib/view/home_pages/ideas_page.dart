@@ -360,7 +360,7 @@ class _IdeasFormState extends State<IdeasForm> {
 
                     if(response != null){
                       _showResultDialog(context, response['user_Message']);
-                      print('$response');
+//                      print('$response');
                     } else {
                       _showResultDialog(context, 'Error while sending. Please try again');
                     }

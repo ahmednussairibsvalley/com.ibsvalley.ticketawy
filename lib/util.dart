@@ -452,7 +452,7 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 
       // send
       var response = await request.send();
-    print(response.statusCode);
+//    print(response.statusCode);
 
       String reply = await response.stream.transform(utf8.decoder).join();
 
@@ -466,14 +466,14 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 
       // send
       var response = await request.send();
-      print(response.statusCode);
+//      print(response.statusCode);
 
       String reply = await response.stream.transform(utf8.decoder).join();
 
       return json.decode(reply);
     }
   } catch (e){
-    print(e.toString());
+//    print(e.toString());
     return null;
   }
 

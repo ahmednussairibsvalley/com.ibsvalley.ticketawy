@@ -35,6 +35,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   FutureBuilder _sliders;
+  Widget _hotEvents;
+  Widget _hotOffers;
 
   @override
   void initState() {
@@ -44,26 +46,28 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot){
         if(snapshot.connectionState == ConnectionState.done){
           if(snapshot.hasData){
+            _hotEvents = EventsSlider(
+              onEventPressed: widget.onEventPressed,
+              list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
+              onUpdateWisthList: () {
+                _updateSliders();
+              },
+            );
+            _hotOffers = HotOffersSlider(
+              onUpdateWishList: () {
+                _updateSliders();
+              },
+              onEventPressed: widget.onHotOfferPressed,
+              list: snapshot.data['hotEvents'],
+            );
             return ListView(
               children: <Widget>[
-                EventsSlider(
-                  onEventPressed: widget.onEventPressed,
-                  list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
-                  onUpdateWisthList: () {
-                    _updateSliders();
-                  },
-                ),
+                _hotEvents,
                 CategoriesSlider(
                   list: snapshot.data['homeCategories'],
                   onPress: widget.onPress,
                 ),
-                HotOffersSlider(
-                  onUpdateWishList: () {
-                    _updateSliders();
-                  },
-                  onEventPressed: widget.onHotOfferPressed,
-                  list: snapshot.data['hotEvents'],
-                ),
+                _hotOffers,
               ],
             );
           }
@@ -331,7 +335,7 @@ class _EventItemState extends State<EventItem> {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
-    print('loaded');
+//    print('loaded');
     _refreshController.loadComplete();
   }
 

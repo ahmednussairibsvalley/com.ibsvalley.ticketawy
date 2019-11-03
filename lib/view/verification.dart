@@ -154,7 +154,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                           });
                           var response = await util.sendVerificationMessage(widget.phoneNumber);
 
-                          print('$response');
+//                          print('$response');
                           if(response != null && response['result']){
                             setState(() {
                               _message = 'An SMS sent to you';

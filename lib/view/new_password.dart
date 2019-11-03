@@ -180,7 +180,7 @@ class _NewPasswordState extends State<NewPassword> {
                                   newPassword: _newPassword
                               );
 
-                              print('$response');
+//                              print('$response');
 
                               setState(() {
                                 _passwordUpdating = false;
