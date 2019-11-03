@@ -115,7 +115,16 @@ class _HomePageState extends State<HomePage> {
             }
             return Container();
           }
-          return Container();
+          return SpinKitFadingCircle(
+            itemBuilder: (context , int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.deepOrange,
+                ),
+              );
+            },
+          );
         },
       );
     });
