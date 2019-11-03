@@ -18,7 +18,8 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
+
   final Function(int, String) onPress;
   final Function(int) onEventPressed;
   final Function(int) onHotOfferPressed;
@@ -29,92 +30,119 @@ class HomePage extends StatefulWidget {
         @required this.onHotOfferPressed});
 
   @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  FutureBuilder _sliders;
-  Widget _hotEvents;
-  Widget _hotOffers;
-
-  @override
-  void initState() {
-    super.initState();
-    _sliders = FutureBuilder(
-      future: util.getHomeLists(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            _hotEvents = EventsSlider(
-              onEventPressed: widget.onEventPressed,
-              list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
-              onUpdateWisthList: () {
-                _updateSliders();
+  Widget build(BuildContext context) {
+    while(Globals.pagesStack.isNotEmpty){
+      Globals.pagesStack.pop();
+    }
+    Globals.pagesStack.push(PagesIndices.homePageIndex);
+    return FutureBuilder(
+      future: Connectivity().checkConnectivity(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data == ConnectivityResult.mobile ||
+              snapshot.data == ConnectivityResult.wifi) {
+            return FutureBuilder(
+              future: util.getHomeLists(),
+              builder: (context, snapshot){
+                if(snapshot.connectionState == ConnectionState.done){
+                  if(snapshot.hasData){
+                    return Sliders(
+                      data: snapshot.data,
+                      onEventPressed: onEventPressed,
+                      onHotOfferPressed: onHotOfferPressed,
+                      onPress: onPress,
+                    );
+                  }
+                  return Container();
+                }
+                return SpinKitFadingCircle(
+                  itemBuilder: (context , int index) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.deepOrange,
+                      ),
+                    );
+                  },
+                );
               },
-            );
-            _hotOffers = HotOffersSlider(
-              onUpdateWishList: () {
-                _updateSliders();
-              },
-              onEventPressed: widget.onHotOfferPressed,
-              list: snapshot.data['hotEvents'],
-            );
-            return ListView(
-              children: <Widget>[
-                _hotEvents,
-                CategoriesSlider(
-                  list: snapshot.data['homeCategories'],
-                  onPress: widget.onPress,
-                ),
-                _hotOffers,
-              ],
             );
           }
-          return Container();
+          return Center(
+            child: Text('There is no internet connection'),
+          );
         }
-        return SpinKitFadingCircle(
-          itemBuilder: (context , int index) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.deepOrange,
-              ),
-            );
-          },
-        );
+        return Container();
       },
     );
   }
+}
 
-  _updateSliders(){
+class Sliders extends StatefulWidget {
+
+  final Function(int, String) onPress;
+  final Function(int) onEventPressed;
+  final Function(int) onHotOfferPressed;
+  final Map data;
+
+  Sliders(
+      {@required this.onPress,
+        @required this.onEventPressed,
+        @required this.onHotOfferPressed, @required this.data});
+  @override
+  _SlidersState createState() => _SlidersState();
+}
+
+class _SlidersState extends State<Sliders> {
+
+  Widget _hotOffers;
+  Widget _hotEvents;
+
+  _updateHotEvents(){
     setState(() {
-      _sliders = FutureBuilder(
+      _hotEvents = FutureBuilder(
         future: util.getHomeLists(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.done){
             if(snapshot.hasData){
-              return ListView(
-                children: <Widget>[
-                  EventsSlider(
-                    onEventPressed: widget.onEventPressed,
-                    list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
-                    onUpdateWisthList: () {
-                      _updateSliders();
-                    },
-                  ),
-                  CategoriesSlider(
-                    list: snapshot.data['homeCategories'],
-                    onPress: widget.onPress,
-                  ),
-                  HotOffersSlider(
-                    onUpdateWishList: () {
-                      _updateSliders();
-                    },
-                    onEventPressed: widget.onHotOfferPressed,
-                    list: snapshot.data['hotEvents'],
-                  ),
-                ],
+              return EventsSlider(
+                onEventPressed: widget.onEventPressed,
+                list: widget.data['homeEvents']/*Globals.controller.homeEvents*/,
+                onUpdateWisthList: () {
+                  _updateHotOffers();
+                },
+              );
+            }
+            return Container();
+          }
+          return SpinKitFadingCircle(
+            itemBuilder: (context , int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.deepOrange,
+                ),
+              );
+            },
+          );
+        },
+      );
+    });
+  }
+
+  _updateHotOffers(){
+    setState(() {
+      _hotOffers = FutureBuilder(
+        future: util.getHomeLists(),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              return HotOffersSlider(
+                onUpdateWishList: () {
+                  _updateHotEvents();
+                },
+                onEventPressed: widget.onHotOfferPressed,
+                list: snapshot.data['hotEvents'],
               );
             }
             return Container();
@@ -135,28 +163,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    while(Globals.pagesStack.isNotEmpty){
-      Globals.pagesStack.pop();
-    }
-    Globals.pagesStack.push(PagesIndices.homePageIndex);
-    return FutureBuilder(
-      future: Connectivity().checkConnectivity(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data == ConnectivityResult.mobile ||
-              snapshot.data == ConnectivityResult.wifi) {
-            return _sliders;
-          }
-          return Center(
-            child: Text('There is no internet connection'),
-          );
-        }
-        return Container();
+  void initState() {
+    super.initState();
+    _hotEvents = EventsSlider(
+      onEventPressed: widget.onEventPressed,
+      list: widget.data['homeEvents']/*Globals.controller.homeEvents*/,
+      onUpdateWisthList: () {
+        _updateHotOffers();
       },
+    );
+
+    _hotOffers = HotOffersSlider(
+      onUpdateWishList: () {
+        _updateHotEvents();
+      },
+      onEventPressed: widget.onHotOfferPressed,
+      list: widget.data['hotEvents'],
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        _hotEvents,
+        CategoriesSlider(
+          list: widget.data['homeCategories'],
+          onPress: widget.onPress,
+        ),
+        _hotOffers,
+      ],
     );
   }
 }
+
 
 class EventsSlider extends StatefulWidget {
   final Function onEventPressed;
@@ -521,7 +560,7 @@ class _EventItemState extends State<EventItem> {
                     ),
                     Container(
                       height: widget.title.length > 29 ? 48 : 31,
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
                       decoration: BoxDecoration(
                         color: Color(0xffe75d02),
                         borderRadius: BorderRadius.only(
