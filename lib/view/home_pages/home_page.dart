@@ -84,48 +84,41 @@ class _HomePageState extends State<HomePage> {
   }
 
   _updateSliders(){
-    _sliders = FutureBuilder(
-      future: util.getHomeLists(),
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done){
-          if(snapshot.hasData){
-            return ListView(
-              children: <Widget>[
-                EventsSlider(
-                  onEventPressed: widget.onEventPressed,
-                  list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
-                  onUpdateWisthList: () {
-                    _updateSliders();
-                  },
-                ),
-                CategoriesSlider(
-                  list: snapshot.data['homeCategories'],
-                  onPress: widget.onPress,
-                ),
-                HotOffersSlider(
-                  onUpdateWishList: () {
-                    _updateSliders();
-                  },
-                  onEventPressed: widget.onHotOfferPressed,
-                  list: snapshot.data['hotEvents'],
-                ),
-              ],
-            );
+    setState(() {
+      _sliders = FutureBuilder(
+        future: util.getHomeLists(),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            if(snapshot.hasData){
+              return ListView(
+                children: <Widget>[
+                  EventsSlider(
+                    onEventPressed: widget.onEventPressed,
+                    list: snapshot.data['homeEvents']/*Globals.controller.homeEvents*/,
+                    onUpdateWisthList: () {
+                      _updateSliders();
+                    },
+                  ),
+                  CategoriesSlider(
+                    list: snapshot.data['homeCategories'],
+                    onPress: widget.onPress,
+                  ),
+                  HotOffersSlider(
+                    onUpdateWishList: () {
+                      _updateSliders();
+                    },
+                    onEventPressed: widget.onHotOfferPressed,
+                    list: snapshot.data['hotEvents'],
+                  ),
+                ],
+              );
+            }
+            return Container();
           }
           return Container();
-        }
-        return SpinKitFadingCircle(
-          itemBuilder: (context , int index) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.deepOrange,
-              ),
-            );
-          },
-        );
-      },
-    );
+        },
+      );
+    });
   }
 
   @override
@@ -143,7 +136,7 @@ class _HomePageState extends State<HomePage> {
             return _sliders;
           }
           return Center(
-            child: Text('There is no connection'),
+            child: Text('There is no internet connection'),
           );
         }
         return Container();
@@ -385,7 +378,7 @@ class _EventItemState extends State<EventItem> {
   Widget build(BuildContext context) {
     return SmartRefresher(
       enablePullDown: true,
-      enablePullUp: true,
+//      enablePullUp: true,
       onLoading: _onLoading,
       onRefresh: _onRefresh,
       controller: _refreshController,
