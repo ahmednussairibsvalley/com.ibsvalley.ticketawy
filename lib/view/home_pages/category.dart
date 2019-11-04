@@ -45,7 +45,6 @@ class _CategoryPageState extends State<CategoryPage> {
       builder: (context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done){
           if (snapshot.hasData) {
-//          Globals.controller.populateEvents(snapshot.data);
             return snapshot.data.length > 0
                 ? EventsSlider(
               eventsList: snapshot.data,
@@ -391,7 +390,6 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class EventsPage extends StatelessWidget {
-//  List list = Globals.controller.events;
   final List list;
   final Function(int) onCategoryPressed;
 

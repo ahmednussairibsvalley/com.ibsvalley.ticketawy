@@ -1,9 +1,7 @@
 import 'package:stack/stack.dart';
-import 'package:ticketawy/controller.dart';
 
 class Globals{
   static String userId = '';
-  static Controller controller;
   static Stack<int> pagesStack = Stack();
   static int categoryId = 1;
   static int eventId = 0;

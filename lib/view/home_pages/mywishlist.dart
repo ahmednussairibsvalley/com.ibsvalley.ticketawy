@@ -139,7 +139,7 @@ class MyWishListPage extends StatelessWidget {
               );
             }
             return Center(
-              child: Text('There is no connection'),
+              child: Text('There is no internet connection'),
             );
           }
           return Container();
@@ -173,10 +173,9 @@ class _WishListViewerState extends State<WishListViewer> {
           if(snapshot.hasData){
             List list = snapshot.data;
             if(list.length > 0){
-              Globals.controller.populateWishList(list);
               return EventsSlider(
                 onCategoryPressed: widget.onCategoryPressed,
-                list: Globals.controller.wishList,
+                list: list,
                 onUpdateWishList: (){
                   _updateEventSlider();
                 },
@@ -234,10 +233,9 @@ class _WishListViewerState extends State<WishListViewer> {
             if(snapshot.hasData){
               List list = snapshot.data;
               if(list.length > 0){
-                Globals.controller.populateWishList(list);
                 return EventsSlider(
                   onCategoryPressed: widget.onCategoryPressed,
-                  list: Globals.controller.wishList,
+                  list: list,
                   onUpdateWishList: (){
                     _updateEventSlider();
                   },
@@ -431,7 +429,6 @@ class _EventsSliderState extends State<EventsSlider> {
 }
 
 class EventsPage extends StatelessWidget {
-//  List list = Globals.controller.events;
   final List list;
   final Function(int) onCategoryPressed;
   final Function onUpdateWishList;
@@ -456,7 +453,7 @@ class EventsPage extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
               onTap: (){
-                onCategoryPressed(list[index].id);
+                onCategoryPressed(list[index]['id']);
               },
               child: Material(
                 elevation: 5,
@@ -472,7 +469,7 @@ class EventsPage extends StatelessWidget {
                           ResponsiveContainer(
                               heightPercent: 10, widthPercent: 40,
                               child: Image.network(
-                                list[index].imageUrl,
+                                '${Globals.imageBaseUrl}/${list[index]['logo']}',
                                 fit: BoxFit.fill,
 
                               )),
@@ -493,7 +490,7 @@ class EventsPage extends StatelessWidget {
                                       size: 25,
                                     ),
                                     onPressed: () async{
-                                      await util.addToRemoveFromWishList(list[index].id);
+                                      await util.addToRemoveFromWishList(list[index]['id']);
                                       onUpdateWishList();
 
                                     }
@@ -505,7 +502,7 @@ class EventsPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
-                            child: Text('${list[index].title}',style: TextStyle(fontSize: 12),)
+                            child: Text('${list[index]['name']}',style: TextStyle(fontSize: 12),)
                         ),
                       ),
                       Container(
@@ -515,7 +512,7 @@ class EventsPage extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            'Starts from ${list[index].price} EGP',
+                            'Starts from ${list[index]['price']} EGP',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

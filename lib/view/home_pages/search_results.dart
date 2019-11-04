@@ -46,7 +46,6 @@ class SearchResults extends StatelessWidget {
 }
 
 class EventsPage extends StatelessWidget {
-//  List list = Globals.controller.events;
   final List list;
   final Function(int) onCategoryPressed;
 
