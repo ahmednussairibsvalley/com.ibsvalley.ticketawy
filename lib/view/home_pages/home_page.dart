@@ -98,6 +98,12 @@ class _SlidersState extends State<Sliders> {
   Widget _hotOffers;
   Widget _hotEvents;
 
+  ListView _listView;
+
+  double _lastPagePosition = 0;
+
+  final ScrollController _scrollController = ScrollController();
+
   _updateHotEvents(){
     setState(() {
       _hotEvents = FutureBuilder(
@@ -127,7 +133,21 @@ class _SlidersState extends State<Sliders> {
           );
         },
       );
+      _listView = ListView(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: <Widget>[
+          _hotEvents,
+          CategoriesSlider(
+            list: widget.data['homeCategories'],
+            onPress: widget.onPress,
+          ),
+          _hotOffers,
+        ],
+      );
     });
+    _scrollController.jumpTo(_lastPagePosition);
   }
 
   _updateHotOffers(){
@@ -159,6 +179,19 @@ class _SlidersState extends State<Sliders> {
           );
         },
       );
+      _listView = ListView(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: <Widget>[
+          _hotEvents,
+          CategoriesSlider(
+            list: widget.data['homeCategories'],
+            onPress: widget.onPress,
+          ),
+          _hotOffers,
+        ],
+      );
     });
   }
 
@@ -180,10 +213,11 @@ class _SlidersState extends State<Sliders> {
       onEventPressed: widget.onHotOfferPressed,
       list: widget.data['hotEvents'],
     );
-  }
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
+
+    _listView = ListView(
+      controller: _scrollController,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       children: <Widget>[
         _hotEvents,
         CategoriesSlider(
@@ -192,6 +226,19 @@ class _SlidersState extends State<Sliders> {
         ),
         _hotOffers,
       ],
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener(
+      child: _listView,
+      onNotification: (t) {
+        if (t is ScrollEndNotification) {
+//          print(_scrollController.position.pixels);
+          _lastPagePosition = _scrollController.position.maxScrollExtent;
+        }
+        return null;
+      },
     );
   }
 }
