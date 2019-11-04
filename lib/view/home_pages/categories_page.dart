@@ -36,12 +36,12 @@ class AllCategoriesPage extends StatelessWidget {
           future: util.categoryList(),
           builder: (context, snapshot){
             if(snapshot.hasData){
-              Globals.controller.populateCategories(snapshot.data);
+//              Globals.controller.populateCategories(snapshot.data);
               return ListView(
                 children: <Widget>[
                   CategoriesPager(
                     onCategoryPressed: onCategoryPressed,
-                    categoriesList: Globals.controller.categories,
+                    categoriesList: snapshot.data,
                   )
                 ],
               );
@@ -274,11 +274,32 @@ class CategoryItem extends StatelessWidget {
         scrollDirection: Axis.vertical,
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(list.length, (index){
+          String imageUrl = 'assets/loading.png';
+          switch(list[index]['categoryName']){
+            case 'MUSIC':
+              imageUrl = 'assets/category_music.jpg';
+              break;
+            case 'THEATERS':
+              imageUrl = 'assets/category_theatre.jpg';
+              break;
+            case 'COURSES':
+              imageUrl = 'assets/category_courses.jpg';
+              break;
+            case 'SPORTING':
+              imageUrl = 'assets/category_sporting.jpg';
+              break;
+            case 'ENTERTAINMENT':
+              imageUrl = 'assets/category_entertainment.jpg';
+              break;
+            case 'OTHERS':
+              imageUrl = 'assets/category_others.jpg';
+              break;
+          }
           return Padding(
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
               onTap: (){
-                onCategoryPressed(list[index].id, list[index].title);
+                onCategoryPressed(list[index]['id'], list[index]['categoryName']);
               },
               child: Material(
                 elevation: 5,
@@ -288,10 +309,10 @@ class CategoryItem extends StatelessWidget {
                   child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Expanded(child: Image.asset(list[index].imageUrl, fit: BoxFit.cover,)),
+                      Expanded(child: Image.asset(imageUrl, fit: BoxFit.cover,)),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text('${list[index].title}'),
+                        child: Text('${list[index]['categoryName']}'),
                       ),
                     ],
                   ),
