@@ -413,7 +413,7 @@ class EventsPage extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: GestureDetector(
               onTap: () {
-                onCategoryPressed(list[index].id);
+                onCategoryPressed(list[index]['id']);
               },
               child: Material(
                 elevation: 5,
