@@ -44,6 +44,8 @@ class _VerificationDialogState extends State<VerificationDialog> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+
+        /// The verification dialog body.
         GestureDetector(
           onTap: (){
             FocusScope.of(context).requestFocus(FocusNode());
@@ -53,6 +55,9 @@ class _VerificationDialogState extends State<VerificationDialog> {
             height: 300.0,
             child: Column(
               children: <Widget>[
+
+                // the first paragraph indicating of an SMS
+                // message being sent
                 Padding(
                   padding: const EdgeInsets.only(top: 30,bottom: 8 , left: 8 ,right: 8),
                   child: Text(
@@ -72,7 +77,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                   child: DashedDivider(),
                 ),
 
-
+                // The code text field
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
@@ -98,6 +103,8 @@ class _VerificationDialogState extends State<VerificationDialog> {
                   ),
                 ),
 
+                // The appearing message under
+                // the code text field.
                 Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: _message.isNotEmpty?
@@ -107,6 +114,7 @@ class _VerificationDialogState extends State<VerificationDialog> {
                   ),
                 ),
 
+                // The two buttons (confirm) and (resend).
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -230,6 +238,8 @@ class _VerificationDialogState extends State<VerificationDialog> {
             ),
           ),
         ),
+
+        /// The top right closing icon
         Positioned(
           top: 0.0,
           right: 0.0,
