@@ -3,20 +3,11 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import '../custom_widgets/CustomShowDialog.dart';
+//import '../custom_widgets/CustomShowDialog.dart';
 import 'package:responsive_container/responsive_container.dart';
 
 import '../../globals.dart';
 import '../../util.dart' as util;
-
-List<T> map<T>(List list, Function handler) {
-  List<T> result = [];
-  for (var i = 0; i < list.length; i++) {
-    result.add(handler(i, list[i]));
-  }
-
-  return result;
-}
 
 class CategoryPage extends StatefulWidget {
   final Function onBack;
@@ -234,28 +225,31 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
-  _showFilterDialog(BuildContext context) {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return CustomAlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            contentPadding: EdgeInsets.all(0),
-            content: Container(
-              width: 300.0,
-              height: 450.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(33.0)),
-              ),
-              child: FiterDialog(),
-            ),
-          );
-        });
-  }
+//  _showFilterDialog(BuildContext context) {
+//    showDialog(
+//        barrierDismissible: false,
+//        context: context,
+//        builder: (context) {
+//          return CustomAlertDialog(
+//            titlePadding: EdgeInsets.all(0),
+//            contentPadding: EdgeInsets.all(0),
+//            content: Container(
+//              width: 300.0,
+//              height: 450.0,
+//              decoration: BoxDecoration(
+//                shape: BoxShape.rectangle,
+//                color: Colors.white,
+//                borderRadius: BorderRadius.all(Radius.circular(33.0)),
+//              ),
+//              child: FiterDialog(),
+//            ),
+//          );
+//        });
+//  }
 }
+
+// -------------------------------------------
+// -------------------------------------------
 
 class EventsSlider extends StatefulWidget {
   final Function(int) onCategoryPressed;
@@ -464,6 +458,9 @@ class EventsPage extends StatelessWidget {
   }
 }
 
+// -------------------------------------------
+// -------------------------------------------
+
 class DrawerDivider extends StatelessWidget {
   final double height;
   final Color color;
@@ -496,6 +493,10 @@ class DrawerDivider extends StatelessWidget {
     );
   }
 }
+
+// -------------------------------------------
+// -------------------------------------------
+
 
 class FiterDialog extends StatefulWidget {
   @override
@@ -809,4 +810,16 @@ class _FiterDialogState extends State<FiterDialog> {
       ],
     );
   }
+}
+
+// -------------------------------------------
+// -------------------------------------------
+
+List<T> map<T>(List list, Function handler) {
+  List<T> result = [];
+  for (var i = 0; i < list.length; i++) {
+    result.add(handler(i, list[i]));
+  }
+
+  return result;
 }

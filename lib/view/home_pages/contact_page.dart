@@ -197,6 +197,8 @@ class _ContactFormState extends State<ContactForm> {
 //    final _width = MediaQuery.of(context).size.width;
     return Stack(
       children: <Widget>[
+
+        // the body
         Center(
 
           // The title with the text area.
@@ -291,19 +293,6 @@ class _ContactFormState extends State<ContactForm> {
                 key: _formKey,
               ),
 
-//          // Add photo
-//          Container(
-//            alignment: Alignment.centerLeft,
-//            child: Padding(
-//              padding: const EdgeInsets.only(right: 80, left: 50, top: 20, bottom: 10),
-//              child: Image.asset('assets/add_photo.png',
-//                height: Platform.isIOS?30
-//                    :_width> 360?42:28,
-//                alignment: Alignment.centerLeft,
-//              ),
-//            ),
-//          ),
-
               // Send button
               Padding(
                 padding: const EdgeInsets.only(right: 30, left: 30, top: 30),
@@ -365,6 +354,8 @@ class _ContactFormState extends State<ContactForm> {
             ],
           ),
         ),
+
+        // sending progress widget
         _sending? Positioned(
           top: 0.0, bottom: 0.0, left: 0.0, right: 0.0,
           child: Container(

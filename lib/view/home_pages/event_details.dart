@@ -76,6 +76,7 @@ class EventDetails extends StatelessWidget {
             );
           },
         ),
+
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: Row(
@@ -458,6 +459,9 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
   }
 }
 
+// -------------------------------------------
+// -------------------------------------------
+
 class ChooseTicket extends StatefulWidget {
   final Function onTicketChosen;
   final Function(String) onOrderCompleted;
@@ -722,6 +726,9 @@ class _ChooseTicketState extends State<ChooseTicket> {
   }
 }
 
+// -------------------------------------------
+// -------------------------------------------
+
 class ClassItem extends StatefulWidget {
   final int orderIndex;
   final int classId;
@@ -762,14 +769,20 @@ class _ClassItemState extends State<ClassItem> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+
+        // the dash divider
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DashedDivider(),
         ),
+
+        // the service class item body
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
+
+              // the service class name
               Padding(
                 padding: const EdgeInsets.only(right: 16, left: 12),
                 child: Text(
@@ -780,9 +793,13 @@ class _ClassItemState extends State<ClassItem> {
                       color: Color(0xff878787)),
                 ),
               ),
+
+              // the rest of the service class
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+
+                  // the price
                   Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -805,6 +822,8 @@ class _ClassItemState extends State<ClassItem> {
                       ),
                     ),
                   ),
+
+                  // the quantity counter
                   Flexible(
                     child: TicketQuantity(
                       onUpdateQuantity: (value) async {
@@ -840,6 +859,9 @@ class _ClassItemState extends State<ClassItem> {
     );
   }
 }
+
+// -------------------------------------------
+// -------------------------------------------
 
 // Ticket Quantity dropdown.
 class TicketQuantity extends StatefulWidget {

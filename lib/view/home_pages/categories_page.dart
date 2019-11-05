@@ -3,15 +3,6 @@ import 'package:flutter/material.dart';
 import '../../globals.dart';
 import '../../util.dart' as util;
 
-List<T> map<T>(List list, Function handler) {
-  List<T> result = [];
-  for (var i = 0; i < list.length; i++) {
-    result.add(handler(i, list[i]));
-  }
-
-  return result;
-}
-
 class AllCategoriesPage extends StatelessWidget {
 
   final Function(int, String) onCategoryPressed;
@@ -324,4 +315,14 @@ class CategoryItem extends StatelessWidget {
       ),
     );
   }
+}
+
+
+List<T> map<T>(List list, Function handler) {
+  List<T> result = [];
+  for (var i = 0; i < list.length; i++) {
+    result.add(handler(i, list[i]));
+  }
+
+  return result;
 }
