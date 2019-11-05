@@ -18,6 +18,8 @@ List<T> map<T>(List list, Function handler) {
   return result;
 }
 
+/// The home page.
+
 class HomePage extends StatelessWidget {
 
   final Function(int, String) onPress;
@@ -78,6 +80,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
+/// The sliders viewer.
+
 class Sliders extends StatefulWidget {
 
   final Function(int, String) onPress;
@@ -98,6 +102,8 @@ class _SlidersState extends State<Sliders> {
   Widget _hotOffers;
   Widget _hotEvents;
 
+  Widget _tmp;
+
   ListView _listView;
 
   double _lastPagePosition = 0;
@@ -111,6 +117,7 @@ class _SlidersState extends State<Sliders> {
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.done){
             if(snapshot.hasData){
+              _scrollController.jumpTo(_lastPagePosition);
               return EventsSlider(
                 onEventPressed: widget.onEventPressed,
                 list: widget.data['homeEvents']/*Globals.controller.homeEvents*/,
@@ -147,7 +154,7 @@ class _SlidersState extends State<Sliders> {
         ],
       );
     });
-    _scrollController.jumpTo(_lastPagePosition);
+
   }
 
   _updateHotOffers(){
@@ -234,7 +241,6 @@ class _SlidersState extends State<Sliders> {
       child: _listView,
       onNotification: (t) {
         if (t is ScrollEndNotification) {
-//          print(_scrollController.position.pixels);
           _lastPagePosition = _scrollController.position.maxScrollExtent;
         }
         return null;
@@ -243,6 +249,10 @@ class _SlidersState extends State<Sliders> {
   }
 }
 
+// -------------------------------------------
+// -------------------------------------------
+
+/// The events slider.
 
 class EventsSlider extends StatefulWidget {
   final Function onEventPressed;
@@ -337,6 +347,8 @@ class _EventsSliderState extends State<EventsSlider> {
     );
   }
 }
+
+/// The event item.
 
 class EventItem extends StatefulWidget {
   final int id;
@@ -636,6 +648,11 @@ class _EventItemState extends State<EventItem> {
   }
 }
 
+// -------------------------------------------
+// -------------------------------------------
+
+/// The categories slider
+
 class CategoriesSlider extends StatefulWidget {
   final Function(int, String) onPress;
   final List list;
@@ -762,6 +779,8 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
   }
 }
 
+/// The categories page.
+
 class CategoriesPage extends StatelessWidget {
   final List list;
   final Function(int, String) onPress;
@@ -840,6 +859,12 @@ class CategoriesPage extends StatelessWidget {
     );
   }
 }
+
+
+// -------------------------------------------
+// -------------------------------------------
+
+/// The hot offers slider
 
 class HotOffersSlider extends StatefulWidget {
   final Function(int) onEventPressed;
@@ -966,6 +991,8 @@ class _HotOffersSliderState extends State<HotOffersSlider> {
   }
 }
 
+/// The hot offer page
+
 class HotOfferPage extends StatelessWidget {
   final List list;
 
@@ -1005,6 +1032,9 @@ class HotOfferPage extends StatelessWidget {
     );
   }
 }
+
+
+/// The hot offer item
 
 class HotOfferItem extends StatefulWidget {
   final int id;
@@ -1114,6 +1144,9 @@ class _HotOfferItemState extends State<HotOfferItem> {
     );
   }
 }
+
+
+/// The wish list button
 
 class WishListButton extends StatefulWidget {
 

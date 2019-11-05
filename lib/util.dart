@@ -9,6 +9,11 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:ticketawy/globals.dart';
 
+
+/// This class contains the methods which are used
+/// for calling the Ticketawy API.
+
+/// The Base URL
 final String _baseUrl = 'http://40.85.116.121:8607';
 
 
@@ -173,7 +178,7 @@ Future<Map> verifyPhone (String phone, String code) async {
   }
 }
 
-/// Calling the Category List
+/// Calls the Category List
 Future<List> categoryList () async{
   try{
     String url = '$_baseUrl/api/Event/Category_list';
@@ -188,6 +193,7 @@ Future<List> categoryList () async{
   }
 }
 
+/// Calls the home lists
 Future<Map> getHomeLists() async {
   try{
     String url = '$_baseUrl/api/Home/Home_Lists';
@@ -202,6 +208,7 @@ Future<Map> getHomeLists() async {
   }
 }
 
+/// Calls the home events
 Future<List> getHomeEvents() async {
   try{
     String url = '$_baseUrl/api/Home/Home_Lists';
@@ -217,6 +224,7 @@ Future<List> getHomeEvents() async {
   }
 }
 
+/// Calls the hot offers
 Future<List> getHotEvents() async {
   try{
     String url = '$_baseUrl/api/Home/Home_Lists';
@@ -232,9 +240,11 @@ Future<List> getHotEvents() async {
   }
 }
 
-Future<List> getServiceClasses(int id) async{
+/// Calls the service classes API for
+/// an event specified by its eventId
+Future<List> getServiceClasses(int eventId) async{
   try{
-    String url = '$_baseUrl/api/Order/Service_Class?id=$id';
+    String url = '$_baseUrl/api/Order/Service_Class?id=$eventId';
 
     var response = await http.get(url).timeout(Duration(seconds: timeOut));
 
@@ -247,6 +257,8 @@ Future<List> getServiceClasses(int id) async{
   }
 }
 
+/// Calls the events list API for
+/// a category specified by its categoryId
 Future<List> getEventsList(int categoryId) async{
   try{
     String url = '$_baseUrl/api/Event/Events_List?categoryId=$categoryId';
@@ -262,6 +274,7 @@ Future<List> getEventsList(int categoryId) async{
   }
 }
 
+/// Calls the API which updates the user details.
 Future<Map> updateUserDetails({@required String fullName,
   @required String phoneNumber,@required String password}) async {
   try{
@@ -287,6 +300,8 @@ Future<Map> updateUserDetails({@required String fullName,
   }
 }
 
+/// Calls the API which adds to and removes from
+/// the user's wish list.
 Future<Map> addToRemoveFromWishList(int eventId) async {
   try{
     String url = '$_baseUrl/api/Event/Add_Wishlist?Event_Id=$eventId&User_Id=${Globals.userId}';
@@ -307,6 +322,7 @@ Future<Map> addToRemoveFromWishList(int eventId) async {
   }
 }
 
+/// Calls the API which returns the wish list.
 Future<List> getWishList () async {
 
   try{
@@ -338,6 +354,7 @@ Future<List> search(String keyWord) async {
   }
 }
 
+/// Calls the API which returns the orders history.
 Future<List> getOrdersHistory() async {
   try{
     String url = '$_baseUrl/api/Order/Order_History?id=${Globals.userId}';
@@ -352,6 +369,7 @@ Future<List> getOrdersHistory() async {
   }
 }
 
+/// Posts to the contact us API.
 Future<Map> contactUs({@required String phoneEmail, @required String subject,
   @required String message}) async{
 
@@ -378,6 +396,7 @@ Future<Map> contactUs({@required String phoneEmail, @required String subject,
   }
 }
 
+/// Posts new order to the orders API
 Future<Map> addOrder({@required int eventId, @required List orders}) async {
   try{
     String url = '$_baseUrl/api/Order/payment';
@@ -403,6 +422,7 @@ Future<Map> addOrder({@required int eventId, @required List orders}) async {
   }
 }
 
+/// Calls the (forgot password) API.
 Future<Map> recoverPassword(String phoneNumber) async{
   try{
     String url = '$_baseUrl/api/AspNetUsers/ForgotPassword';
@@ -426,6 +446,7 @@ Future<Map> recoverPassword(String phoneNumber) async{
   }
 }
 
+/// Calls the ideas API to post new ideas item.
 Future<Map> addIdeas({File imageFile, @required String message}) async {
 
   try{
@@ -481,6 +502,7 @@ Future<Map> addIdeas({File imageFile, @required String message}) async {
 
 }
 
+/// Calls the API which updates the password.
 Future<Map> updatePassword({@required String phoneNumber, @required String newPassword}) async{
   try{
     String url = '$_baseUrl/api/AspNetUsers/UpdatePassword';
@@ -505,6 +527,7 @@ Future<Map> updatePassword({@required String phoneNumber, @required String newPa
   }
 }
 
+/// Calls the API which checks the available tickets.
 Future<Map> availableTickets({@required int quantity,
   @required int classId,
   @required int activityServiceId}) async{
@@ -524,6 +547,8 @@ Future<Map> availableTickets({@required int quantity,
   }
 }
 
+/// Calls the API which confirms the SMS code to
+/// change the user password.
 Future<Map> confirmPasswordCode({@required String phoneNumber, @required String code}) async{
   try{
     String url = '$_baseUrl/api/AspNetUsers/Confirm_Password_Code';
@@ -548,38 +573,7 @@ Future<Map> confirmPasswordCode({@required String phoneNumber, @required String 
   }
 }
 
-//Future<String> get _localPath async {
-//  final directory = await getApplicationDocumentsDirectory();
-//
-//  return directory.path;
-//}
-
-//Future<File> get _localFile async {
-//  final path = await _localPath;
-//  return File('$path/msg.txt');
-//}
-//
-//Future<File> writeContent(String msg) async {
-//  final file = await _localFile;
-//
-//  // Write the file.
-//  return file.writeAsString('$msg');
-//}
-//
-//Future<String> readContent() async {
-//  try {
-//    final file = await _localFile;
-//
-//    // Read the file.
-//    String contents = await file.readAsString();
-//
-//    return contents;
-//  } catch (e) {
-//    // If encountering an error, return 0.
-//    return null;
-//  }
-//}
-
+/// Calls the API which displays the ticket details.
 Future<List> getTicketDetails(String orderId) async{
   try{
     String url = '$_baseUrl/api/Tickets/Ticket_details?orderId=$orderId';
@@ -595,6 +589,7 @@ Future<List> getTicketDetails(String orderId) async{
   }
 }
 
+/// Calls the API which registers new successful order.
 Future<Map> onPaymentSuccessful({
     @required bool paymentResult,
     @required String transactionId,
