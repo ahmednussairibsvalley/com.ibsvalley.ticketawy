@@ -5,8 +5,11 @@ import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
 
+
+/// Class for password updating screen.
 class NewPassword extends StatefulWidget {
 
+  /// The phone number
   final String phone;
 
   NewPassword({@required this.phone,});
@@ -32,9 +35,13 @@ class _NewPasswordState extends State<NewPassword> {
 
     return Stack(
       children: <Widget>[
+
+        // the body
         Scaffold(
           body: Stack(
             children: <Widget>[
+
+              // the background
               Container(
                 height: _height,
                 width: _width,
@@ -46,6 +53,7 @@ class _NewPasswordState extends State<NewPassword> {
                         image: AssetImage('assets/login.jpg'))),
               ),
 
+              // the body
               Positioned(
                 left: 0.0,
                 right: 0.0,
@@ -55,11 +63,15 @@ class _NewPasswordState extends State<NewPassword> {
                   key: _formKey,
                   child: ListView(
                     children: <Widget>[
+
+                      // The header
                       Image.asset(
                         'assets/header.png',
                         width: 300,
                         height: 195,
                       ),
+
+                      // The dashed divider
                       Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 20, left: 50, right: 50,),
                         child: DashedDivider(
@@ -235,6 +247,8 @@ class _NewPasswordState extends State<NewPassword> {
             ],
           ),
         ),
+
+        // password updating progress widget
         _passwordUpdating? Positioned(
           top: 0.0, bottom: 0.0, left: 0.0, right: 0.0,
           child: Container(
@@ -263,6 +277,7 @@ class _NewPasswordState extends State<NewPassword> {
     );
   }
 
+  /// Shows password updating result dialog
   _showResultDialog(BuildContext context, String message, Function onPasswordUpdate, bool passwordUpdated){
     showDialog(
         barrierDismissible: false,

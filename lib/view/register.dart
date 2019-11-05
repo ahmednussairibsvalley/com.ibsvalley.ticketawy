@@ -12,8 +12,14 @@ import 'login.dart';
 import 'registration_success.dart';
 import 'verification.dart';
 
+/// The registration page
+
 class Register extends StatefulWidget {
+
+  /// Is it opened from home page?
   final bool openedFromHome;
+
+  /// Is it opened from the event details page?
   final bool openedFromEventDescription;
 
   Register({
@@ -48,6 +54,8 @@ class _RegisterState extends State<Register> {
     return WillPopScope(
         child: Stack(
           children: <Widget>[
+
+            /// The registration page body
             Scaffold(
               body: Stack(
                 children: <Widget>[
@@ -443,6 +451,8 @@ class _RegisterState extends State<Register> {
                 ],
               ),
             ),
+
+            // The registration progress bar
             _registering
                 ? Positioned(
                     top: 0.0,
@@ -484,6 +494,7 @@ class _RegisterState extends State<Register> {
         });
   }
 
+  ///Shows the verification dialog
   _showVerificationDialog({String phoneNumber, String id, String password}) {
     showDialog(
         barrierDismissible: false,
@@ -508,6 +519,7 @@ class _RegisterState extends State<Register> {
   }
 }
 
+/// Shows the registration error dialog
 _showRegistrationErrorDialog(BuildContext context, {String message}) {
   showDialog(
       barrierDismissible: false,
@@ -569,6 +581,8 @@ _showRegistrationErrorDialog(BuildContext context, {String message}) {
       });
 }
 
+
+/// Shows the registration success dialog
 _showRegistrationSuccessDialog(BuildContext context,
     {String message,
     String id,

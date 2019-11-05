@@ -15,6 +15,7 @@ import 'home.dart';
 import 'registration_success.dart';
 import 'verification.dart';
 
+/// Class for the login screen
 class Login extends StatefulWidget {
   final bool openedFromHome;
   final bool openedByDrawer;

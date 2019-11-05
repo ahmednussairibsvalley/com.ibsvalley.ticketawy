@@ -26,6 +26,8 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+
+        // title
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -37,10 +39,14 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
             ),
           ),
         ),
+
+        // dashed divider
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: DashedDivider(),
         ),
+
+        // message
         Expanded(
           child: Text(
             'Registered With Success',
@@ -51,6 +57,8 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
             ),
           ),
         ),
+
+        // the close button
         ListTile(
           enabled: _confirming?false:true,
           onTap: () async {

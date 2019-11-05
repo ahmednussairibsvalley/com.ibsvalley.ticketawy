@@ -26,8 +26,6 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
 
-//    print('Width: ${Globals.screenUtil.width}');
-//    print('Height: ${Globals.screenUtil.height}');
     _controller = AnimationController(vsync: this, duration: Duration(seconds: 2));
     _winkingController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _titleController = AnimationController(vsync: this, duration: Duration(seconds: 1));
@@ -63,12 +61,6 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
           if (connectivityResult == ConnectivityResult.mobile ||
               connectivityResult == ConnectivityResult.wifi){
             Globals.userId = prefs.getString('userId');
-//            Map userData = await getUserDetails();
-//            print('$userData');
-//            Globals.controller.populateUser(userData);
-//            List categoriesList = await categoryList();
-//
-//            Globals.controller.populateCategories(categoriesList);
           }
           Navigator.of(context).pushReplacementNamed('/home');
         }else
@@ -116,9 +108,6 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                         builder: (context, child){
                           return Stack(
                             children: <Widget>[
-//                              Container(
-//                                color: Colors.transparent,
-//                              ),
                               Image.asset('assets/logo.png', width: 117, height: 164,),
                               Opacity(
                                 opacity: sin(_winkingAnimation.value),

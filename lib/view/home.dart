@@ -24,7 +24,7 @@ import 'package:responsive_container/responsive_container.dart';
 
 import 'login.dart';
 
-
+/// Class for home pages
 class Home extends StatefulWidget {
 
   final int currentPageIndex;
