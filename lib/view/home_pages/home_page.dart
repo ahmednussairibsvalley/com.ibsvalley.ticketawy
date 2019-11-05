@@ -102,8 +102,6 @@ class _SlidersState extends State<Sliders> {
   Widget _hotOffers;
   Widget _hotEvents;
 
-  Widget _tmp;
-
   ListView _listView;
 
   double _lastPagePosition = 0;
