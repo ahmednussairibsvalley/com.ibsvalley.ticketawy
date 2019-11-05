@@ -511,6 +511,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
               ),
             ),
 
+            // the body
             Flexible(
               child: ListView(
                 children: <Widget>[
@@ -844,7 +845,6 @@ class _ClassItemState extends State<ClassItem> {
                             '${widget.classId}';
                         Globals.orderTickets[widget.orderIndex]
                             ['numberOfTickets'] = '$value';
-//                        print('${Globals.orderTickets}');
                       },
                       activityServiceId: widget.activityServiceId,
                       classId: widget.classId,
