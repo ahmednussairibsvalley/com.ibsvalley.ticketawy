@@ -112,6 +112,7 @@ class AllCategoriesPage extends StatelessWidget {
   }
 }
 
+/// The categories page.
 class CategoriesPager extends StatefulWidget {
 
   final Function(int, String) onCategoryPressed;
@@ -251,7 +252,7 @@ class _CategoriesPagerState extends State<CategoriesPager> {
   }
 }
 
-
+/// The category item
 class CategoryItem extends StatelessWidget {
   final List list;
   final Function(int, String) onCategoryPressed;
