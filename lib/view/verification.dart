@@ -4,12 +4,23 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'dashed_divider.dart';
 import '../util.dart' as util;
 
+/// Phone number verification dialog
 class VerificationDialog extends StatefulWidget {
 
+  /// The phone number
   final String phoneNumber;
+
+  /// The user ID.
   final String id;
+
+  /// The user password.
   final String password;
+
+  /// Callback function for success.
   final Function(String, String, String) onSuccess;
+
+  /// Will the verification dialog be
+  /// used only for phone confirmation?
   final bool forJustPhoneConfirmation;
 
   VerificationDialog({@required this.phoneNumber, this.password, this.id,
@@ -20,10 +31,13 @@ class VerificationDialog extends StatefulWidget {
 
 class _VerificationDialogState extends State<VerificationDialog> {
 
+  /// Masked text controller for the code text field.
   final _verificationController = MaskedTextController(mask: '000000',);
 
+  /// The appearing message under the code text field.
   String _message = '';
 
+  /// Resending the SMS code?
   bool _resending = false;
 
   @override
