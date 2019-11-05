@@ -1,5 +1,10 @@
 import 'package:stack/stack.dart';
 
+/// This class contains the global classes and fields
+/// which the whole project depends on.
+
+
+/// The global fields.
 class Globals{
   static String userId = '';
   static Stack<int> pagesStack = Stack();
@@ -17,6 +22,8 @@ class Globals{
   static int currentCategoryPageIndex = 0;
 }
 
+
+/// The home pages indices.
 class PagesIndices {
   static final int homePageIndex = 0;
   static final int profilePageIndex = 1;
@@ -34,6 +41,7 @@ class PagesIndices {
   static final int ticketPageIndex = 13;
 }
 
+/// The event reservation options (tickets or seats).
 class ReservationOptions{
   static final int byTickets = 0;
   static final int bySeats = 1;
