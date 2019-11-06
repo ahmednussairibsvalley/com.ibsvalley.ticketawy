@@ -29,6 +29,7 @@ class AllCategoriesPage extends StatelessWidget {
             if(snapshot.hasData){
               return ListView(
                 children: <Widget>[
+
                   CategoriesPager(
                     onCategoryPressed: onCategoryPressed,
                     categoriesList: snapshot.data,

@@ -12,8 +12,6 @@ import 'package:file_picker/file_picker.dart';
 import '../../globals.dart';
 import '../../util.dart' as util;
 
-//import '../../globals.dart';
-
 class IdeasPage extends StatelessWidget {
 
   final Function onPreviousPagePressed;
@@ -37,8 +35,6 @@ class IdeasPage extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-//      resizeToAvoidBottomInset: false,
-//      resizeToAvoidBottomPadding: false,
         body: GestureDetector(
           onTap: (){
             FocusScope.of(context).requestFocus(FocusNode());
@@ -125,6 +121,10 @@ class IdeasPage extends StatelessWidget {
     );
   }
 }
+
+// ****************************************
+// ****************************************
+
 
 class IdeasForm extends StatefulWidget {
   @override
@@ -261,6 +261,8 @@ class _IdeasFormState extends State<IdeasForm> {
     final _width = MediaQuery.of(context).size.width;
     return Stack(
       children: <Widget>[
+
+        // the body
         Center(
 
           // The title with the text area.
@@ -397,6 +399,8 @@ class _IdeasFormState extends State<IdeasForm> {
             ],
           ),
         ),
+
+        // sending ideas progress widget
         _sending?Positioned(
           left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
           child: Container(

@@ -47,7 +47,7 @@ class EventDetails extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return EventTabs(
-                  haveSeats: snapshot.data['haveSeats'] == null?false:true,
+                  haveSeats: snapshot.data['haveSeats'] == null ? false : true,
                   data: snapshot.data,
                   onEventBooked: onEventBooked,
                   onOrderCompleted: onOrderCompleted,
@@ -62,7 +62,7 @@ class EventDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SpinKitFadingCircle(
-                    itemBuilder: (context , int index) {
+                    itemBuilder: (context, int index) {
                       return DecoratedBox(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -76,7 +76,6 @@ class EventDetails extends StatelessWidget {
             );
           },
         ),
-
         bottomNavigationBar: BottomAppBar(
           color: Colors.black,
           child: Row(
@@ -159,11 +158,12 @@ class EventTabs extends StatefulWidget {
   final Map data;
   final bool haveSeats;
 
-  EventTabs(
-      {@required this.onEventBooked,
-      @required this.data,
-      @required this.onOrderCompleted,
-      @required this.haveSeats,});
+  EventTabs({
+    @required this.onEventBooked,
+    @required this.data,
+    @required this.onOrderCompleted,
+    @required this.haveSeats,
+  });
 
   @override
   _EventTabsState createState() => _EventTabsState();
@@ -180,7 +180,8 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
     super.initState();
     DateTime _expirationDate = DateTime.parse(widget.data['expirationDate']);
     DateTime _currentDate = DateTime.now();
-    _expired = _expirationDate.difference(_currentDate).inDays >= 0 ? false : true;
+    _expired =
+        _expirationDate.difference(_currentDate).inDays >= 0 ? false : true;
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -192,15 +193,12 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
       });
   }
 
-//sghgjxgjd csdkjdvskj ksjhfksjdhf
   //Begin
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
 
-    return
-        // the hole space
-        ResponsiveContainer(
+    return ResponsiveContainer(
       widthPercent: 100,
       heightPercent: 90,
       child: Scaffold(
@@ -309,40 +307,40 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                   ),
 
                   // Buy Tickets Button
-//                BuyTicket(),
-//                GestureDetector(
-//                  onTap: () {
-//                    if (Globals.skipped) {
-//                      Navigator.of(context).push(
-//                          MaterialPageRoute(builder: (context) => Login(openedFromHome: false,
-//                            openedFromEventDescription: true,
-//                          )));
-//                    } else {
-//                      if (Globals.reservationOption ==
-//                          ReservationOptions.byTickets)
-//                        _showChooseTicketDialog(widget.onEventBooked);
-//                      else if (Globals.reservationOption ==
-//                          ReservationOptions.bySeats) widget.onEventBooked();
-//                    }
-//                  },
-//                  child: Container(
-//                    height: 45,
-//                    color: Color(0xffff6600),
-//                    child: ResponsiveContainer(
-//                      widthPercent: 30,heightPercent: 8,
-//                      alignment: Alignment.center,
-//                      child: Text(
-//                        Globals.reservationOption ==
-//                            ReservationOptions.byTickets
-//                            ? 'Buy Tickets'
-//                            : 'Buy Seats',
-//                        textAlign: TextAlign.center,
-//                        style: TextStyle(
-//                            color: Colors.white, fontFamily: 'MyriadPro',fontSize: 15),
-//                      ),
-//                    ),
-//                  ),
-//                )
+                  //                BuyTicket(),
+                  //                GestureDetector(
+                  //                  onTap: () {
+                  //                    if (Globals.skipped) {
+                  //                      Navigator.of(context).push(
+                  //                          MaterialPageRoute(builder: (context) => Login(openedFromHome: false,
+                  //                            openedFromEventDescription: true,
+                  //                          )));
+                  //                    } else {
+                  //                      if (Globals.reservationOption ==
+                  //                          ReservationOptions.byTickets)
+                  //                        _showChooseTicketDialog(widget.onEventBooked);
+                  //                      else if (Globals.reservationOption ==
+                  //                          ReservationOptions.bySeats) widget.onEventBooked();
+                  //                    }
+                  //                  },
+                  //                  child: Container(
+                  //                    height: 45,
+                  //                    color: Color(0xffff6600),
+                  //                    child: ResponsiveContainer(
+                  //                      widthPercent: 30,heightPercent: 8,
+                  //                      alignment: Alignment.center,
+                  //                      child: Text(
+                  //                        Globals.reservationOption ==
+                  //                            ReservationOptions.byTickets
+                  //                            ? 'Buy Tickets'
+                  //                            : 'Buy Seats',
+                  //                        textAlign: TextAlign.center,
+                  //                        style: TextStyle(
+                  //                            color: Colors.white, fontFamily: 'MyriadPro',fontSize: 15),
+                  //                      ),
+                  //                    ),
+                  //                  ),
+                  //                )
                   _expired
                       ? Container(
                           height: 45,
@@ -386,8 +384,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                                   top: 15,
                                   bottom: 15),
                               child: Text(
-                                !widget.haveSeats? 'Buy Tickets'
-                                    : 'Buy Seats',
+                                !widget.haveSeats ? 'Buy Tickets' : 'Buy Seats',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -406,7 +403,7 @@ class _EventTabsState extends State<EventTabs> with TickerProviderStateMixin {
                 physics: index == locationPageIndex
                     ? NeverScrollableScrollPhysics()
                     : AlwaysScrollableScrollPhysics(),
-//              physics: AlwaysScrollableScrollPhysics(),
+                //              physics: AlwaysScrollableScrollPhysics(),
                 children: <Widget>[
                   AboutPage(
                     imageUrl: '${Globals.imageBaseUrl}/${widget.data['logo']}',
@@ -579,7 +576,7 @@ class _ChooseTicketState extends State<ChooseTicket> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         SpinKitFadingCircle(
-                                          itemBuilder: (context , int index) {
+                                          itemBuilder: (context, int index) {
                                             return DecoratedBox(
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
@@ -766,7 +763,6 @@ class _ClassItemState extends State<ClassItem> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-
         // the dash divider
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -778,7 +774,6 @@ class _ClassItemState extends State<ClassItem> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-
               // the service class name
               Padding(
                 padding: const EdgeInsets.only(right: 16, left: 12),
@@ -795,7 +790,6 @@ class _ClassItemState extends State<ClassItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
                   // the price
                   Container(
                     alignment: Alignment.center,
