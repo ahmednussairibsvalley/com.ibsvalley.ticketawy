@@ -100,6 +100,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+
+        // the body
         Form(
           key: _formKey,
           child: ListView(
@@ -258,6 +260,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
             ],
           ),
         ),
+
+        // updating profile progress widget
         _updating?
         Positioned(
           left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
