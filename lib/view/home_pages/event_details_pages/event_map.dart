@@ -18,11 +18,28 @@ class _LargerMapState extends State<LargerMap> {
     final _height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: WebView(
-        initialUrl: Uri.dataFromString('<iframe src="${widget.url}" width="$_width" height="$_height" frameborder="0" style="border:0;" allowfullscreen=""></iframe>', mimeType: 'text/html').toString(),
-        javascriptMode: JavascriptMode.unrestricted,
+      body: Stack(
+        children: <Widget>[
+
+          WebView(
+            initialUrl: Uri.dataFromString('<iframe src="${widget.url}" width="$_width" height="$_height" frameborder="0" style="border:0;" allowfullscreen=""></iframe>', mimeType: 'text/html').toString(),
+            javascriptMode: JavascriptMode.unrestricted,
 
 
+          ),
+
+          Positioned(
+            bottom: 0.0,
+            right: 0.0,
+            left: 0.0,
+            child: RaisedButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text('Back'),
+            ),
+          ),
+        ],
       ),
     );
   }
