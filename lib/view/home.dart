@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:responsive_container/responsive_container.dart';
+
 import 'home_pages/search_results.dart';
 import 'home_pages/ticket_page.dart';
-import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
 import 'home_pages/select_seat.dart';
 import 'home_pages/categories_page.dart';
@@ -13,17 +14,15 @@ import 'home_pages/contact_page.dart';
 import 'home_pages/event_details.dart';
 import 'home_pages/faq_page.dart';
 import 'home_pages/ideas_page.dart';
-
-import '../globals.dart';
 import 'home_pages/category.dart';
 import 'home_pages/home_page.dart';
 import 'home_pages/profile_page.dart';
-import 'package:responsive_container/responsive_container.dart';
+
+import 'custom_widgets/CustomShowDialog.dart';
 
 import 'login.dart';
 import 'register.dart';
-
-import 'custom_widgets/CustomShowDialog.dart';
+import '../globals.dart';
 
 /// Class for home pages
 class Home extends StatefulWidget {
@@ -563,26 +562,6 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 index = PagesIndices.paymentPageIndex;
                               });
-                            },
-                            onAllCategoriesPressed: (){
-                              setState(() {
-                                index = PagesIndices.categoriesPageIndex;
-                              });
-                            },
-                          ):
-                          index == PagesIndices.buyTicketsPageIndex? BuyTickets(
-                            onPreviousPagePressed: (){
-                              Globals.pagesStack.pop();
-                              if(Globals.pagesStack.isNotEmpty){
-                                setState(() {
-                                  index = Globals.pagesStack.pop();
-                                });
-                              } else {
-                                setState(() {
-                                  index = PagesIndices.homePageIndex;
-                                });
-                              }
-
                             },
                             onAllCategoriesPressed: (){
                               setState(() {

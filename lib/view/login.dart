@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ticketawy/view/dashed_divider.dart';
-import 'package:ticketawy/view/password_recovery.dart';
-import 'package:ticketawy/view/register.dart';
+import 'dashed_divider.dart';
+import 'password_recovery.dart';
+import 'register.dart';
 import '../globals.dart';
 import '../util.dart' as util;
 
