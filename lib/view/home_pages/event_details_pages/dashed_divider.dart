@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Class for dashed divider
 class DashedDivider extends StatelessWidget {
   final double height;
   final Color color;

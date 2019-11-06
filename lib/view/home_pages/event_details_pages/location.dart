@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
@@ -17,8 +15,6 @@ class LocationPage extends StatelessWidget {
   LocationPage({@required this.mapUrl, @required this.startDate, @required this.endDate});
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
-
     DateTime _startDate = DateTime.parse(startDate);
     DateTime _endDate = DateTime.parse(endDate);
     String _startTimeText = DateFormat.jm().format(_startDate);
@@ -26,8 +22,6 @@ class LocationPage extends StatelessWidget {
       padding: EdgeInsets.only( right: 15, left: 15, bottom: 15),
 //      child: LocationMap2(mapUrl: mapUrl),
       child: Column(
-//        shrinkWrap: true,
-//        itemExtent: _width > 360?350:370,
         children: <Widget>[
           Flexible(
             child: Material(
@@ -126,6 +120,9 @@ class LocationPage extends StatelessWidget {
   }
 }
 
+// *****************************************
+// *****************************************
+
 class LocationMap extends StatefulWidget {
   @override
   _LocationMapState createState() => _LocationMapState();
@@ -152,6 +149,9 @@ class _LocationMapState extends State<LocationMap> {
     );
   }
 }
+
+// *****************************************
+// *****************************************
 
 class LocationMap2 extends StatefulWidget {
   final String mapUrl;

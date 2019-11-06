@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:ticketawy/view/dashed_divider.dart';
@@ -13,7 +11,6 @@ class SchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _width = MediaQuery.of(context).size.width;
     return ResponsiveContainer(widthPercent: 90, heightPercent: 90,
       padding: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
       child: Material(
@@ -24,7 +21,6 @@ class SchedulePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
-//              crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(scheduleList.length, (index){
 
                 List agendaList = scheduleList[index]['agendas'];
