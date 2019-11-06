@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../globals.dart';
 import '../../util.dart' as util;
 
+/// Class for search results page
 class SearchResults extends StatelessWidget {
   final Function(int) onEventClicked;
 
@@ -44,6 +45,9 @@ class SearchResults extends StatelessWidget {
     );
   }
 }
+
+//******************************
+//******************************
 
 class EventsPage extends StatelessWidget {
   final List list;
@@ -122,6 +126,9 @@ class EventsPage extends StatelessWidget {
     );
   }
 }
+
+//******************************
+//******************************
 
 class WishListButton extends StatefulWidget {
 

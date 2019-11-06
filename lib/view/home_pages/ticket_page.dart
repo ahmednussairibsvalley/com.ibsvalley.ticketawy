@@ -5,22 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:dashed_container/dashed_container.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-//import 'package:barcode_flutter/barcode_flutter.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../globals.dart';
 import '../dashed_divider.dart';
 import '../../util.dart' as util;
 import 'package:intl/intl.dart';
-
-List<T> map<T>(List list, Function handler) {
-  List<T> result = [];
-  for (var i = 0; i < list.length; i++) {
-    result.add(handler(i, list[i]));
-  }
-
-  return result;
-}
 
 class TicketsPage extends StatefulWidget {
 
@@ -72,6 +62,9 @@ class _TicketsPageState extends State<TicketsPage> {
     );
   }
 }
+
+// ************************************
+// ************************************
 
 class TicketsSlider extends StatefulWidget {
 
@@ -147,6 +140,8 @@ class _TicketsSliderState extends State<TicketsSlider> {
   }
 }
 
+// ************************************
+// ************************************
 
 class TicketItem extends StatefulWidget {
   final String orderId;
@@ -367,4 +362,16 @@ class _TicketItemState extends State<TicketItem> {
           ),
         ));
   }
+}
+
+// ************************************
+// ************************************
+
+List<T> map<T>(List list, Function handler) {
+  List<T> result = [];
+  for (var i = 0; i < list.length; i++) {
+    result.add(handler(i, list[i]));
+  }
+
+  return result;
 }
