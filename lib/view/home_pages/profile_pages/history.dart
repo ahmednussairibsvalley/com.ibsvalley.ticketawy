@@ -70,6 +70,9 @@ class ProfileHistory extends StatelessWidget {
   }
 }
 
+// **********************************
+// **********************************
+
 class HistorySlider extends StatefulWidget {
   final List list;
   final Function(String) onHistoryItemPressed;
@@ -130,6 +133,9 @@ class _HistorySliderState extends State<HistorySlider>
   }
 }
 
+// **********************************
+// **********************************
+
 class HistoryPage extends StatelessWidget {
   final List list;
   final Function(String) onHistoryItemPressed;
@@ -164,6 +170,9 @@ class HistoryPage extends StatelessWidget {
   }
 }
 
+// **********************************
+// **********************************
+
 class HistoryItem extends StatelessWidget {
   final String orderId;
   final String imageUrl;
@@ -191,7 +200,6 @@ class HistoryItem extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
 
     DateTime _orderDate = DateTime.parse(orderDate);
 
@@ -204,6 +212,8 @@ class HistoryItem extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+
+              // Event image
               Image.network(
                 imageUrl,
                 height: MediaQuery.of(context).size.height / 10,
@@ -332,31 +342,6 @@ class HistoryItem extends StatelessWidget {
                 ),
               ),
 
-              // Delete history
-//              Padding(
-//                padding: const EdgeInsets.only(top: 8.0, right: 4.0, left: 4.0),
-//                child: Container(
-//                  decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(30),
-//                    color: Color(0xfffe6700),
-//                  ),
-//                  child: Padding(
-//                    padding: const EdgeInsets.only(top: 4 , bottom: 4 , left: 9 , right: 9),
-//                    child: Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                      children: <Widget>[
-//                        Image.asset('assets/delete_history.png', width: 35, height: 35,),
-//                        Text('Delete history',
-//                          textAlign: TextAlign.center,
-//                          style: TextStyle(
-//                            color: Colors.white,
-//                          ),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                ),
-//              ),
             ],
           ),
         ),
