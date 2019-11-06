@@ -7,15 +7,6 @@ import 'package:responsive_container/responsive_container.dart';
 import '../../globals.dart';
 import '../../util.dart' as util;
 
-List<T> map<T>(List list, Function handler) {
-  List<T> result = [];
-  for (var i = 0; i < list.length; i++) {
-    result.add(handler(i, list[i]));
-  }
-
-  return result;
-}
-
 class MyWishListPage extends StatelessWidget {
   final Function onBack;
   final Function(int) onCategoryPressed;
@@ -47,6 +38,8 @@ class MyWishListPage extends StatelessWidget {
               return Scaffold(
                 body: Column(
                   children: <Widget>[
+
+                    // the page title
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
@@ -62,6 +55,9 @@ class MyWishListPage extends StatelessWidget {
                         ],
                       ),
                     ),
+
+
+                    // the wish list viewer
                     Flexible(
                       child: ListView(
                         children: <Widget>[
@@ -72,6 +68,7 @@ class MyWishListPage extends StatelessWidget {
                     )
                   ],
                 ),
+
                 bottomNavigationBar: BottomAppBar(
                   color: Colors.black,
                   child: Row(
@@ -149,6 +146,9 @@ class MyWishListPage extends StatelessWidget {
     );
   }
 }
+
+// **********************************
+// **********************************
 
 class WishListViewer extends StatefulWidget {
 
@@ -292,6 +292,8 @@ class _WishListViewerState extends State<WishListViewer> {
   }
 }
 
+// **********************************
+// **********************************
 
 class EventsSlider extends StatefulWidget {
   final Function(int) onCategoryPressed;
@@ -428,6 +430,9 @@ class _EventsSliderState extends State<EventsSlider> {
   }
 }
 
+// **********************************
+// **********************************
+
 class EventsPage extends StatelessWidget {
   final List list;
   final Function(int) onCategoryPressed;
@@ -533,6 +538,9 @@ class EventsPage extends StatelessWidget {
   }
 }
 
+// **********************************
+// **********************************
+
 class DrawerDivider extends StatelessWidget {
   final double height;
   final Color color;
@@ -564,4 +572,17 @@ class DrawerDivider extends StatelessWidget {
       },
     );
   }
+}
+
+
+// **********************************
+// **********************************
+
+List<T> map<T>(List list, Function handler) {
+  List<T> result = [];
+  for (var i = 0; i < list.length; i++) {
+    result.add(handler(i, list[i]));
+  }
+
+  return result;
 }
