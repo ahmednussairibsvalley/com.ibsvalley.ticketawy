@@ -6,19 +6,47 @@ import 'package:stack/stack.dart';
 
 /// The global fields.
 class Globals{
+
+  /// the user ID.
   static String userId = '';
+
+  /// Stack of home pages indices
   static Stack<int> pagesStack = Stack();
+
+  /// Category ID
   static int categoryId = 1;
+
+  /// Event ID
   static int eventId = 0;
+
+  /// Event reservation option (0 for ticket, 1 for seats)
   static int reservationOption = 0;
+
+  /// Current category name
   static String currentCategoryName = '';
-  static String userPassword = 'esraa123';
+
+  /// User password
+  static String userPassword = '';
+
+  /// login skipped?
   static bool skipped = false;
+
+  /// search keyword
   static String keyWord = '';
+
+  /// the event image base URL.
   static String imageBaseUrl = 'https://beta.ticketawy.com/Media/Events_Logo';
+
+  /// Order ID
   static String orderId = '';
+
+  /// List of added orders.
   static List orderTickets = [];
+
+  ///Is the tickets page opened after the order is processed
   static bool ticketsPageOpenedAfterOrder = false;
+
+  /// Current categories page index
   static int currentCategoryPageIndex = 0;
 }
 

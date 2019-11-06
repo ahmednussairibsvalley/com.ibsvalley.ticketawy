@@ -621,10 +621,6 @@ class _ChooseTicketState extends State<ChooseTicket> {
                     }
                   }
 
-//              print('${Globals.userId}');
-//              print('${Globals.eventId}');
-//              print('${json.encode(list)}');
-
                   if (list.length > 0) {
                     Navigator.of(context).pop();
                     Globals.orderTickets.clear();
