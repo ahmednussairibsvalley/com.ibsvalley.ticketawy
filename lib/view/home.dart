@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ticketawy/view/home_pages/search_results.dart';
-import 'package:ticketawy/view/home_pages/ticket_page.dart';
-import 'package:ticketawy/view/register.dart';
-import 'custom_widgets/CustomShowDialog.dart';
+import 'home_pages/search_results.dart';
+import 'home_pages/ticket_page.dart';
 import 'home_pages/buy_tickets.dart';
 import 'home_pages/mywishlist.dart';
 import 'home_pages/select_seat.dart';
@@ -23,6 +21,9 @@ import 'home_pages/profile_page.dart';
 import 'package:responsive_container/responsive_container.dart';
 
 import 'login.dart';
+import 'register.dart';
+
+import 'custom_widgets/CustomShowDialog.dart';
 
 /// Class for home pages
 class Home extends StatefulWidget {
