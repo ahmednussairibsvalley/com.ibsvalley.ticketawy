@@ -27,6 +27,7 @@ import '../globals.dart';
 /// Class for home pages
 class Home extends StatefulWidget {
 
+  /// the current page index
   final int currentPageIndex;
 
   Home({this.currentPageIndex = -1,});
@@ -36,69 +37,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  /// Scaffold key for the drawer
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  /// the search text field controller
   TextEditingController _searchController = TextEditingController();
 
+  /// the page index
   int index = PagesIndices.homePageIndex;
 
+  /// the previous page index
   int _previousPageIndex = -1;
-
-  _showNoConnectivityDialog(){
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context){
-          return CustomAlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            contentPadding: EdgeInsets.all(0),
-            content: Container(
-              width: 260.0,
-              height: 230.0,
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
-                      child: Container(
-                        child: Text('Please check your internet connection and try again.',
-                          style: TextStyle(
-                            color: Color(0xfffe6700),
-                            fontSize: 20,
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(10),
-                      )
-                  ),
-                  ListTile(
-                    onTap: (){
-                      Navigator.of(context).pop();
-                    },
-                    title: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        child: Text('Close',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xfffe6700),
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                        ),
-                        padding: EdgeInsets.all(10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-    );
-  }
 
   @override
   void initState() {
@@ -109,6 +58,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
+    /// Map for the drawer
     final Map<String, Function> leftDrawerMap = Globals.skipped?
     {
       'Home' : (){
@@ -300,23 +250,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-
-//            // The top right icon.
-//            Positioned(
-//              right: 0.0, top: 0.0,
-//              child: Padding(
-//                padding: const EdgeInsets.all(8.0),
-//                child: Image.asset(
-//                  'assets/top_right_settings_icon.png',
-//                  height: 40,
-//                  width: 40,
-//                  color: Colors.white,
-//                  alignment: Alignment.topRight,
-//                ),
-//              ),
-//            ),
-
-
 
             // The body
             Positioned(
@@ -671,7 +604,6 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-
             // Search field
             index != PagesIndices.homePageIndex?
             Positioned(
@@ -685,9 +617,6 @@ class _HomeState extends State<Home> {
                   onTap: (){
                     if(index != PagesIndices.searchPageIndex)
                       _previousPageIndex = index;
-//                      setState(() {
-//                        index = -1;
-//                      });
                   },
                   onChanged: (value) async{
                     var connectivityResult = await Connectivity().checkConnectivity();
@@ -768,13 +697,13 @@ class _HomeState extends State<Home> {
             ):
             Container(),
 
-
           ],
         ),
       ),
     );
   }
 
+  /// The drawer item
   Widget _drawerItem(String title){
     return Column(
       children: <Widget>[
@@ -795,8 +724,67 @@ class _HomeState extends State<Home> {
       ],
     );
   }
+
+  /// Shows no internet connectivity dialog
+  _showNoConnectivityDialog(){
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context){
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text('Please check your internet connection and try again.',
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )
+                  ),
+                  ListTile(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text('Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
 }
 
+/// Class for drawer divider
 class DrawerDivider extends StatelessWidget {
   final double height;
   final Color color;

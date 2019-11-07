@@ -17,8 +17,14 @@ import 'verification.dart';
 
 /// Class for the login screen
 class Login extends StatefulWidget {
+
+  /// Is it opened from home page?
   final bool openedFromHome;
+
+  /// Is it opened from the drawer?
   final bool openedByDrawer;
+
+  /// Is it opened from the event details screen?
   final bool openedFromEventDescription;
 
   Login({this.openedFromHome = true,
@@ -33,126 +39,11 @@ class _LoginState extends State<Login> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  /// Signing In?
   bool _loggingIn = false;
+
+  /// Is password shown by the user?
   bool _passwordShown = false;
-
-  _showLoginErrorDialog(BuildContext context, {String message}) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CustomAlertDialog(
-            content: Container(
-              width: 300.0,
-              height: 170.0,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Error',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18.5,
-                        fontFamily: 'GeometriqueSans',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DashedDivider(),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        message.isEmpty ? 'Error when signing in' : message,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: 'Verdana',
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    title: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xfffe6700),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Close',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  _showNoConnectivityDialog() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return CustomAlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            contentPadding: EdgeInsets.all(0),
-            content: Container(
-              width: 260.0,
-              height: 230.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
-                      child: Container(
-                    child: Text(
-                      'Please check your internet connection and try again.',
-                      style: TextStyle(
-                        color: Color(0xfffe6700),
-                        fontSize: 20,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
-                  )),
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    title: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        child: Text(
-                          'Close',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xfffe6700),
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                        ),
-                        padding: EdgeInsets.all(10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1005,6 +896,127 @@ class _LoginState extends State<Login> {
     );
   }
 
+  /// Shows error signing in dialog
+  _showLoginErrorDialog(BuildContext context, {String message}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: Container(
+              width: 300.0,
+              height: 170.0,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Error',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.5,
+                        fontFamily: 'GeometriqueSans',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DashedDivider(),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        message.isEmpty ? 'Error when signing in' : message,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: 'Verdana',
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    title: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xfffe6700),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Close',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  /// Shows no internet connectivity dialog
+  _showNoConnectivityDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomAlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.all(0),
+            content: Container(
+              width: 260.0,
+              height: 230.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        child: Text(
+                          'Please check your internet connection and try again.',
+                          style: TextStyle(
+                            color: Color(0xfffe6700),
+                            fontSize: 20,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                      )),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    title: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Container(
+                        child: Text(
+                          'Close',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfffe6700),
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  /// Shows code verification dialog
   _showVerificationDialog({String phoneNumber, String id, String password}) {
     showDialog(
         context: context,
@@ -1023,6 +1035,8 @@ class _LoginState extends State<Login> {
         });
   }
 
+  /// Shows registration success dialog after the code
+  /// verification dialog
   _showRegistrationSuccessDialog(BuildContext context,
       {String message, String id, String password}) {
     showDialog(
@@ -1037,6 +1051,7 @@ class _LoginState extends State<Login> {
           );
         });
   }
+
 
   _showUnderDevelopmentDialog(context) {
     showDialog(

@@ -12,6 +12,7 @@ import '../dashed_divider.dart';
 import '../../util.dart' as util;
 import 'package:intl/intl.dart';
 
+/// Class for tickets page
 class TicketsPage extends StatefulWidget {
 
   final Function onWillPop;
