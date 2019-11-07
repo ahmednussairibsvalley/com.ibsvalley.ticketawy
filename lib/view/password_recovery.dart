@@ -7,6 +7,8 @@ import 'custom_widgets/CustomShowDialog.dart';
 import 'dashed_divider.dart';
 import 'verification.dart';
 
+
+/// Class for password recovery screen
 class PasswordRecovery extends StatefulWidget {
   @override
   _PasswordRecoveryState createState() => _PasswordRecoveryState();
@@ -18,30 +20,8 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
 
   TextEditingController _phoneController = TextEditingController();
 
-//  String _phoneNumber = '';
-
+  /// Does it calling the recovering password API?
   bool _recovering = false;
-
-  _showVerificationDialog({String phoneNumber, String id, String password,}){
-
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return CustomAlertDialog(
-            content: VerificationDialog(
-              forJustPhoneConfirmation: true,
-              phoneNumber: phoneNumber,
-              id: id, password: password,
-              onSuccess: (id , message , password ) {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
-                  phone: phoneNumber,
-                )));
-              },
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +42,9 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                     color: Colors.deepPurple,
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                        image: AssetImage('assets/login.jpg'))),
+                        image: AssetImage('assets/login.jpg'),
+                    ),
+                ),
               ),
 
               Positioned(
@@ -135,7 +116,6 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                               if(!regex.hasMatch(value)){
                                 return 'Invalid phone number';
                               }
-//                              _phoneNumber = value;
                               return null;
                             },
                           ),
@@ -159,8 +139,6 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                               });
 
                               Map response = await util.sendVerificationMessage(_phoneController.text);
-
-//                              print('$response');
 
                               setState(() {
                                 _recovering = false;
@@ -251,6 +229,29 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
     );
   }
 
+  /// Shows the code verification dialog
+  _showVerificationDialog({String phoneNumber, String id, String password,}){
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return CustomAlertDialog(
+            content: VerificationDialog(
+              forJustPhoneConfirmation: true,
+              phoneNumber: phoneNumber,
+              id: id, password: password,
+              onSuccess: (id , message , password ) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NewPassword(
+                  phone: phoneNumber,
+                )));
+              },
+            ),
+          );
+        });
+  }
+
+  /// Shows the result dialog
   _showResultDialog(BuildContext context, String message){
     showDialog(
         barrierDismissible: false,

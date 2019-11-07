@@ -20,17 +20,23 @@ class NewPassword extends StatefulWidget {
 class _NewPasswordState extends State<NewPassword> {
 
   final _formKey = GlobalKey<FormState>();
+
+  /// Is password shown by user?
   bool _passwordShown = false;
+
+  /// Is confirmation password shown by user?
   bool _passwordConfirmationShown = false;
+
   @override
   Widget build(BuildContext context) {
 
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
+    /// Is the password being updated?
     bool _passwordUpdating = false;
 
-
+    /// the new password value.
     String _newPassword = '';
 
     return Stack(
@@ -49,8 +55,9 @@ class _NewPasswordState extends State<NewPassword> {
                     color: Colors.deepPurple,
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        //                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                        image: AssetImage('assets/login.jpg'))),
+                        image: AssetImage('assets/login.jpg'),
+                    ),
+                ),
               ),
 
               // the body
@@ -242,7 +249,8 @@ class _NewPasswordState extends State<NewPassword> {
                         color: Colors.white,
                         size: 30,
                       ),
-                    )),
+                    ),
+                ),
               ),
             ],
           ),
@@ -293,6 +301,8 @@ class _NewPasswordState extends State<NewPassword> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+
+                  // dialog message
                   Expanded(
                       child: Container(
                         child: Text('$message',
@@ -306,6 +316,8 @@ class _NewPasswordState extends State<NewPassword> {
                         padding: EdgeInsets.all(10),
                       )
                   ),
+
+                  // Close button
                   ListTile(
                     onTap: (){
                       Navigator.of(context).pop();

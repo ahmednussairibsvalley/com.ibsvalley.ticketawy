@@ -23,8 +23,12 @@ class VerificationDialog extends StatefulWidget {
   /// used only for phone confirmation?
   final bool forJustPhoneConfirmation;
 
-  VerificationDialog({@required this.phoneNumber, this.password, this.id,
-    @required this.onSuccess, this.forJustPhoneConfirmation = false});
+  VerificationDialog(
+      {@required this.phoneNumber,
+      this.password,
+      this.id,
+      @required this.onSuccess,
+      this.forJustPhoneConfirmation = false});
   @override
   _VerificationDialogState createState() => _VerificationDialogState();
 }
@@ -32,7 +36,9 @@ class VerificationDialog extends StatefulWidget {
 class _VerificationDialogState extends State<VerificationDialog> {
 
   /// Masked text controller for the code text field.
-  final _verificationController = MaskedTextController(mask: '000000',);
+  final _verificationController = MaskedTextController(
+    mask: '000000',
+  );
 
   /// The appearing message under the code text field.
   String _message = '';
@@ -44,10 +50,9 @@ class _VerificationDialogState extends State<VerificationDialog> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-
         /// The verification dialog body.
         GestureDetector(
-          onTap: (){
+          onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Container(
@@ -59,10 +64,11 @@ class _VerificationDialogState extends State<VerificationDialog> {
                 // the first paragraph indicating of an SMS
                 // message being sent
                 Padding(
-                  padding: const EdgeInsets.only(top: 30,bottom: 8 , left: 8 ,right: 8),
+                  padding: const EdgeInsets.only(
+                      top: 30, bottom: 8, left: 8, right: 8),
                   child: Text(
                     'An SMS sent to you with a verification code, '
-                        'please enter the code and press confirm',
+                    'please enter the code and press confirm',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -81,12 +87,12 @@ class _VerificationDialogState extends State<VerificationDialog> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         _message = '';
                       });
                     },
-                    onChanged: (value){
+                    onChanged: (value) {
                       setState(() {
                         _message = '';
                       });
@@ -107,11 +113,14 @@ class _VerificationDialogState extends State<VerificationDialog> {
                 // the code text field.
                 Padding(
                   padding: const EdgeInsets.all(0.0),
-                  child: _message.isNotEmpty?
-                  Text(_message, textAlign: TextAlign.center,)
+                  child: _message.isNotEmpty
+                      ? Text(
+                          _message,
+                          textAlign: TextAlign.center,
+                        )
                       : Padding(
-                    padding: const EdgeInsets.all(5),
-                  ),
+                          padding: const EdgeInsets.all(5),
+                        ),
                 ),
 
                 // The two buttons (confirm) and (resend).
@@ -119,34 +128,39 @@ class _VerificationDialogState extends State<VerificationDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-
                     // Confirm
                     GestureDetector(
-                      onTap: () async{
-                        if(widget.forJustPhoneConfirmation){
-                          Map response = await util.confirmPasswordCode(phoneNumber: widget.phoneNumber, code: _verificationController.text);
-                          if(response != null && response['result']){
+                      onTap: () async {
+                        if (widget.forJustPhoneConfirmation) {
+                          Map response = await util.confirmPasswordCode(
+                              phoneNumber: widget.phoneNumber,
+                              code: _verificationController.text);
+                          if (response != null && response['result']) {
                             Navigator.of(context).pop();
-//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                            widget.onSuccess(response['id'], response['user_Message'], widget.password);
+                            widget.onSuccess(response['id'],
+                                response['user_Message'], widget.password);
                           } else {
                             setState(() {
-                              _message = response != null?response['user_Message']:'';
+                              _message = response != null
+                                  ? response['user_Message']
+                                  : '';
                             });
                           }
                         } else {
-                          Map response = await util.verifyPhone(widget.phoneNumber, _verificationController.text);
-                          if(response != null && response['result']){
+                          Map response = await util.verifyPhone(
+                              widget.phoneNumber, _verificationController.text);
+                          if (response != null && response['result']) {
                             Navigator.of(context).pop();
-//                      _showRegistrationSuccessDialog(context, message: response['user_Message'],id: widget.id, password: widget.password);
-                            widget.onSuccess(response['id'], response['user_Message'], widget.password);
+                            widget.onSuccess(response['id'],
+                                response['user_Message'], widget.password);
                           } else {
                             setState(() {
-                              _message = response != null?response['user_Message']:'Error Confirming The Code';
+                              _message = response != null
+                                  ? response['user_Message']
+                                  : 'Error Confirming The Code';
                             });
                           }
                         }
-
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -155,11 +169,10 @@ class _VerificationDialogState extends State<VerificationDialog> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text('Confirm',
+                          child: Text(
+                            'Confirm',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -167,17 +180,17 @@ class _VerificationDialogState extends State<VerificationDialog> {
 
                     //Resend
                     GestureDetector(
-                      onTap: () async{
-                        if(!_resending){
+                      onTap: () async {
+                        if (!_resending) {
                           FocusScope.of(context).requestFocus(FocusNode());
                           setState(() {
                             _message = 'Resending ..';
                             _resending = true;
                           });
-                          var response = await util.sendVerificationMessage(widget.phoneNumber);
+                          var response = await util
+                              .sendVerificationMessage(widget.phoneNumber);
 
-//                          print('$response');
-                          if(response != null && response['result']){
+                          if (response != null && response['result']) {
                             setState(() {
                               _message = 'An SMS sent to you';
                               _resending = false;
@@ -187,53 +200,26 @@ class _VerificationDialogState extends State<VerificationDialog> {
                               _message = 'Error while resending a new SMS.';
                               _resending = false;
                             });
-
                           }
                         }
-
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: _resending?Colors.grey:Color(0xfffe6700),
+                          color: _resending ? Colors.grey : Color(0xfffe6700),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text('Resend',
+                          child: Text(
+                            'Resend',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-//                  ListTile(
-//                    onTap: () async{
-//
-//                      Map response = await util.verifyPhone(phoneNumber, _verificationController.text);
-//
-//                      if(response['result']){
-//                        Navigator.of(context).pop();
-//                        _showRegistrationSuccessDialog(context, message: response['user_Message']);
-//                      }
-//                    },
-//                    title: Container(
-//                      decoration: BoxDecoration(
-//                        color: Color(0xfffe6700),
-//                        borderRadius: BorderRadius.circular(20),
-//                      ),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(8.0),
-//                        child: Text(
-//                          'Confirm',
-//                          textAlign: TextAlign.center,
-//                        ),
-//                      ),
-//                    ),
-//                  )
               ],
             ),
           ),
@@ -243,12 +229,11 @@ class _VerificationDialogState extends State<VerificationDialog> {
         Positioned(
           top: 0.0,
           right: 0.0,
-
           child: GestureDetector(
-            onTap: (){
-              Navigator.of(context).pop();
-            },
-              child: Icon(Icons.close)
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Icon(Icons.close),
           ),
         )
       ],

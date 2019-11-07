@@ -8,9 +8,17 @@ import 'dashed_divider.dart';
 import 'home.dart';
 
 class RegistrationSuccessDialog extends StatefulWidget {
+
+  /// the message
   final String message;
+
+  /// the password
   final String password;
+
+  /// the user ID
   final String id;
+
+  /// Is it opened from event details screen?
   final bool openedFromEventDescription;
 
   RegistrationSuccessDialog({@required this.message, @required this.password,
@@ -21,6 +29,7 @@ class RegistrationSuccessDialog extends StatefulWidget {
 
 class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
 
+  /// Confirming registration?
   bool _confirming = false;
 
   @override
@@ -69,7 +78,6 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
             Globals.skipped = false;
             Globals.userPassword =
             widget.password != null && widget.password.isNotEmpty ? widget.password : '';
-//                    Globals.userId = response['id'];
             Globals.userId = widget.id != null && widget.id.isNotEmpty ? widget.id : '';
             Map userData = await util.getUserDetails();
 
@@ -100,6 +108,8 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
           title: Stack(
             alignment: Alignment.center,
             children: <Widget>[
+
+              // the close button title
               Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -114,6 +124,8 @@ class _RegistrationSuccessDialogState extends State<RegistrationSuccessDialog> {
                   ),
                 ),
               ),
+
+              // confirming registration progress widget
               _confirming?Positioned(
                 right: 0.0, left: 0.0,
                 child: Container(

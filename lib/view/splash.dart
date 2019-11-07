@@ -85,6 +85,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
+
+            // the background
             Container(
               height: _height,
               width: _width,
@@ -96,12 +98,16 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                 )
               ),
             ),
+
+            // the logo, title, and subtitle
             Positioned(
               left: 0.0, right: 0.0, top: 0.0, bottom: 0.0,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+
+                    // the animated logo
                     AnimatedBuilder(
                       child: AnimatedBuilder(
                         child: Image.asset('assets/logo_open_eyed.png', width: 117, height: 164,),
@@ -126,6 +132,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                         );
                       },
                     ),
+
+                    // the animated title
                     AnimatedBuilder(
                       child: Image.asset('assets/ticketawy.png', width: 225.5, height: 50.75,),
                       animation: _titleAnimation,
@@ -136,6 +144,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                         );
                       },
                     ),
+
+                    // the animated subtitle
                     AnimatedBuilder(
                       child: Image.asset('assets/ticket_easy.png', width: 119.5, height: 25.75,),
                       animation: _subTitleAnimation,
@@ -150,6 +160,8 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                 ),
               ),
             ),
+
+            // the footer
             Positioned(
               left: 0.0, right: 0.0, bottom: 0.0,
               child: Image.asset('assets/splash_footer.png',),

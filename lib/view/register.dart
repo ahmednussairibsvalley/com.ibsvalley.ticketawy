@@ -12,7 +12,7 @@ import 'login.dart';
 import 'registration_success.dart';
 import 'verification.dart';
 
-/// The registration page
+/// Class for the registration page
 
 class Register extends StatefulWidget {
 
@@ -59,6 +59,7 @@ class _RegisterState extends State<Register> {
             Scaffold(
               body: Stack(
                 children: <Widget>[
+
                   // The background
                   Container(
                     height: _height,
@@ -67,8 +68,9 @@ class _RegisterState extends State<Register> {
                         color: Colors.deepPurple,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-//                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.3), BlendMode.dstATop),
-                            image: AssetImage('assets/login.jpg'))),
+                            image: AssetImage('assets/login.jpg'),
+                        ),
+                    ),
                   ),
 
                   //The registration form
@@ -79,6 +81,7 @@ class _RegisterState extends State<Register> {
                     padding: EdgeInsets.only(top: 50),
                     child: ListView(
                       children: <Widget>[
+
                         //Header Logo
                         ResponsiveContainer(
                           widthPercent: 25,
@@ -95,6 +98,8 @@ class _RegisterState extends State<Register> {
                               key: _formKey,
                               child: Column(
                                 children: <Widget>[
+
+                                  // Dashed Divider
                                   ResponsiveContainer(
                                     child: DashedDivider(
                                       color: Colors.white30,
@@ -104,6 +109,8 @@ class _RegisterState extends State<Register> {
                                     padding:
                                         EdgeInsets.only(left: 30, right: 30),
                                   ),
+
+                                  // sign up page title
                                   ResponsiveContainer(
                                     widthPercent: 100,
                                     heightPercent: 8,
@@ -333,7 +340,6 @@ class _RegisterState extends State<Register> {
                                                 _registering = false;
                                               });
 
-//                                        _showRegistrationSuccessDialog(context,message: response['user_Message']);
                                               _fullNameController.value =
                                                   _fullNameController.value
                                                       .copyWith(text: '');
