@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -228,7 +230,7 @@ class _HomeState extends State<Home> {
                   }
                 },
                 child: Image.asset('assets/header.png',
-                  height: 110,
+                  height: Platform.isIOS?95:110,
                 ),
               ),
             ),

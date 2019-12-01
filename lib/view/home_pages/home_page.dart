@@ -313,7 +313,7 @@ class _EventsSliderState extends State<EventsSlider> {
     return Column(
       children: <Widget>[
         _carouselSlider,
-        Row(
+        _list.length > 1?Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: map<Widget>(
             _list,
@@ -340,7 +340,8 @@ class _EventsSliderState extends State<EventsSlider> {
               );
             },
           ),
-        ),
+        )
+        :Container(),
       ],
     );
   }
